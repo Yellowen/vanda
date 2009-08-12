@@ -1,0 +1,96 @@
+		Bax-CMS development policy
+
+This document contain the git repository structure and specific commit policies.
+so feel free to add your ideas about this matter to this file.
+
+Warnning : this file will be here till phase 1 start . after that this file will 
+terminate and join to developers manuals
+
+Git Repository structure :
+    
+    Since now i call Bax-CMS directory (root directory) "/" so / sign refer to Bax-CMS .
+    
+    For a clean job its good to put just project it self under the Bax-CMS repository ,
+    but in addition to project code we have some files that play important roll in project
+    but are not the memeber of project it self for example , pictures and templates are two
+    important part of CMS view . its not a good idea to put the image source files
+    (GIMP *.xcf or Photoshop *.psd) in the project tree . we just use thethe image output
+    not the source.
+
+    So here is some solution that we can use to solve this problem (if you know one write
+    it down) :
+
+
+       1. Put project directory in / address ,and put art and other section in / dir
+       	  just like code dir. Then we use git submodule for each one (For more information
+	  git submodules look at man git-submodule or ask me in lxsameer@gmail.com).so ower
+	  directory structre will be something like:
+
+
+       	      	      Bax-CMS/
+				Bax/
+					ower codes and django root
+				arts/
+					images sources and outputs
+				Templates/
+					templates sources
+				.
+				.
+				.
+
+		Benefits of this solution:
+
+			 1. Clean job 
+			 2. Multi-section repo so user can clone each section separatly.
+
+		Non-benefits of this :
+			 
+			 1. The Most important problem that we happen on this solution is 
+			    branching . by this solution ower submodules can't have different
+			    branches for them self and it is a big problem
+
+
+	2. Build a separate repository for arts and other stuffs. ( i thinks it is the best one)
+
+	   	 Benefits:
+
+			1. clean job
+			2. two different repo for developers and artist
+			3. Lower size of repo
+
+
+Developing policies:
+
+	The secret of successful software developing is "developing management" .
+	Developing managment is about how we manages out codes , how we deals with bugs,
+	how we add new feature, how we release ower software and . . . 
+
+	To do so , we need to form ower developing and commit to a fair struct.
+
+	I thinks the best way to get better result is :
+
+	  NOTE : Global versioning system use tree digit number for show the product 
+	       	 status . Frist one called Major version that indicate  the big changes
+		 in software , like huge changes in code or changing base algorithm and etc
+		 the second number called Minor version indicate the small changes like 
+		 adding new features and the third on indicate bug fixes.
+
+	  1. build 2 more branch called "unstable" and "testing" . we work on 'unstable' 
+	     branch for developing and adding new things to Bax-CMS . later , when a 
+	     new feature added to project and known bugs got fixed then unstable code will
+	     move ( merge ) to 'testing' branch for pass the testing phase . When the testing
+	     code show stale behavior from it self it will be move to master branch. 
+	     On new release we make a new branch from master code and name that with the Major 
+	     and minor version number for example the code of version 1.2 will be held in "1.2"
+	     branch . after releasing a version any bug fixes will we taged . As an example some
+	     week after releasing version 1.2 , we will found a bug in version 1.2 (remember
+	     may be we work in some other major version in unstable branch like 3 but bug found
+	     in verison 1.2) . After fixing that bug we tag the fixing commit as 1.2.1.
+
+
+	  2. The commit string should be meaningful , and show what's changed in code .
+	     don't enter the lazy string please.
+
+	  3. Broken code or incompeted code should not commited.
+
+       ***4. Never ever merge the branches with each other till you know what you do
