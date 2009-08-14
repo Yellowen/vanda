@@ -1,0 +1,19 @@
+		Bax-CMS coding policy and standard
+
+
+Comments :
+
+	 Please remember to add a easy to understand comment in your code even for each line.
+	 there is some comment mark that use by MSPS (My Small Programming Suit) for reporting :
+	 	 #+++ : use this when you want remember to do something in code
+	 	 #!!! : use this when you want to mark some code for error checking 
+	 	 #@@@ : use this to add important note to the Code
+
+Special Strings :
+	There is some important Strings that you can use in coding and have special meanning.
+	this string remove by some other string in the release time with sps. for example you
+	use '$$VERSION$$' string in your code to mark an string for sps , at the release time 
+	you run MSPS ( Read MSPS usage please ) for clean up code for release. then MSPS replace
+	that string with the version number of Bax-CMS . MSPS look for MSPS.conf file in the 
+	current working directory and use that for its action , so remember to add the strings
+	in MSPS.conf file

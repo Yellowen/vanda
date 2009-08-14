@@ -4,7 +4,7 @@ import os
 
 
 #+++ Remember to shut down the debug mode in official release
-#@@@ for more information about $$something$$ string take a look at doc/devel/comments.policy
+#@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
