@@ -23,13 +23,13 @@ Git Repository structure :
 
        1. Put project directory in / address ,and put art and other section in / dir
        	  just like code dir. Then we use git submodule for each one (For more information
-	  git submodules look at man git-submodule or ask me in lxsameer@gmail.com).so ower
+	  git submodules look at man git-submodule or ask me in lxsameer@gmail.com).so our
 	  directory structre will be something like:
 
 
        	      	      Bax-CMS/
 				Bax/
-					ower codes and django root
+					our codes and django root
 				arts/
 					images sources and outputs
 				Templates/
@@ -46,7 +46,7 @@ Git Repository structure :
 		Non-benefits of this :
 			 
 			 1. The Most important problem that we happen on this solution is 
-			    branching . by this solution ower submodules can't have different
+			    branching . by this solution our submodules can't have different
 			    branches for them self and it is a big problem
 
 
@@ -63,9 +63,9 @@ Developing policies:
 
 	The secret of successful software developing is "developing management" .
 	Developing managment is about how we manages out codes , how we deals with bugs,
-	how we add new feature, how we release ower software and . . . 
+	how we add new feature, how we release our software and . . . 
 
-	To do so , we need to form ower developing and commit to a fair struct.
+	To do so , we need to form our developing and commit to a fair struct.
 
 	I thinks the best way to get better result is :
 
@@ -97,3 +97,9 @@ Developing policies:
 
        	  5. Always add new code to unstable branch and never work on other branch unless you know
 	     what you do
+	     
+	  6. keep in mind then always be update with the main repo . our git repository deny the
+	     non-fast-forward commits so if you stoped from pushing to server with some error about
+	     non-fast-forward memory don't suprised , just pull or fetch from server to your local repo
+	     to update with the changes and try again. this error accur when server have some commits that
+	     you dont have
