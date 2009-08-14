@@ -94,3 +94,6 @@ Developing policies:
 	  3. Broken code or incompeted code should not commited.
 
        ***4. Never ever merge the branches with each other till you know what you do
+
+       	  5. Always add new code to unstable branch and never work on other branch unless you know
+	     what you do
