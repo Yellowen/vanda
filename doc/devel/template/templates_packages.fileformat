@@ -1,0 +1,36 @@
+			Bax-CMS Templates package file format
+
+This documents describe the format and structure of a Bax-CMS template file, this is 
+just my idea about this matter and if you have a better idea or want to complete mine
+write me in <lxsameer@gmail.com> .
+
+Bax use two kind of templates a distributed form and a centralized form.
+    
+    Distributed form (DF) : this kind of template packages contains some templates
+    		       	    that should install in each app templates directory
+		       	    with the goal of making apps more portable
+    
+    Cetralized form  (CF) : In this form all the templates installed globally . it is
+    	       	       	    easier to manage.
+
+
+Bax-CMS use bzip2 compressed tarball for packing its templates . each template package
+file have a directory structure like below:
+
+
+     Bzip2 Compressed tarball root : /
+
+     	  |
+	  |
+	  |- package.info	: Contain some information about package and templates like
+	     			  Type of template (DF or CF) , author and etc. Refer to 
+				  package.info section in this document
+          |
+	  |
+	  |- templates/		: Contain the template files . look at DF and CF section.
+	  |
+	  |
+	  |
+	  |- media/		: Contain media files like images , javascript files and etc.
+	  
+	
