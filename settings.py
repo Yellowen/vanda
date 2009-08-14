@@ -1,20 +1,48 @@
 # Django settings for Bax_CMS project.
+import os
 
+
+
+#+++ Remember to shut down the debug mode in official release
+#@@@ for more information about $$something$$ string take a look at doc/devel/comments.policy
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+
+
 ADMINS = (
+  
+    #+++ this section should filled with installer system
+    ('$$ADMIN_NAME$$' , '$$ADMIN_MAIL$$'),
+    # example
     # ('Your Name', 'your_email@domain.com'),
 )
 
+
+
+
+
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+
+#--- Database configuration -------------------------------------------------------------------------------------------
+#@@@ we use sqlite3 for ower development but in the official release this section will fill with installer
+
+if DEBUG:
+    # don't change this section
+    DATABASE_ENGINE = 'sqlite3'
+    DATABASE_NAME = 'db.devdb'
+else:
+
+    DATABASE_ENGINE = '$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME = '$$DB_NAME$$'             # Or path to database file if using sqlite3.
+    DATABASE_USER = '$$DB_USER$$'             # Not used with sqlite3.
+    DATABASE_PASSWORD = '$$DB_PASSWD$$'         # Not used with sqlite3.
+    DATABASE_HOST = '$$DB_HOST$$'             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_PORT = '$$DB_PORT$$'             # Set to empty string for default. Not used with sqlite3.
+
+#-----------------------------------------------------------------------------------------------------------------------
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -63,14 +91,21 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'Bax_CMS.urls'
+# original one
+#ROOT_URLCONF = 'Bax_CMS.urls'
+#ower changed one
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
+    os.path.join (os.path.dirname (__file__) , 'templates').replace ('\\' .'/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
+
+#@@@ Never use never use the dir name Bax_CMS in module starts
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
