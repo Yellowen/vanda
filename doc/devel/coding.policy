@@ -1,4 +1,4 @@
-		Bax-CMS coding policy and standard
+		Dina-CMS coding policy and standard
 
 
 Comments :
@@ -14,6 +14,6 @@ Special Strings :
 	this string remove by some other string in the release time with sps. for example you
 	use '@@VERSION@@' string in your code to mark an string for sps , at the release time 
 	you run MSPS ( Read MSPS usage please ) for clean up code for release. then MSPS replace
-	that string with the version number of Bax-CMS . MSPS look for MSPS.conf file in the 
+	that string with the version number of Dina-CMS . MSPS look for MSPS.conf file in the 
 	current working directory and use that for its action , so remember to add the strings
 	in MSPS.conf file

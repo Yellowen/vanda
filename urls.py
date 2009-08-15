@@ -7,7 +7,7 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # Example:
-    # (r'^Bax_CMS/', include('Bax_CMS.foo.urls')),
+    # (r'^Dina_CMS/', include('Dina_CMS.foo.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

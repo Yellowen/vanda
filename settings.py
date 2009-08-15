@@ -1,4 +1,4 @@
-# Django settings for Bax_CMS project.
+# Django settings for Dina_CMS project.
 import os
 
 
@@ -92,7 +92,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 # original one
-#ROOT_URLCONF = 'Bax_CMS.urls'
+#ROOT_URLCONF = 'Dina_CMS.urls'
 #ower changed one
 ROOT_URLCONF = 'urls'
 
@@ -105,7 +105,7 @@ TEMPLATE_DIRS = (
 
 
 
-#@@@ Never use never use the dir name Bax_CMS in module starts
+#@@@ Never use never use the dir name Dina_CMS in module starts
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

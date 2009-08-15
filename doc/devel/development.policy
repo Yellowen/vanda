@@ -1,4 +1,4 @@
-		Bax-CMS development policy
+		Dina-CMS development policy
 
 This document contain the git repository structure and specific commit policies.
 so feel free to add your ideas about this matter to this file.
@@ -8,9 +8,9 @@ terminate and join to developers manuals
 
 Git Repository structure :
     
-    Since now i call Bax-CMS directory (root directory) "/" so / sign refer to Bax-CMS .
+    Since now i call Dina-CMS directory (root directory) "/" so / sign refer to Dina-CMS .
     
-    For a clean job its good to put just project it self under the Bax-CMS repository ,
+    For a clean job its good to put just project it self under the Dina-CMS repository ,
     but in addition to project code we have some files that play important roll in project
     but are not the memeber of project it self for example , pictures and templates are two
     important part of CMS view . its not a good idea to put the image source files
@@ -27,8 +27,8 @@ Git Repository structure :
 	  directory structre will be something like:
 
 
-       	      	      Bax-CMS/
-				Bax/
+       	      	      Dina-CMS/
+				Dina/
 					our codes and django root
 				arts/
 					images sources and outputs
@@ -75,16 +75,16 @@ Developing policies:
 		 the second number called Minor version indicate the small changes like 
 		 adding new features and the third on indicate bug fixes.
 
-	  1. build 2 more branch called "unstable" and "testing" . we work on 'unstable' 
-	     branch for developing and adding new things to Bax-CMS . later , when a 
-	     new feature added to project and known bugs got fixed then unstable code will
+	  1. build 2 more branch called "stable" and "testing" . we work on 'master' 
+	     branch for developing and adding new things to Dina-CMS . later , when a 
+	     new feature added to project and known bugs got fixed then master code will
 	     move ( merge ) to 'testing' branch for pass the testing phase . When the testing
-	     code show stale behavior from it self it will be move to master branch. 
-	     On new release we make a new branch from master code and name that with the Major 
+	     code show stale behavior from it self it will be move to stable branch. 
+	     On new release we make a new branch from stable code and name that with the Major 
 	     and minor version number for example the code of version 1.2 will be held in "1.2"
 	     branch . after releasing a version any bug fixes will we taged . As an example some
 	     week after releasing version 1.2 , we will found a bug in version 1.2 (remember
-	     may be we work in some other major version in unstable branch like 3 but bug found
+	     may be we work in some other major version in master branch like 3 but bug found
 	     in verison 1.2) . After fixing that bug we tag the fixing commit as 1.2.1.
 
 
@@ -95,7 +95,7 @@ Developing policies:
 
        ***4. Never ever merge the branches with each other till you know what you do
 
-       	  5. Always add new code to unstable branch and never work on other branch unless you know
+       	  5. Always add new code to master branch and never work on other branch unless you know
 	     what you do
 	     
 	  6. keep in mind then always be update with the main repo . our git repository deny the
@@ -103,3 +103,8 @@ Developing policies:
 	     non-fast-forward memory don't suprised , just pull or fetch from server to your local repo
 	     to update with the changes and try again. this error accur when server have some commits that
 	     you dont have
+
+	  7. Please add any bug with its desciption in issue tracking system in github for managing bugs and
+	     bugfixed . the issue tracking address is http://github.com/lxsameer/Dina_CMS/issues.
+	     each issue gets an number is issue tracking system (IST) like #number. please add the number in
+	     bugfix commit message.

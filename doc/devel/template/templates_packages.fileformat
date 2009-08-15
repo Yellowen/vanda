@@ -1,10 +1,10 @@
-			Bax-CMS Templates package file format
+			Dina-CMS Templates package file format
 
-This documents describe the format and structure of a Bax-CMS template file, this is 
+This documents describe the format and structure of a Dina-CMS template file, this is 
 just my idea about this matter and if you have a better idea or want to complete mine
 write me in <lxsameer@gmail.com> .
 
-Bax use two kind of templates a distributed form and a centralized form.
+Dina use two kind of templates a distributed form and a centralized form.
     
     Distributed form (DF) : this kind of template packages contains some templates
     		       	    that should install in each app templates directory
@@ -14,7 +14,7 @@ Bax use two kind of templates a distributed form and a centralized form.
     	       	       	    easier to manage.
 
 
-Bax-CMS use bzip2 compressed tarball for packing its templates . each template package
+Dina-CMS use bzip2 compressed tarball for packing its templates . each template package
 file have a directory structure like below:
 
 
