@@ -12,7 +12,7 @@ Comments :
 Special Strings :
 	There is some important Strings that you can use in coding and have special meanning.
 	this string remove by some other string in the release time with sps. for example you
-	use '$$VERSION$$' string in your code to mark an string for sps , at the release time 
+	use '@@VERSION@@' string in your code to mark an string for sps , at the release time 
 	you run MSPS ( Read MSPS usage please ) for clean up code for release. then MSPS replace
 	that string with the version number of Bax-CMS . MSPS look for MSPS.conf file in the 
 	current working directory and use that for its action , so remember to add the strings
