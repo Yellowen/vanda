@@ -1,0 +1,7 @@
+		Admin main functions
+
+
+1. i think it is a good idea to build a installer system that install some package file
+   that contain templates or application . installer is a model that never hold any thing 
+   just upload package , extract that and read some information from that and store them in
+   other tables (application or templates) and install them at last
