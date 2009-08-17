@@ -1,6 +1,5 @@
 from django.contrib import admin
 from models import *
-import tarfile
 from django.conf import settings
 import installer
 
@@ -10,8 +9,10 @@ class inst_admin (admin.ModelAdmin):
         # save the model and file will uploaded
         obj.save ()
         # getting the file address
-        package_address = settings.MEDIA_ROOT + "/" +  str (obj.File)
+        package_address = settings.MEDIA_ROOT + "/" + str (obj.File)
+        
         # delete the uploaded file and installer database entry
+        ins = installer (package_address)
         obj.delete ()
         
 

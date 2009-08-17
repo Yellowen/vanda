@@ -1,1 +1,4 @@
 * Finding a better way to deal with installer 
+* adding conf validator to installer class
+* may be i should add a lower case converter in _parser
+* i should add a comment parser in _parser

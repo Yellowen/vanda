@@ -15,7 +15,7 @@ class application (models.Model):
     Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
     # each application identify it self by SHA1 hash.
     # i should find a better way
-    #SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False , verbose_name = _('SHA1 hash') , help_text = _("Each application identify it self by its SHA1 hash"))
+    SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False , verbose_name = _('SHA1 hash') , help_text = _("Each application identify it self by its SHA1 hash"))
     Author = models.CharField (max_length = 30 , verbose_name = _('Author'))
     Email = models.EmailField (verbose_name = _('Email'))
     Home = models.URLField (blank = True , verbose_name = _('Home Page') )
