@@ -4,6 +4,7 @@ import shutil
 import random
 from models import application 
 from django.conf import settings
+from django.core.management import call_command
 
 
 class installer (object):
@@ -23,7 +24,7 @@ class installer (object):
         # Get the current working directory address
         pwd = os.getcwd ()
         self.return_path = pwd
-
+        os.chdir ('/tmp/')
         # build a random unique name
         dirname = 'dina_' + str (random.randrange (1 , 1000))
         self.dirname = dirname
@@ -32,14 +33,14 @@ class installer (object):
         os.mkdir(dirname)
 
         # Copy archive and its meta data to /tmp
-        shutil.copy2 (self.path , '/tmp/' + dirname)
+        shutil.copy2 (self.path , '/tmp/' + dirname + "/tmp_archive")
 
         # Change the current working directory to /tmp
         os.chdir ('/tmp/' + dirname)
 
         #extract the file name from path
-        archive = self.path.split('/')[-1]
-
+        archive =  "tmp_archive"#self.path.split('/')[-1]
+        
         # open archive file for extraction
         tar = tarfile.open (archive)
 
@@ -56,7 +57,7 @@ class installer (object):
         
 
         #+++ here i should add an exception handler --------------
-
+        #+++ here i should add an sha1 validator 
         if dic["type"].lower ()  == "application":
 
             self.obj = application (Name = dic["name"])
@@ -66,13 +67,14 @@ class installer (object):
             self.obj = template (Name = dic["name"])
             # here i should add the difference field
         
+        self.obj.Version = dic["version"]
         self.obj.SHA1 = dic["sha1"]
         self.obj.Author = dic["author"]
         self.obj.Email = dic["email"]
         self.obj.Home = dic["home"]
         self.obj.url = dic["url"]
         self.obj.Description = dic["description"]
-        self.dir = dic["directory"]
+        
         self.obj.Publish = False
         #------------------------------------------------------
 
@@ -82,19 +84,27 @@ class installer (object):
 
     def install (self):
         """ install the package """
+
         self._extract ()
         self._read_index ()
         os.chdir ('/tmp/' + self.dirname)
+
+        #+++ here i should add a snippet code for installing templates
+        
+        
+
         appdir = settings.APP_ROOT
-        shutil.copy2 (self.dir , appdir)
-        #+++ i put an error handler here
-        #fd = open (settings.CONFS_ROOT + "/" + self.dir + ".conf" , 'w')
-        #fd.writelines ()
-        #fd.close ()
+        shutil.copytree (self.obj.Name , appdir + "/" + self.obj.Name)
+        #os.rmdir ('/tmp/' + self.dirname)
+        os.chdir (self.return_path)
+                   
+        return self.obj
+
 
     def _parser (self , file):
         """Parse the file to a python dictionary"""
         #+++ here i should add a conf validator
+        #+++ here i should add a ; for end of line
         try:
             fd = open (file , "r")
             lines = fd.readlines ()
@@ -104,11 +114,10 @@ class installer (object):
             return -1
         dic = {}
         for i in lines:
-            if i.strip ()[0] == '#':
-                pass
-            else:
+            if i[0] != '#':
+                
                 li = i.split ("=")
-                dic[li[0].strip().lower()] = li[1].strip().lower()
+                dic[li[0].lower().strip()] = li[1].lower().strip()
                 
         return dic
 

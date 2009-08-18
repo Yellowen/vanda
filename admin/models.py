@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-# Create your models here.
 
 class Installer (models.Model):
     # here i should add the help text if i succeed.
@@ -13,8 +12,11 @@ class Installer (models.Model):
 
 class application (models.Model):
     Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
+
     # each application identify it self by SHA1 hash.
     # i should find a better way
+
+    Version = models.CharField (max_length = 15 , verbose_name = _('Version'))
     SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False , verbose_name = _('SHA1 hash') , help_text = _("Each application identify it self by its SHA1 hash"))
     Author = models.CharField (max_length = 30 , verbose_name = _('Author'))
     Email = models.EmailField (verbose_name = _('Email'))
@@ -31,3 +33,4 @@ class application (models.Model):
         verbose_name_plural = _('Applications')
         
 
+#+++ maybe its a good idea to add a application category

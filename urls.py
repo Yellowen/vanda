@@ -2,6 +2,8 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
 import os
+import confs
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 admin.autodiscover()
@@ -28,3 +30,7 @@ if settings.DEBUG :
                                   
                                                   
 )
+
+
+#+++ here i should find a better way to deal with dynamic urls
+urlpatterns += confs.load_urls ()
