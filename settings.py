@@ -1,5 +1,6 @@
 # Django settings for Dina_CMS project.
 import os
+import confs
 
 #+++ Remember to shut down the debug mode in official release
 #@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
@@ -59,10 +60,18 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+
+# FS_ROOT represent to the Dina root filesystem
+FS_ROOT = os.path.dirname (__file__)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join (os.path.dirname (__file__) , 'media').replace ('\\' , '/')
-APP_ROOT = os.path.join (os.path.dirname (__file__) , 'apps').replace ('\\' , '/')
+MEDIA_ROOT = os.path.join (FS_ROOT , 'media').replace ('\\' , '/')
+
+# APP_ROOT conatain the logic path to app dir
+APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
+
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -114,4 +123,5 @@ INSTALLED_APPS = (
 )
 
 
-
+#+++ here i should find a better way to deal with dynamic apps
+INSTALLED_APPS += confs.load_apps ()

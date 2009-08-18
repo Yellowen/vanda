@@ -57,7 +57,7 @@ class installer (object):
         
 
         #+++ here i should add an exception handler --------------
-
+        #+++ here i should add an sha1 validator 
         if dic["type"].lower ()  == "application":
 
             self.obj = application (Name = dic["name"])
@@ -67,13 +67,14 @@ class installer (object):
             self.obj = template (Name = dic["name"])
             # here i should add the difference field
         
+        self.obj.Version = dic["version"]
         self.obj.SHA1 = dic["sha1"]
         self.obj.Author = dic["author"]
         self.obj.Email = dic["email"]
         self.obj.Home = dic["home"]
         self.obj.url = dic["url"]
         self.obj.Description = dic["description"]
-        self.dir = dic["directory"]
+        
         self.obj.Publish = False
         #------------------------------------------------------
 
@@ -87,8 +88,13 @@ class installer (object):
         self._extract ()
         self._read_index ()
         os.chdir ('/tmp/' + self.dirname)
+
+        #+++ here i should add a snippet code for installing templates
+        
+        
+
         appdir = settings.APP_ROOT
-        shutil.copytree (self.dir , appdir + "/" + self.dir)
+        shutil.copytree (self.Name , appdir + "/" + self.dir)
         #os.rmdir ('/tmp/' + self.dirname)
         os.chdir (self.return_path)
                    
@@ -98,6 +104,7 @@ class installer (object):
     def _parser (self , file):
         """Parse the file to a python dictionary"""
         #+++ here i should add a conf validator
+        #+++ here i should add a ; for end of line
         try:
             fd = open (file , "r")
             lines = fd.readlines ()
