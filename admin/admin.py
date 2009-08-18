@@ -12,7 +12,10 @@ class inst_admin (admin.ModelAdmin):
         package_address = settings.MEDIA_ROOT + "/" + str (obj.File)
         
         # delete the uploaded file and installer database entry
-        ins = installer (package_address)
+        ins = installer.installer (package_address)
+        app = ins.install ()
+        app.save ()
+
         obj.delete ()
         
 
