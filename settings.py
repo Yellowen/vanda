@@ -1,8 +1,6 @@
 # Django settings for Dina_CMS project.
 import os
 
-
-
 #+++ Remember to shut down the debug mode in official release
 #@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
 DEBUG = True
@@ -64,7 +62,7 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join (os.path.dirname (__file__) , 'media').replace ('\\' , '/')
-
+APP_ROOT = os.path.join (os.path.dirname (__file__) , 'apps').replace ('\\' , '/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -114,3 +112,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'admin',
 )
+
+
+

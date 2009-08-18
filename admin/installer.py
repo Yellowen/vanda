@@ -3,6 +3,8 @@ import tarfile
 import shutil
 import random
 from models import application 
+from django.conf import settings
+
 
 class installer (object):
     """ Dina Installer main class """
@@ -52,7 +54,9 @@ class installer (object):
         # pars the information file to a python dictionary
         dic = self._parser ('package.info')
         
-        
+
+        #+++ here i should add an exception handler --------------
+
         if dic["type"].lower ()  == "application":
 
             self.obj = application (Name = dic["name"])
@@ -61,22 +65,32 @@ class installer (object):
 
             self.obj = template (Name = dic["name"])
             # here i should add the difference field
-
+        
         self.obj.SHA1 = dic["sha1"]
         self.obj.Author = dic["author"]
         self.obj.Email = dic["email"]
         self.obj.Home = dic["home"]
         self.obj.url = dic["url"]
         self.obj.Description = dic["description"]
+        self.dir = dic["directory"]
         self.obj.Publish = False
+        #------------------------------------------------------
+
         return 0
     
 
 
     def install (self):
         """ install the package """
-        
-    
+        self._extract ()
+        self._read_index ()
+        os.chdir ('/tmp/' + self.dirname)
+        appdir = settings.APP_ROOT
+        shutil.copy2 (self.dir , appdir)
+        #+++ i put an error handler here
+        #fd = open (settings.CONFS_ROOT + "/" + self.dir + ".conf" , 'w')
+        #fd.writelines ()
+        #fd.close ()
 
     def _parser (self , file):
         """Parse the file to a python dictionary"""
@@ -94,7 +108,8 @@ class installer (object):
                 pass
             else:
                 li = i.split ("=")
-                dic[li[0].strip()] = li[1].strip()
+                dic[li[0].strip().lower()] = li[1].strip().lower()
+                
         return dic
 
 
