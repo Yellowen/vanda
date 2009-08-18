@@ -1,8 +1,10 @@
 import os
-from django.conf.url.defaults import *
+from django.conf.urls.defaults import *
+
+
 def load_apps ():
     flist = os.listdir (os.path.dirname (__file__))
-    apps = ()
+    app = ()
     
     for i in flist:
         if i[-5:-1] == ".conf" :
@@ -10,8 +12,10 @@ def load_apps ():
             fd = open (i , 'r')
             lines = fd.readlines ()
             fd.close ()
-            apps += ('apps.' + lines[0])
-    return apps
+            app += ('apps.' + lines[0])
+    return app
+
+
             
 def load_urls ():
     flist = os.listdir (os.path.dirname (__file__))
