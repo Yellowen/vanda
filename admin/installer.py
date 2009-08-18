@@ -94,7 +94,7 @@ class installer (object):
         
 
         appdir = settings.APP_ROOT
-        shutil.copytree (self.Name , appdir + "/" + self.dir)
+        shutil.copytree (self.obj.Name , appdir + "/" + self.obj.Name)
         #os.rmdir ('/tmp/' + self.dirname)
         os.chdir (self.return_path)
                    
@@ -114,11 +114,10 @@ class installer (object):
             return -1
         dic = {}
         for i in lines:
-            if i.strip ()[0] == '#':
-                pass
-            else:
+            if i[0] != '#':
+                
                 li = i.split ("=")
-                dic[li[0].strip().lower()] = li[1].strip().lower()
+                dic[li[0].lower().strip()] = li[1].lower().strip()
                 
         return dic
 

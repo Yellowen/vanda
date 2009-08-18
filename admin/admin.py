@@ -35,7 +35,7 @@ class app_admin (admin.ModelAdmin):
     def save_model (self , request , obj , fro , change):
         if obj.Publish == True :
             # I use app name as it conf file name 
-            fd = open (settings.FS_ROOT + "/confs/" + str(obj.Name) + ".conf")
+            fd = open (settings.FS_ROOT + "/confs/" + str(obj.Name) + ".conf" , 'w')
             fd.write (str(obj.Name) + "\n")
             fd.write (str(obj.url) + "\n")
             fd.close ()
