@@ -1,5 +1,5 @@
 import os
-
+from django.conf.url.defaults import *
 def load_apps ():
     flist = os.listdir (os.path.dirname (__file__))
     apps = ()
@@ -23,6 +23,6 @@ def load_urls ():
             fd = open (i , 'r')
             lines = fd.readlines ()
             fd.close ()
-            apps += (lines[1])
+            apps += patterns ('' , (r''+ lines[1] , include ('apps.' + lines[0] + ".urls") ), )
     return apps
 
