@@ -25,6 +25,7 @@ class installer (object):
         pwd = os.getcwd ()
         self.return_path = pwd
         os.chdir ('/tmp/')
+
         # build a random unique name
         dirname = 'dina_' + str (random.randrange (1 , 1000))
         self.dirname = dirname
@@ -129,7 +130,7 @@ class installer (object):
 #+++ may be i should put this in a class
 
 
-    
+#+++ add an error handler here    
 def get_apps ():
     papp = application.objects.filter (Publish=True)
     iapp = ()

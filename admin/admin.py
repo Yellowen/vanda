@@ -21,6 +21,10 @@ class inst_admin (admin.ModelAdmin):
         app.save ()
 
         obj.delete ()
+
+
+    def add_view (self , request, form_url='', extra_context=None):
+        
         
 
 
