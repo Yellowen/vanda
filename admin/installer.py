@@ -131,8 +131,9 @@ class installer (object):
 
 
 #+++ add an error handler here    
-def get_apps ():
+def update_apps ():
     papp = application.objects.filter (Publish=True)
+    
     iapp = ()
     
     for i in papp:
@@ -145,5 +146,6 @@ def get_apps ():
     fd = open (settings.FS_ROOT + "/confs/__init__.py" , 'w')
     fd.write ('published_apps = ' + str (iapp).replace (',' , ' , \n'))
     fd.close ()
+    
     return 
     

@@ -23,8 +23,8 @@ class inst_admin (admin.ModelAdmin):
         obj.delete ()
 
 
-    def add_view (self , request, form_url='', extra_context=None):
-        
+    #def add_view (self , request, form_url='', extra_context=None):
+    #    pass
         
 
 
@@ -42,16 +42,19 @@ class app_admin (admin.ModelAdmin):
     def save_model (self , request , obj , fro , change):
         
         obj.save ()
-        print "sdfsdfsd"
-        installer.get_apps ()
+        
+        installer.update_apps ()
         call_command ('syncdb')
         
         
     #------------------------------------------------------------------
 
 
-    def delete_view (self , request , obj , fro , change):
-        pass
+    #def delete_view (self , request , object_id, extra_context=None):
+     #   installer.update_apps ()
+        
+        #super (app_admin , self).delete_view (request , object_id)
+        
         
 
 admin.site.register (Installer , inst_admin)
