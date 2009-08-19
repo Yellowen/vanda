@@ -122,4 +122,26 @@ class installer (object):
         return dic
 
 
+
+
+
+
+#+++ may be i should put this in a class
+
+
     
+def get_apps ():
+    papp = application.objects.filter (Publish=True)
+    iapp = ()
+    if len (papp) > 0 :
+        for i in papp:
+            iapp += ('apps.' + str (i.Name) , )
+        settings.INSTALLED_APPS += iapp
+        print settings.INSTALLED_APPS
+        os.unlink (settings.FS_ROOT + "/confs/__init__.py")
+        fd = open (settings.FS_ROOT + "/confs/__init__.py" , 'w')
+        fd.write ('published_apps = ' + str (iapp).replace (',' , ' , \n'))
+        fd.close ()
+        return 
+    else:
+        return

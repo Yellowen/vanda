@@ -33,4 +33,4 @@ if settings.DEBUG :
 
 
 #+++ here i should find a better way to deal with dynamic urls
-urlpatterns += confs.load_urls ()
+#urlpatterns += confs.load_urls ()

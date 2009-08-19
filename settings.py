@@ -1,7 +1,6 @@
 # Django settings for Dina_CMS project.
 import os
 import confs
-
 #+++ Remember to shut down the debug mode in official release
 #@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
 DEBUG = True
@@ -120,8 +119,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'admin',
+    
+    
+    
 )
 
 
 #+++ here i should find a better way to deal with dynamic apps
-INSTALLED_APPS += confs.load_apps ()
+INSTALLED_APPS += confs.published_apps
+#installer.get_app ()
+#INSTALLED_APPS += get_apps ()
+
+    
