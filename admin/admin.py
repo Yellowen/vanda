@@ -36,17 +36,10 @@ class app_admin (admin.ModelAdmin):
 
     #+++ i should find a better way to deal with dynamic apps ------------
     def save_model (self , request , obj , fro , change):
-        #if obj.Publish == True :
-        #    # I use app name as it conf file name 
-        #    fd = open (settings.FS_ROOT + "/confs/" + str(obj.Name) + ".conf" , 'w')
-        #    fd.write ('apps.' + str(obj.Name) + "\n")
-        #    fd.write (str(obj.url) + "\n")
-        #    fd.close ()
-        #else :
-        #    os.unlink (settings.FS_ROOT + "/confs/" + str(obj.Name) + ".conf")
+        
         obj.save ()
+        print "sdfsdfsd"
         installer.get_apps ()
-        #call_command ('sqlall' , 'news')
         call_command ('syncdb')
         
         

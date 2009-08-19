@@ -1,2 +1,1 @@
 published_apps = ()
-)
