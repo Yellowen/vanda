@@ -1,9 +1,10 @@
 from django.conf.urls.defaults import *
-from django.conf import settings
+
+import confs
 from django.contrib import admin
 import os
-import confs
 
+from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 admin.autodiscover()
@@ -26,11 +27,27 @@ urlpatterns = patterns('',
 if settings.DEBUG :
     
     urlpatterns += patterns ('' ,
-       (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'media').replace ('\\' ,'/')}),
-                                  
+                             (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'media').replace ('\\' ,'/')}),
+                             
                                                   
 )
 
 
 #+++ here i should find a better way to deal with dynamic urls
-#urlpatterns += confs.load_urls ()
+
+#conf = settings.FS_ROOT + "/confs/urls"
+#fd = open (conf , 'r')
+#urls = fd.readlines ()
+
+#fd.close ()
+#!!! may be i should use something other that patterns ('' , '')
+#a = patterns ('' , '')
+plc = confs.urls
+if len (plc) != 0:
+    for i in plc :
+        a = patterns ('' , (i[0] , include (i[1])),)
+        print a
+        
+        urlpatterns += a 
+
+

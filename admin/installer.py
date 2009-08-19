@@ -136,18 +136,33 @@ def update_apps ():
     papp = application.objects.filter (Publish=True)
     
     iapp = ()
-    
+    appurl = ()
     for i in papp:
         iapp += ('apps.' + str (i.Name) , )
+        appurl += (("r'"+ str(i.url ) + "' , 'apps."  + str(i.Name) + ".urls'" ) , )
     settings.INSTALLED_APPS += iapp
-    print "dsdsd"
-    
-    print iapp
+        
     os.unlink (settings.FS_ROOT + "/confs/__init__.py")
+    print appurl
     fd = open (settings.FS_ROOT + "/confs/__init__.py" , 'w')
+    
+    #fd.write ('from django.conf.urls import defaults\n\n')
     fd.write ('published_apps = ' + str (iapp).replace (',' , ' , \n'))
+    fd.write ("\n\n")
+    fd.write ("urls = [")
+    if len(papp) != 0 :
+        
+        for i in appurl:
+            print i 
+            fd.write ("[" + i+  "] , ")
+    #else:
+    #    fd.write ("published_url = defaults.patterns ('' , " + str (appurl).replace ('"' , '') )
+    fd.write ("\n]")
     fd.close ()
     
+    #fd = open (settings.FS_ROOT + "/confs/urls.py" , 'w')
+    #fd.write (" ," .join (appurl).replace ('"' , ''))
+    #fd.close ()
     return 
     
 def app_update_callback (sender , **keyword):
