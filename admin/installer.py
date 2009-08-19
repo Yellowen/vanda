@@ -2,7 +2,8 @@ import os
 import tarfile
 import shutil
 import random
-from models import application 
+from models import *
+from django.db.models.signals import post_delete 
 from django.conf import settings
 
 
@@ -149,3 +150,8 @@ def update_apps ():
     
     return 
     
+def app_update_callback (sender , **keyword):
+    update_apps ()
+
+
+post_delete.connect (app_update_callback , sender=application)
