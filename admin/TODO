@@ -1,5 +1,6 @@
 * Finding a better way to deal with installer 
-* Finding a better way to deal with dynamic apps
 * adding conf validator to installer class
-+ may be i should add a lower case converter in _parser
-+ i should add a comment parser in _parser
+* adding SHA1 comperssion 
+++ Finding a better way to deal with dynamic apps
+++ may be i should add a lower case converter in _parser
+++ i should add a comment parser in _parser
