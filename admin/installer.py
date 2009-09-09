@@ -63,18 +63,20 @@ class installer (object):
         if dic["type"].lower ()  == "application":
 
             self.obj = application (Name = dic["name"])
+            self.obj.url = dic["url"]
 
         elif dic["type"].lower () == "template":
 
             self.obj = template (Name = dic["name"])
-            # here i should add the difference field
+            self.obj.Default = False
+            #+++ here i should add the difference field
         
         self.obj.Version = dic["version"]
         self.obj.SHA1 = dic["sha1"]
         self.obj.Author = dic["author"]
         self.obj.Email = dic["email"]
         self.obj.Home = dic["home"]
-        self.obj.url = dic["url"]
+        
         self.obj.Description = dic["description"]
         
         self.obj.Publish = False
@@ -89,19 +91,25 @@ class installer (object):
 
         self._extract ()
         self._read_index ()
+        
         os.chdir ('/tmp/' + self.dirname)
 
-        #+++ here i should add a snippet code for installing templates
-        
-        
 
-        appdir = settings.APP_ROOT
-        shutil.copytree (self.obj.Name , appdir + "/" + self.obj.Name)
-        #os.rmdir ('/tmp/' + self.dirname)
+        # Installing application
+        if self.obj.type == "application":
+
+            target_dir = settings.APP_ROOT
+        else:
+            target_dir = settings.TEMPLATE_DIRS
+
+        shutil.copytree (self.obj.Name , target_dir + "/" + self.obj.Name)
+        os.rmdir ('/tmp/' + self.dirname)
         os.chdir (self.return_path)
-                   
+        
         return self.obj
-
+        
+            
+            
 
     def _parser (self , file):
         """Parse the file to a python dictionary"""

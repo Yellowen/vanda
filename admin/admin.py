@@ -29,17 +29,20 @@ class inst_admin (admin.ModelAdmin):
 
 
 class app_admin (admin.ModelAdmin):
-    list_display = ('Name' , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
+    list_display = (__unicode__ , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
     list_display_links = ('Name' , 'Publish' , )
     list_filter = ('Publish' , )
     list_per_page = 15
     ordering = ('Name' , )
     search_fields = ('Name' ,)
     
+    
     #+++ here i should add some ACTION about publishing 
 
     #+++ i should find a better way to deal with dynamic apps ------------
     def save_model (self , request , obj , fro , change):
+        
+        
         
         obj.save ()
         
@@ -49,13 +52,33 @@ class app_admin (admin.ModelAdmin):
         
     #------------------------------------------------------------------
 
+            
+        
+    
 
-    #def delete_view (self , request , object_id, extra_context=None):
-     #   installer.update_apps ()
+
+class temp_admin (admin.ModelAdmin):
+    list_display = (__unicode__ , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Default')
+    list_display_links = ('Name' , 'Publish' , )
+    #list_filter = ('Publish' , )
+    list_per_page = 15
+    ordering = ('Name' , )
+    search_fields = ('Name' ,)
+    
+    
+    def save_model (self , request , obj , fro , change):
         
-        #super (app_admin , self).delete_view (request , object_id)
-        
+
+        # Get current template
+        current = template.objects.get(Default=True)
+        current.Default = False
+        os.unlink (settings.TEMPLATE_DIRS + "/default")
+        os.symlink (settings.TEMPLATE_DIRS + "/" + obj.Name , settings.TEMPLATE_DIRS + "/default")
+        obj.save ()
+    
         
 
 admin.site.register (Installer , inst_admin)
 admin.site.register (application , app_admin)
+admin.site.register (template , temp_admin)
+

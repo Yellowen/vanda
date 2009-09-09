@@ -75,10 +75,10 @@ class template (models.Model):
     Default = models.BooleanField (unique = True , verbose_name = _('Default'))
 
 
-    def delete (self):
+    #def delete (self):
         #+++ here i should add a peace of code that run a hook inside of template directory for returning 
         #+++ the template dir address
-        pass
+        #pass
 
 
     def __unicode__ (self):
