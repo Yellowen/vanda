@@ -68,8 +68,10 @@ class installer (object):
         elif dic["type"].lower () == "template":
 
             self.obj = template (Name = dic["name"])
+
             self.obj.Default = False
             #+++ here i should add the difference field
+
         
         self.obj.Version = dic["version"]
         self.obj.SHA1 = dic["sha1"]
