@@ -63,10 +63,12 @@ class installer (object):
         if dic["type"].lower ()  == "application":
 
             self.obj = application (Name = dic["name"])
+            self.obj.url = dic["url"]
 
         elif dic["type"].lower () == "template":
 
             self.obj = template (Name = dic["name"])
+            self.obj.default = False
             # here i should add the difference field
         
         self.obj.Version = dic["version"]
@@ -74,7 +76,7 @@ class installer (object):
         self.obj.Author = dic["author"]
         self.obj.Email = dic["email"]
         self.obj.Home = dic["home"]
-        self.obj.url = dic["url"]
+        
         self.obj.Description = dic["description"]
         
         self.obj.Publish = False
