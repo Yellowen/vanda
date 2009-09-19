@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 class Installer (models.Model):
 
     # here i should add the help text if i succeed.
-    File = models.FileField (_("File") , help_text=_("Upload and install a package") ,  upload_to = 'tmp/')
+    File = models.FileField (verbose_name = _("File") , help_text=_("Upload and install a package") ,  upload_to = 'tmp/')
     class Meta:
         verbose_name_plural = _('Installer')
         

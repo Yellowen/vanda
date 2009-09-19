@@ -29,7 +29,7 @@ class inst_admin (admin.ModelAdmin):
 
 
 class app_admin (admin.ModelAdmin):
-    list_display = (__unicode__ , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
+    list_display = ('Name' , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
     list_display_links = ('Name' , 'Publish' , )
     list_filter = ('Publish' , )
     list_per_page = 15
@@ -58,8 +58,8 @@ class app_admin (admin.ModelAdmin):
 
 
 class temp_admin (admin.ModelAdmin):
-    list_display = (__unicode__ , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Default')
-    list_display_links = ('Name' , 'Publish' , )
+    list_display = ('Name', 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Default')
+    list_display_links = ('Name' , 'Default' , )
     #list_filter = ('Publish' , )
     list_per_page = 15
     ordering = ('Name' , )

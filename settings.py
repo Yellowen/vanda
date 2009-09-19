@@ -66,7 +66,7 @@ FS_ROOT = os.path.dirname (__file__)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join (FS_ROOT , 'media').replace ('\\' , '/')
+MEDIA_ROOT = os.path.join (FS_ROOT , 'site_media').replace ('\\' , '/')
 
 # APP_ROOT conatain the logic path to app dir
 APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
