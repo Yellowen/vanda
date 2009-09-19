@@ -9,13 +9,48 @@
 
 {% block breadcrumbs %}{% endblock %}
 
+
+
+
+
+{% block pretitle %}
+<H1>{% trans "Welcome to Dina CMS admin panel" %}</h1>
+
+<div class="module">
+
+<table>
+<caption ><a href="pkgm/" class="section">{% trans "Package Managment" %}</a></caption>
+<tr>
+<th scope="row"><a href="pkgm/installer/">{% trans "Installer" %}</a></th>
+<td><a href="pkgm/installer/desc/" class="changelink">{% trans "Description" %}</a></td>
+</tr>
+<tr>
+<th scope="row"><a href="pkgm/apps/">{% trans "Applications" %}</a></th>
+<td><a href="pkgm/apps/desc/" class="changelink">{% trans "Description" %}</a></td>
+</tr>
+<tr>
+<th scope="row"><a href="pkgm/temps/">{% trans "Templates" %}</a></th>
+<td><a href="pkgm/temps/desc/" class="changelink">{% trans "Description" %}</a></td>
+</tr>
+
+</table>
+<p> {% trans "Use installer to install new packages from repositories or installing packages by hand." %} </p>
+</div>
+{% endblock %}
+
+
+
+
+
+{% block content_title %}<h1>{% trans "Application Managment" %}</h1>{% endblock %}
+
 {% block content %}
 <div id="content-main">
-<p>sdfsdfSDF</p>
+
 {% if app_list %}
     {% for app in app_list %}
         <div class="module">
-        <table summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
+        <table  summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
         {% for model in app.models %}
             <tr>
