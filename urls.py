@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/dpm/', include('admin.urls')),
     (r'^admin/', include(admin.site.urls)),
+                       
+                       
 )
 
 
@@ -28,8 +30,8 @@ urlpatterns = patterns('',
 if settings.DEBUG :
     
     urlpatterns += patterns ('' ,
-                             (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'site_media').replace ('\\' ,'/')}),
-                             (r'^media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'media').replace ('\\' ,'/')}),
+                       (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': os.path.join ( os.path.dirname (__file__) , 'site_media').replace ('\\' ,'/')}),      
+                       (r'^media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'media').replace ('\\' ,'/')}),
                              
                                                   
 )

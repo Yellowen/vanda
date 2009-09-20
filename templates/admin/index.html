@@ -36,6 +36,7 @@
 </table>
 <p> {% trans "Use installer to install new packages from repositories or installing packages by hand." %} </p>
 </div>
+<br/>
 {% endblock %}
 
 
@@ -49,8 +50,10 @@
 
 {% if app_list %}
     {% for app in app_list %}
+       {% ifnotequal app.name  "Admin" %}
         <div class="module">
         <table  summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
+	  
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
         {% for model in app.models %}
             <tr>
@@ -75,6 +78,7 @@
         {% endfor %}
         </table>
         </div>
+	{% endifnotequal %}
     {% endfor %}
 {% else %}
     <p>{% trans "You don't have permission to edit anything." %}</p>

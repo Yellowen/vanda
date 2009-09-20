@@ -1,5 +1,9 @@
 Dina-CMS
 
+IMPORTANT NOTE : Please run 'run_server.sh' script for running development server
+	       	 instead of running "python manage.py runserver"
+
+
 Phase 0 :
 
       Please add your ideas in doc/devel/<your username>.idea .
