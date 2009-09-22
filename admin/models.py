@@ -86,3 +86,16 @@ class template (models.Model):
 
     class Meta :
         verbose_name_plural = _('Templates')
+
+
+
+
+class Repository (models.Model):
+    url = models.CharField (max_length=100, unique=True , verbose_name=_('url'))
+    comment = models.TextField(blank=True , verbose_name = _('comment'))
+
+    def __unicode__ (self):
+        return self.url
+
+    def __str__ (self):
+        return self.url
