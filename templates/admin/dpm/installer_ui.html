@@ -74,12 +74,12 @@
 
 
 
-{% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
 {% block content %}
 
 <!-- main window -->
 <!-- header -->
-<div class="containerPlus resizable {buttons:'i', icon:'browser.png', skin:'white', width:'1024',height:'600', grid:100}" style="top:30px;left:10px">
+<div class="containerPlus resizable {buttons:'i', icon:'browser.png', skin:'default', width:'1024',height:'600', grid:100}" style="top:15px;left:10px">
   <div class="no"><div class="ne"><div class="n">{% trans "DPM Installer" %}</div></div>
     <div class="o"><div class="e"><div class="c">
       <div class="mbcontainercontent" style="border:1px solid gray">
@@ -87,11 +87,22 @@
 
 
 
-        <div class="containerPlus draggable {buttons:'m,i', icon:'browser.png', skin:'white', width:'300' , height:'350'}" >
+        <div class="containerPlus draggable {buttons:'m,i', icon:'browser.png', skin:'default', width:'300' , height:'350'}" >
           <div class="no"><div class="ne"><div class="n">{% trans "Sections" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
-                
+
+     <script language="javascript">
+		  function ass () {
+		  
+		      if ( $('#packages').length )
+		          $('#packages').mb_changeContainerContent ('/admin/dpm/' , '');
+		          alert ('sadasd');
+		  };
+		</script>
+		<button id="iconize" onclick="$('#packages').mb_changeContainerContent ('/admin/dpm/installer/test/' , '');">sd</button>
+
+           
 
               </div>
             </div></div></div>
@@ -105,7 +116,7 @@
 
 	<!-- draggable resizable -->
 
-        <div class="containerPlus draggable  {buttons:'m,i', icon:'browser.png', skin:'white', width:'679' ,  height:'350' }" style="top:36px;left:324px" >
+        <div id="packages" class="containerPlus draggable  {buttons:'m,i', icon:'browser.png', skin:'default', width:'679' ,  height:'350', content:'/admin/'}"  style="top:36px;left:324px" >
           <div class="no"><div class="ne"><div class="n">{% trans "Packages" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
@@ -123,10 +134,13 @@
 
 
 
-        <div class="containerPlus draggable  {buttons:'m,i', icon:'desc.png', skin:'white', width:'980' ,  height:'190' }"  style="top:385px;left:22px">
+        <div class="containerPlus draggable  {buttons:'m,i', icon:'desc.png', skin:'default', width:'980' ,  height:'190' }"  style="top:385px;left:22px">
           <div class="no"><div class="ne"><div class="n">{% trans "Description" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
+
+
+		
 
 
               </div>

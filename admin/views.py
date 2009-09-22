@@ -14,3 +14,10 @@ def installer (requst , param):
         return rr ('admin/dpm/installer_ui.html')
 
 
+def installer_test (request ):
+        pkg = []
+        for i in  range (1 ,12):
+            pkg.append ({"id" : i , "checked" : "checked"})
+    
+        return rr ('admin/dpm/pkglist.html' , {"pkg" : pkg})
+    
