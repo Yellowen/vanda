@@ -1,9 +1,11 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% load adminmedia %}{% admin_media_prefix %}css/dashboard.css" />
+{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
+
 
 {% block bodyclass %}dashboard{% endblock %}
 
@@ -14,6 +16,11 @@
 
 
 {% block pretitle %}
+
+
+
+
+
 <H1>{% trans "Welcome to Dina CMS admin panel" %}</h1>
 
 <div class="module">
@@ -85,6 +92,10 @@
 {% endif %}
 </div>
 {% endblock %}
+
+
+
+
 
 {% block sidebar %}
 <div id="content-related">

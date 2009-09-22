@@ -647,6 +647,55 @@ table#change-history tbody th {
     margin-right: -19em;
 }
 
+#content-sidetop {
+    float: right;
+    width: 100%;
+    position: relative;
+    margin-right: -45%;
+    #margin-top: -33%;
+    
+}
+
+#info {
+    position: relative;
+    width: 20%;
+    min-width: 400px;
+    padding: 0;
+    float: right;
+    margin: 50px;# -150px;
+    #margin-left: 50px;
+    
+}
+
+
+#installer {
+    position: relative;
+    width: 100%;
+    min-width: 400px;
+    max-width: 1000px;
+    padding: 10px;
+    float: left;
+    margin: 10x;# -150px;
+
+    
+    background: #eee;
+    margin-left: 15%;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #footer {
     clear: both;
     padding: 10px;

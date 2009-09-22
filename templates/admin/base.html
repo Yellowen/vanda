@@ -14,6 +14,8 @@
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
 <!-- Container -->
+
+
 <div id="container">
 
     {% if not is_popup %}
@@ -49,7 +51,9 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
+		    
     </div>
+
     <!-- END Header -->
     {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
     {% endif %}
@@ -58,9 +62,13 @@
         <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
         {% endif %}
 
+
     <!-- Content -->
+
     <div id="content" class="{% block coltype %}colM{% endblock %}">
+      
         {% block pretitle %}{% endblock %}
+	
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}
         {% block object-tools %}{% endblock %}
@@ -70,10 +78,13 @@
 	
         <br class="clear" />
     </div>
+        
+
     <!-- END Content -->
 
     {% block footer %}<div id="footer"></div>{% endblock %}
 </div>
+
 <!-- END Container -->
 
 </body>
