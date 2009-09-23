@@ -18,7 +18,7 @@ class Repository (object):
     Dina Repository Class
     """
 
-    def __init__ (self, url , cache ,x codename="stable" , sections=["main",] ):
+    def __init__ (self, url , cache ,codename="stable" , sections=["main",] ):
         self.protocol = url.split (':')[0]
         self.codec = codec.getCodec (self.protocol)
         if not self.codec :
@@ -56,7 +56,7 @@ class Repository (object):
         try:
             self.codec.getFile (self.url + addr , self.cache)
             
-            except:
+        except:
                 #+++ here i should add better output
                 raise RepositoryError ("codec.getFile : error")
         
@@ -99,11 +99,3 @@ class Repository (object):
 
 
 
-    def getPackages_List (self , section="all"):
-        """
-        Return all packages in given category.
-        """
-        try:
-            fd = open (self.cache + "repos/"  + 
-        pkgfile = self._getFile (
-        

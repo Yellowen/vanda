@@ -3,7 +3,7 @@ import shutil
 import random
 import simplejson as json
 from django.conf import settings
-from Repository import *
+from repository import *
 from models import Repository as rp
 
 class DPMError (Exception):
@@ -68,7 +68,7 @@ class DPM (object):
         for i in self._repositories:
             if repo == 'all':
                 i.update ()
-            else if repo == i.name:
+            elif repo == i.name:
                 i.update ()
                 
         pkgs = list ()
@@ -89,11 +89,32 @@ class DPM (object):
                         pname = y["package"]
                         phash = y["hash"]
                         pversion = y["version"]
+                        paddress = y["address"]
                         if tmppkgs.has_key (phash):
                             pass
                         else:
-                            tmppkgs[phash] = pname  + "::" + phash + "::" + pversion
+                            tmppkgs[phash] = pname  + "::" + phash + "::" + pversion + "::" + paddress
+                    l1  = list (set (pkgs ) ^ set (tmppkgs))
+                    l2  = list (set (pkgs ) ^ set (l1))
+                    if len (l2) > 0:
+                        pkgs = l1 + l2
+                    else:
+                        pkgs = l1
+        pkgs_namelist = list ()
+        for i in pkgs:
+            pkgs_namelist.append (i.split("::")[0])
+        pkgs.sort ()
+        pkgs_namelist.sort ()
 
+        #+++ here i should add a code snippet for determine the installed application
+
+
+        fd = open (self.cache + "Packages" , 'w')
+        fd.writelines (pkgs)
+        fd.close ()
+        fd = open (self.cache + "pkgs.cache" , "w")
+        fd.writelines (pkgs_namelist)
+        fd.close ()
 
                     
                         
@@ -108,19 +129,13 @@ class DPM (object):
         """
         Return the packages list in given category.
         """
-        repos = list()
-        for i in self._repositoris:
-            try:
-                fd = open (self.cache + "repos/"  + i.name + "/Packages.json", 'r' )
-                pkgs = json.loads (fd.read())
-                repos.append ({"name" : i.name , "pkglist" : pkgs})
-                for j in pkgs:
-                    if pkglist.has_key (j["Package"]):
-                        
-
-                
-                
-        pkgfile = self._getFile (
+        try:
+            fd = open (self.cache + "pkgs.cache" , 'r')
+            pkgs = fd.readlines ()
+            fd.close ()
+            return pkgs
+        except:
+            raise DPMError ('Update needed.')
     
 
 
