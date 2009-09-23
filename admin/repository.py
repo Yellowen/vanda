@@ -18,30 +18,35 @@ class Repository (object):
     Dina Repository Class
     """
 
-    def __init__ (self, url , cache ,codename="stable" , sections=["main",] ):
-        self.protocol = url.split (':')[0]
+    def __init__ (self, _url , cache ,codename="stable" , sections=["main",] ):
+        self.protocol = _url.split (':')[0]
         self.codec = codec.getCodec (self.protocol)
         if not self.codec :
             raise RepositoryError ("\"%s\" does not support by DPM at this time." % (self.protocol))
         self.codename = codename
         self.sections = sections
-        if url[-1] == "/":
-            url = url[:-1]
-        self.url = url
+        if _url[-1] == "/":
+            
+            _url = _url[:-1]
+        self.url = _url
         self.cache = cache
-        self.name = url.replace (' ' , '_').replace ('/' , '_')
+        self.name = _url.replace (' ' , '_').replace ('/' , '_')
         
         
 
-    def _setUrl (self , url):
+    #def _setUrl (self , _url):
         #+++ i should add here an url validation
-        self.url = url
+        
+    #    if _url[-1] == "/":
+            
+    #        _url = _url[:-1]
+    #    self.url = _url
         
 
-    def _getUrl (self):
-        return self.url
+    #def _getUrl (self):
+    #    return self.url
     
-    url = property (fget = _getUrl , fset= _setUrl)
+   # url = property (fget = _getUrl , fset= _setUrl)
 
 
 
@@ -72,30 +77,37 @@ class Repository (object):
         
         #+++ here i should add some scurity identification for repositories. something lik Release file in debian
 
-
+        if not os.path.exists (self.cache + "repo"):
+            pwd = os.getcwd ()
+            os.chdir (self.cache)
+            os.mkdir ("repo")
+            os.chdir (pwd)
         dirs = os.listdir (self.cache + "repo/")
-        if not self.name in dirs:
+        if not os.path.exists (self.cache + "repo/" + self.name):
             os.mkdir (self.cache + "repo/" + self.name)
         addr = list ()
-        for i in self.sectiosn:
+        for i in self.sections:
             
             addr.append ( {"url" :  self.url + "/dists/" + self.codename + "/" +  i  + "/Packages.json" , "cache_dir" : self.codename + "_" +  i})
         dirs = os.listdir (self.cache + "repo/" + self.name)
         for i in addr:
             if not i["cache_dir"] in dirs:
                 os.mkdir (self.cache + "repo/" + self.name + "/" + i["cache_dir"])
-            try:
+            #try:
                 
-                self.codec.getFile (i , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
-            except:
-                raise RepositoryError ("codec.getFile : error")
+            self.codec.getFile (i["url"] , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
+            #except:
+            #    raise RepositoryError ("codec.getFile : error")
 
 
     def CleanCache (self):
         """
         Clean the cache.
         """
-        shutil.rmtree (self.cache + "repo/" + self.name)
+        try:
+            shutil.rmtree (self.cache + "repo/" + self.name)
+        except:
+            pass
 
 
 

@@ -4,7 +4,7 @@ import random
 import simplejson as json
 from django.conf import settings
 from repository import *
-from models import Repository as rp
+from models import Repo as rp
 
 class DPMError (Exception):
     def __init__ (self , err):
@@ -47,6 +47,7 @@ class DPM (object):
 
         #+++ may be i write a better parser
         repos = list ()
+        
         for i in conflist:
             
             url =i.url.split (' ')[0]
@@ -56,12 +57,12 @@ class DPM (object):
                 codename = "stable"
             sections =i.url.split (' ')[2:]
             repos.append (Repository (url , self.cache , codename , sections ))
-        return repos
+            return repos
 
 
 
 
-    def Update (self , repo='all'):
+    def update (self , repo='all'):
         """
         Update the Packages file of given repository. and cache the packages file
         """
@@ -71,9 +72,10 @@ class DPM (object):
             elif repo == i.name:
                 i.update ()
                 
-        pkgs = list ()
+        pkgs = dict ()
         for i in self._repositories:
             addr = self.cache + "repo/" + i.name
+            
             dirs = os.listdir ( addr )
             for j in dirs:
                 if j[0] == '.':
@@ -87,33 +89,48 @@ class DPM (object):
                     for y in jobj :
                         #+++ here i should add extra dara this is just for basic usage
                         pname = y["package"]
-                        phash = y["hash"]
+                        psha1 = y["sha1"]
                         pversion = y["version"]
                         paddress = y["address"]
-                        if tmppkgs.has_key (phash):
+                        if tmppkgs.has_key (psha1):
                             pass
                         else:
-                            tmppkgs[phash] = pname  + "::" + phash + "::" + pversion + "::" + paddress
+                            tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress
+                    print "tmp ->>>>" + str (tmppkgs)        
                     l1  = list (set (pkgs ) ^ set (tmppkgs))
+                    print "l1 ---> " + str (l1)
                     l2  = list (set (pkgs ) ^ set (l1))
+                    diffs = list ()
                     if len (l2) > 0:
-                        pkgs = l1 + l2
+                        diffs = l1 + l2
                     else:
-                        pkgs = l1
+                        diffs = l1
+                    tmp = dict()
+                    for i in diffs:
+                        if pkgs.has_key (i):
+                            tmp[i] = pkgs[i]
+                        elif tmppkgs.has_key (i):
+                            tmp[i] = tmppkgs[i]
+                    pkgs = tmp
+
+
+                    
         pkgs_namelist = list ()
         for i in pkgs:
-            pkgs_namelist.append (i.split("::")[0])
-        pkgs.sort ()
+            pkgs_namelist.append (pkgs[i].split("::")[0])
+        
         pkgs_namelist.sort ()
 
         #+++ here i should add a code snippet for determine the installed application
 
 
         fd = open (self.cache + "Packages" , 'w')
-        fd.writelines (pkgs)
+        for i in pkgs:
+            fd.write (pkgs[i] + "\n")
         fd.close ()
         fd = open (self.cache + "pkgs.cache" , "w")
-        fd.writelines (pkgs_namelist)
+        for i in pkgs_namelist:
+            fd.write (i + "\n")
         fd.close ()
 
                     
@@ -125,7 +142,7 @@ class DPM (object):
 
 
 
-    def List (self , section="all"):
+    def pkglist (self , section="all"):
         """
         Return the packages list in given category.
         """
@@ -140,7 +157,7 @@ class DPM (object):
 
 
 
-    def Install (self , pkglist):
+    def install (self , pkglist):
         """
         Installer a Package list.
         """

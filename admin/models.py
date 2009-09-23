@@ -90,7 +90,7 @@ class template (models.Model):
 
 
 
-class Repository (models.Model):
+class Repo (models.Model):
     url = models.CharField (max_length=100, unique=True , verbose_name=_('url'))
     comment = models.TextField(blank=True , verbose_name = _('comment'))
 

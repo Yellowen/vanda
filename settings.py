@@ -82,6 +82,9 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+
+DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '$3%mti-%a0$)-h3x-ak_92s&o2p8j96r&kwbbjv&w936@1b9#d'
 
