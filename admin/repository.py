@@ -18,7 +18,7 @@ class Repository (object):
     Dina Repository Class
     """
 
-    def __init__ (self, url , codename="stable" , sections=["main",] ):
+    def __init__ (self, url , cache ,x codename="stable" , sections=["main",] ):
         self.protocol = url.split (':')[0]
         self.codec = codec.getCodec (self.protocol)
         if not self.codec :
@@ -28,6 +28,7 @@ class Repository (object):
         if url[-1] == "/":
             url = url[:-1]
         self.url = url
+        self.cache = cache
         self.name = url.replace (' ' , '_').replace ('/' , '_')
         
         
@@ -43,6 +44,8 @@ class Repository (object):
     url = property (fget = _getUrl , fset= _setUrl)
 
 
+
+
     def _getFile (self , addr):
         """
         Download the given file.
@@ -51,19 +54,49 @@ class Repository (object):
             return -1
         filename = addr.split ('/')[-1]
         try:
-            fd = open (self.cache + filename , 'r')
-        except:
-            try:
-                self.codec.getFile (self.url + addr , self.cache)
-                fd = open (self.cache + filename , 'r')
+            self.codec.getFile (self.url + addr , self.cache)
+            
             except:
                 #+++ here i should add better output
                 raise RepositoryError ("codec.getFile : error")
-        fd.close ()
-        return self.cache + filename
         
+        return self.cache + filename
+
+
+    def update (self):
+        """
+        Update repository packages file.
+        """
+
+        self.CleanCache ()
+        
+        #+++ here i should add some scurity identification for repositories. something lik Release file in debian
+
+
+        dirs = os.listdir (self.cache + "repo/")
+        if not self.name in dirs:
+            os.mkdir (self.cache + "repo/" + self.name)
+        addr = list ()
+        for i in self.sectiosn:
             
-            
+            addr.append ( {"url" :  self.url + "/dists/" + self.codename + "/" +  i  + "/Packages.json" , "cache_dir" : self.codename + "_" +  i})
+        dirs = os.listdir (self.cache + "repo/" + self.name)
+        for i in addr:
+            if not i["cache_dir"] in dirs:
+                os.mkdir (self.cache + "repo/" + self.name + "/" + i["cache_dir"])
+            try:
+                
+                self.codec.getFile (i , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
+            except:
+                raise RepositoryError ("codec.getFile : error")
+
+
+    def CleanCache (self):
+        """
+        Clean the cache.
+        """
+        shutil.rmtree (self.cache + "repo/" + self.name)
+
 
 
     def getPackages_List (self , section="all"):
