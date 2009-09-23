@@ -96,9 +96,9 @@ class DPM (object):
                             pass
                         else:
                             tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress
-                    print "tmp ->>>>" + str (tmppkgs)        
+                            
                     l1  = list (set (pkgs ) ^ set (tmppkgs))
-                    print "l1 ---> " + str (l1)
+                    
                     l2  = list (set (pkgs ) ^ set (l1))
                     diffs = list ()
                     if len (l2) > 0:
@@ -150,7 +150,8 @@ class DPM (object):
             fd = open (self.cache + "pkgs.cache" , 'r')
             pkgs = fd.readlines ()
             fd.close ()
-            return pkgs
+            
+            return [i.replace ("\n" , "") for i in pkgs]
         except:
             raise DPMError ('Update needed.')
     

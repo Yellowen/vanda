@@ -14,5 +14,5 @@ class codec (object):
         """
         Get src file and copy that to dst
         """
-        print src
+        
         shutil.copy ( src[7:] , dst)

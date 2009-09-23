@@ -93,11 +93,11 @@ class Repository (object):
         for i in addr:
             if not i["cache_dir"] in dirs:
                 os.mkdir (self.cache + "repo/" + self.name + "/" + i["cache_dir"])
-            #try:
+            try:
                 
-            self.codec.getFile (i["url"] , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
-            #except:
-            #    raise RepositoryError ("codec.getFile : error")
+                self.codec.getFile (i["url"] , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
+            except:
+                raise RepositoryError ("codec.getFile : error")
 
 
     def CleanCache (self):

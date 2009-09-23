@@ -17,11 +17,11 @@ def installer (requst , param):
 
 def installer_test (request ):
     dpm = DPM.DPM ()
-    dpm.Update ()
-    dpm.List ()
-    pkg = []
-    for i in  range (1 ,12):
-        pkg.append ({"id" : i , "checked" : "checked"})
+    dpm.update ()
+    pkg1 = dpm.pkglist ()
+    pkg = list ()
+    for i in  pkg1:
+        pkg.append ({"id" : i , "checked" : "checked" , "name" : i})
         
     return rr ('admin/dpm/pkglist.html' , {"pkg" : pkg})
     
