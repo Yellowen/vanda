@@ -3,3 +3,4 @@
 * try to make better look n feel for package manager in admin section . DO NOT FOREGET admin/index.html 
 * add presentage width to installer main window for more flixiblity
 * fix the installer main window icon bug
+* Add some command for DPM in manage.py

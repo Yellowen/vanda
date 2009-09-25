@@ -21,7 +21,12 @@ def installer_test (request ):
     pkg1 = dpm.pkglist ()
     pkg = list ()
     for i in  pkg1:
-        pkg.append ({"id" : i , "checked" : "checked" , "name" : i})
+        m = i.split ("::")[1]
+        if m == "*":
+            check = "checked"
+        else:
+            check = ""
+        pkg.append ({"id" : i , "checked" : check , "name" : i.split("::")[0]})
         
     return rr ('admin/dpm/pkglist.html' , {"pkg" : pkg})
     

@@ -5,6 +5,7 @@ import simplejson as json
 from django.conf import settings
 from repository import *
 from models import Repo as rp
+from models import application , template
 
 class DPMError (Exception):
     def __init__ (self , err):
@@ -117,7 +118,21 @@ class DPM (object):
                     
         pkgs_namelist = list ()
         for i in pkgs:
-            pkgs_namelist.append (pkgs[i].split("::")[0])
+            phash = pkgs[i].split("::")[1]
+            try:
+                app = application.objects.get (SHA1=phash)
+                app = "*"
+            except:
+                try:
+                    app = template.objects.get (SHA1=phash)
+                    app = "*"
+                except:
+                    app = "!"
+                
+                    
+            
+            
+            pkgs_namelist.append (str (pkgs[i].split("::")[0]) + "::" + app)
         
         pkgs_namelist.sort ()
 
@@ -173,7 +188,7 @@ class DPM (object):
             fd = open (self.cache + "lock"  , 'w')
             fd.write (str (self.id))
             fd.close ()
-
+        
         
 
     

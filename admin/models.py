@@ -21,8 +21,7 @@ class application (models.Model):
     Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
 
     # each application identify it self by SHA1 hash.
-    # i should find a better way
-
+    
     Version = models.CharField (max_length = 15 , verbose_name = _('Version'))
 
     SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False
