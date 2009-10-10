@@ -48,7 +48,7 @@ def rese (path , js):
                 di["Url"] = jobj[0]["url"]
                 di["Short_Desc"] = jobj[0]["short_desc"]
                 di["Desc"] = jobj[0]["desc"]
-                    
+                
                     
                 if jobj[0]["type"] == "app" or jobj[0]["type"] == "theme":
                     di["Type"] = jobj[0]["type"]
