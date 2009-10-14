@@ -16,27 +16,34 @@ def rese (path , js):
     ret = list ()
     brk = list ()
     for i in lst:
-        
+        # Check the i (that is a file or directory) for being directory
         if os.path.isdir (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/')):
-            
+            # if it is then call this function again with new path that is i
             lst2 = lst2[:] + rese (path + "/" + i + "/", js)[:]
         else:
+            #if it is not . then parse the file name for name version.
             di = dict () 
             name = i.split("-")[0]
             di["Package"] =  name
             version = ".".join (i.split ("-")[1].split(".")[:3])
             di["Version"] =  version
+            # Generate the SHA1 hash for package for its validation in future
             m = hashlib.sha1 ()
             m.update (file (path + "/" + i , 'r').read())
             di["SHA1"] = m.hexdigest ()
+            # address element will point to package file , and store to Packages.json file
             di["Address"] = os.path.join (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/')
+            # Open the packege file for gathering more information from package
             fd = tf.open (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/'))
             try:
+                # extract the Package.json file in /tmp
                 os.mkdir ('/tmp/dpm_pkg')
                 fd.extract (i + "/Package.json" , "/tmp/dpm_pkg")
                 try:
+                    # Try to read the json content
                     jobj = json.loads (file ("/tmp/dpm_pkg/" + i + "/Package.json").read ().lower())
                 except:
+                    
                     raise JSONError ("your Package.json file in %s has a syntax error." % (i + "/Package.json"))
                     #+++ here i should add a try/except for doesn't exists keys
                     
@@ -65,6 +72,7 @@ def rese (path , js):
             
     ret = js[:] + lst2[:]
     shutil.rmtree ('/tmp/dpm_pkg')
+    #return the Packages json content
     return ret , brk
 
 
