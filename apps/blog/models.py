@@ -23,4 +23,12 @@ class comment (models.Model):
     author = models.ForeignKey ("auth.User" , editable=False , verbose_name = _("Author"))
     datetime = models.DateTimeField (auto_now_add = True , editable=False , verbose_name = _('Date and Time'))
     text = models.TextField (verbose_name = _('Text'))
-    post = models.ForeignKey (
+    post = models.ForeignKey ("entry" , verbose_name = _("Post"))
+    
+    def __unicode__ (self):
+        return self.text
+
+    class Meta:
+        verbose_name_plural = _("Comments")
+        verbose_name = _('Comment')
+
