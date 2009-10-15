@@ -11,6 +11,25 @@ if len (sys.argv) > 1:
         sys.exit (1)
 
 
+
+
+def parser  (filename):
+    a = dict ()
+    try:
+
+        fd = open (filename , 'r')
+        st = fd.readline ().split (';')
+        for i in st:
+            #+++ here i should add a validator
+            key = i.split ('=')[0].strip ().lower()
+            value = i.split ('=')[1].strip ().lower()
+            a[key] = value
+    except:
+        raise "%s : No such file or directory." % (filename)
+    return 0
+
+
+
 #+++ here i should add to way for getting information about app :
 #+++ 1 . by askong from user 
 #+++ 2 . by reading a file in a directory like dina ( just like debian control directory)
@@ -35,8 +54,16 @@ def user_get (path):
 
 def read_file (path):
     pwd = os.getcwd ()
-    os.chdir (path)
-
+    os.chdir (path + "../")
+    attr = parser (path + "/dina/control")
+    filename = attr['name'] + "-" + attr['version']
+    try:
+        os.mkdir ("/tmp/buildpkg/")
+    except:
+        pass
+    shutil.copy (path , '/tmp/buildpkg/')
+    os.rmdir ('/tmp/buildpkg/' + path.split ('/')[-1] + "/dina")
+    
 
 
 
