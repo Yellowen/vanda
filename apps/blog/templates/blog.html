@@ -1,0 +1,11 @@
+{% extend "index.html" %}
+
+{% block content %}
+{% for i in entry %}
+<H2>{{ i.title }}</h2>
+<p>{{ i.author.uid }}</p>
+<br/>
+<p>{{ i.text }}</p>
+<br/>
+<p>{{ i.datetime }} </p>
+{% endblock %}

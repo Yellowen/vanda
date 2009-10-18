@@ -2,6 +2,8 @@ import os
 import shutil
 import tarfile as tf
 import sys
+import simplejson as json
+
 
 if len (sys.argv) > 1:
     if os.path.isdir ( os.path.join (os.path.dirname (sys.argv[1]) , sys.argv[1]).replace ('\\' , '/')):
@@ -56,15 +58,21 @@ def read_file (path):
     pwd = os.getcwd ()
     os.chdir (path + "../")
     attr = parser (path + "/dina/control")
-    filename = attr['name'] + "-" + attr['version']
+    filename = attr['name'] + "-" + attr['version'] + ".tar.bz2"
     try:
         os.mkdir ("/tmp/buildpkg/")
     except:
         pass
     shutil.copy (path , '/tmp/buildpkg/')
     os.rmdir ('/tmp/buildpkg/' + path.split ('/')[-1] + "/dina")
-    
-
+    fd = tf.open ('/tmp/buildpkg/' + filename , "w:bz2")
+    fd.add ('/tmp/buildpkg/' + path.split ('/')[-1])
+    fd1 = open ('/tmp/buildpkg/Package.json' , 'w')
+    fd1.write (json.JSONEncoder().encode (attr).replace (',' , ',\n').replace ('},' , '},\n').replace ('"}' , '"\n}').replace ('{"' , '{\n"'))
+    fd1.close ()
+    fd.add ('/tmp/buildpkg/Package.json')
+    fd.close ()
+    shutil.copy ('/tmp/buildpkg/' + filename + ".tar.bz2" , path + "../")
 
 
 print "dpm-buildpkg tool "
