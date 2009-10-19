@@ -77,24 +77,33 @@ class Repository (object):
         
         #+++ here i should add some scurity identification for repositories. something lik Release file in debian
 
+        # Check for repo dir in the cache directory
         if not os.path.exists (self.cache + "repo"):
             pwd = os.getcwd ()
             os.chdir (self.cache)
+            # create the repo dir
             os.mkdir ("repo")
             os.chdir (pwd)
-        dirs = os.listdir (self.cache + "repo/")
+        
+        # check for its cache dir inside of main cache directory
         if not os.path.exists (self.cache + "repo/" + self.name):
             os.mkdir (self.cache + "repo/" + self.name)
         addr = list ()
+        
+        # build a dict that contain a url(contain the address of Packages.json file in repository for certain section like main)
+        # cache_dir (contain the name of cache directory for a section that live in cache/repo/repo_name/cache_dir)
+
         for i in self.sections:
             
             addr.append ( {"url" :  self.url + "/dists/" + self.codename + "/" +  i  + "/Packages.json" , "cache_dir" : self.codename + "_" +  i})
+            
         dirs = os.listdir (self.cache + "repo/" + self.name)
         for i in addr:
+            # Check for exists section cache_dir in main cache directory
             if not i["cache_dir"] in dirs:
                 os.mkdir (self.cache + "repo/" + self.name + "/" + i["cache_dir"])
             try:
-                
+                # Get the remote Packages.json file and store it in cache
                 self.codec.getFile (i["url"] , self.cache + "repo/" + self.name + "/" + i["cache_dir"])
             except:
                 raise RepositoryError ("codec.getFile : error")

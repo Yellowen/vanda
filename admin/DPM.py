@@ -7,7 +7,10 @@ from repository import *
 from models import Repo as rp
 from models import application , template
 
+
+
 class DPMError (Exception):
+    
     def __init__ (self , err):
         self.errstr = err
     def __unicode__ (self):
@@ -35,8 +38,10 @@ class DPM (object):
             self.cache = '/tmp/'
 
         self.id = random.randrange (100 ,200)
-
+        
+        # retrive all repositories
         confs = rp.objects.all ()
+        # parse the repositories information
         self._repositories = self._sourceparser (confs)
         
 
@@ -67,6 +72,7 @@ class DPM (object):
         """
         Update the Packages file of given repository. and cache the packages file
         """
+        # call the update method for repo
         for i in self._repositories:
             if repo == 'all':
                 i.update ()
@@ -74,15 +80,20 @@ class DPM (object):
                 i.update ()
                 
         pkgs = dict ()
+        # load the Packages list from cached files
         for i in self._repositories:
             addr = self.cache + "repo/" + i.name
             
             dirs = os.listdir ( addr )
             for j in dirs:
+                
                 if j[0] == '.':
+                    # skip the hidden dirs
                     pass
                 else:
+                    # open the cached Packages.json for a section
                     fd = open (addr + "/" + j + "/Packages.json")
+                    # load its json content into a python dict
                     jobj = json.loads (fd.read ().lower ())
                     fd.close ()
                     tmppkgs = dict ()
@@ -93,14 +104,18 @@ class DPM (object):
                         psha1 = y["sha1"]
                         pversion = y["version"]
                         paddress = y["address"]
+                        # skip the exist packages by checking for exists hashes
                         if tmppkgs.has_key (psha1):
                             pass
                         else:
+                            # provide a cache for for package information in above format
                             tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress
+                    
                             
                     l1  = list (set (pkgs ) ^ set (tmppkgs))
                     
                     l2  = list (set (pkgs ) ^ set (l1))
+
                     diffs = list ()
                     if len (l2) > 0:
                         diffs = l1 + l2
@@ -112,6 +127,7 @@ class DPM (object):
                             tmp[i] = pkgs[i]
                         elif tmppkgs.has_key (i):
                             tmp[i] = tmppkgs[i]
+                    # final packages list
                     pkgs = tmp
 
 
@@ -120,10 +136,12 @@ class DPM (object):
         for i in pkgs:
             phash = pkgs[i].split("::")[1]
             try:
+                # check for installed application
                 app = application.objects.get (SHA1=phash)
                 app = "*"
             except:
                 try:
+                    # check for install template
                     app = template.objects.get (SHA1=phash)
                     app = "*"
                 except:
@@ -136,9 +154,9 @@ class DPM (object):
         
         pkgs_namelist.sort ()
 
-        #+++ here i should add a code snippet for determine the installed application
+        
 
-
+        # write cache data to files
         fd = open (self.cache + "Packages" , 'w')
         for i in pkgs:
             fd.write (pkgs[i] + "\n")
