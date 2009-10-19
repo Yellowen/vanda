@@ -71,7 +71,7 @@ class DPM (object):
     def update (self , repo='all'):
         """
         Update the Packages file of given repository. and cache the packages file
-        """
+       """
         # call the update method for repo
         for i in self._repositories:
             if repo == 'all':
@@ -154,7 +154,7 @@ class DPM (object):
             
             
             #pkgs_namelist.append (str (pkgs[i].split("::")[0]) + "::" + app)
-            pkgs_namelist.append (str (pkgs[i] + "::" + app)
+            pkgs_namelist.append (str (pkgs[i] + "::" + app))
         pkgs_namelist.sort ()
 
         

@@ -73,8 +73,11 @@ if __name__ == "__main__" :
 
 #+++ optparser should be used instead of this opt patser
     if len (sys.argv) > 1:
-        
-        if os.path.isdir ( os.path.join (os.path.dirname (sys.argv[1]) , sys.argv[1]).replace ('\\' , '/')):
+        if sys.argv[1][-1] == "/":
+            ps = sys.argv[1][:-1]
+        else:
+            ps = sys.argv[1]
+        if os.path.isdir ( os.path.join (os.path.dirname (ps) , ps).replace ('\\' , '/')):
             target = sys.argv[1]
         else:
             print "Check first argument for a valid directory."

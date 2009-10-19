@@ -21,7 +21,7 @@ def rese (path , js):
         if os.path.isdir (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/')):
 
             # if it is then call this function again with new path that is i
-            lst2 = lst2[:] + rese (path + "/" + i + "/", js)[:]
+            lst2 = lst2[:] + rese (path + "/" + i + "/", js)[0][:]
         else:
 
             #if it is not . then parse the file name for name version.
@@ -40,28 +40,41 @@ def rese (path , js):
             fd = tf.open (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/'))
             try:
                 # extract the Package.json file in /tmp
-                os.mkdir ('/tmp/dpm_pkg')
-                fd.extract (i + "/Package.json" , "/tmp/dpm_pkg")
+                try:
+                    os.mkdir ('/tmp/dpm_pkg')
+                    os.mkdir ('/tmp/dpm_pkg/' + i)
+                except:
+                    pass
+                fd.extract ("Package.json" , "/tmp/dpm_pkg/" + i + "/")
+                fd.close ()
                 try:
                     # Try to read the json content
-                    jobj = json.loads (file ("/tmp/dpm_pkg/" + i + "/Package.json").read ().lower())
-                except:
+                    ff = open ("/tmp/dpm_pkg/" + i + "/Package.json")
+                    acc =  ff.read ().lower()
+                    
+                    ff.close ()
+                    jobj = json.loads (acc + "\n")
+                    
+                except :
+                    
                     
                     raise JSONError ("your Package.json file in %s has a syntax error." % (i + "/Package.json"))
                     #+++ here i should add a try/except for doesn't exists keys
                     
-                di["Author"] = jobj[0]["author"]
-                di["Home"] = jobj[0]["home"]
-                di["Email"] = jobj[0]["email"]
+                di["Author"] = jobj["author"]
+                di["Home"] = jobj["home"]
+                di["Email"] = jobj["email"]
                 
                     #+++ maybe i should escape the url value
-                di["Url"] = jobj[0]["url"]
-                di["Short_Desc"] = jobj[0]["short"]
+                
+                di["Short_Desc"] = jobj["short"]
                 #di["Desc"] = jobj[0]["desc"]
                 
                     
-                if jobj[0]["type"] == "Application" or jobj[0]["type"] == "Template":
-                    di["Type"] = jobj[0]["type"]
+                if jobj["type"] == "application" or jobj["type"] == "template":
+                    di["Type"] = jobj["type"]
+                    if jobj["type"] == "application":
+                        di["Url"] = jobj["url"]
                 else:
                     raise JSONError ("Package.json -> Type should be Application or Template.")
 
@@ -69,14 +82,15 @@ def rese (path , js):
 
                 
             except IOError , e:
-                brk.append (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/'))
+                brk.append (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/')
             
             lst2.append (di)
             
-    ret = js[:] + lst2[:]
-    shutil.rmtree ('/tmp/dpm_pkg')
+    #ret = js[:] + lst2[:]
+    ret =  lst2[:]
+    
     #return the Packages json content
-    return ret , brk
+    return [ret , brk]
 
 
 
@@ -97,14 +111,16 @@ if url[-1] == "/":
     url = url[:-1]
 
 b = list ()
-a , c  = rese (url , b)
+[a , c]  = rese (url , b)
+shutil.rmtree ('/tmp/dpm_pkg/')
 if len (c) > 0 :
     print "dpm-scanpackages find some broken packages:"
     for i in c:
-        print i
+        print "___C " +  i
 
     print "Check Package.json file inside of packages for valid JSON formation or existance."
 else:
+    #print "------> " + a
     print json.JSONEncoder().encode (a).replace (',' , ',\n').replace ('},' , '},\n').replace ('"}' , '"\n}').replace ('{"' , '{\n"')
 
 
