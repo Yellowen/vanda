@@ -19,9 +19,11 @@ def rese (path , js):
     for i in lst:
         # Check the i (that is a file or directory) for being directory
         if os.path.isdir (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/')):
+
             # if it is then call this function again with new path that is i
             lst2 = lst2[:] + rese (path + "/" + i + "/", js)[:]
         else:
+
             #if it is not . then parse the file name for name version.
             di = dict () 
             name = i.split("-")[0]
@@ -54,14 +56,14 @@ def rese (path , js):
                 
                     #+++ maybe i should escape the url value
                 di["Url"] = jobj[0]["url"]
-                di["Short_Desc"] = jobj[0]["short_desc"]
-                di["Desc"] = jobj[0]["desc"]
+                di["Short_Desc"] = jobj[0]["short"]
+                #di["Desc"] = jobj[0]["desc"]
                 
                     
-                if jobj[0]["type"] == "app" or jobj[0]["type"] == "theme":
+                if jobj[0]["type"] == "Application" or jobj[0]["type"] == "Template":
                     di["Type"] = jobj[0]["type"]
                 else:
-                    raise JSONError ("Package.json -> Type should be app or theme.")
+                    raise JSONError ("Package.json -> Type should be Application or Template.")
 
 
 

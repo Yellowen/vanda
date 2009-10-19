@@ -104,12 +104,15 @@ class DPM (object):
                         psha1 = y["sha1"]
                         pversion = y["version"]
                         paddress = y["address"]
+                        shortdesc = y["short_desc"]
+                        #desc = y["desc"]
+                        
                         # skip the exist packages by checking for exists hashes
                         if tmppkgs.has_key (psha1):
                             pass
                         else:
                             # provide a cache for for package information in above format
-                            tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress
+                            tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress + "::" + shortdesc
                     
                             
                     l1  = list (set (pkgs ) ^ set (tmppkgs))
@@ -150,8 +153,8 @@ class DPM (object):
                     
             
             
-            pkgs_namelist.append (str (pkgs[i].split("::")[0]) + "::" + app)
-        
+            #pkgs_namelist.append (str (pkgs[i].split("::")[0]) + "::" + app)
+            pkgs_namelist.append (str (pkgs[i] + "::" + app)
         pkgs_namelist.sort ()
 
         
@@ -203,9 +206,15 @@ class DPM (object):
             fd.close ()
             raise DPMError ("An other DPM process with '%s' ID running." % (oid))
         except:
+            # lock the repository
             fd = open (self.cache + "lock"  , 'w')
             fd.write (str (self.id))
             fd.close ()
+
+        # Check for exists pkgs dir in cache directory
+        if not os.path.exists (self.cache + "pkgs"):
+            os.mkdir (self.cache + "pkgs")
+        
         
         
 

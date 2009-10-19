@@ -13,10 +13,19 @@ except:
 
 app = dict ()
 
+while (1):
+    app["type"] = raw_input ("Type (1=Application , 2=Template) :  ")
+    if app["type"] == 1 or app["type"] == 2:
+        if app["type"] == 1:
+            app["type"] == "Application"
+        else:
+            app["type"] == "Template"
+        break
 app["version"] = raw_input ("Version :  ")
+
 app["author"] = raw_input ("Who is author of package? ")
 
-app ["auth_mail"] = raw_input ("What is the email of author? ")
+app ["email"] = raw_input ("What is the email of author? ")
 app["home"] = raw_input ("Where is the package home page ? ")
 app['url'] = raw_input ("Enter the default URL for the app to listening : ")
 app['short'] = raw_input ("Enter one line as its short description : ")
