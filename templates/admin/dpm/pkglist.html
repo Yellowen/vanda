@@ -1,5 +1,29 @@
+{% load i18n %}
 <form id="form" action="." >
-  {% for i in pkg %}
-  <input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }} style="background: #eef256;" >{{ i.name }}</input><br/>
-  {% endfor %}
+	<table width="640"  border="0">
+    <tr bgcolor='#aaa'>
+        <th >{% trans 'Packages' %}
+        </th>
+        <th>{% trans 'Version' %}
+        </th>
+        <th>{% trans 'Short Description' %}
+        </th>
+    </tr>
+    
+    	  {% for i in pkg %}
+  
+  
+
+	<tr>
+        <td width='120'><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > {{ i.name }}</input>
+        </td>
+        <td width='50'>{{ i.version }}
+        </td>
+        <td>{{ i.short_desc }}
+        </td>
+    </tr>
+	{% endfor %}
+</table>
+
 </form>
+
