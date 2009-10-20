@@ -75,10 +75,15 @@ class temp_admin (admin.ModelAdmin):
         os.unlink (settings.TEMPLATE_DIRS + "/default")
         os.symlink (settings.TEMPLATE_DIRS + "/" + obj.Name , settings.TEMPLATE_DIRS + "/default")
         obj.save ()
+
+
+class repo_admin (admin.ModelAdmin):
+    list_display = ('url' , 'comment')
     
         
 
 admin.site.register (Installer , inst_admin)
 admin.site.register (application , app_admin)
 admin.site.register (template , temp_admin)
+admin.site.register (Repo , repo_admin)
 

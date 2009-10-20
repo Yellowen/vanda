@@ -90,7 +90,7 @@ class template (models.Model):
 
 
 class Repo (models.Model):
-    url = models.CharField (max_length=100, unique=True , verbose_name=_('url'))
+    url = models.CharField (max_length=100, unique=True , verbose_name=_('url') , help_text = _("Url should be in '<protocol>://<address>/ <codename> <section> <section> ...' format"))
     comment = models.TextField(blank=True , verbose_name = _('comment'))
 
     def __unicode__ (self):
