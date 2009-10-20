@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-
+from django.http import HttpResponseRedirect
 import confs
 from django.contrib import admin
 import os
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/dpm/', include('core.urls')),
+    (r'^admin/core/$', 'core.views.pkgm_mng'),                   
     (r'^admin/', include(admin.site.urls)),
                        
                        
