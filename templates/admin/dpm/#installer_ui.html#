@@ -77,75 +77,17 @@
 {% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
 {% block content %}
 
-
-
-
-
-
- <div class="containerPlus{buttons:'m', skin:'white', width:'200 , height:200' }" style="position: static;top: 10%;left:5%" >
-          <div class="no"><div class="ne"><div class="n"></div></div>
-            <div class="o"><div class="e"><div class="c">
-              <div class="mbcontainercontent">
-
-    
-	
-<table border="0"><tr><th>&nbsp;</th>
-	<th valign="middle" onclick="$('#packages').mb_changeContainerContent ('/admin/dpm/installer/test/' , '');" style="cursor: pointer;"><p><img src="{% load adminmedia %}{% admin_media_prefix %}img/installer/reload.png"> {% trans 'Reload' %}</p></th>
-	<th>&nbsp;</th>
-	
-	<th>&nbsp;</th>
-	<th valign="middle" onclick="" style="cursor: pointer;" ><p><img src="{% load adminmedia %}{% admin_media_prefix %}img/installer/clean.png" width="32" height="32"> {% trans 'Apply' %}</p></th>
-	</tr></table>
-           
-
-              </div>
-            </div></div></div>
-            <div >
-              <div class="so"><div class="se"><div class="s"> </div></div></div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- main window -->
 <!-- header -->
-<div class="containerPlus resizable {buttons:'m,i', icon:'browser.png', skin:'default', width:'1024', height:'600', grid:100}" style="position: static;top: 5%;left:15%">
+<div class="containerPlus resizable {buttons:'i', icon:'browser.png', skin:'default', width:'1024',height:'600', grid:100}" style="top:15px;left:10px">
   <div class="no"><div class="ne"><div class="n">{% trans "DPM Installer" %}</div></div>
-    <div class="o"><div class="e"><div class="c">
-    
-	
-	
-      <div class="mbcontainercontent" style="border:1px solid gray;">
+    <div class="o"><div class="e"><div class="c"><tab ><tr><th>asd</th></tr></table>
+      <div class="mbcontainercontent" style="border:1px solid gray">
 <!-- end header -->
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
 
-        <div class="containerPlus draggable {buttons:'m,i', icon:'ss.png', skin:'default', width:'200' , height:'350'}" style="top:40px;left:25px">
+
+        <div class="containerPlus draggable {buttons:'m,i', icon:'browser.png', skin:'default', width:'300' , height:'350'}" >
           <div class="no"><div class="ne"><div class="n">{% trans "Sections" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
@@ -174,7 +116,7 @@
 
 	<!-- draggable resizable -->
 
-        <div id="packages" class="containerPlus draggable {buttons:'m,i', icon:'vb.png', skin:'default', width:'767' ,  height:'350', content:'/admin/dpm/installer/test/'}"  style="top:40px;left:224px" >
+        <div id="packages" class="containerPlus draggable  {buttons:'m,i', icon:'browser.png', skin:'default', width:'679' ,  height:'350', content:'/admin/dpm/installer/test/'}"  style="top:36px;left:324px" >
           <div class="no"><div class="ne"><div class="n">{% trans "Packages" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
@@ -192,7 +134,7 @@
 
 
 
-        <div class="containerPlus draggable  {buttons:'m,i', icon:'desc.png', skin:'default', width:'969' ,  height:'190' }"  style="top:385px;left:22px">
+        <div class="containerPlus draggable  {buttons:'m,i', icon:'desc.png', skin:'default', width:'980' ,  height:'190' }"  style="top:385px;left:22px">
           <div class="no"><div class="ne"><div class="n">{% trans "Description" %}</div></div>
             <div class="o"><div class="e"><div class="c">
               <div class="mbcontainercontent">
@@ -218,23 +160,11 @@
       </div>
     </div></div></div>
     <div >
-      <div class="so"><div class="se"dfg><div class="s"> </div></div></div>
+      <div class="so"><div class="se"><div class="s"> </div></div></div>
     </div>
   </div>
 </div>
 <!-- end main window -->
-
-
-
-
-	 
-
-
-
-
-
-
-
 
 
 

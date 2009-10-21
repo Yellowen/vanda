@@ -1,6 +1,6 @@
 {% load i18n %}
-<form id="form" action="." >
-	<table width="640"  border="0">
+<form class="form" action="." >
+	<table   border="0" style="position: relative; width: 100%;">
     <tr bgcolor='#aaa'>
         <th >{% trans 'Packages' %}
         </th>
@@ -15,9 +15,9 @@
   
 
 	<tr>
-        <td width='120'><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > {{ i.name }}</input>
+        <td style="position:relative; width:22%" ><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > {{ i.name }}</input>
         </td>
-        <td width='50'>{{ i.version }}
+        <td style="position:relative; width:13%">{{ i.version }}
         </td>
         <td>{{ i.short_desc }}
         </td>
