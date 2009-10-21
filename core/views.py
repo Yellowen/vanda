@@ -1,20 +1,21 @@
 from django.shortcuts import render_to_response as rr
+from django.contrib.auth.decorators import user_passes_test
 import DPM
 # Create your views here.
 
 
-
+@user_passes_test(lambda u: u.is_superuser , login_url='/admin/')
 def pkgm_mng (request):
     return rr ('admin/dpm.html')
 
-
+@user_passes_test(lambda u: u.is_superuser , login_url='/admin/')
 def installer (requst , param):
     if param == "desc" :
         return rr ('admin/dpm.html')
     else:
-        return rr ('admin/dpm/installer_ui.html')
+        return rr ('admin/dpm/installer_ui.html' , login_url='/admin/')
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def installer_test (request ):
     dpm = DPM.DPM ()
     dpm.update ()
