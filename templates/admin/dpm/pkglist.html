@@ -3,7 +3,16 @@
 </head>
 <body>
 {% load i18n %}
-<form id="form" action="." >
+	
+<table border="0"><tr><th>&nbsp;</th><th>&nbsp;</th>
+	<th valign="middle" onclick="$('#packages').mb_changeContainerContent ('/admin/dpm/installer/test/' , '');" style="cursor: pointer;"><p><img src="{% load adminmedia %}{% admin_media_prefix %}img/installer/reload.png"> {% trans 'Reload' %}</p></th>
+	<th>&nbsp;</th>
+	<th>&nbsp;</th><th>&nbsp;</th>
+	<th>&nbsp;</th>
+	<th valign="middle" onclick="$('#form').submit();" style="cursor: pointer;" ><p><img src="{% load adminmedia %}{% admin_media_prefix %}img/installer/clean.png" width="32" height="32"> {% trans 'Apply' %}</p></th>
+	</tr></table>
+
+<form id="form" action="/admin/dpm/installer/apply/" method="POST" >
 	<table   border="0" style="position: relative; width: 100%;">
     <tr bgcolor='#aaa'>
         <th >{% trans 'Packages' %}
@@ -19,7 +28,7 @@
   
 
 	<tr >
-        <td style="position:relative; width:22%" ><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > <a href="#"  onclick="$('#desc').mb_changeContainerContent ('/admin/dpm/installer/{{ i.id }}/' , '');">{{ i.name }}</a></input>
+        <td style="position:relative; width:22%" ><input class="checklist" id="{{ i.id }}" name="{{ i.name }}" type="checkbox" {{ i.checked }}  > <a href="#"  onclick="$('#desc').mb_changeContainerContent ('/admin/dpm/installer/{{ i.id }}/' , '');">{{ i.name }}</a></input>
         </td>
         <td style="position:relative; width:13%">{{ i.version }}
         </td>

@@ -47,3 +47,14 @@ def installer_test (request ):
         a += 1
     return rr ('admin/dpm/pkglist.html' , {"pkg" : pkg})
     
+@user_passes_test(lambda u: u.is_superuser , login_url='/admin/')
+def apply (request):
+    if request.method == "POST":
+        pkglist = list ()
+        for i in request.POST:
+            pkglist.append (i)
+
+        dpm = DPM.DPM ()
+        #+++ a removal test should come here
+        dpm.install (pkglist)
+        return HR (a)
