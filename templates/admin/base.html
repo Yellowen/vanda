@@ -82,7 +82,20 @@
 
     <!-- END Content -->
 
-    {% block footer %}<div id="footer"></div>{% endblock %}
+    {% block footer %}<div class="footer">
+<table align="center" width="550" >
+<tr>
+ <td><a href="http://wwwgithub.com/lxsameer/Dina_CMS" alt="Dina CMS Home Page" ><img src="{% admin_media_prefix %}img/admin/dina.png" ></a></td>
+<td><a href="http://www.python.org/" alt="Python Home Page" ><img src="{% admin_media_prefix %}img/admin/python.png"></a></td>
+<td><a href="http://www.djangoproject.com/" alt="Django Home Page" ><img src="{% admin_media_prefix %}img/admin/django.png"></a></td>
+</tr>
+</table>
+<br/>
+<p align="center">{% trans 'Dina CMS Released under the term of use of' %}<a href="www.gnu.org/licenses/gpl.html"> {% trans "GNU/GPL" %}</a> {% trans "license." %}</p>
+<p align="center">{% trans 'Dina CMS version 0.1.0' %}</p>
+
+</div>
+{% endblock %}
 </div>
 
 <!-- END Container -->
