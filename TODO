@@ -9,3 +9,4 @@
 + check the simplejson module name in target platform (in py2.5 it is a external module with simplejson name but in py2.6 it is a built-in module with json name).
 + check the broken package report in dpm-scanpackages.py (brk)
 + change the url of packages section in installer ui , ( currently is test/)
++ load the package desciption instead of short desc in description window in installer ui

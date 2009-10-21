@@ -6,7 +6,7 @@ from django.conf import settings
 from repository import *
 from models import Repo as rp
 from models import application , template
-
+import bz2
 
 
 class DPMError (Exception):
@@ -217,8 +217,19 @@ class DPM (object):
         
         
         
-
-    
+    def show (self , mhash):
+        """
+        Return a dictionary that contain package information.
+        """
+        bz = bz2.BZ2Compressor ()
+        fd = open (self.cache + "pkgs.cache")
+        lst = fd.readlines ()
+        fd.close ()
+        for i in lst :
+            phash = i.split ("::")[1]
+            if phash == mhash:
+                return {"name" : i.split ("::")[0] , "hash" : phash , "version" : i.split ("::")[2] , "short" : i.split ("::")[4] } # , "desc" : bz.decompress (i.split ("::")[6]) }
+        
         
         
 

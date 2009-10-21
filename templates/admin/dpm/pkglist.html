@@ -1,5 +1,9 @@
+<html><head>
+
+</head>
+<body>
 {% load i18n %}
-<form class="form" action="." >
+<form id="form" action="." >
 	<table   border="0" style="position: relative; width: 100%;">
     <tr bgcolor='#aaa'>
         <th >{% trans 'Packages' %}
@@ -14,8 +18,8 @@
   
   
 
-	<tr>
-        <td style="position:relative; width:22%" ><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > {{ i.name }}</input>
+	<tr >
+        <td style="position:relative; width:22%" ><input class="checklist" id="{{ i.id }}" type="checkbox" {{ i.checked }}  > <a href="#"  onclick="$('#desc').mb_changeContainerContent ('/admin/dpm/installer/{{ i.id }}/' , '');">{{ i.name }}</a></input>
         </td>
         <td style="position:relative; width:13%">{{ i.version }}
         </td>
@@ -26,4 +30,5 @@
 </table>
 
 </form>
-
+</body>
+</html>

@@ -69,7 +69,7 @@
 
 {% if app_list %}
     {% for app in app_list %}
-       {% ifnotequal app.name  "Admin" %}
+       {% ifnotequal app.name  "Core" %}
         <div class="module">
         <table  summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}">
 	  
