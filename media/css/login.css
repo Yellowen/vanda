@@ -26,12 +26,14 @@ body.login {
 
 .login .form-row {
     
-    position: relative;
-    top:  -105%;
-    left: -5%;
+ #   position: relative;
+#    top:  -105%;
+#    left: -5%;
     padding: 4px 0;
     float: left;
     width: 100%;
+    margin-left:-5%;
+    margin-:-5%;
 }
 
 .login .form-row label {
@@ -54,15 +56,21 @@ body.login {
 }
 
 .login .submit-row {
-    position: relative;
-    top:  -80%;
-    left : 90px;
+    #position: relative;
+    #top:  -80%;
+    #left : 90px;
     clear: both;
-    padding: 1em 0 0 9.4em;
+    #padding: 1em 0 0 9.4em;
+    margin-left:44%;
+    padding-top:20px;
 }
 
 .login .logo {
-position: relative;
-top:  0%;
-left : 67%;
+#float: left;
+#position: relative;
+#top:  0%;
+#left : 67%;
+margin-top: -12em;
+margin-left: 25em;
+padding-bottom:11em;
 }
