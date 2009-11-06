@@ -30,8 +30,13 @@ MANAGERS = ADMINS
 
 if DEBUG:
     # don't change this section
-    DATABASE_ENGINE = 'sqlite3'
-    DATABASE_NAME = 'db.devdb'
+#    DATABASE_ENGINE = 'sqlite3'
+#    DATABASE_NAME = 'db.devdb'
+
+    DATABASE_ENGINE = 'mysql' #'$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME = 'dina' #'$$DB_NAME$$'             # Or path to database file if using sqlite3.
+    DATABASE_USER = 'root' #'$$DB_USER$$'             # Not used with sqlite3.
+    DATABASE_PASSWORD = '123456' #'$$DB_PASSWD$$'         # Not used with sqlite3.
 else:
 
     DATABASE_ENGINE = '$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

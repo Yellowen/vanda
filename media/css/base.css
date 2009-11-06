@@ -732,7 +732,8 @@ table#change-history tbody th {
 }
 
 .dashboard #content {
-    width: 500px;
+	/* original value was 500px */
+    width: 35%;
 }
 
 /* HEADER */
