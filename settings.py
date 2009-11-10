@@ -2,6 +2,8 @@
 import os
 import confs
 
+
+
 #+++ Remember to shut down the debug mode in official release
 #@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
 DEBUG = True
@@ -30,13 +32,13 @@ MANAGERS = ADMINS
 
 if DEBUG:
     # don't change this section
-#    DATABASE_ENGINE = 'sqlite3'
-#    DATABASE_NAME = 'db.devdb'
+    DATABASE_ENGINE = 'sqlite3'
+    DATABASE_NAME = 'db.devdb'
 
-    DATABASE_ENGINE = 'mysql' #'$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-    DATABASE_NAME = 'dina' #'$$DB_NAME$$'             # Or path to database file if using sqlite3.
-    DATABASE_USER = 'root' #'$$DB_USER$$'             # Not used with sqlite3.
-    DATABASE_PASSWORD = '123456' #'$$DB_PASSWD$$'         # Not used with sqlite3.
+#    DATABASE_ENGINE = 'mysql' #'$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+#    DATABASE_NAME = 'dina' #'$$DB_NAME$$'             # Or path to database file if using sqlite3.
+#    DATABASE_USER = 'root' #'$$DB_USER$$'             # Not used with sqlite3.
+#    DATABASE_PASSWORD = '123456' #'$$DB_PASSWD$$'         # Not used with sqlite3.
 else:
 
     DATABASE_ENGINE = '$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -127,7 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'core',
+    'dina.core',
     
     
     
