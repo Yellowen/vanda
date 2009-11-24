@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'dina.core',
+    'dina.fem.menu',
     
     
     

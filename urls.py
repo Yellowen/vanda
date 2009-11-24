@@ -18,8 +18,8 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/dpm/', include('core.urls')),
-    (r'^admin/core/$', 'core.views.pkgm_mng'),                   
+    (r'^admin/dpm/', include('dina.core.urls')),
+    (r'^admin/core/$', 'dina.core.views.pkgm_mng'),                   
     (r'^admin/', include(admin.site.urls)),
                        
                        
