@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>Technical details</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="technical-details">
+<h1 class="title">Technical details</h1>
+
+<div class="admonition-about-this-document admonition">
+<p class="first admonition-title">About this document</p>
+<p class="last">This document provides technical details related to some aspects of
+Django MPTT's inner workings and its implementation of Modified
+Preorder Tree Traversal.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#tree-structure" id="id1">Tree structure</a><ul>
+<li><a class="reference internal" href="#tree-id" id="id2">Tree id</a><ul>
+<li><a class="reference internal" href="#root-node-ordering" id="id3">Root node ordering</a></li>
+<li><a class="reference internal" href="#movement-and-volatility" id="id4">Movement and volatility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#level" id="id5">Level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-field-creation-vs-explicitly-defining-mptt-fields" id="id6">Dynamic field creation vs. explicitly defining MPTT fields</a></li>
+<li><a class="reference internal" href="#running-the-test-suite" id="id7">Running the test suite</a></li>
+</ul>
+</div>
+<div class="section" id="tree-structure">
+<h1><a class="toc-backref" href="#id1">Tree structure</a></h1>
+<p>In addition to the left and right identifiers which form the core of how
+MPTT works and the parent field, Django MPTT has the following
+additional fields on each tree node.</p>
+<div class="section" id="tree-id">
+<h2><a class="toc-backref" href="#id2">Tree id</a></h2>
+<p><strong>A unique identifier assigned to each root node and inherited by all its
+descendants.</strong></p>
+<p>This identifier is the means by which Django MPTT implements multiple
+root nodes.</p>
+<p>Since we can use it to identify all nodes which belong to a particular
+tree, the subtree headed by each root node can have its edge indicators
+starting at <tt class="docutils literal"><span class="pre">1</span></tt> - as long as tree operations are constrained to the
+appropriate tree id(s), we don't have to worry about overlapping of left
+and right edge indicator values with those of nodes in other trees.</p>
+<p>This approach limits the number of rows affected when making space to
+insert new nodes and removing gaps left by deleted nodes.</p>
+<div class="section" id="root-node-ordering">
+<h3><a class="toc-backref" href="#id3">Root node ordering</a></h3>
+<p>This field also defines the order in which root nodes are retrieved when
+you create a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> using <tt class="docutils literal"><span class="pre">TreeManager</span></tt>, which by default
+orders the resulting <tt class="docutils literal"><span class="pre">QuerySet</span></tt> by tree id, then left edge indicator
+(for depth-first ordering).</p>
+<p>When a new root node is created, it is assigned the next-largest tree id
+available, so by default root nodes (and thus their subtrees) are
+displayed in the order they were created.</p>
+</div>
+<div class="section" id="movement-and-volatility">
+<h3><a class="toc-backref" href="#id4">Movement and volatility</a></h3>
+<p>Since root node ordering is defined by tree id, it can also be used to
+implement movement of other nodes as siblings of a target root node.</p>
+<p>When you use the node movement API to move a node to be a sibling of a
+root node, tree ids are shuffled around to acheive the new ordering
+required. Given this, you should consider the tree id to be
+<strong>volatile</strong>, so it's recommended that you don't store tree ids in your
+applications to identify particular trees.</p>
+<p>Since <em>every</em> node has a tree id, movement of a node to be a sibling of
+a root node can potentially result in a large number of rows being
+modified, as the further away the node you're moving is from its target
+location, the larger the number of rows affected - every node with a
+tree id between that of the node being moved and the target root node
+will require its tree id to be modified.</p>
+</div>
+</div>
+<div class="section" id="level">
+<h2><a class="toc-backref" href="#id5">Level</a></h2>
+<p><strong>The level (or &quot;depth&quot;) at which a node sits in the tree.</strong></p>
+<p>Root nodes are level <tt class="docutils literal"><span class="pre">0</span></tt>, their immediate children are level <tt class="docutils literal"><span class="pre">1</span></tt>,
+<em>their</em> immediate children are level <tt class="docutils literal"><span class="pre">2</span></tt> and so on...</p>
+<p>This field is purely denormalisation for convenience. It avoids the need
+to examine the tree structure to determine the level of a particular
+node and makes queries which need to take depth into account easier to
+implement using Django's ORM. For example, limiting the number of levels
+of nodes which are retrieved for the whole tree or any subtree:</p>
+<pre class="literal-block">
+# Retrieve root nodes and their immediate children only
+SomeModel.tree.filter(level__lte=1)
+
+# Retrieve descendants of a node up to two levels below it
+node.get_descendants().filter(level__lte=node.level + 2)
+</pre>
+</div>
+</div>
+<div class="section" id="dynamic-field-creation-vs-explicitly-defining-mptt-fields">
+<h1><a class="toc-backref" href="#id6">Dynamic field creation vs. explicitly defining MPTT fields</a></h1>
+<p>Model classes which do not have field names which clash with the default
+arguments to the <tt class="docutils literal"><span class="pre">mptt.register</span></tt> function need not contain any details
+about MPTT fields at all in their class definition.</p>
+<p>One of the goals of this application is that authors should not have to
+worry about setting up or using MPTT fields directly in order to reap
+the benefits of the functionality their existence enables.</p>
+<p>While dynamically added MPTT fields can be used in inner <tt class="docutils literal"><span class="pre">Meta</span></tt> and
+<tt class="docutils literal"><span class="pre">Admin</span></tt> classes, it is recommended that models which will use these
+fields elsewhere in the class definition should implement the fields
+themselves for clarity - it's already bad enough that we're dynamically
+adding fields without your model definitions using fields which don't
+appear to exist.</p>
+<p>Salt to taste, your mileage may vary, etc. etc.</p>
+</div>
+<div class="section" id="running-the-test-suite">
+<h1><a class="toc-backref" href="#id7">Running the test suite</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">mptt.tests</span></tt> package is set up as a project which holds a test
+settings module and defines models for use in testing MPTT. You can run
+the tests from the command-line using the <tt class="docutils literal"><span class="pre">django-admin.py</span></tt> script,
+specifying that the test settings module should be used:</p>
+<pre class="literal-block">
+django-admin.py test --settings=mptt.tests.settings
+</pre>
+<p>Django MPTT has been tested with SQLite, MySQL 4.1 and PostgreSQL 8.1 on
+Windows.</p>
+</div>
+</div>
+</body>
+</html>

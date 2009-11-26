@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>Models and Managers</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="models-and-managers">
+<h1 class="title">Models and Managers</h1>
+
+<div class="admonition-about-this-document admonition">
+<p class="first admonition-title">About this document</p>
+<p class="last">This document describes the changes Django MPTT makes to your Django
+model classes and the custom tree manager it provides, so you can
+easily work with model instances as trees.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#mptt-register-setting-up-a-django-model-for-mptt" id="id1"><tt class="docutils literal"><span class="pre">mptt.register</span></tt> - setting up a Django model for MPTT</a></li>
+<li><a class="reference internal" href="#model-instance-methods-added-by-django-mptt" id="id2">Model instance methods added by Django MPTT</a></li>
+<li><a class="reference internal" href="#the-treemanager-custom-manager" id="id3">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
+<li><a class="reference internal" href="#example-usage" id="id4">Example usage</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="mptt-register-setting-up-a-django-model-for-mptt">
+<h1><a class="toc-backref" href="#id1"><tt class="docutils literal"><span class="pre">mptt.register</span></tt> - setting up a Django model for MPTT</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">mptt</span></tt> module contains a <tt class="docutils literal"><span class="pre">register</span></tt> function, which users can
+call to set a Django model up for MPTT. This function takes as its
+arguments the model class itself and additional options related to
+working with the model as a tree.</p>
+<div class="admonition-mptt-register-and-syncdb admonition">
+<p class="first admonition-title"><tt class="docutils literal"><span class="pre">mptt.register</span></tt> and <tt class="docutils literal"><span class="pre">syncdb</span></tt></p>
+<p>As discussed further below, the <tt class="docutils literal"><span class="pre">mptt.register</span></tt> function will
+dynamically add new fields to your models if certain required tree
+fields are not present.</p>
+<p class="last">As such, unless you are manually setting up all required tree fields
+in your models, you must have the call to <tt class="docutils literal"><span class="pre">mptt.register</span></tt> in place
+<strong>before</strong> you use Django's <tt class="docutils literal"><span class="pre">syncdb</span></tt> management command to create
+tables. Otherwise, you will have to recreate tables so the
+appropriate tree columns are in place in the database.</p>
+</div>
+<p>The following argument is required:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">model</span></tt></dt>
+<dd>The model class which is to be set up for MPTT.</dd>
+</dl>
+<p>All remaining arguments are optional, but you should take care to
+specify appropriate fields names where the default field names do not
+fit with your model class' definition:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">parent_attr</span></tt></dt>
+<dd><p class="first">The name of a field which relates the model back to itself such that
+each instance can be a child of another instance. Defaults to
+<tt class="docutils literal"><span class="pre">'parent'</span></tt>.</p>
+<p>Users are responsible for setting this field up on the model class,
+which can be done like so:</p>
+<pre class="last literal-block">
+parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+</pre>
+</dd>
+</dl>
+<p>For the following four arguments, if fields with the given names do not
+exist, they will be added to the model dynamically:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">left_attr</span></tt></dt>
+<dd>The name of a field which contains the left tree node edge indicator,
+which should be a <tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt>. Defaults to <tt class="docutils literal"><span class="pre">'lft'</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">right_attr</span></tt></dt>
+<dd>The name of a field which contains the right tree node edge
+indicator, which should be a <tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt>. Defaults to
+<tt class="docutils literal"><span class="pre">'rght'</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">tree_id_attr</span></tt></dt>
+<dd><p class="first">The name of a field which contains the tree id of each node, which
+should be a <tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt>. Defaults to <tt class="docutils literal"><span class="pre">'tree_id'</span></tt>.</p>
+<p class="last">Items which do not have a parent are considered to be &quot;root&quot; nodes in
+the tree and will be allocated a new tree id. All descendants of root
+nodes will be given the same tree id as their root node.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">level_attr</span></tt></dt>
+<dd><p class="first">The name of a field which contains the (zero-based) level at which an
+item sits in the tree, which should be a <tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt>.
+Defaults to <tt class="docutils literal"><span class="pre">'level'</span></tt>.</p>
+<p class="last">For example, root nodes would have a level of <tt class="docutils literal"><span class="pre">0</span></tt> and their
+immediate children would have have a level of <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">tree_manager_attr</span></tt></dt>
+<dd>The name of an attribute which will hold a custom manager which is
+used to work with trees of model instances. Defaults to <tt class="docutils literal"><span class="pre">'tree'</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">order_insertion_by</span></tt></dt>
+<dd><p class="first">The name of a field which should define ordering when new tree nodes
+are being inserted or existing nodes are being reparented. Defaults
+to <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<p class="last">Note that this will require an extra database query to determine
+where nodes should be positioned when they are being saved. This
+option is handy if you're maintaining mostly static structures, such
+as trees of categories, which should always be in alphabetical order.</p>
+</dd>
+</dl>
+<p id="minimal-example-usage">A mimimal example usage of <tt class="docutils literal"><span class="pre">mptt.register</span></tt> is given below, where the
+model being set up for MPTT is suitable for use with the default
+arguments which specify fields and the tree manager attribute:</p>
+<pre class="literal-block">
+from django.db import models
+
+import mptt
+
+class Genre(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+
+mptt.register(Genre, order_insertion_by='name')
+</pre>
+</div>
+<div class="section" id="model-instance-methods-added-by-django-mptt">
+<h1><a class="toc-backref" href="#id2">Model instance methods added by Django MPTT</a></h1>
+<p>The following instance methods will be added to your Django models when
+you set them up for MPTT:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt> -- creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt>
+containing the ancestors of the model instance.</p>
+<p>These default to being in descending order (root ancestor first,
+immediate parent last); passing <tt class="docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt>
+argument will reverse the ordering (immediate parent first, root
+ancestor last).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_children()</span></tt> -- creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the immediate
+children of the model instance, in tree order.</p>
+<p>The benefit of using this method over the reverse relation provided
+by the ORM to the instance's children is that a database query can be
+avoided in the case where the instance is a leaf node (it has no
+children).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt> -- creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt>
+containing descendants of the model instance, in tree order.</p>
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include
+the model instance itself.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt> -- returns the number of descendants the
+model instance has, based on its left and right tree node edge
+indicators. As such, this does not incur any database access.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt> -- returns the model instance's next sibling
+in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt> if it doesn't have a next sibling.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt> -- returns the model instance's previous
+sibling in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt> if it doesn't have a previous
+sibling.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_root()</span></tt> -- returns the root node of the model instance's tree.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt> -- creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt>
+containing siblings of the model instance. Root nodes are considered
+to be siblings of other root nodes.</p>
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include
+the model instance itself.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">commit=False)</span></tt> --
+positions the model instance (which must not yet have been inserted
+into the database) in the tree based on <tt class="docutils literal"><span class="pre">target</span></tt> and <tt class="docutils literal"><span class="pre">position</span></tt>
+(when appropriate).</p>
+<p>If <tt class="docutils literal"><span class="pre">commit</span></tt> is True, the model instance's <tt class="docutils literal"><span class="pre">save()</span></tt> method will be
+called before the instance is returned.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt> -- returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a
+child node, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt> -- returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf
+node (it has no children), <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt> -- returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a root
+node, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</li>
+</ul>
+<ul id="move-to-documentation">
+<li><p class="first"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt> -- moves the model
+instance elsewhere in the tree based on <tt class="docutils literal"><span class="pre">target</span></tt> and <tt class="docutils literal"><span class="pre">position</span></tt>
+(when appropriate).</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>Is is assumed that when you call this method, the tree fields in
+the instance you've called it on, and in any <tt class="docutils literal"><span class="pre">target</span></tt> instance passed
+in, reflect the current state of the database.</p>
+<p class="last">Modifying the tree fields manually before calling this method or
+using tree fields which are out of sync with the database can
+result in the tree structure being put into an inaccurate state.</p>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">target</span></tt> is another model instance, it will be used to determine
+the type of movement which needs to take place, and will be used as
+the basis for positioning the model when it is moved, in combination
+with the <tt class="docutils literal"><span class="pre">position</span></tt> argument.</p>
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that the model instance should be
+turned into a root node. The <tt class="docutils literal"><span class="pre">position</span></tt> argument is disregarded in
+this case.</p>
+<p>Valid values for the <tt class="docutils literal"><span class="pre">position</span></tt> argument and their effects on
+movement are:</p>
+<blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">'first-child'</span></tt></dt>
+<dd><p class="first last">The instance being moved should have <tt class="docutils literal"><span class="pre">target</span></tt> set as its new
+parent and be placed as its <em>first</em> child in the tree structure.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'last-child'</span></tt></dt>
+<dd><p class="first last">The instance being moved should have <tt class="docutils literal"><span class="pre">target</span></tt> set as its new
+parent and be placed as its <em>last</em> child in the tree structure.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'left'</span></tt></dt>
+<dd><p class="first last">The instance being moved should have <tt class="docutils literal"><span class="pre">target</span></tt>'s parent set as
+its new parent and should be placed <em>directly before</em> <tt class="docutils literal"><span class="pre">target</span></tt>
+in the tree structure.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">'right'</span></tt></dt>
+<dd><p class="first last">The instance being moved should have <tt class="docutils literal"><span class="pre">target</span></tt>'s parent set as
+its new parent and should be placed <em>directly after</em> <tt class="docutils literal"><span class="pre">target</span></tt>
+in the tree structure.</p>
+</dd>
+</dl>
+</blockquote>
+<p>A <tt class="docutils literal"><span class="pre">ValueError</span></tt> will be raised if an invalid value is given for the
+<tt class="docutils literal"><span class="pre">position</span></tt> argument.</p>
+<p>Note that some of the moves you could attempt to make with this method
+are invalid - for example, trying to make an instance be its own its
+own child or the child of one of its descendants. In these cases, a
+<tt class="docutils literal"><span class="pre">mptt.exceptions.InvalidMove</span></tt> exception will be raised.</p>
+<p>The instance itself will be also modified as a result of this call, to
+reflect the state of its updated tree fields in the database, so it's
+safe to go on to save it or use its tree fields after you've called
+this method.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="the-treemanager-custom-manager">
+<h1><a class="toc-backref" href="#id3">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a></h1>
+<p>A custom manager, <tt class="docutils literal"><span class="pre">TreeManager</span></tt> is also added to your Django models
+when you set them up for MPTT - the attribute this manager can be
+accessed through is specified by the <tt class="docutils literal"><span class="pre">tree_manager_attr</span></tt> argument to
+<tt class="docutils literal"><span class="pre">mptt.register</span></tt>.</p>
+<p>Any <tt class="docutils literal"><span class="pre">QuerySet</span></tt> created with this manager will be ordered based on the
+tree structure, with root nodes appearing in tree id order and and their
+descendants being ordered in a depth-first fashion.</p>
+<p>The following manager methods are available:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">add_related_count(queryset,</span> <span class="pre">rel_cls,</span> <span class="pre">rel_field,</span> <span class="pre">count_attr,</span> <span class="pre">cumulative=False)</span></tt>
+-- adds a related item count to a given <tt class="docutils literal"><span class="pre">QuerySet</span></tt> using its
+<a class="reference external" href="http://www.djangoproject.com/documentation/db-api/#extra-select-none-where-none-params-none-tables-none">extra method</a>, for a model which has a relation to this manager's
+model.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">rel_cls</span></tt></dt>
+<dd><p class="first last">A Django model class which has a relation to this manager's model.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">rel_field</span></tt></dt>
+<dd><p class="first last">The name of the field in <tt class="docutils literal"><span class="pre">rel_cls</span></tt> which holds the
+relation.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">count_attr</span></tt></dt>
+<dd><p class="first last">The name of an attribute which should be added to each item in
+this <tt class="docutils literal"><span class="pre">QuerySet</span></tt>, containing a count of how many instances
+of <tt class="docutils literal"><span class="pre">rel_cls</span></tt> are related to it through <tt class="docutils literal"><span class="pre">rel_field</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">cumulative</span></tt></dt>
+<dd><p class="first last">If <tt class="docutils literal"><span class="pre">True</span></tt>, the count will be for each item and all of its
+descendants, otherwise it will be for each item itself.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_root(tree_id)</span></tt> -- returns the root node of tree with the given
+id.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">insert_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child',</span> <span class="pre">commit=False)</span></tt> --
+sets up the tree state for <tt class="docutils literal"><span class="pre">node</span></tt> (which has not yet been inserted
+into in the database) so it will be positioned relative to a given
+<tt class="docutils literal"><span class="pre">target</span></tt> node as specified by <tt class="docutils literal"><span class="pre">position</span></tt> (when appropriate) when
+it is inserted, with any neccessary space already having been made for
+it.</p>
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be the last
+root node.</p>
+<p>If <tt class="docutils literal"><span class="pre">commit</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>'s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be
+called before it is returned.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">move_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child')</span></tt> -- moves <tt class="docutils literal"><span class="pre">node</span></tt>
+based on <tt class="docutils literal"><span class="pre">target</span></tt>, relative to <tt class="docutils literal"><span class="pre">position</span></tt> when appropriate.</p>
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be removed
+from its current position and turned into a root node. If <tt class="docutils literal"><span class="pre">node</span></tt> is
+a root node in this case, no action will be taken.</p>
+<p>The given <tt class="docutils literal"><span class="pre">node</span></tt> will be modified to reflect its new tree state in
+the database.</p>
+<p>For more details, see the <a class="reference internal" href="#move-to-documentation">move_to documentation</a> above.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">root_nodes()</span></tt> -- creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing root nodes.</p>
+</li>
+</ul>
+<div class="section" id="example-usage">
+<h2><a class="toc-backref" href="#id4">Example usage</a></h2>
+<p>In the following examples, we have <tt class="docutils literal"><span class="pre">Category</span></tt> and <tt class="docutils literal"><span class="pre">Question</span></tt> models.
+<tt class="docutils literal"><span class="pre">Question</span></tt> has a <tt class="docutils literal"><span class="pre">category</span></tt> field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to
+<tt class="docutils literal"><span class="pre">Category</span></tt>.</p>
+<p>Retrieving a list of root Categories which have a <tt class="docutils literal"><span class="pre">question_count</span></tt>
+attribute containing the number of Questions associated with each root
+and all of its descendants:</p>
+<pre class="literal-block">
+roots = Category.tree.add_related_count(Category.tree.root_nodes(), Question,
+                                        'category', 'question_counts',
+                                        cumulative=True)
+</pre>
+<p>Retrieving a list of child Categories which have a <tt class="docutils literal"><span class="pre">question_count</span></tt>
+attribute containing the number of Questions associated with each of
+them:</p>
+<pre class="literal-block">
+node = Category.objects.get(name='Some Category')
+children = Category.tree.add_related_count(node.get_children(), Question,
+                                           'category', 'question_counts')
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,13 +1,10 @@
 from django.conf.urls.defaults import *
 from django.http import HttpResponseRedirect
 import confs
-from django.contrib import admin
 import os
-
 from django.conf import settings
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
     # Example:
@@ -18,9 +15,9 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/dpm/', include('dina.core.urls')),
-    (r'^admin/core/$', 'dina.core.views.pkgm_mng'),                   
-    (r'^admin/', include(admin.site.urls)),
+    #(r'^admin/dpm/', include('dina.core.urls')),
+    #(r'^admin/core/$', 'dina.core.views.pkgm_mng'),                   
+    (r'^admin/', include('dina.urls')),
                        
                        
 )

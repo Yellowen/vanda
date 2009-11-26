@@ -19,3 +19,6 @@
 ++ add a template validator and security tester ( refer to template chapter of pro django )
 ++ write a middleware for number of visitors
 ++ add a virus scanner for uploaded file ( optional for users ) --> pyclam
+
+! i should add a premission check to menu view
+! i should check for dpm cache dir existance
