@@ -8,9 +8,14 @@
       <script type="text/javascript" src="{% admin_media_prefix %}js/jquery.js"></script>
   <script type="text/javascript" src="{% admin_media_prefix %}js/jstree/jquery.tree.js"></script>	
 	<script type="text/javascript">
-		$(function () {
-			$("#tree").tree ();
-		});
+	  $(function () {
+		$("#tree").tree ();
+ 		               
+		$('#changelist').css('height' , (parseInt($('#tree').css('height')) + 20).toString () + 'px');
+	        $("#tree").change (function (){
+	                   $('#changelist').css('height' , (parseInt($('#tree').css('height')) + 20).toString () + 'px');
+	        });
+	  });
 
 	</script>
   {% if cl.formset %}
@@ -60,13 +65,11 @@
       {% endif %}
     {% endblock %}
 
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist" style="heigth: 100%;">
+    <div  class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist" >
 	<div id="tree" >
-	  <ul>
-	    <li><p>sdf</p><ul>
-	    <li>asdasd</li></ul></li>
-	    <li>samer</li>
-	    </ul>
+	  
+	  {{ tree }}
+
 	</div>
       
     </div>
