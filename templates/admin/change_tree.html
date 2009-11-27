@@ -47,7 +47,7 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-  <div id="content-main">
+  <div id="content-main" >
     {% block object-tools %}
       {% if has_add_permission %}
         <ul class="object-tools">
@@ -60,8 +60,8 @@
       {% endif %}
     {% endblock %}
 
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-	<div id="tree">
+    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist" style="heigth: 100%;">
+	<div id="tree" >
 	  <ul>
 	    <li><p>sdf</p><ul>
 	    <li>asdasd</li></ul></li>
