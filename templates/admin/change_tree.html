@@ -9,8 +9,20 @@
   <script type="text/javascript" src="{% admin_media_prefix %}js/jstree/jquery.tree.js"></script>	
 	<script type="text/javascript">
 	  $(function () {
-		$("#tree").tree ();
- 		               
+		$("#tree").tree ({
+	  
+	              ui : {
+	                      animation : 200,
+	                      theme_name: "apple"
+	                   },
+	  
+	              type : {
+	                      renameable : true ,
+	                      deletable : true
+	                     }
+	     
+	                        });
+ 	  
 		$('#changelist').css('height' , (parseInt($('#tree').css('height')) + 20).toString () + 'px');
 	        $("#tree").change (function (){
 	                   $('#changelist').css('height' , (parseInt($('#tree').css('height')) + 20).toString () + 'px');
@@ -53,23 +65,15 @@
 
 {% block content %}
   <div id="content-main" >
-    {% block object-tools %}
-      {% if has_add_permission %}
-        <ul class="object-tools">
-          <li>
-            <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
-              {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
-            </a>
-          </li>
-        </ul>
-      {% endif %}
-    {% endblock %}
+   <h1>{{ msg }}</h1>
 
     <div  class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist" >
 	<div id="tree" >
-	  
+	  <ul>
+	    <li>Menus
 	  {{ tree }}
-
+	  </li>
+	    </ul>
 	</div>
       
     </div>
