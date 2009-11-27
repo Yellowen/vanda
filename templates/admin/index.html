@@ -13,6 +13,21 @@
 
 
 
+
+{% block pretitle %}
+
+
+
+
+
+
+
+<H1>{% trans "Main Panel" %}</h1>
+
+<div class="module">
+
+
+
 <table>
 <caption ><a href="dpm/" class="section">{% trans "Package Managment" %}</a></caption>
 
@@ -43,36 +58,11 @@
 </table>
 
 
-{% block panel %}
-
-
-
-
-<div  style="float:right; margin-right: 20px; width: 40%;" id="panel"  >
-
-<H1>{% trans "Main Panel" %}</h1>
-
-<div class="module">
-
-<table>
-	<tr>
-		<td> <a href="dpm/installer/"><img src="{% load adminmedia %}{% admin_media_prefix %}img/admin/download_manager.png" ><br/><h4 align="center">Installer</h4> </a></td>
-		<td></td>
-		<td></td>
-	</tr>
-</table>
 
 <p> {% trans "Use installer to install new packages from repositories or installing packages by hand." %} </p>
 </div>
 <br/>
-</div>
-{% endblock %}
 
-{% block pretitle %}
-<H1>{% trans "Dina CMS admin panel" %}</h1>
-
-<p>{% trans "Welcome to Dina CMS admin panel. If you are new to Dina , please take a look at Dina Home Page for its documents and tutorials." %}</p>
-<br/>
 {% endblock %}
 
 
