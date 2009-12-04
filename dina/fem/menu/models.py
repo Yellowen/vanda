@@ -21,7 +21,7 @@ class item (models.Model):
     #newwindow
 
     weight = models.IntegerField (max_length = 2 , verbose_name = _("Weight") , default = 0 , help_text = _("A menu with the lower weight value will stay in top. (Not in Shamsiel WebDesk.)"))
-    publish = models.BooleanField (default = False , verbose_name = _("Target"))
+    publish = models.BooleanField (default = False , verbose_name = _("Should it be piblished?"))
     def __unicode__ (self):
         return self.title
 

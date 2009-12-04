@@ -4,7 +4,9 @@ import confs
 import os
 from django.conf import settings
 
-
+#REMOVE:START ----------------
+from views import testview
+#REMOVEL:END ------------------
 
 urlpatterns = patterns('',
     # Example:
@@ -17,6 +19,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     #(r'^admin/dpm/', include('dina.core.urls')),
     #(r'^admin/core/$', 'dina.core.views.pkgm_mng'),                   
+    #REMOVE:START -------------------------------------
+    (r'^$' , testview),
+    #REMOVE:END ---------------------------------------
     (r'^admin/', include('dina.urls')),
                        
                        

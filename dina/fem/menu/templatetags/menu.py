@@ -1,6 +1,8 @@
 from django import template
+from django.template import Template , Context
 from dina.fem.menu.models import *
-
+from django.template.loader import get_template
+register = template.Library()
 
 def do_menu(parser, token):
     try:
@@ -16,7 +18,29 @@ def do_menu(parser, token):
 class menu_node(template.Node):
     def __init__(self, title):
         self.title = title
-    def render(self, context):
         
-        return datetime.datetime.now().strftime(self.format_string)
+        
+    def draw_menu (self , x , context):
+        submenu = get_template ("test/menu.html")
+        item = get_template ("test/item.html")
+        res = Template ('').render (Context ())
+        con = {"title" : x.title , "submenu" : ""}
+        for i in x.get_children ():
+            res = res + self.draw_menu (i , context)
+        for i in x.items.all () :
+            res = res + item.render ( Context ( {"target" : i.url , "title" : i.title } ) )
+        con["submenu"] = res
+        out = submenu.render ( Context( con ,  autoescape=context.autoescape ) )
+        print out
+        return  out
 
+
+    def render(self, context):
+        smenu = menu.objects.get (title = self.title)
+        output = self.draw_menu (smenu , context)
+
+        return output
+
+
+
+register.tag ('menu' , do_menu)

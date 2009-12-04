@@ -28,3 +28,5 @@ def change_list (request):
     tree = tree + "</ul>\n"
     t = Template (tree)
     return rr ('admin/change_tree.html', {"msg" : "Menu View" , "app_label" : "Menu" ,"tree" : t.render (Context ())})
+
+
