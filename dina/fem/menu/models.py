@@ -1,15 +1,18 @@
+# Any time during the development process please read the brainstorm and goal files of this section and
+# stay update with it , don't forget to review changelog of project ;)
+
 from django.db import models
 from django.utils.translation import ugettext as _
 
 from  dina import mptt
-# Create your models here.
 
 
 class menu (models.Model):
     title = models.CharField (max_length = 30 , verbose_name = _("Title"))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     items = models.ManyToManyField ('item' , blank = True)
-
+    
+    
 
     def __unicode__ (self):
         return self.title
