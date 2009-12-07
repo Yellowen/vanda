@@ -11,7 +11,7 @@ class menu (models.Model):
     title = models.CharField (max_length = 30 , verbose_name = _("Title"))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     items = models.ManyToManyField ('item' , blank = True)
-    
+
     
 
     def __unicode__ (self):

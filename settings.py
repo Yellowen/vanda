@@ -109,7 +109,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 # original one
-#ROOT_URLCONF = 'Dina_CMS.urls'
+#ROOT_URLCONF = 'Dina_Project.urls'
 #ower changed one
 ROOT_URLCONF = 'urls'
 

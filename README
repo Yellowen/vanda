@@ -1,4 +1,4 @@
-Dina-CMS
+Dina-Project
 
 IMPORTANT NOTE : Please run 'run_server.sh' script for running development server
 	       	 instead of running "python manage.py runserver"

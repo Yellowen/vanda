@@ -11,19 +11,10 @@ from views import testview
 #REMOVEL:END ------------------
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^Dina_CMS/', include('Dina_CMS.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    #(r'^admin/dpm/', include('dina.core.urls')),
-    #(r'^admin/core/$', 'dina.core.views.pkgm_mng'),                   
     #REMOVE:START -------------------------------------
-    (r'^$' , testview),
+    (r'^test$' , testview),
     #REMOVE:END ---------------------------------------
+    (r'^$' , include('apps.urls')),                   
     (r'^admin/', include('dina.urls')),
                        
                        
@@ -43,14 +34,6 @@ if settings.DEBUG :
 
 
 #+++ here i should find a better way to deal with dynamic urls
-
-#conf = settings.FS_ROOT + "/confs/urls"
-#fd = open (conf , 'r')
-#urls = fd.readlines ()
-
-#fd.close ()
-#!!! may be i should use something other that patterns ('' , '')
-#a = patterns ('' , '')
 plc = confs.urls
 if len (plc) != 0:
     for i in plc :

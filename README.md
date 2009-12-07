@@ -1,4 +1,4 @@
-Dina-CMS
+Dina-Project
 ===================
 
 IMPORTANT NOTE :
