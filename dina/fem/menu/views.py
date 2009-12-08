@@ -7,12 +7,12 @@ from models import *
 
 
 def gentree (x):
-    tree = "<li><a href='/admin/menu/menu/%d/'>%s</a><ul>\n" % (x.id , x)
+    tree = "<li><div><a href='/admin/menu/menu/%d/'>%s</a> | <a href='/admin/menu/menu/%d/' Onclick='window.document.open (\"/admin/\");'>Edit</a></div><ul>\n" % (x.id , x , x.id)
     for i in x.get_children ():
         tree = tree +  gentree (i)
     
     for i in x.items.filter (publish = True):
-        tree = tree + "<li><a href='/admin/menu/item/%d/'>%s</a></li>\n" % (i.id , i)
+        tree = tree + "<li><a href='/admin/menu/item/%d/'>%s</a> | <a href='/admin/menu/item/%d/' Onclick='window.document.open (\"/admin/\");'>Edit</a></li>\n" % (i.id , i , i.id)
     tree = tree + "</ul></li>\n"
     return tree
     

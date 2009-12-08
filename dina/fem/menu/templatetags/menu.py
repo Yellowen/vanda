@@ -67,15 +67,19 @@ class menu_class_node(template.Node):
 
         
     def draw_menu (self , x , context):
-        menu_t = get_template ("test/menu.html")    
+        menu_t = get_template ("test/menu_%s.html" % (self.mclass))    
 
         
         res = Template ('').render (Context ())
-        con = {"title" : x.title , "submenu" : "" , "items" : []}
+        # normal refer to view of menu , if it exist on context menu will render with submenu otherwise just items will rendered .
+        con = {"title" : x.title , "submenu" : "" , "items" : [] , "normal" : ""}
+        
         for i in x.items.all () :
             con['items'].append (i)
-        for i in x.get_children ():
-            res = res + self.draw_menu (i , context )
+        if x.view == "normal":
+            con['normal'] = x.view
+            for i in x.get_children ():
+                res = res + self.draw_menu (i , context )
 
         dassert (res)
         if res:
@@ -89,7 +93,7 @@ class menu_class_node(template.Node):
         smenu = menu.objects.filter (mclass = self.mclass , publish = True , parent = None)
         output = ""
         for i in smenu:
-            output = output + self.draw_menu (i , context )
+            output = output + self.draw_menu (i , context)
         
         return output
 
