@@ -8,10 +8,22 @@ from  dina import mptt
 
 
 class menu (models.Model):
+    VIEWS = (
+        ('normal' , _('Normal')) ,
+        ('item' , _('Items Only')),
+        )
+    MCLASS = (
+        ('side' , _('Side')) ,
+        ('top' , _('Top')),
+        )
+
     title = models.CharField (max_length = 30 , verbose_name = _("Title"))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
-    items = models.ManyToManyField ('item' , blank = True)
-
+    items = models.ManyToManyField ('item' , blank = True , verbose_name = _("Items"))
+    publish = models.BooleanField (default = False , verbose_name = _("Should it be piblished?"))
+    
+    view = models.CharField (max_length = 20 , choices = VIEWS , default = VIEWS[0][0] , help_text = _("Use 'Items Only' to force menu to show only items.") , verbose_name = _("View"))
+    mclass = models.CharField (max_length = 20 , choices = MCLASS , default = MCLASS[0][0] , verbose_name = _("Class"))
     
 
     def __unicode__ (self):
