@@ -1,0 +1,13 @@
+<ul style=""><li>{{ title }}
+{% if submenus %}
+   {% for i in submenus %}
+      {{ i }}
+   {% endfor %}
+{% endif %}
+{% load i18n%}
+<ul>
+{% for i in items %}
+  <li>{{ i.title }} | <a href='/admin/menu/item/{{ i.id }}/'>{% trans 'Edit' %}</a></li>
+{% endfor %}
+</ul>
+</li></ul>

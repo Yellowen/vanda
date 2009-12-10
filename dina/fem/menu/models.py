@@ -17,11 +17,11 @@ class menu (models.Model):
         ('top' , _('Top')),
         )
 
-    title = models.CharField (max_length = 30 , verbose_name = _("Title"))
+    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _('For Advance users : You can draw this menu in a template by adding {% menu "title" %} tag.'))
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
-    items = models.ManyToManyField ('item' , blank = True , verbose_name = _("Items"))
-    publish = models.BooleanField (default = False , verbose_name = _("Should it be piblished?"))
-    
+    items = models.ManyToManyField ('item' , blank = True , verbose_name = _("Items") , help_text = _("The items that this menu should contain."))
+    publish = models.BooleanField (default = False , verbose_name = _("Publish it"))
+    #!!! these to property designed for version 0.1.0 so they ar temporary
     view = models.CharField (max_length = 20 , choices = VIEWS , default = VIEWS[0][0] , help_text = _("Use 'Items Only' to force menu to show only items.") , verbose_name = _("View"))
     mclass = models.CharField (max_length = 20 , choices = MCLASS , default = MCLASS[0][0] , verbose_name = _("Class"))
     

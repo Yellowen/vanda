@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response as rr
 from django.template import Context , Template
+from django.template.loader import get_template
 from django.contrib.auth.decorators import user_passes_test
 from models import *
 # Create your views here.
@@ -7,14 +8,19 @@ from models import *
 
 
 def gentree (x):
-    tree = "<li><div><a href='/admin/menu/menu/%d/'>%s</a> | <a href='/admin/menu/menu/%d/' Onclick='window.document.open (\"/admin/\");'>Edit</a></div><ul>\n" % (x.id , x , x.id)
+    # get the jstree template in 'admin/menu/tree_view.html' 
+    t = get_template ('admin/menu/tree_view.html')
+    con = {"title" : x.title , "submenus" : "" , "items" : []}
+    # define res as a Safestring
+    res = Template ('').render (Context ())
     for i in x.get_children ():
-        tree = tree +  gentree (i)
+        res = res +  gentree (i)
     
-    for i in x.items.filter (publish = True):
-        tree = tree + "<li><a href='/admin/menu/item/%d/'>%s</a> | <a href='/admin/menu/item/%d/' Onclick='window.document.open (\"/admin/\");'>Edit</a></li>\n" % (i.id , i , i.id)
-    tree = tree + "</ul></li>\n"
-    return tree
+    for i in x.items.all ():
+        con["items"].append (i)
+    if res:
+        con["submenus"] = Context (res)
+    return t.render (Context (con))
     
 
 
