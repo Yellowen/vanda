@@ -794,3 +794,28 @@ table#change-history tbody th {
     color: #666;
 }
 
+/* MENU HTML CSS */
+
+.coll {
+
+width : 800px;
+
+/*height : 24px;*/
+border-color : -moz-use-text-color -moz-use-text-color #DEDEDC #DEDEDC;
+border-style : none noe solid solid;
+border-width : medium medium 1px 1px;
+display: block;
+overflow : hidden;
+}
+
+.coll:hover {
+background : #eeeeee;
+}
+
+.col1 {
+float: left;
+}
+
+.col2 {
+float: right;
+} 

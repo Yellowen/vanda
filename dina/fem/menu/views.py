@@ -10,7 +10,7 @@ from models import *
 def gentree (x):
     # get the jstree template in 'admin/menu/tree_view.html' 
     t = get_template ('admin/menu/tree_view.html')
-    con = {"title" : x.title , "submenus" : "" , "items" : []}
+    con = {"obj" : x , "submenus" : "" , "items" : []}
     # define res as a Safestring
     res = Template ('').render (Context ())
     for i in x.get_children ():
