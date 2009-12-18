@@ -6,7 +6,7 @@ from dina.core.dev import dassert
 register = template.Library()
 
 
-# {% menu "menu title" %} denination. --------------------------------------------------------
+# {% menu "menu title" %} defination. --------------------------------------------------------
 
 def do_menu(parser, token):
     try:
