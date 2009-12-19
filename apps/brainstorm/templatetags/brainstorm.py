@@ -1,8 +1,10 @@
-from django import template
+from django import template , forms
+from django.utils.translation import ugettext as _
 from django.template import Template , Context
-from models import *
+from apps.brainstorm.models import *
 from django.template.loader import get_template
 from dina.core.dev import dassert
+
 register = template.Library()
 
 
@@ -27,29 +29,54 @@ def do_brainstorm (parser, token):
     
 
 
+
+
+class storm_form (forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super(storm_form, self).__init__(*args, **kwargs)
+        self.fields['category'].choices = [(i.id, i.name) for i in category.objects.all()]
+
+    email = forms.EmailField (label = _("Email") , help_text = _("We will contact you via this email address"))
+    category = forms.ChoiceField (label = _("Category"))
+    storm = forms.CharField (max_length =100 , label = _("Title"))
+    description = forms.CharField (widget=forms.Textarea , label = _("Description"))
+
+
+
+class category_form (forms.Form):
+
+
+    title= forms.CharField (label = _("title"))
+
+    
+    
 class brainstorm_node(template.Node):
     def __init__(self, section):
         self.section = section
+        self.form =[ storm_form () , category_form ()]
         
         
-    def draw_section (self , x , context):
-        submenu = get_template ("test/menu.html")
-        item = get_template ("test/item.html")
-        res = Template ('').render (Context ())
-        con = {"title" : x.title , "submenu" : ""}
-        for i in x.get_children ():
-            res = res + self.draw_menu (i , context)
-        for i in x.items.all () :
-            res = res + item.render ( Context ( {"target" : i.url , "title" : i.title } ) )
-        con["submenu"] = res
-        out = submenu.render ( Context( con ,  autoescape=context.autoescape ) )
-        dassert (out)
-        return  out
-
 
     def render(self, context):
-        cate = category.objects.filter (publish = True).order_by ('title')
-        t = get_template (
-        for i in cate:
+        
+        if self.section == 'view':
+            cate = category.objects.filter (published = True).order_by ('title')
+            obj = list ()
+            
+            for i in cate:
+                dic = dict ()
+                dic['title'] = i.title
+                storms = storm.objects.filter (category = i)
+                dic['storms'] = storms
+                obj.append (dic)
+            t = get_template ('view.html')
+            return t.render (Context ({"cats" : obj }))
+        if self.section == 'form':
+            t = get_template ("form.html")
+            return t.render (Context ( {"form" : self.form[0] , "catform" : self.form[1] }))
+                
+        
             
 # -------------------------------------------------------------------------------------------------
+register.tag ('brainstorm' , do_brainstorm)

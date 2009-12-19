@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     #REMOVE:START -------------------------------------
     (r'^test$' , testview),
     #REMOVE:END ---------------------------------------
-    (r'^$' , include('apps.urls')),                   
+    (r'^' , include('apps.urls')),                   
     (r'^admin/', include('dina.urls')),
                        
                        

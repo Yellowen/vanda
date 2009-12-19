@@ -1,0 +1,53 @@
+{% load i18n %}
+<script type="text/javascript">
+  function add_category ()
+  {
+ 
+
+  };
+
+  
+</script>
+<p align="center"> {% trans 'If you need a new category create it' %}<br /> <a href="#" class="dialog_opener"  content="category_form" >{% trans 'Create a Ctegory' %}</a></p>
+
+
+<table align="center">
+  
+    
+
+       {% if form.errors %}
+    <tr><td>
+        <p style="color: red;">
+            {% trans 'Please correct the error{{ form.errors|pluralize }} below.' %}
+        </p></td><td></td></tr>
+	{% endif %}
+
+  <form method = "POST" action="">
+	{{ form }}
+	<tr><td></td><td><p align="center"><input type="submit" value="{% trans 'Submit' %}"></p></td>
+</form>
+
+	</table>
+<div id="category_form" class="dialog_content" width="400" height="220" title="sameer" hide="fade" model="1"> 
+<p>{% trans "Create your desire category.you can't see it in main category list untill admin user activate it." %}</p>
+
+
+<table align="center" >
+  
+    
+
+       {% if catform.errors %}
+    <tr><td>
+        <p style="color: red;">
+            {% trans 'Please correct the error{{ catform.errors|pluralize }} below.' %}
+        </p></td><td></td></tr>
+	{% endif %}
+
+  <form method = "POST" action="">
+	{{ catform }}
+	<tr><td></td><td><p align="center"><input type="submit" value="{% trans 'Submit' %}"></p></td>
+</form>
+
+	</table>
+
+</div>

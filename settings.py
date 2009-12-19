@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'dina.core',
     'dina.mptt',
     'dina.fem.menu',
+    'apps.brainstorm',
     
     
     

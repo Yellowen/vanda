@@ -12,6 +12,7 @@
 + load the package desciption instead of short desc in description window in installer ui
 + add some decorator for certain jobs like loging and ...
 
++ add jquery theme selector
 
 ++ Build two settings profile one for developing and second one for publishing , without any needs for changing profile these two should be smart ( look at chapter 12 of django book )
 ++ build a signal and slot framework (if you don't know about django signals please refer to django official documentations for basic and pro django page 226 for advance information.)

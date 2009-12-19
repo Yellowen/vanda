@@ -1,0 +1,8 @@
+<ul>{% for i in cat %}
+  <ul>{{ i.title }}
+  {% for j in i.storms %}
+    <li>{{ j }}</li>
+  {% endfor %}
+  </ul>
+{% endfor %}
+</ul>

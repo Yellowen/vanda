@@ -7,6 +7,6 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('',
-                       
+                       (r'brainstorm/$' , 'apps.brainstorm.views.show'),
                        
 )

@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from  dina import mptt
+
 
 
 
 class category (models.Model):
-    title = models.CharField ( max_lenght = 30 , verbose_name =  _("Title") )
+    title = models.CharField ( max_length = 30 , verbose_name =  _("Title") )
     published = models.BooleanField ( default = False , verbose_name =  _("Publish"))
     
     def __unicode__ (self):
@@ -17,7 +17,8 @@ class category (models.Model):
 
 class storm (models.Model):
     email = models.EmailField (verbose_name =  _("Email"))
-    title = models.CharField ( max_lenght = 100 , verbose_name =  _("Title") )
+    title = models.CharField ( max_length = 100 , verbose_name =  _("Title") )
+    category = models.ForeignKey ('category' , verbose_name =  _("Category"))
     description = models.TextField (verbose_name =  _("Description"))
     
     
