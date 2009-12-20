@@ -1,4 +1,5 @@
-from django import template , forms
+from django import template
+from apps.brainstorm.forms import *
 from django.utils.translation import ugettext as _
 from django.template import Template , Context
 from apps.brainstorm.models import *
@@ -31,24 +32,6 @@ def do_brainstorm (parser, token):
 
 
 
-class storm_form (forms.Form):
-
-    def __init__(self, *args, **kwargs):
-        super(storm_form, self).__init__(*args, **kwargs)
-        self.fields['category'].choices = [(i.id, i.name) for i in category.objects.all()]
-
-    email = forms.EmailField (label = _("Email") , help_text = _("We will contact you via this email address"))
-    category = forms.ChoiceField (label = _("Category"))
-    storm = forms.CharField (max_length =100 , label = _("Title"))
-    description = forms.CharField (widget=forms.Textarea , label = _("Description"))
-
-
-
-class category_form (forms.Form):
-
-
-    title= forms.CharField (label = _("title"))
-
     
     
 class brainstorm_node(template.Node):
@@ -67,7 +50,7 @@ class brainstorm_node(template.Node):
             for i in cate:
                 dic = dict ()
                 dic['title'] = i.title
-                storms = storm.objects.filter (category = i)
+                storms = storm.objects.filter (category = i , published = True)
                 dic['storms'] = storms
                 obj.append (dic)
             t = get_template ('view.html')

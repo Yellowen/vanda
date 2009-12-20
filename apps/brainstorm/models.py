@@ -19,6 +19,7 @@ class storm (models.Model):
     email = models.EmailField (verbose_name =  _("Email"))
     title = models.CharField ( max_length = 100 , verbose_name =  _("Title") )
     category = models.ForeignKey ('category' , verbose_name =  _("Category"))
+    published = models.BooleanField ( default = False , verbose_name =  _("Publish"))
     description = models.TextField (verbose_name =  _("Description"))
     
     
