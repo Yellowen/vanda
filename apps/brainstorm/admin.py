@@ -8,8 +8,8 @@ class cat_admin (admin.ModelAdmin):
     search_field = [ "title" , ]
 
 class storm_admin (admin.ModelAdmin):
-    list_display = ["title"  , "category" , "email" , "description"]
-    list_filter = ["category" ]
+    list_display = ["title"  , "category" , "email" , "published" ,  "description"]
+    list_filter = ["category", "published" ]
     search_field = [ "title" , "email" ]
 
 class comment_admin (admin.ModelAdmin):

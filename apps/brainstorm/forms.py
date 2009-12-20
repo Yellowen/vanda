@@ -7,7 +7,7 @@ class comment_form (forms.Form):
     
     email = forms.EmailField (label = _("Email"))
     storm = forms.CharField (widget=forms.HiddenInput)
-    description = forms.CharField (widget=forms.Textarea , label = _("Comment"))
+    comment = forms.CharField (widget=forms.Textarea , label = _("Comment"))
 
     def as_complete_table (self , action = "" , method="POST" , bname = _("submit")):
         a = super(comment_form , self).as_table()
