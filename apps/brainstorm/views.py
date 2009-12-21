@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response as rr
 from django.template import Context , Template
+from django.template.loader import get_template
 from models import *
 from forms import *
 from django.utils.translation import ugettext as _
@@ -26,7 +27,10 @@ def comments (request , xid):
         return rr ('test/brainstorm.html')
         
     else:
+        t = get_template ('comment.html')
+        comments = comment.objects.filter (storm = storm.objects.get (id = int (xid)))
+        content = t.render (Context ({"comments" : comments}))
         cforms = comment_form (initial = {'storm' : xid})
-        return rr ('index_1.html' , {"content" : cforms.as_complete_table () })
+        return rr ('index_1.html' , {"content" : content + cforms.as_complete_table () })
 
 
