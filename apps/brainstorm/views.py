@@ -34,3 +34,10 @@ def comments (request , xid):
         return rr ('index_1.html' , {"content" : content + cforms.as_complete_table () })
 
 
+def new_cat (request):
+    if 'title' in request.POST:
+        cat = category (title = requset.POST['title'] , published = False )
+        cat.save ()
+        return rr ('index_1.html' , {"content" : _('Your desire category was saved , we look at it and publish it as soon as possible.')})
+    else:
+        return rr  ('test/brainstorm.html')
