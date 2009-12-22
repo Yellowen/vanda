@@ -7,8 +7,8 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('',
-                       (r'brainstorm/' , include ('apps.brainstorm.urls')),
-                       (r'pages/' , include ('dina.fem.page.urls')),
+                       #+++ i should use named group url instead of normal one
+                       (r'([^/]+)/$' , 'dina.fem.page.views.show_page'),
                        
                        
 )
