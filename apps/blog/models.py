@@ -22,22 +22,3 @@ class post (models.Model):
         verbose_name_plural = _("Posts")
         verbose_name = _('Post')
 
-    
-
-class comment (models.Model):
-    """
-    Comment model hold the comments of posts.
-    """
-
-    nick = models.CharField ( max_length=20 , verbose_name = _("Nickname"))
-    datetime = models.DateTimeField (auto_now_add = True , editable=False , verbose_name = _('Date and Time'))
-    text = models.TextField (verbose_name = _('Text'))
-    post = models.ForeignKey ("post" , verbose_name = _("Post"))
-    
-    def __unicode__ (self):
-        return self.text
-
-    class Meta:
-        verbose_name_plural = _("Comments")
-        verbose_name = _('Comment')
-

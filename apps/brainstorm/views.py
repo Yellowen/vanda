@@ -14,7 +14,7 @@ def show (request):
         return rr ('index_1.html' , {"content" :   _("Your storm Commited , thanks for sharing.")})
     else:
         
-        return rr ('test/brainstorm.html')
+        return rr ('default/brainstorm.html')
 
 # i must remove the hidden input
 def comments (request , xid):
@@ -24,7 +24,7 @@ def comments (request , xid):
         cstorm  = storm.objects.get (id = xid)
         newcom = comment (comment = com , storm = cstorm , email = cemail)
         newcom.save ()
-        return rr ('test/brainstorm.html')
+        return rr ('default/brainstorm.html')
         
     else:
         t = get_template ('comment.html')
@@ -36,8 +36,8 @@ def comments (request , xid):
 
 def new_cat (request):
     if 'title' in request.POST:
-        cat = category (title = requset.POST['title'] , published = False )
+        cat = category (title = request.POST['title'] , published = False )
         cat.save ()
         return rr ('index_1.html' , {"content" : _('Your desire category was saved , we look at it and publish it as soon as possible.')})
     else:
-        return rr  ('test/brainstorm.html')
+        return rr  ('default/brainstorm.html')

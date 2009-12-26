@@ -1,0 +1,5 @@
+* 27 Dec 2009 - 0.2.0
+  + Add RSS and Atom to blog system
+* 18 Dec 2009 - 0.1.0
+  @ Due to short goals of project , we should build a blog system that just work.
+   

@@ -2,14 +2,38 @@
 <script type="text/javascript">
   function add_category ()
   {
- 
-
+  if ($("#cat").hide )
+  {
+    $("#cat").show ();
+  }
+  else 
+  {
+    $("#cat").hide ();
+  }
   };
 
   
 </script>
-<p align="center"> {% trans 'If you need a new category create it' %}<br /> <a href="#" class="dialog_opener"  content="category_form" >{% trans 'Create a Ctegory' %}</a></p>
+<p align="center"> {% trans 'If you need a new category create it' %}<br /> <a href="#" class="dialog_opener"  content="category_form" >{% trans 'Create a Ctegory' %}</a></p><a href="#" Onclick="add_category ();">asd</a>
+<div id="cat">
+<table align="center" >
+  
+    
 
+       {% if catform.errors %}
+    <tr><td>
+        <p style="color: red;">
+            {% trans 'Please correct the error{{ catform.errors|pluralize }} below.' %}
+        </p></td><td></td></tr>
+	{% endif %}
+
+  <form action="/brainstorm/category/" method="POST">
+	{{ catform }}
+	<tr><td></td><td><p align="center"><input type="submit" value="{% trans 'Submit' %}"></p></td>
+</form>
+
+	</table>
+</div>
 
 <table align="center">
   
@@ -28,7 +52,7 @@
 </form>
 
 	</table>
-<div id="category_form" class="dialog_content" width="400" height="220" title="sameer" hide="fade" model="1"> 
+<div id="category_form" class="dialog_content" width="400" height="220" title="Category" hide="fade" model="1"> 
 <p>{% trans "Create your desire category.you can't see it in main category list untill admin user activate it." %}</p>
 
 
@@ -43,7 +67,7 @@
         </p></td><td></td></tr>
 	{% endif %}
 
-  <form method = "POST" action="/brainstorm/category/">
+  <form action="/brainstorm/category/" method="POST">
 	{{ catform }}
 	<tr><td></td><td><p align="center"><input type="submit" value="{% trans 'Submit' %}"></p></td>
 </form>

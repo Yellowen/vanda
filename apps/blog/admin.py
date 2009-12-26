@@ -8,6 +8,7 @@ class admin_post (admin.ModelAdmin):
     #--- datetime filter should remove in future
     list_filter = ["datetime" , "author" ]
     search_field = [ "title" , ]
+    
 
     def save_model (self, request, obj, form, change):
         obj.author = request.user
@@ -15,13 +16,8 @@ class admin_post (admin.ModelAdmin):
 
 
     
-class admin_com (admin.ModelAdmin):
-    list_display = ["nick"  , "datetime" , "post"]
-    
-    list_filter = ["datetime" ,  ]
-    search_field = [ "nick" , ]
 
 
 
 admin.site.register (post , admin_post)
-admin.site.register (comment , admin_com)
+
