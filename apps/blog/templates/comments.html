@@ -1,0 +1,36 @@
+{% extends "test/base_html.html" %}
+{% load i18n %}
+{% load comments %}
+
+{% block content %}
+<H2>{{ post.title }}</h2>
+<p>{{ post.author }}</p>
+<br/>
+<p>{{ post.text|linebreaks|urlize }}</p>
+<br/>
+<p>{{ post.datetime|date:"D d M Y" }}</p>
+<br />
+<h3>{% trans 'Comments' %}</h3>
+{% get_comment_list for post as comment_list %}
+{% for comment in comment_list %}
+<h5>{{ comment.user }}</p>
+<p>{{ comment.comment|linebreaks }}</p>
+<p>{{ comment.submit_date|date:"D d M Y" }}</p>
+<br/>
+{% endfor %}
+{% get_comment_form for post as form %}
+<form action="{% comment_form_target %}" method="POST">
+<table>
+  {{ form }}
+	<tr>
+	<td><input type="hidden" name="next" value="/blog/post/{{ post.slug }}/" /></td>
+	<td></td>
+	</tr>
+
+  <tr>
+    <td><br /><p align="center"><input class="submit-preview" type="submit" value="{% trans 'Preview' %}" name="preview"/></p></td>
+    <td><br/><p align="center"><input type="submit" name="submit" class="submit-post" value="{% trans 'Submit' %}"></p></td>
+  </tr>
+</form>
+</table>
+{% endblock %}

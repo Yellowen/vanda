@@ -1,11 +1,14 @@
-{% extend "index.html" %}
-
+{% extends "test/base_html.html" %}
+{% load i18n %}
+{% load comments %}
 {% block content %}
-{% for i in entry %}
+
+{% for i in post %}
 <H2>{{ i.title }}</h2>
-<p>{{ i.author.uid }}</p>
+<p>{{ i.author }}</p>
 <br/>
-<p>{{ i.text }}</p>
+<p>{{ i.text|linebreaks|urlize }}</p>
 <br/>
-<p>{{ i.datetime }} </p>
+<p>{{ i.datetime|date:"D d M Y" }} | <a href="/blog/post/{{ i.slug }}/">{% trans 'Comment' %}{% get_comment_count for i as count %} ({{ count }})</a></p>
+{% endfor %}
 {% endblock %}

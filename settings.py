@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.comments',
     'django.contrib.sites',
     'django.contrib.admin',
     'dina.core',
@@ -134,7 +135,7 @@ INSTALLED_APPS = (
     'dina.fem.menu',
     'dina.fem.page',
     'apps.brainstorm',
-    
+    'apps.blog',
     
     
     

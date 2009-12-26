@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     
                 (r'^admin/', include('dina.urls')),
                 (r'^$' , 'dina.fem.page.views.show_home'),
+                (r'^comments/', include('django.contrib.comments.urls')),
+
                 (r'^' , include('apps.urls')),                                      
                        
 )
