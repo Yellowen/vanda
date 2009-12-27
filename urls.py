@@ -41,7 +41,7 @@ plc = confs.urls
 if len (plc) != 0:
     for i in plc :
         a = patterns ('' , (i[0] , include (i[1])),)
-        print a
+        
         
         urlpatterns += a 
 

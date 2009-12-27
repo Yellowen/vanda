@@ -1,7 +1,12 @@
 {% for i in comments %}
-<div style='border: 1px;'>
-<h3>{{ i.email }}</h3>
+<div class="post">
+
+<h3 class="title">{{ i.email }}</h3>
+<div class="entry">
 <p>{{ i.comment|linebreaks }}</p>
+</div>
 </div>
 <br/>
 {% endfor %}
+
+

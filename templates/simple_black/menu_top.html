@@ -1,0 +1,27 @@
+{% if normal %}
+  
+  {{ title|capfirst }}<ul id="navlist">
+  {% if submenu %}
+    {% for i in submenu %}
+      {{ i }}
+    {% endfor %}
+  {% endif %}
+
+{% for i in items %}
+<li><a href="{{ i.url }}"> {{ i.title|capfirst }} </a></li>
+{% endfor %}
+
+</ul>
+</div>
+{% else %}
+<div id="menu">
+  <ul>
+
+
+{% for i in items %}
+<li><a href="{{ i.url }}"> {{ i.title|upper }} </a></li> 
+{% endfor %}
+
+</ul>
+</div>
+{% endif %}

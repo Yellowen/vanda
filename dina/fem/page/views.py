@@ -10,7 +10,7 @@ def show_page (request , Slug):
         if a.published == True:
             t = Template (a.content).render (Context ())
             title = a.title
-            return rr ('index_1.html', {"title" : title , "content" : t})
+            return rr ('default/index_1.html', {"title" : title , "content" : t})
         else :
             raise Http404 ()
     except:
@@ -24,4 +24,4 @@ def show_home (requset):
         a = page.objects.get (id=1)
     t = Template (a.content).render (Context ())
     title = a.title
-    return rr ('index_1.html' , {"title" : title , "content" : t})
+    return rr ('default/index_1.html' , {"title" : title , "content" : t})

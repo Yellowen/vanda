@@ -1,0 +1,27 @@
+{% extends 'default/base.html' %}
+{% load menu %}
+{% load i18n %}
+{% load brainstorm %}
+
+{% block body %}
+
+<div id="sidebar">
+{% block left-side %}
+<ul>
+{% menu_class "side" %}
+</ul>
+{% endblock %}
+</div>
+
+
+
+
+
+
+<div id="content">
+{% block content %}
+		
+		
+{% endblock %}
+</div>
+{% endblock %}

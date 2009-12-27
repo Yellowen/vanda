@@ -25,8 +25,8 @@ class menu_node(template.Node):
         
         
     def draw_menu (self , x , context):
-        submenu = get_template ("test/menu.html")
-        item = get_template ("test/item.html")
+        submenu = get_template ("default/menu.html")
+        item = get_template ("default/item.html")
         res = Template ('').render (Context ())
         con = {"title" : x.title , "submenu" : ""}
         for i in x.get_children ():
@@ -67,7 +67,7 @@ class menu_class_node(template.Node):
 
         
     def draw_menu (self , x , context):
-        menu_t = get_template ("test/menu_%s.html" % (self.mclass))    
+        menu_t = get_template ("default/menu_%s.html" % (self.mclass))    
 
         
         res = Template ('').render (Context ())
