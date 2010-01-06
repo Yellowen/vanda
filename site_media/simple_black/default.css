@@ -123,7 +123,7 @@ input, textarea, select {
 	margin-right: 3px;
 	padding: 10px 20px;
 	text-decoration: none;
-	text-transform: lowercase;
+	#text-transform: lowercase;
 	font: 13px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #FFFFFF;
 }
