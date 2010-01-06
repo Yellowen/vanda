@@ -11,7 +11,7 @@ def show (request):
         cat = category.objects.get (id = int (request.POST['category']))
         st = storm (email = request.POST['email'] , title = request.POST['storm'] , published = False , description = request.POST['description'] , category = cat )
         st.save ()
-        return rr ('index_1.html' , {"content" :   _("Your storm Commited , thanks for sharing.")})
+        return rr ('default/index_1.html' , {"content" :   _("Your storm Commited , thanks for sharing.")})
     else:
         
         return rr ('default/brainstorm.html')
