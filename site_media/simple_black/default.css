@@ -69,6 +69,11 @@ form {
 	padding: 0;
 }
 
+label {
+    font-family:sans-serif;
+    font-size:12px;
+}
+
 fieldset {
 	margin: 0;
 	padding: 0;
@@ -80,9 +85,11 @@ legend {
 }
 
 input, textarea, select {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 13px;
+    border: none;
+	#font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	#font-size: 8px;
 	color: #333333;
+	margin-right:30px;
 }
 
 /* Header */
