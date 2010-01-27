@@ -1,5 +1,6 @@
 import os
 import sys
+os.environ['PYTHON_EGG_CACHE'] = '~/python_egg'
 
 sys.path.append(os.path.join (os.path.dirname (__file__) , '../../').replace ("\\" , "/"))
 
