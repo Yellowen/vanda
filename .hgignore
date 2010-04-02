@@ -4,7 +4,7 @@
 .pida-metadata/*
 .project
 .DS_Store
-.cache
+.cache/*
 
 syntax: glob
 

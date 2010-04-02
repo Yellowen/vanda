@@ -1,3 +1,0 @@
-* 28 Jan 2010 - 0.2
-  + layout manager
-  + settings framework
