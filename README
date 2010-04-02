@@ -1,14 +1,18 @@
 Dina-Project
+===================
 
-IMPORTANT NOTE : Please run 'run_server.sh' script for running development server
+IMPORTANT NOTE :
+-------------------
+
+		 Please run 'run_server.sh' script for running development server
 	       	 instead of running "python manage.py runserver"
 
 
 Phase 0 :
-
-      Please add your ideas in doc/devel/<your username>.idea .
-      Please Read doc/deve/development.policy and write your brainstorm there.
+---------------
+Please add your ideas in doc/devel/<your username>.idea .
+Please Read doc/deve/development.policy and write your brainstorm there.
 
 Phase 1 :
-
-      Building a basic CMS platform , including App and template installer
+---------------
+Building a basic CMS platform , including App and template installer
