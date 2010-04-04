@@ -26,29 +26,18 @@ ADMINS = (
 MANAGERS = ADMINS
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'db.devdb',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
-#--- Database configuration -------------------------------------------------------------------------------------------
-#@@@ we use sqlite3 for ower development but in the official release this section will fill with installer
 
-if DEBUG:
-    # don't change this section
-    DATABASE_ENGINE = 'sqlite3'
-    DATABASE_NAME = 'db.devdb'
-
-#    DATABASE_ENGINE = 'mysql' #'$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-#    DATABASE_NAME = 'dina' #'$$DB_NAME$$'             # Or path to database file if using sqlite3.
-#    DATABASE_USER = 'root' #'$$DB_USER$$'             # Not used with sqlite3.
-#    DATABASE_PASSWORD = '123456' #'$$DB_PASSWD$$'         # Not used with sqlite3.
-else:
-
-    DATABASE_ENGINE = '$$DB_ENGINE$$'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-    DATABASE_NAME = '$$DB_NAME$$'             # Or path to database file if using sqlite3.
-    DATABASE_USER = '$$DB_USER$$'             # Not used with sqlite3.
-    DATABASE_PASSWORD = '$$DB_PASSWD$$'         # Not used with sqlite3.
-    DATABASE_HOST = '$$DB_HOST$$'             # Set to empty string for localhost. Not used with sqlite3.
-    DATABASE_PORT = '$$DB_PORT$$'             # Set to empty string for default. Not used with sqlite3.
-
-#-----------------------------------------------------------------------------------------------------------------------
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -105,8 +94,11 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
+
 
 # original one
 #ROOT_URLCONF = 'Dina_Project.urls'
@@ -122,7 +114,7 @@ TEMPLATE_DIRS = (
 
 
 
-#@@@ Never use never use the dir name Dina_CMS in module starts
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,21 +122,12 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.messages',
     'dina.core',
-    'dina.mptt',
+    'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
-    'apps.brainstorm',
-    'apps.blog',
-    
-    
-    
+    'apps.blog',  
     
 )
 
-
-#+++ here i should find a better way to deal with dynamic apps
-INSTALLED_APPS += confs.published_apps
-
-
-    
