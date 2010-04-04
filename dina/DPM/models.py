@@ -1,21 +1,11 @@
-from django.db import models
 import os
 import shutil
+
+from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
-
-
-
-class Installer (models.Model):
-
-    # here i should add the help text if i succeed.
-    File = models.FileField (verbose_name = _("File") , help_text=_("Upload and install a package") ,  upload_to = 'tmp/')
-    class Meta:
-        verbose_name_plural = _('Installer')
-        
-
-
+# This model will be rreplaced in the future by DPM
 class application (models.Model):
 
     Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
@@ -52,43 +42,54 @@ class application (models.Model):
         verbose_name_plural = _('Applications')
         
 
-#+++ maybe its a good idea to add a application category
 
 
-class template (models.Model):
+# This Model will be replace or modified by DPM in the future version
+class Template (models.Model):
+    """
+    Dina Template class each template will have an entry here
+    that make it easy to manage them.
+    """
     
-    Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
-   
-    Version = models.CharField (max_length = 15 , verbose_name = _('Version'))
-
-    SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False
-                             , verbose_name = _('SHA1 hash') , 
-                             help_text = _("Each application identify it self by its SHA1 hash"))
-
-    Author = models.CharField (max_length = 30 , verbose_name = _('Author'))
-    Email = models.EmailField (verbose_name = _('Email'))
-    Home = models.URLField (blank = True , verbose_name = _('Home Page') )
-
-    Description = models.TextField (blank = True , verbose_name = _('Description')  )
-
+    Name = models.CharField (max_length = 30,  unique = True , verbose_name = _('Template Name') )
+    SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"))
+    Author = models.CharField (max_length = 30 , verbose_name = _('Author') , blank=True , null=True)
+    Email = models.EmailField (verbose_name = _('Email')  , blank=True , null=True )
+    Home = models.URLField (blank = True , verbose_name = _('Home Page')  , blank=True , null=True)
+    Description = models.TextField (blank = True , verbose_name = _('Description') , blank=True , null=True )
     Default = models.BooleanField (unique = True , verbose_name = _('Default'))
 
+    def delete (self):
+        # TODO: Checking for a global setting that allow to run a hook inside of templates
+        # in the installation and deletation time.
 
-    #def delete (self):
-        #+++ here i should add a peace of code that run a hook inside of template directory for returning 
-        #+++ the template dir address
-        #pass
+        # TODO: Remove the template directory and its media and its model.
 
+        pass
 
+    def install (self):
+        # TODO: Checking for a global setting that allow to run a hook inside of templates
+        # in the installation and deletation time.
+
+        # TODO: Read the template default path , and copy the template files and media
+
+        pass
+        
     def __unicode__ (self):
         return self.Name
 
     class Meta :
+        verbose_name = _('Template')
         verbose_name_plural = _('Templates')
+        permissions = (
+            ('can_add_template' , _("Can add template.")),
+            ('can_edit_template' , _("Can edit template.")),
+            ('can_edit_template_source' , _("Can edit template source.")),
+            ('can_delete_template' , _("Can delete template.")),
+            )
 
 
-
-
+# This Model will be replace or modified by DPM in the future version
 class Repo (models.Model):
     url = models.CharField (max_length=100, unique=True , verbose_name=_('url') , help_text = _("Url should be in '[protocol]://[address]/ [codename] [section] [section] ... format"))
     comment = models.TextField(blank=True , verbose_name = _('comment'))
