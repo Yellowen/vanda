@@ -35,14 +35,3 @@ if settings.DEBUG :
                                                   
 )
 
-
-#+++ here i should find a better way to deal with dynamic urls
-plc = confs.urls
-if len (plc) != 0:
-    for i in plc :
-        a = patterns ('' , (i[0] , include (i[1])),)
-        
-        
-        urlpatterns += a 
-
-
