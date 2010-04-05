@@ -1,6 +1,6 @@
 # Django settings for Dina_CMS project.
 import os
-import confs
+import django
 
 
 
@@ -25,7 +25,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -34,8 +33,8 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
 
 
 
@@ -91,13 +90,16 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+
+]
+
+
 
 
 # original one
@@ -115,7 +117,7 @@ TEMPLATE_DIRS = (
 
 
 
-INSTALLED_APPS = (
+DJANGO_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -123,11 +125,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.messages',
+]
+
+
+
+DINA_APPS = [
     'dina.core',
+    'dina.DPM',
     'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
     'apps.blog',  
-    
-)
+]
+
+INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 
 

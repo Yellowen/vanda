@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+
+# From old version (0.1.0) -------------------------------------------------------------------
 # This model will be rreplaced in the future by DPM
 class application (models.Model):
 
@@ -43,6 +45,24 @@ class application (models.Model):
         
 
 
+#---------------------------------------------------------------------------
+
+
+class TemplateManager (models.Manager):
+    """
+    This manager will add to template model and provide some functions like:
+    setActive : this function the a template as active (template in use)
+    """
+    
+    
+    def setActive (self):
+        """
+        Set a template as active and deactivate lastest active template.
+        """
+        
+        print str (self.get_query_set ())
+
+
 
 # This Model will be replace or modified by DPM in the future version
 class Template (models.Model):
@@ -55,9 +75,13 @@ class Template (models.Model):
     SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"))
     Author = models.CharField (max_length = 30 , verbose_name = _('Author') , blank=True , null=True)
     Email = models.EmailField (verbose_name = _('Email')  , blank=True , null=True )
-    Home = models.URLField (blank = True , verbose_name = _('Home Page')  , blank=True , null=True)
-    Description = models.TextField (blank = True , verbose_name = _('Description') , blank=True , null=True )
-    Default = models.BooleanField (unique = True , verbose_name = _('Default'))
+    Home = models.URLField ( verbose_name = _('Home Page')  , blank=True , null=True)
+    Description = models.TextField ( verbose_name = _('Description') , blank=True , null=True )
+    Active = models.BooleanField (unique = True , verbose_name = _('Active'))
+
+    # Set the default manager . Since TemplateManager class extend the Manager class
+    # all of default manager's method will be available.
+    objects = TemplateManager ()
 
     def delete (self):
         # TODO: Checking for a global setting that allow to run a hook inside of templates

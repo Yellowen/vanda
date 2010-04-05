@@ -58,8 +58,8 @@ class app_admin (admin.ModelAdmin):
 
 
 class temp_admin (admin.ModelAdmin):
-    list_display = ('Name', 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Default')
-    list_display_links = ('Name' , 'Default' , )
+    list_display = ('Name' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Active')
+    list_display_links = ('Name' , 'Active' , )
     #list_filter = ('Publish' , )
     list_per_page = 15
     ordering = ('Name' , )
@@ -69,12 +69,10 @@ class temp_admin (admin.ModelAdmin):
     def save_model (self , request , obj , fro , change):
         
 
-        # Get current template
-        current = template.objects.get(Default=True)
-        current.Default = False
-        os.unlink (settings.TEMPLATE_DIRS + "/default")
-        os.symlink (settings.TEMPLATE_DIRS + "/" + obj.Name , settings.TEMPLATE_DIRS + "/default")
         obj.save ()
+        if obj.Active:
+            obj.objects.setActive (id=obj.id)
+        
 
 
 class repo_admin (admin.ModelAdmin):
@@ -84,6 +82,6 @@ class repo_admin (admin.ModelAdmin):
 
 admin.site.register (Installer , inst_admin)
 admin.site.register (application , app_admin)
-admin.site.register (template , temp_admin)
+admin.site.register (Template , temp_admin)
 admin.site.register (Repo , repo_admin)
 
