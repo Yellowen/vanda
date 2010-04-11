@@ -25,9 +25,9 @@ def register(model, parent_attr='parent', left_attr='lft', right_attr='rght',
     from django.db.models import FieldDoesNotExist, PositiveIntegerField
     from django.utils.translation import ugettext as _
 
-    from dina.mptt import models
-    from dina.mptt.signals import pre_save
-    from dina.mptt.managers import TreeManager
+    from dina.utils.mptt import models
+    from dina.utils.mptt.signals import pre_save
+    from dina.utils.mptt.managers import TreeManager
 
     if model in registry:
         raise AlreadyRegistered(

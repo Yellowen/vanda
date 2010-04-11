@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response as rr
 from django.http import HttpResponse as HR
 
 from django.contrib.auth.decorators import user_passes_test
-import DPM
+import dina.DPM
 
 # Create your views here.
 

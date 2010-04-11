@@ -4,7 +4,7 @@ A custom manager for working with trees of objects.
 from django.db import connection, models, transaction
 from django.utils.translation import ugettext as _
 
-from dina.mptt.exceptions import InvalidMove
+from dina.utils.mptt.exceptions import InvalidMove
 
 __all__ = ('TreeManager',)
 

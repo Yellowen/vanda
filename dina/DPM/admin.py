@@ -1,8 +1,8 @@
+import os
+
 from django.contrib import admin
 from models import *
 from django.conf import settings
-import installer
-import os 
 from django.core.management import call_command
 
 
@@ -46,7 +46,7 @@ class app_admin (admin.ModelAdmin):
         
         obj.save ()
         
-        installer.update_apps ()
+#        installer.update_apps ()
         call_command ('syncdb')
         
         
@@ -80,7 +80,7 @@ class repo_admin (admin.ModelAdmin):
     
         
 
-admin.site.register (Installer , inst_admin)
+#admin.site.register (Installer , inst_admin)
 admin.site.register (application , app_admin)
 admin.site.register (Template , temp_admin)
 admin.site.register (Repo , repo_admin)

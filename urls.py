@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.http import HttpResponseRedirect
-import confs
+
 import os
 from django.conf import settings
 

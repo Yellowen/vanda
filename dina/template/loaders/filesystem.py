@@ -1,11 +1,17 @@
 """
 Wrapper for loading templates from the filesystem by active template.
 """
-
 from django.conf import settings
 from django.template import TemplateDoesNotExist
 from django.template.loader import BaseLoader
 from django.utils._os import safe_join
+
+# IMPORTANT: --------------------------------------------------------
+# This import section may change in the due to finding a better
+# Tree structur 
+from dina.DPM.models import Template
+
+# ------------------------------------------------------------------
 
 class Loader(BaseLoader):
     is_usable = True
@@ -16,11 +22,18 @@ class Loader(BaseLoader):
         directory in 'template_dirs'. Any paths that don't lie inside one of the
         template dirs are excluded from the result set, for security reasons.
         """
+
+        
         if not template_dirs:
             template_dirs = settings.TEMPLATE_DIRS
+            
         for template_dir in template_dirs:
             try:
+
+#                active_template = Template.objects.Current ()
+#                template_name = safe_join (active_template , template_name)
                 yield safe_join(template_dir, template_name)
+                
             except UnicodeDecodeError:
                 # The template dir name was a bytestring that wasn't valid UTF-8.
                 raise

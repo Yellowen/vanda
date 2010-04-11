@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+from managers import TemplateManager
 
 # From old version (0.1.0) -------------------------------------------------------------------
 # This model will be rreplaced in the future by DPM

@@ -17,10 +17,10 @@ class TemplateManager (models.Manager):
         pass
 
 
-    def getActiveTheme (self):
+    def Current (self):
         """
         Return the current active themplate.
         """
-
-        print str (self.get_query_set ())
-        return super(TemplateMAnager , self).get_query_set ().get (Active=True)
+      
+        current = super(TemplateManager , self).get_query_set ().get (Active=True).Name
+        return '/%s/' % current
