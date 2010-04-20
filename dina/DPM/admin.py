@@ -70,8 +70,10 @@ class temp_admin (admin.ModelAdmin):
         
 
         obj.save ()
-        if obj.Active:
-            obj.objects.setActive (id=obj.id)
+#        if obj.Active:
+#            Template.objects.get (Active=True)
+#            obj.objects.setActive (id=obj.id)
+
         
 
 

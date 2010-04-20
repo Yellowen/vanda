@@ -2,6 +2,7 @@ import os
 import shutil
 
 from django.db import models
+
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
@@ -60,12 +61,13 @@ class Template (models.Model):
     """
     
     Name = models.CharField (max_length = 30,  unique = True , verbose_name = _('Template Name') )
-    SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"))
+    SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"), blank=True , null=True)
     Author = models.CharField (max_length = 30 , verbose_name = _('Author') , blank=True , null=True)
     Email = models.EmailField (verbose_name = _('Email')  , blank=True , null=True )
     Home = models.URLField ( verbose_name = _('Home Page')  , blank=True , null=True)
     Description = models.TextField ( verbose_name = _('Description') , blank=True , null=True )
-    Active = models.BooleanField (unique = True , verbose_name = _('Active'))
+    # TODO: unique=True should add to Active field
+    Active = models.BooleanField ( verbose_name = _('Active'))
 
     # Set the default manager . Since TemplateManager class extend the Manager class
     # all of default manager's method will be available.
@@ -79,6 +81,18 @@ class Template (models.Model):
 
         pass
 
+
+    def save (self, force_insert=False, force_update=False):
+        if self.Active:
+            try:
+                a = Template.objects.get (Active=True)
+                a.Active = False
+                a.save ()
+            except Template.DoesNotExist:
+                pass
+            
+        super(Template, self).save (force_insert, force_update)
+        
     def install (self):
         # TODO: Checking for a global setting that allow to run a hook inside of templates
         # in the installation and deletation time.

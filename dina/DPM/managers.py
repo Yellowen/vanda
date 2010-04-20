@@ -23,4 +23,4 @@ class TemplateManager (models.Manager):
         """
       
         current = super(TemplateManager , self).get_query_set ().get (Active=True).Name
-        return '/%s/' % current
+        return '%s/' % current

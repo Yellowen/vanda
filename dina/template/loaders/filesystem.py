@@ -30,12 +30,17 @@ class Loader(BaseLoader):
         for template_dir in template_dirs:
             try:
 
-#                active_template = Template.objects.Current ()
-#                template_name = safe_join (active_template , template_name)
-                yield safe_join(template_dir, template_name)
+                active_template = Template.objects.Current ()
+                
+                template_n = active_template + template_name
+
+
+
+                yield safe_join(template_dir, template_n)
                 
             except UnicodeDecodeError:
                 # The template dir name was a bytestring that wasn't valid UTF-8.
+                print "1"
                 raise
             except ValueError:
                 # The joined path was located outside of this particular
@@ -46,7 +51,9 @@ class Loader(BaseLoader):
     def load_template_source(self, template_name, template_dirs=None):
         tried = []
         for filepath in self.get_template_sources(template_name, template_dirs):
+
             try:
+
                 file = open(filepath)
                 try:
                     return (file.read().decode(settings.FILE_CHARSET), filepath)

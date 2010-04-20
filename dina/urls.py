@@ -10,7 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
-    (r'^dpm/', include('dina.core.urls')),
+  #  (r'^dpm/', include('dina.core.urls')),
     (r'^core/$', 'dina.core.views.pkgm_mng'),                   
     (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),                   
     (r'^', include(admin.site.urls)),
