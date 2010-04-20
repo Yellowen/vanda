@@ -14,6 +14,8 @@
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
 <!-- Container -->
+
+
 <div id="container">
 
     {% if not is_popup %}
@@ -22,7 +24,7 @@
         <div id="branding">
         {% block branding %}{% endblock %}
         </div>
-        {% if user.is_active and user.is_staff %}
+        {% if user.is_authenticated and user.is_staff %}
         <div id="user-tools">
             {% trans 'Welcome,' %}
             <strong>{% firstof user.first_name user.username %}</strong>.
@@ -49,7 +51,9 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
+		    
     </div>
+
     <!-- END Header -->
     {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
     {% endif %}
@@ -58,21 +62,47 @@
         <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
         {% endif %}
 
+
     <!-- Content -->
+
+	{% block panel %}{% endblock %}
+
+
     <div id="content" class="{% block coltype %}colM{% endblock %}">
+      
         {% block pretitle %}{% endblock %}
+	
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}
         {% block object-tools %}{% endblock %}
         {{ content }}
         {% endblock %}
         {% block sidebar %}{% endblock %}
+	
         <br class="clear" />
     </div>
+        
+
     <!-- END Content -->
 
-    {% block footer %}<div id="footer"></div>{% endblock %}
+    {% block footer %}
+<br/>
+<div class="footer">
+<table align="center" width="550" >
+<tr>
+ <td><a href="http://wwwgithub.com/lxsameer/Dina_CMS" alt="Dina CMS Home Page" ><img src="{% admin_media_prefix %}img/admin/dina.png" ></a></td>
+<td><a href="http://www.python.org/" alt="Python Home Page" ><img src="{% admin_media_prefix %}img/admin/python.png"></a></td>
+<td><a href="http://www.djangoproject.com/" alt="Django Home Page" ><img src="{% admin_media_prefix %}img/admin/django.png"></a></td>
+</tr>
+</table>
+<br/>
+<p align="center">{% trans 'Dina CMS Released under the term of use of' %}<a href="www.gnu.org/licenses/gpl.html"> {% trans "GNU/GPL" %}</a> {% trans "license." %}</p>
+<p align="center">{% trans 'Dina CMS version 0.1.0' %}</p>
+
 </div>
+{% endblock %}
+</div>
+
 <!-- END Container -->
 
 </body>

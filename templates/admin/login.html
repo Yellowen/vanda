@@ -5,7 +5,12 @@
 
 {% block bodyclass %}login{% endblock %}
 
-{% block content_title %}{% endblock %}
+{% block branding %} 
+
+{% endblock %}
+
+
+{% block content_title %}<h1 align="center">Dina Admin</h1>{% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
 
@@ -13,7 +18,8 @@
 {% if error_message %}
 <p class="errornote">{{ error_message }}</p>
 {% endif %}
-<div id="content-main">
+<div id="content-main" > 
+<br/>
 <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
   <div class="form-row">
     <label for="id_username">{% trans 'Username:' %}</label> <input type="text" name="username" id="id_username" />
@@ -26,9 +32,13 @@
     <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
   </div>
 </form>
+<div class="logo">
+<img src="{% admin_media_prefix %}img/admin/login.png">
+</div>
 
 <script type="text/javascript">
 document.getElementById('id_username').focus()
 </script>
 </div>
+<br/>
 {% endblock %}
