@@ -10,7 +10,7 @@ from django.utils._os import safe_join
 # This import section may change in the due to finding a better
 # Tree structur 
 from dina.DPM.models import Template
-
+from dina.template import parser
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
@@ -56,7 +56,9 @@ class Loader(BaseLoader):
 
                 file = open(filepath)
                 try:
-                    return (file.read().decode(settings.FILE_CHARSET), filepath)
+                     unparse_template = file.read().decode(settings.FILE_CHARSET)
+                     
+                     return (unparse_template , filepath)
                 finally:
                     file.close()
             except IOError:
