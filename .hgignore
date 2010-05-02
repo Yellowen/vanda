@@ -16,5 +16,6 @@ syntax: glob
 *.swp
 *.kpf
 *.log
+*.e4p
 *.wpr
 data/*
