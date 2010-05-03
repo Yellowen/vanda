@@ -16,18 +16,3 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
-
-from django.conf.urls.defaults import *
-
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-
-
-
-urlpatterns = patterns('',
-
-                       (r'pages/' , include ('dina.fem.page.urls')),
-                       (r'blog/' , include ('apps.blog.urls')),
-                       
-)
