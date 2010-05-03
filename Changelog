@@ -1,4 +1,208 @@
+2010-05-04  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README, README.developers, dina/utils/mptt/django-
+	mptt-0.2-docs/forms.html, dina/utils/mptt/django-
+	mptt-0.2-docs/install.html, dina/utils/mptt/django-
+	mptt-0.2-docs/models.html, dina/utils/mptt/django-
+	mptt-0.2-docs/overview.html, dina/utils/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/utils/mptt/django-
+	mptt-0.2-docs/templates.html, dina/utils/mptt/django-
+	mptt-0.2-docs/utilities.html:
+	README added.
+	[efb95514f88f] [tip]
+
+	* apps/blog/templatetags/blog.py, dina/DPM/admin.py,
+	dina/DPM/managers.py, dina/DPM/models.py, dina/conf/configs.py,
+	dina/conf/models.py, dina/core/codec/file/main.py,
+	dina/core/dev/__init__.py, dina/core/installer.py,
+	dina/core/package.py, dina/core/repository.py, dina/core/server.py,
+	dina/core/tools/dinaize.py, dina/core/tools/dpm-buildpkg.py,
+	dina/core/tools/dpm-scanpackages.py, dina/core/urls.py,
+	dina/core/views.py, dina/fem/menu/admin.py, dina/fem/menu/models.py,
+	dina/fem/menu/templatetags/menu.py, dina/fem/menu/views.py,
+	dina/fem/page/admin.py, dina/fem/page/models.py,
+	dina/fem/page/urls.py, dina/fem/page/views.py,
+	dina/template/loaders/filesystem.py, dina/template/parser.py,
+	dina/urls.py:
+	Prepare to migrate to savannah
+	[b9cc81c92b95]
+
+	* apps/blog/admin.py, apps/blog/models.py, apps/blog/urls.py,
+	apps/blog/views.py, apps/urls.py, license_header, manage.py,
+	settings.py, urls.py, views.py:
+	blog fixed for savannah
+	[c8bf90bb2a84]
+
+2010-05-03  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* COPYING, License:
+	License file changed.
+	[bc31273e715e]
+
+	* License:
+	License added.
+	[00a1efd3ee34]
+
+2010-05-02  Nima Nazari  <eminem_d12n@yahoo.com>
+
+	* dina/core/server.py:
+	some bug fixed in server.py
+	[64a68314f4e5]
+
+	* dina/core/server.py, site_media/simple_black/default.css,
+	site_media/simple_black/img01.jpg,
+	site_media/simple_black/img02.jpg,
+	site_media/simple_black/img03.jpg,
+	site_media/simple_black/img11.gif,
+	site_media/simple_black/img12.gif,
+	site_media/simple_black/spacer.gif,
+	templates/simple_black/media/css/default.css,
+	templates/simple_black/media/images/img01.jpg,
+	templates/simple_black/media/images/img02.jpg,
+	templates/simple_black/media/images/img03.jpg,
+	templates/simple_black/media/images/img11.gif,
+	templates/simple_black/media/images/img12.gif,
+	templates/simple_black/media/images/spacer.gif, urls.py:
+	Media dynamic serving completed. ( unsecure )
+	[1c2f881585a8]
+
+	* .hgignore, dina/core/server.py:
+	some change in server.py
+	[979ca929b4c6]
+
+2010-05-02  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/core/server.py:
+	media serving view def added.
+	[2424785825ad]
+
+2010-04-30  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/DPM/fixtures/initial_data.json,
+	dina/fem/menu/fixtures/initial_data.json,
+	dina/fem/page/fixtures/initial_data.json:
+	Some fixtures add for page, menu and DPM
+	[4c0a44cd2c16]
+
+2010-04-21  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/template/loaders/filesystem.py, dina/template/parser.py:
+	dina/template/parser.py added.
+	[829e5025fdf5]
+
+2010-04-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/blog/templates/blog.html, apps/blog/templates/comments.html,
+	dina/DPM/admin.py, dina/DPM/managers.py, dina/DPM/models.py,
+	dina/fem/menu/templatetags/menu.py, dina/fem/page/views.py,
+	dina/template/loaders/filesystem.py, dina/urls.py,
+	templates/simple_black/base_html.html,
+	templates/simple_black/index.html,
+	templates/simple_black/index_1.html:
+	Default template loader completed, Dina is templatable now.
+	[e4d20b3b4c7f]
+
+	* templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/login.html, templates/dina/default, test.py:
+	Some bug fixed in admin templates.
+	[6e4c404e9a73]
+
+2010-04-16  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* templates/simple_black/base.html,
+	templates/simple_black/base_html.html:
+	removing brainstorm
+	[ac82458e0fb9]
+
+2010-04-11  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/urls.py, dina/DPM/admin.py, dina/DPM/managers.py,
+	dina/DPM/models.py, dina/core/views.py, dina/fem/menu/models.py,
+	dina/template/loaders/filesystem.py, dina/utils/mptt/__init__.py,
+	dina/utils/mptt/managers.py, settings.py, urls.py:
+	Some 1.2 port issue and template loader improvments
+	[1b78f16b3df7]
+
+2010-04-07  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/DPM/managers.py, dina/DPM/models.py, dina/template/__init__.py,
+	dina/template/loaders/__init__.py,
+	dina/template/loaders/filesystem.py, settings.py:
+	Dina template loader added.
+	[b4cfc0f4410b]
+
+2010-04-05  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* .hgignore, dina/DPM/admin.py, dina/DPM/models.py, settings.py:
+	TemplateManager added.
+	[8d6219563376]
+
+	* dina/DPM/models.py:
+	DPM Template model prepared.
+	[99c4b3da082c]
+
+	* dina/DPM/DPM.py, dina/DPM/__init__.py, dina/DPM/admin.py,
+	dina/DPM/models.py, dina/core/DPM.py, dina/core/admin.py,
+	dina/core/models.py:
+	DPM package moved to dina/DPM
+	[6bc0debd2cbf]
+
 2010-04-04  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* confs/__init__.py, urls.py:
+	Conf removed.
+	[a32e98aa4508]
+
+	* apps/brainstorm/__init__.py, apps/brainstorm/admin.py,
+	apps/brainstorm/brainstorm, apps/brainstorm/forms.py,
+	apps/brainstorm/models.py, apps/brainstorm/templates/comment.html,
+	apps/brainstorm/templates/form.html,
+	apps/brainstorm/templates/view.html,
+	apps/brainstorm/templatetags/__init__.py,
+	apps/brainstorm/templatetags/brainstorm.py, apps/brainstorm/urls.py,
+	apps/brainstorm/views.py:
+	Brainstorm removed.
+	[1c0852858f3d]
+
+	* dina/mptt/__init__.py, dina/mptt/django-mptt-0.2-docs/forms.html,
+	dina/mptt/django-mptt-0.2-docs/install.html, dina/mptt/django-
+	mptt-0.2-docs/models.html, dina/mptt/django-
+	mptt-0.2-docs/overview.html, dina/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/mptt/django-
+	mptt-0.2-docs/templates.html, dina/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/mptt/exceptions.py,
+	dina/mptt/forms.py, dina/mptt/managers.py, dina/mptt/models.py,
+	dina/mptt/signals.py, dina/mptt/templatetags/__init__.py,
+	dina/mptt/templatetags/mptt_tags.py, dina/mptt/tests/__init__.py,
+	dina/mptt/tests/doctests.py,
+	dina/mptt/tests/fixtures/categories.json,
+	dina/mptt/tests/fixtures/genres.json, dina/mptt/tests/models.py,
+	dina/mptt/tests/settings.py, dina/mptt/tests/testcases.py,
+	dina/mptt/tests/tests.py, dina/mptt/utils.py:
+	mptt moved.
+	[a9af33a27856]
+
+	* Changelog, dina/utils/__init__.py, dina/utils/mptt/__init__.py,
+	dina/utils/mptt/django-mptt-0.2-docs/forms.html, dina/utils/mptt
+	/django-mptt-0.2-docs/install.html, dina/utils/mptt/django-
+	mptt-0.2-docs/models.html, dina/utils/mptt/django-
+	mptt-0.2-docs/overview.html, dina/utils/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/utils/mptt/django-
+	mptt-0.2-docs/templates.html, dina/utils/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/utils/mptt/exceptions.py,
+	dina/utils/mptt/forms.py, dina/utils/mptt/managers.py,
+	dina/utils/mptt/models.py, dina/utils/mptt/signals.py,
+	dina/utils/mptt/templatetags/__init__.py,
+	dina/utils/mptt/templatetags/mptt_tags.py,
+	dina/utils/mptt/tests/__init__.py,
+	dina/utils/mptt/tests/doctests.py,
+	dina/utils/mptt/tests/fixtures/categories.json,
+	dina/utils/mptt/tests/fixtures/genres.json,
+	dina/utils/mptt/tests/models.py, dina/utils/mptt/tests/settings.py,
+	dina/utils/mptt/tests/testcases.py, dina/utils/mptt/tests/tests.py,
+	dina/utils/mptt/utils.py, settings.py:
+	Settings.py fixed for 1.2
+	[d77d72111adf]
 
 	* templates/admin/404.html, templates/admin/500.html,
 	templates/admin/actions.html, templates/admin/app_index.html,
@@ -24,7 +228,7 @@
 	templates/admin/search_form.html, templates/admin/submit_line.html,
 	templates/admin/template_validator.html:
 	Admin template fixed
-	[f34001662468] [tip]
+	[f34001662468]
 
 2010-04-03  Sameer Rahmani  <lxsameer@gmail.com>
 
