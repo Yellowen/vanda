@@ -32,7 +32,12 @@ class DinaConfig (models.Model):
     def save(self, *args, **kwargs):
         DinaConfig.objects.all ().delete ()
         super(DinaConfig, self).save (*args , **kwargs)
-                                   
+
+
+
+
+    def __unicode__ (self):
+        return "%s" % (self.site_name)
     # Managers
 #    objects = sd
 
