@@ -17,27 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.db import models
-from django.utils.translation import ugettext as _
+from django.contrib import admin
+from models import *
 
-# TODO: Add a dynamic field loader 
-class DinaConfig (models.Model):
-    # Fields
-    site_name =  models.CharField (max_length = 50, verbose_name=_("Site Name"), \
-                                   help_text=_("Site Name is a name that show in the title srction."),\
-                                   default=_("Dina Project"))
-    
-
-    # Methods
-    def save(self, *args, **kwargs):
-        DinaConfig.objects.all ().delete ()
-        super(DinaConfig, self).save (*args , **kwargs)
-                                   
-    # Managers
-#    objects = sd
-
-
-
-class AppsConfigs (models.Model):
+class Config (admin.ModelAdmin):
     pass
+
+
+admin.site.register (DinaConfig , Config)
 

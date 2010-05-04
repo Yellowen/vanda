@@ -155,6 +155,7 @@ DJANGO_APPS = [
 DINA_APPS = [
     'dina.core',
     'dina.DPM',
+    'dina.conf',
     'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
