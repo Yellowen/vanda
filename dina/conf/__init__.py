@@ -1,4 +1,8 @@
-__all__ = ('register',)
+from models import * #DinaConfing
+
+
+
+#__all__ = ('register',)
 
 class AlreadyRegistered(Exception):
     """

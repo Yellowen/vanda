@@ -75,3 +75,10 @@ class Config (object) :
     def __setattr__ (self , name , value):
         print " = ".join (name,value)
         self.__dict__[name] = int (value ) + 1 
+
+
+class test (Config):
+
+
+    b = 32
+    f = 40
