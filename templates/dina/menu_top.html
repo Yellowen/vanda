@@ -15,9 +15,9 @@
 </div>
 {% else %}
 
-
+<ul>
 {% for i in items %}
-<a href="{{ i.url }}">{{ i.title }}</a> |
+<li><a href="{{ i.url }}">{{ i.title }}</a></li>
 {% endfor %}
-
+</ul>
 {% endif %}

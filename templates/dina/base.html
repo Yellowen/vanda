@@ -52,9 +52,24 @@
 
 		 <div id="footer">
 		       {% block footer %}
+		       <div class='footercontent'>
 
-		       
-		       <p> DinaProject</p>
+			 <div id='footerleft'>
+			   {% menu "footer_left" %}
+			 </div>
+
+			 <div id='footercenter'>
+			   {% menu "footer_center" %}
+			 </div>
+
+			 <div id='footerright'>
+			   {% menu "footer_right" %}
+			 </div>
+
+		       </div>
+		       <div id='copyright'>
+			 <p>Copyright (c) 2009 - 2010 Dina Project. Dina release under the term of GNU/GPL v2.</p>
+		       </div>
 		       {% endblock %}
 
 			   
