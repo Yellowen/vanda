@@ -52,7 +52,7 @@ a:active {
  float: left;
  color: #2e3436;
  background: #eeeeec;
- min-height: 350px;
+ min-height: 550px;
  width: 80%;
  display: inline;
 }
@@ -115,6 +115,11 @@ a:active {
  clear: both;
  color: #eeeeec;
  background: #555753;
+}
+
+#footer a{
+    padding-left: 0px;
+    color: #e9b96e;
 }
 
 
