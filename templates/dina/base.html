@@ -1,45 +1,66 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load menu %}
+{% load i18n %}
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Dina Project</title>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+{% block header %}
+<title>{% block title %}Dina Project{% endblock %}</title>
 <link rel="stylesheet" type="text/css" href="/site_media/css/default.css">
-</head><body>
+{% endblock %}
+</head>
+<body>
 	<div id="wrapper">
          <div id="header">
 		 
-		       <p>This is the Header</p>		 
+		       <H1>Dina Project</H1>		 
+		       <span>Impossible is Impossible</span>
 			   
 		 </div>
+	 {% block top-side %}
          <div id="navigation">
 		 
-		       <p>This is the Navigation</p>		 
+		 {% menu_class "top"%}
+		 
 			   
-		 </div>
+	 </div>
+	 {% endblock %}
+	 {% block body %}
 		 <div id="content">
 		      
-			  <p>This is the main content</p><br><br> 
-              <p><a href="http://www.cssportal.com/generators/layouts/filenumber.htm">
-              <img src="83338_files/html.html" width="16" border="0" height="16"> HTML File</a></p>
-              <p><a href="http://www.cssportal.com/generators/layouts/filenumber.css">
-              <img src="83338_files/css.html" width="16" border="0" height="16"> CSS File</a></p>
-	          <p>To download, right click and choose 'Save Target as...'</p>
-	          <p>&nbsp;</p>
-	          <p>If you use one of these layouts, please consider linking to CSS Portal.<br>
-	          http://www.cssportal.com</p>
-	          		 
-		 
+		      
+		      {% block content %}
+
+		
+		      {% endblock %}
+		      
+
+		      
 		 </div>
+	 {% endblock %}
+		 {% block left-side %}
 		 <div id="rightcolumn">
-		 
-		       <p>Right Column</p>
-		 
+		   
+		   <ul>
+		     {% menu_class "side" %}
+		   </ul>
+		   		 
 		 </div>
+		 {% endblock %}
+
 		 <div id="footer">
+		       {% block footer %}
+
 		       
-			   <p>This is the Footer</p>		
+		       <p> DinaProject</p>
+		       {% endblock %}
+
+			   
 			    
-	     </div>   </div>
+		 </div>
+	</div>
    
-</body></html>
+</body>
+</html>
