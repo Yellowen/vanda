@@ -30,6 +30,17 @@ class ConfigBase (type):
         """
         
         super_new = super(ConfigBase , cls).__new__
+
+        module = attrs.pop ('__module__')
+        new_class = super_new (cls , name , bases , {'__module__' : module} )
+        attr_meta = attrs.pop ('Meta', None)
+        if not attr_meta:
+            meta = getattr(new_class, 'Meta', None)
+        else:
+            meta = attr_meta
+            
+        if getattr(meta, 'label', None) is None:
+            kwargs = {'label' : name}
         
         print "Name: %s" % name
         print "Base Classes:"
@@ -37,9 +48,9 @@ class ConfigBase (type):
             print "\t%s" % i
         
         for i in attrs.keys ():
-            print "%s = %s" % (i , type(attrs[i]).__name__)
+            print "%s = %s" % (i , attrs[i])
             
-        new_class = super_new (cls , name , bases , attrs )
+
         setattr(new_class , "sameer" , "rahmani")
         return new_class
         
