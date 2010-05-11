@@ -42,7 +42,6 @@ urlpatterns = patterns('',
     (r'^core/$', 'dina.core.views.pkgm_mng'),                   
     (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),
     url(r'^$', wrap(admin_index), name='index'),
-    #(r'^$' , 'dina.core.sites.admin_index'),
     (r'^', include(admin.site.urls)),
                        
                        

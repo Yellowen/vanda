@@ -46,14 +46,3 @@ urlpatterns = patterns('',
 )
 
 
-
-# this section add site media to the development environment in release time we should use apache for handling this
-#if settings.DEBUG :
-    
-#    urlpatterns += patterns ('' ,
- #                      (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': os.path.join ( os.path.dirname (__file__) , 'site_media').replace ('\\' ,'/')}),      
-  #                     (r'^media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root':os.path.join ( os.path.dirname (__file__) , 'media').replace ('\\' ,'/')}),
-                             
-                                                  
-#)
-
