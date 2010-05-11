@@ -16,24 +16,33 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
-
-
+import os
 
 from django.conf.urls.defaults import *
 from django.contrib import admin
-import os
+from django.utils.functional import update_wrapper
 
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+from dina.core.sites import admin_index
+
+
 admin.autodiscover()
 
 
+
+def wrap(view, cacheable=False):
+    def wrapper(*args, **kwargs):
+        return admin.site.admin_view(view, cacheable)(*args, **kwargs)
+    return update_wrapper(wrapper, view)
+        
+
 urlpatterns = patterns('',
-    # Uncomment the next line to enable the admin:
-  #  (r'^dpm/', include('dina.core.urls')),
+
+    #  (r'^dpm/', include('dina.core.urls')),
     (r'^core/$', 'dina.core.views.pkgm_mng'),                   
-    (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),                   
+    (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),
+    url(r'^$', wrap(admin_index), name='index'),
+    #(r'^$' , 'dina.core.sites.admin_index'),
     (r'^', include(admin.site.urls)),
                        
                        
