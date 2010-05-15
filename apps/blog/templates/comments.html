@@ -28,7 +28,7 @@
 </div>
 {% endfor %}
 {% get_comment_form for post as form %}
-<form action="{% comment_form_target %}" method="POST">
+<form action="{% comment_form_target %}" method="POST">{% csrf_token %}
 <table>
   {{ form }}
 	<tr>
