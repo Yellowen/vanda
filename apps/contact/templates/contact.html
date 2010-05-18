@@ -1,0 +1,76 @@
+{% extends "base_html.html" %}
+{% load i18n %}
+{% block content %}
+
+{% if contact_info.contact_position_flag %}
+	<p> {{ contact_info.contact_position }} </p>
+{% endif %}
+
+{% if contact_info.email_flag %}
+	<a href="{{ contact_info.email }}">
+    		{{ contact_info.email }}
+  	</a>
+{% endif %}
+
+{% if contact_info.street_address_flag %}
+	<p> {{ contact_info.street_address }} </p>
+{% endif %}
+
+{% if contact_info.town_flag %}
+	<p> {{ contact_info.town }} </p>
+{% endif %}
+
+{% if contact_info.state_flag %}
+	<p> {{ contact_info.state }} </p>
+{% endif %}
+
+{% if contact_info.postalcode_flag %}
+	<p> {{ contact_info.postalcode }} </p>
+{% endif %}
+
+{% if contact_info.tell_flag %}
+	<p> {{ contact_info.tell }} </p>
+{% endif %}
+
+{% if contact_info.cell_flag %}
+	<p> {{ contact_info.cell }} </p>
+{% endif %}
+
+{% if contact_info.fax_flag %}
+	<p> {{ contact_info.fax }} </p>
+{% endif %}
+
+{% if contact_info.weburl_flag %}
+	<a href="{{ contact_info.weburl }}">
+    		{{ contact_info.weburl }}
+  	</a>
+{% endif %}
+
+{% if contact_info.miscellaneous_flag %}
+	<p> {{ contact_info.miscellaneous }} </p>
+{% endif %}
+<form action="/contact/" method="post">{% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.subject.errors }}
+        <label for="id_subject">Subject :</label>
+        {{ form.subject }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.message.errors }}
+        <label for="id_message">Messege :</label>
+        {{ form.message }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.sender.errors }}
+        <label for="id_sender">Sender E-Mail :</label>
+        {{ form.sender }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.cc_myself.errors }}
+        <label for="id_cc_myself">Cc myself :</label>
+        {{ form.cc_myself }}
+    </div>
+    <p><input type="submit" value="Send Message" /></p>
+</form>
+
+{% endblock %}

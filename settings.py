@@ -119,7 +119,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware' ,
 ]
 
 
@@ -148,6 +148,7 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.messages',
+    'django.contrib.redirects',
 ]
 
 
@@ -159,7 +160,8 @@ DINA_APPS = [
     'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
-    'apps.blog',  
+    'apps.blog',
+    'apps.contact',  
 ]
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 

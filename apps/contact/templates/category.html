@@ -1,0 +1,13 @@
+{% extends "base_html.html" %}
+{% load i18n %}
+{% block content %}
+{% for cat in category %}
+<h2>
+  <a href="{{ cat.get_absolute_url }}">
+    {{ cat }}
+  </a>
+</h2>
+
+{% endfor %}
+
+{% endblock %}

@@ -17,18 +17,26 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.conf.urls.defaults import *
+"""
+This file demonstrates two different styles of tests (one doctest and one
+unittest). These will both pass when you run "manage.py test".
 
+Replace these with more appropriate tests for your application.
+"""
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+from django.test import TestCase
 
+class SimpleTest(TestCase):
+    def test_basic_addition(self):
+        """
+        Tests that 1 + 1 always equals 2.
+        """
+        self.failUnlessEqual(1 + 1, 2)
 
+__test__ = {"doctest": """
+Another way to test that 1 + 1 is equal to 2.
 
-urlpatterns = patterns('',
+>>> 1 + 1 == 2
+True
+"""}
 
-                       (r'pages/' , include ('dina.fem.page.urls')),
-                       (r'blog/' , include ('apps.blog.urls')),
-                       (r'contact/' , include ('apps.contact.urls')),
-                       
-)
