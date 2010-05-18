@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------------
 #    Dina Project 
-#    Copyright (C) $YEAR$  $AUTHOR$
+#    Copyright (C) 2010  Dina Project Community
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
