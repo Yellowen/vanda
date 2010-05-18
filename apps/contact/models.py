@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------------
 #    Dina Project 
-#    Copyright (C) <17 may 2010>  Mohammad Hassanzadeh <hassanzadeh.mohammad@gmail.com>
+#    Copyright (C) 2010  Dina Project
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
