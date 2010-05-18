@@ -26,9 +26,14 @@ GNU General Public License for more details.
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-  All of Dina static files ( media files ) release under the term of
+  All the static files of Dina ( media files ) release under the term of
 GPL version 2.
 
+  All the documents of Dina that locate in 'doc' directories release
+under the term of GNU FDL.
+
+  All the HTML templates of Dina (*.html files that contain Django template
+language) release under the term of GPL v2.
 
 2. Dependencies license
 =============================
