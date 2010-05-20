@@ -87,6 +87,10 @@ class Template (models.Model):
     # TODO: unique=True should add to Active field
     Active = models.BooleanField ( verbose_name = _('Active'))
 
+    # This field will contain the base.html hash to track its changes
+    # so every time that base.html changed we can track the change in its
+    # section tags and regenerat front end layouts
+    Base_Hash = models.CharField (max_length=40, verbose_name = _("SHA1"), blank=True , null=True)
     # Set the default manager . Since TemplateManager class extend the Manager class
     # all of default manager's method will be available.
     objects = TemplateManager ()

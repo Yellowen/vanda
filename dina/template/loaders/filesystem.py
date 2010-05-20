@@ -43,7 +43,7 @@ class Loader(BaseLoader):
         directory in 'template_dirs'. Any paths that don't lie inside one of the
         template dirs are excluded from the result set, for security reasons.
         """
-
+        
         
         if not template_dirs:
             template_dirs = settings.TEMPLATE_DIRS
@@ -61,7 +61,7 @@ class Loader(BaseLoader):
                 
             except UnicodeDecodeError:
                 # The template dir name was a bytestring that wasn't valid UTF-8.
-                print "1"
+
                 raise
             except ValueError:
                 # The joined path was located outside of this particular

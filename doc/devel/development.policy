@@ -9,13 +9,11 @@ Copyright (C)  2009-10  Dina Project
     Free Documentation License".
 
 
-This document contain the git repository structure and specific commit policies.
-so feel free to add your ideas about this matter to this file.
+This document contain the mercurial repository structure and specific commit policies.
+If you have any idea please contact me at <lxsameer@gmail.com>.
+if you find any bug in this document please file a bug in bug tracking system.
 
-Warnning : this file will be here till phase 1 start . after that this file will 
-terminate and join to developers manuals
-
-Git Repository structure :
+Mercurial Repository structure :
     
     Since now i call Dina-CMS directory (root directory) "/" so / sign refer to Dina-CMS .
     
