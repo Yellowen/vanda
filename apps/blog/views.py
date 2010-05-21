@@ -18,7 +18,7 @@
 # ---------------------------------------------------------------------------------
 
 from django.core.context_processors import csrf
-from django.shortcuts import render_to_response as rr
+from django.shortcuts import get_object_or_404, render_to_response as rr
 from django.http import Http404
 from models import *
 
@@ -35,15 +35,11 @@ def blog (request):
 
     ent = post.objects.all ().order_by ("-datetime")[:NPP]
     
-    
     return rr ('blog.html' , {"post" : ent})
 
 
-def comments (request , Slug):
-    try:
-        p = post.objects.get ( slug = Slug)
-    except:
-        return Http404 ()
+def comments (request, slug):
+    get_object_or_404(post, slug=slug)
     render = {"post" : p ,}                
     render.update(csrf(request))            #for fixing bug#29883
     return rr ('comments.html' , render)
