@@ -2,70 +2,68 @@
 
 Copyright (C)  2009-10  Dina Project
     Permission is granted to copy, distribute and/or modify this document
-    under the terms of the GNU Free Documentation License, Version 1.3
-    or any later version published by the Free Software Foundation;
-    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-    A copy of the license is included in the section entitled "GNU
-    Free Documentation License".
+ under the terms of the GNU Free Documentation License, Version 1.3
+ or any later version published by the Free Software Foundation;
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ A copy of the license is included in the section entitled "GNU
+ Free Documentation License".
 
+Notes:
+    This document contain the mercurial repository structure and specific commit policies.
+ If you have any idea please contact me at <lxsameer@gmail.com>. if you find any bug in this
+ document please file a bug in bug tracking system.
 
-This document contain the mercurial repository structure and specific commit policies.
-If you have any idea please contact me at <lxsameer@gmail.com>.
-if you find any bug in this document please file a bug in bug tracking system.
+    Since now i call Dina-Project directory (root directory) "/" so / sign refer to 
+ dina-project directory .
 
-Mercurial Repository structure :
+    Please take a look at 2.2.1 section for defination of external applications.
+
+1. General Policy:
+
+    As a Dina developers there is some notes that you should bear in mind:
+
+    * 
+
+2. Mercurial Repository Structure :
     
-    Since now i call Dina-CMS directory (root directory) "/" so / sign refer to Dina-CMS .
+    There is some important issue that you should be awar of as Dina developer.
+
+  2.1 Media files
+
+    For a clean job its good to put just project it self under the dina-project repository, 
+ but in addition to project code we have some files that play important roll in project
+ but are not the memeber of project it self for example , pictures and  are two important
+ part of framework/CMS view . its not a good idea to put the image source files (GIMP *.xcf
+ or Photoshop *.psd) in the project tree . we just use the image output not the source.
+ but the source file is needed because of our license, and we don't have any other
+ repository for this purpose now. "So what should i do?". please build a sub-directory
+ under you template forlder with the "media_source" and put you source file in there.
+ we will build a new repository and move those file ( because we don't want to increase
+ the size of Dina package ) to new repository.
+ 
+  2.2 Applications
     
-    For a clean job its good to put just project it self under the Dina-CMS repository ,
-    but in addition to project code we have some files that play important roll in project
-    but are not the memeber of project it self for example , pictures and templates are two
-    important part of CMS view . its not a good idea to put the image source files
-    (GIMP *.xcf or Photoshop *.psd) in the project tree . we just use thethe image output
-    not the source.
+    As decided in the Dina Developers Community, we will remove all external application
+ from Dina main repository due to reach these goals:
+      
+      * Have a clean source tree
+      * Minimalest package size
+      * Seperating Dina main code from applications code
+      * Seprateing Dina task and bugs from applications one
+      * and etc.
+ 
+    2.2.1 What are external applications ?
+    	  
+	  ( defin what exactly external application is )
 
-    So here is some solution that we can use to solve this problem (if you know one write
-    it down) :
-
-
-       1. Put project directory in / address ,and put art and other section in / dir
-       	  just like code dir. Then we use git submodule for each one (For more information
-	  git submodules look at man git-submodule or ask me in lxsameer@gmail.com).so our
-	  directory structre will be something like:
-
-
-       	      	      Dina-CMS/
-				Dina/
-					our codes and django root
-				arts/
-					images sources and outputs
-				Templates/
-					templates sources
-				.
-				.
-				.
-
-		Benefits of this solution:
-
-			 1. Clean job 
-			 2. Multi-section repo so user can clone each section separatly.
-
-		Non-benefits of this :
-			 
-			 1. The Most important problem that we happen on this solution is 
-			    branching . by this solution our submodules can't have different
-			    branches for them self and it is a big problem
+ But as said in 1.1 we don't have any other repository, so we have to put unnecessary apps
+ in the /apps directory.
 
 
-	2. Build a separate repository for arts and other stuffs. ( i thinks it is the best one)
-
-	   	 Benefits:
-
-			1. clean job
-			2. two different repo for developers and artist
-			3. Lower size of repo
 
 
+
+   
 Developing policies:
 
 	The secret of successful software developing is "developing management" .
