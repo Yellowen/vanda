@@ -18,11 +18,18 @@ Notes:
 
     Please take a look at 2.2.1 section for defination of external applications.
 
+
 1. General Policy:
+    
+    At Dina Developer Community we warmly welcome to those people who wnats to join us. so
+  as a Dina developers there is some notes that you should bear in mind:
 
-    As a Dina developers there is some notes that you should bear in mind:
-
-    * 
+    * Respect to others not matter who you are.
+    * if some one make a mistake in the code call him at privet and tell him kindly.
+    * Do not humiliate any one.
+    * ( think more ).
+    *
+    *
 
 2. Mercurial Repository Structure :
     
@@ -60,56 +67,101 @@ Notes:
  in the /apps directory.
 
 
+  2.3 Branches
 
+    We use default branch of mercurial repositry as our unstable code repository. at each
+ release we will build a branch ant name it as the release version. also we have a branch 
+ call "Stable" for our last stable code.
 
+  2.4 Tags
+ 
+    We use tag for special point of development. The code should tagged with its developer
+ GPG key with the meaningful message. for example important states of application of Dina
+ itself should tagged with GPG key of their last developer.
 
    
-Developing policies:
+3. Developing Policies:
 
-	The secret of successful software developing is "developing management" .
-	Developing managment is about how we manages out codes , how we deals with bugs,
-	how we add new feature, how we release our software and . . . 
+    For gaining better and better team work ability, we need to follow these rulse:
 
-	To do so , we need to form our developing and commit to a fair struct.
+    	* Dina Project release under the term of GPL version 2, so we have to put out license
+	header at the begining of our source files. the source header should be exactly like:
 
-	I thinks the best way to get better result is :
+	     # ----------------------------------------------------------------------------
+	     #    Dina Project 
+	     #    Copyright(C) 2010  Dina Project Developer Community
+	     #
+	     #    This program is free software; you can redistribute it and/or modify
+	     #    it under the terms of the GNU General Public License as published by
+	     #    the Free Software Foundation; either version 2 of the License, or
+	     #    (at your option) any later version.
+	     #
+	     #    This program is distributed in the hope that it will be useful,
+	     #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+	     #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	     #    GNU General Public License for more details.
+	     #
+	     #    You should have received a copy of the GNU General Public License along
+	     #    with this program; if not, write to the Free Software Foundation, Inc.,
+	     #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+	     # -----------------------------------------------------------------------------
 
-	  NOTE : Global versioning system use tree digit number for show the product 
-	       	 status . Frist one called Major version that indicate  the big changes
-		 in software , like huge changes in code or changing base algorithm and etc
-		 the second number called Minor version indicate the small changes like 
-		 adding new features and the third on indicate bug fixes.
+	  please do not add your name in the license header as the author. if you want to other
+	developers know that your are the author of this peace of code or this section please
+	comment your name and contact a line or two after the license header. 
+	  e.g:
+	    
+ 	    # Sameer Rahmani <lxsameer@gmail.com>
 
-	  1. build 2 more branch called "stable" and "testing" . we work on 'master' 
-	     branch for developing and adding new things to Dina-CMS . later , when a 
-	     new feature added to project and known bugs got fixed then master code will
-	     move ( merge ) to 'testing' branch for pass the testing phase . When the testing
-	     code show stale behavior from it self it will be move to stable branch. 
-	     On new release we make a new branch from stable code and name that with the Major 
-	     and minor version number for example the code of version 1.2 will be held in "1.2"
-	     branch . after releasing a version any bug fixes will we taged . As an example some
-	     week after releasing version 1.2 , we will found a bug in version 1.2 (remember
-	     may be we work in some other major version in master branch like 3 but bug found
-	     in verison 1.2) . After fixing that bug we tag the fixing commit as 1.2.1.
+	* If you use an external module that make Dina depend on in please ask the Dina Developers
+	mailing list before that. So Dina Policy Commitee can decide about the external code. We
+	should not use external module or tools that are uncompatiblew ith  GPL liceses.
 
+	* If you use a peace of borrowed code in your code your should specify the source and license
+	of borrowed code, otherwise your code will be removed. 
 
-	  2. The commit string should be meaningful , and show what's changed in code .
-	     don't enter the lazy string please.
+	* If you have to use an external ( borrowed code ) within your source tree, please create a
+	"COPYING" file and fill that with the external code license, and tell Dina Policy Commite 
+	about it.  !!! DO NOT USE GPL UNCOMPATIBLE CODE !!!
+	
+	* Comment your code as mush as possible, so that every other developer can easily understand
+	what was you doing.
 
-	  3. Broken code or incompeted code should not commited.
+	* Please READ PEP8 <http://www.python.org/dev/peps/pep-0008/> and USE it as your main coding
+	style in Dina Project.
 
-       ***4. Never ever merge the branches with each other till you know what you do
+	* If you work on a new feature of new section please make a specification document for your
+	work and put that document in /doc/devel/spec/
+	  
+	  Also make a user manual for your work and put that in /doc/user/ .
+	  Note: if you work on a application put your user and spec documents under:
+	  	 APPDIR/doc/{devel|user}/
 
-       	  5. Always add new code to master branch and never work on other branch unless you know
-	     what you do
+	* If your looking for task to do, please take a look at task manager and bug manager system 
+	and pick a task that you want if the task or bug not assigned to any one else before. if it
+	assigned before and you still want to work on it please contact to its author.
+
+	* File a bug when you find any and work on that. so other developers can find out about that
+	bug. After finishing your work close the bug.
+
+	* If you made some changes in the code that other one works on it right now please contact
+	the current author and tell him/her about your changes.
+
+	* The commit strings should be meaningful, and show what's changed in code. Don't enter lazy
+	 strings as commit message please.
+	
+	* Broken or incompelete code should not commited.
+
+	* Never ever merge the branches with each other till you know what you do. After merging branchs
+	please tell every one about merging.
+
+	* Always add new code to defautl branch and never work on other branch unless you know what you do
 	     
-	  6. keep in mind then always be update with the main repo . our git repository deny the
-	     non-fast-forward commits so if you stoped from pushing to server with some error about
-	     non-fast-forward memory don't suprised , just pull or fetch from server to your local repo
-	     to update with the changes and try again. this error accur when server have some commits that
-	     you dont have
+	* Never split the project heads untill you know what you do.
 
-	  7. Please add any bug with its desciption in issue tracking system in github for managing bugs and
-	     bugfixed . the issue tracking address is http://github.com/lxsameer/Dina_CMS/issues.
-	     each issue gets an number is issue tracking system (IST) like #number. please add the number in
-	     bugfix commit message.
+	* Never use -f option for 'hg push' ( -f means force push )
+
+	* Always choose meaningful name for your code components.
+
+
+4. Versioning Policies.
