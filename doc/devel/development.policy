@@ -17,12 +17,12 @@ Notes:
     Since now i call Dina-Project directory (root directory) "/" so / sign refer to 
  dina-project directory .
 
-    Please take a look at 2.2.1 section for defination of external applications.
+    Please take a look at 2.2.1 section for definition of external applications.
 
 
 1. General Policy:
     
-    At Dina Developer Community we warmly welcome to those people who wnats to join us. so
+    At Dina Developer Community we warmly welcome to those people who wants to join us. so
   as a Dina developers there is some notes that you should bear in mind:
 
     * Respect to others not matter who you are.
@@ -34,18 +34,18 @@ Notes:
 
 2. Mercurial Repository Structure :
     
-    There is some important issue that you should be awar of as Dina developer.
+    There is some important issue that you should be aware of as Dina developer.
 
   2.1 Media files
 
-    For a clean job its good to put just project it self under the dina-project repository, 
+    For a clean job its good to put just project itself under the dina-project repository, 
  but in addition to project code we have some files that play important roll in project
- but are not the memeber of project it self for example , pictures and  are two important
+ but are not the member of project itself for example , pictures and  are two important
  part of framework/CMS view . its not a good idea to put the image source files (GIMP *.xcf
  or Photoshop *.psd) in the project tree . we just use the image output not the source.
  but the source file is needed because of our license, and we don't have any other
  repository for this purpose now. "So what should i do?". please build a sub-directory
- under you template forlder with the "media_source" and put you source file in there.
+ under you template folder with the "media_source" and put you source file in there.
  we will build a new repository and move those file ( because we don't want to increase
  the size of Dina package ) to new repository.
  
@@ -55,14 +55,14 @@ Notes:
  from Dina main repository due to reach these goals:
       
       * Have a clean source tree
-      * Minimalest package size
-      * Seperating Dina main code from applications code
-      * Seprateing Dina task and bugs from applications one
+      * Minimalist package size
+      * Separating Dina main code from applications code
+      * Separating Dina task and bugs from applications one
       * and etc.
  
     2.2.1 What are external applications ?
     	  
-	  ( defin what exactly external application is )
+	  ( define what exactly external application is )
 
  But as said in 1.1 we don't have any other repository, so we have to put unnecessary apps
  in the /apps directory.
@@ -70,7 +70,7 @@ Notes:
 
   2.3 Branches
 
-    We use default branch of mercurial repositry as our unstable code repository. at each
+    We use default branch of mercurial repository as our unstable code repository. at each
  release we will build a branch ant name it as the release version. also we have a branch 
  call "Stable" for our last stable code.
 
@@ -86,7 +86,7 @@ Notes:
     For gaining better and better team work ability, we need to follow these rulse:
 
     	* Dina Project release under the term of GPL version 2, so we have to put out license
-	header at the begining of our source files. the source header should be exactly like:
+	header at the beginning of our source files. the source header should be exactly like:
 
 	     # ----------------------------------------------------------------------------
 	     #    Dina Project 
@@ -115,17 +115,17 @@ Notes:
  	    # Sameer Rahmani <lxsameer@gmail.com>
 
 	* If you use an external module that make Dina depend on in please ask the Dina Developers
-	mailing list before that. So Dina Policy Commitee can decide about the external code. We
-	should not use external module or tools that are uncompatiblew ith  GPL liceses.
+	mailing list before that. So Dina Policy Committee can decide about the external code. We
+	should not use external module or tools that are incompatible with  GPL licenses.
 
 	* If you use a peace of borrowed code in your code your should specify the source and license
 	of borrowed code, otherwise your code will be removed. 
 
 	* If you have to use an external ( borrowed code ) within your source tree, please create a
-	"COPYING" file and fill that with the external code license, and tell Dina Policy Commite 
+	"COPYING" file and fill that with the external code license, and tell Dina Policy Committee 
 	about it.  !!! DO NOT USE GPL UNCOMPATIBLE CODE !!!
 	
-	* Comment your code as mush as possible, so that every other developer can easily understand
+	* Comment your code as much as possible, so that every other developer can easily understand
 	what was you doing.
 
 	* Please READ PEP8 <http://www.python.org/dev/peps/pep-0008/> and USE it as your main coding
@@ -151,14 +151,14 @@ Notes:
 	* The commit strings should be meaningful, and show what's changed in code. Don't enter lazy
 	 strings as commit message please.
 	
-	* Broken or incompelete code should not commited.
+	* Broken or incomplete code should not committed.
 
-	* Never ever merge the branches with each other till you know what you do. After merging branchs
+	* Never ever merge the branches with each other till you know what you do. After merging branches
 	please tell every one about merging.
 
-	* Always add new code to defautl branch and never work on other branch unless you know what you do
+	* Always add new code to default branch and never work on other branch unless you know what you do
 	     
-	* Never split the project heads untill you know what you do.
+	* Never split the project heads until you know what you do.
 
 	* Never use -f option for 'hg push' ( -f means force push )
 
