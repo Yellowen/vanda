@@ -76,6 +76,7 @@ class Loader(BaseLoader):
             try:
 
                 file = open(filepath)
+                
                 try:
                      unparse_template = file.read().decode(settings.FILE_CHARSET)
                      
