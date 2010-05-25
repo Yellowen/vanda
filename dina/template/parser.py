@@ -17,8 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+import re
+
 from dina.core.utils import modification_date , date_cmp
 from django.utils._os import safe_join
+from django.conf import settings
+
 
 class TemplateSyntaxError (Exception):
     def __init__ (self, line , char):
@@ -87,7 +91,24 @@ class HTMLParser (object):
 # TODO: this function is temporary and will remove with HTMLParser
 # as soosn as possible
 def tmp_BaseParser (template_stream):
-    print ">>>> TEST"
+    lines = template_stream.split ("\n")
+    tag_pattern = re.compile ("{% section ('|\")[a-zA-Z0-9_\-]+('|\") %}")
+    section_name_pattern = re.compile ("('|\")[a-zA-Z0-9_\-]+('|\")")
+    for line in lines:
+        value = None
+        # TODO: find a better way to deal with to section tag in a single line
+        tag = tag_pattern.search (line)
+        if tag is not None:
+            
+            section = section_name_pattern.search (line[tag.start(): tag.end ()])
+            if section is not None:
+                value = line[tag.start(): tag.end ()][section.start () +1: section.end () -1]
+            else:
+                # TODO: better exception raising
+                raise "section without name."
+        if value is not None:
+            print "--------> value: " , value
+    return template_stream
 
 
 
@@ -104,11 +125,11 @@ def ParseBase (baseaddress , basefile):
         fd = open (safe_join (baseaddress, basefile))
         stream = fd.read ()
         fd.close ()
-        tmp_BaseParser (stream)
+        result = tmp_BaseParser (stream)
         fd = open (safe_join (baseaddress, 'cache') , 'w+')
         fd.write (sdate)
         fd.close ()
-        return 0
+        return None
     
     
     sdate = modification_date (safe_join (baseaddress, basefile))
@@ -120,14 +141,14 @@ def ParseBase (baseaddress , basefile):
     # TODO: handle the situation that fdate contain invalid date format
     
     if res == 0:
-        return 0
+        return None
     # Handle the time mismatch 
     if res == 1 or res == 2:
         fd = open (safe_join (baseaddress, basefile))
-        stream = fd.read ()
+        stream = fd.read ().decode(settings.FILE_CHARSET)
         fd.close ()
-        
+        result = tmp_BaseParser (stream)
         fd = open (safe_join (baseaddress, 'cache') , 'w+')
         fd.write (sdate)
         fd.close ()
-        return 0
+        return result

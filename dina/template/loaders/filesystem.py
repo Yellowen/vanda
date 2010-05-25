@@ -53,8 +53,7 @@ class Loader(BaseLoader):
 
                 active_template = Template.objects.Current ()
                 template_n = active_template + template_name
-                if template_name == "base.html":
-                    ParseBase (safe_join(template_dir, active_template) , template_name)
+                
                 
                 yield safe_join(template_dir, template_n)
                 
@@ -75,10 +74,20 @@ class Loader(BaseLoader):
             try:
 
                 file = open(filepath)
+                 
+                
                 try:
-                     unparse_template = file.read().decode(settings.FILE_CHARSET)
+                    if template_name == "base.html":
+                        unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
+                                                      template_name)
+                        if unparse_template is None:
+                            
+                            unparse_template = file.read().decode(settings.FILE_CHARSET)
+                    else:
+
+                        unparse_template = file.read().decode(settings.FILE_CHARSET)
                      
-                     return (unparse_template , filepath)
+                    return (unparse_template , filepath)
                 finally:
                     file.close()
             except IOError:
