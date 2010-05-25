@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+from dina.core.utils import modification_date , date_cmp
+from django.utils._os import safe_join
 
 class TemplateSyntaxError (Exception):
     def __init__ (self, line , char):
@@ -33,7 +35,7 @@ class Section (object):
         self.params = params["parameters"]
 
 
-
+# TODO: should complete in future for parsing base.html file
 class HTMLParser (object):
     """
     this class provide a simple template tag parser that allow dina
@@ -41,11 +43,11 @@ class HTMLParser (object):
     """
 
 
-    def __init__ (self, template_stream , openmark = None , closemark= "%}"):
+    def __init__ (self, template_stream):
         self.template = template_stream.split ("\n")
-        self.OPENMARK = openmark
-        self.CLOSEMARK = closemark
-
+        self.OPENMARK = "{%"
+        self.CLOSEMARK = "%}"
+        
     def __FindSectionTag (self , line):
         # TODO: check for exists section tag, if not skip
         open_tags = line.split (self.OPENMARK)
@@ -82,3 +84,50 @@ class HTMLParser (object):
                 result.append (Section (**section))
         return result
     
+# TODO: this function is temporary and will remove with HTMLParser
+# as soosn as possible
+def tmp_BaseParser (template_stream):
+    print ">>>> TEST"
+
+
+
+
+def ParseBase (baseaddress , basefile):
+    try:
+        # if cache file exists
+        fd = open (safe_join (baseaddress, 'cache') , 'r')
+        fdate = fd.readlines ()[0]
+        fd.close ()
+    except IOError:
+        # if cache file does not exists
+        sdate = modification_date (safe_join (baseaddress, basefile))
+        fd = open (safe_join (baseaddress, basefile))
+        stream = fd.read ()
+        fd.close ()
+        tmp_BaseParser (stream)
+        fd = open (safe_join (baseaddress, 'cache') , 'w+')
+        fd.write (sdate)
+        fd.close ()
+        return 0
+    
+    
+    sdate = modification_date (safe_join (baseaddress, basefile))
+    try:
+        # if cache file contain no white space at beginning (fdate)
+        res =  date_cmp (fdate, sdate)
+    except TypeError:
+        res = 2
+    # TODO: handle the situation that fdate contain invalid date format
+    
+    if res == 0:
+        return 0
+    # Handle the time mismatch 
+    if res == 1 or res == 2:
+        fd = open (safe_join (baseaddress, basefile))
+        stream = fd.read ()
+        fd.close ()
+        
+        fd = open (safe_join (baseaddress, 'cache') , 'w+')
+        fd.write (sdate)
+        fd.close ()
+        return 0

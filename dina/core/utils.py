@@ -24,7 +24,7 @@ import datetime
 # Return the last modification date for give file name
 def modification_date(filename):
     t = os.path.getmtime(filename)
-    return datetime.datetime.fromtimestamp(t).replace (" " , "-").replace (":","-")
+    return str(datetime.datetime.fromtimestamp(t)).replace (" " , "-").replace (":","-")
 
 
 # Compare fdate with sdate. if fdate was greater than sdate result = 1

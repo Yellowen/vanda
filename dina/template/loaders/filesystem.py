@@ -31,12 +31,12 @@ from django.utils._os import safe_join
 # This import section may change in the due to finding a better
 # Tree structur 
 from dina.DPM.models import Template
-from dina.template import parser
+from dina.template.parser import ParseBase
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
     is_usable = True
-
+    temp_index = []
     def get_template_sources(self, template_name, template_dirs=None):
         """
         Returns the absolute paths to 'template_name', when appended to each
@@ -52,11 +52,10 @@ class Loader(BaseLoader):
             try:
 
                 active_template = Template.objects.Current ()
-                
                 template_n = active_template + template_name
-
-
-
+                if template_name == "base.html":
+                    ParseBase (safe_join(template_dir, active_template) , template_name)
+                
                 yield safe_join(template_dir, template_n)
                 
             except UnicodeDecodeError:
@@ -76,7 +75,6 @@ class Loader(BaseLoader):
             try:
 
                 file = open(filepath)
-                
                 try:
                      unparse_template = file.read().decode(settings.FILE_CHARSET)
                      
