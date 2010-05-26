@@ -102,12 +102,12 @@ def tmp_BaseParser (template_stream):
             
             section = section_name_pattern.search (line[tag.start(): tag.end ()])
             if section is not None:
-                value = line[tag.start(): tag.end ()][section.start () +1: section.end () -1]
+                values.append (line[tag.start(): tag.end ()][section.start () +1: section.end () -1])
             else:
                 # TODO: better exception raising
                 raise "section without name."
-        if value is not None:
-            print "--------> value: " , value
+    for i in values:
+        pass
     return template_stream
 
 
