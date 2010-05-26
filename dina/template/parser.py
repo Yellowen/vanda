@@ -114,8 +114,10 @@ def tmp_BaseParser (template_stream):
 
 
 def ParseBase (baseaddress , basefile):
+    
     try:
         # if cache file exists
+        print "> 1 > " , safe_join (baseaddress, 'cache')
         fd = open (safe_join (baseaddress, 'cache') , 'r')
         fdate = fd.readlines ()[0]
         fd.close ()
@@ -133,11 +135,8 @@ def ParseBase (baseaddress , basefile):
     
     
     sdate = modification_date (safe_join (baseaddress, basefile))
-    try:
-        # if cache file contain no white space at beginning (fdate)
-        res =  date_cmp (fdate, sdate)
-    except TypeError:
-        res = 2
+    res =  date_cmp (fdate, sdate)
+    
     # TODO: handle the situation that fdate contain invalid date format
     
     if res == 0:

@@ -34,7 +34,7 @@ def modification_date(filename):
 def date_cmp (fdate, sdate):
     flist = fdate.split ("-")
     slist = sdate.split ("-")
-    for i in len(flist):
+    for i in range (0, len(flist)):
         if flist[i] > slist[i]:
             return 1
         elif flist[i] < slist[i]:
