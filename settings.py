@@ -107,7 +107,7 @@ SECRET_KEY = '$3%mti-%a0$)-h3x-ak_92s&o2p8j96r&kwbbjv&w936@1b9#d'
 TEMPLATE_LOADERS = (
     # TODO: add a template loader for loading templates from a compress archive
     # TODO: add a template loader for loading templates from web
-    'dina.template.loaders.filesystem.load_template_source',
+    'dina.fem.template.loaders.filesystem.load_template_source',
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',

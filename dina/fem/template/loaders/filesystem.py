@@ -24,7 +24,7 @@ Wrapper for loading templates from the filesystem by active template.
 
 from django.conf import settings
 from django.template import TemplateDoesNotExist
-from django.template.loader import BaseLoader
+from django.fem.template.loader import BaseLoader
 from django.utils._os import safe_join
 
 # IMPORTANT: --------------------------------------------------------
