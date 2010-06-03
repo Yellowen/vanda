@@ -24,6 +24,8 @@ from django.utils._os import safe_join
 from django.conf import settings
 
 
+from dina.DPM.models import Template
+
 class TemplateSyntaxError (Exception):
     def __init__ (self, line , char):
         super(TemplateSyntaxError, self).__init__ ("Invalide syntax: '%s' char: %s." % (line , char))
@@ -106,6 +108,8 @@ def tmp_BaseParser (template_stream):
             else:
                 # TODO: better exception raising
                 raise "section without name."
+
+    
     for i in values:
         pass
     return template_stream

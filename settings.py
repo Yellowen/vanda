@@ -76,15 +76,10 @@ SITE_ID = 1
 USE_I18N = True
 
 
-# FS_ROOT represent to the Dina root filesystem
-FS_ROOT = os.path.dirname (__file__)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join (FS_ROOT , 'site_media').replace ('\\' , '/')
-
-# APP_ROOT conatain the logic path to app dir
-APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -98,7 +93,6 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 
-DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '$3%mti-%a0$)-h3x-ak_92s&o2p8j96r&kwbbjv&w936@1b9#d'
@@ -125,9 +119,6 @@ MIDDLEWARE_CLASSES = [
 
 
 
-# original one
-#ROOT_URLCONF = 'Dina_Project.urls'
-#ower changed one
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
@@ -136,6 +127,19 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+
+
+# FS_ROOT represent to the Dina root filesystem
+FS_ROOT = os.path.dirname (__file__)
+
+# APP_ROOT conatain the logic path to app dir
+APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
+
+DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
+
+
+
 
 
 
