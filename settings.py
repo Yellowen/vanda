@@ -58,6 +58,18 @@ DATABASES = {
 
 
 
+
+
+# FS_ROOT represent to the Dina root filesystem
+FS_ROOT = os.path.dirname (__file__)
+
+# APP_ROOT conatain the logic path to app dir
+APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
+
+DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
+
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -127,16 +139,6 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
-
-
-
-# FS_ROOT represent to the Dina root filesystem
-FS_ROOT = os.path.dirname (__file__)
-
-# APP_ROOT conatain the logic path to app dir
-APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
-
-DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
 
 
 
