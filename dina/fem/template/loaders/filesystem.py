@@ -24,14 +24,14 @@ Wrapper for loading templates from the filesystem by active template.
 
 from django.conf import settings
 from django.template import TemplateDoesNotExist
-from django.fem.template.loader import BaseLoader
+from django.template.loader import BaseLoader
 from django.utils._os import safe_join
 
 # IMPORTANT: --------------------------------------------------------
 # This import section may change in the due to finding a better
 # Tree structur 
 from dina.DPM.models import Template
-from dina.template.parser import ParseBase
+from dina.fem.template.parser import ParseBase
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
