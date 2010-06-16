@@ -29,7 +29,7 @@ from django.conf import settings
 
 
 def MediaServ (request ,  path):
-    current = Template.objects.Current ()
+    current = Template.objects.CurrentDir ()
     i = 0
 
     # TODO: search in the TEMPLATE_DIRS for the statics files , not in the first element only

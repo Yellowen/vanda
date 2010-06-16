@@ -21,6 +21,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from dina.DPM.models import Template as DPMTemplate
 # TODO: build a optional layout for each page.
 
 
@@ -32,7 +33,7 @@ class TemplateLayouts (models.Model):
     in this model.
     """
 
-    Template = models.ForeignKey ('dina.DPM.models.Template')
+    Template = models.ForeignKey (DPMTemplate) 
     Section = models.CharField (max_length=50)
     Contents = models.ManyToManyField ('Content', blank=True ,null=True)
     

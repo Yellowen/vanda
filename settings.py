@@ -163,11 +163,13 @@ DINA_APPS = [
     'dina.core',
     'dina.DPM',
     'dina.conf',
+    'dina.fem.layout',
     'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
     'apps.blog',
-    'apps.contact',  
+    'apps.contact',
+    
 ]
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 

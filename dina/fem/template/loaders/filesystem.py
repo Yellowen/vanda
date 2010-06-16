@@ -31,7 +31,7 @@ from django.utils._os import safe_join
 # This import section may change in the due to finding a better
 # Tree structur 
 from dina.DPM.models import Template
-from dina.fem.template.parser import ParseBase
+from dina.fem.template.parser import ParseBase , FillSections
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
@@ -51,7 +51,7 @@ class Loader(BaseLoader):
         for template_dir in template_dirs:
             try:
 
-                active_template = Template.objects.Current ()
+                active_template = Template.objects.CurrentDir ()
                 template_n = active_template + template_name
                 
                 
@@ -67,6 +67,7 @@ class Loader(BaseLoader):
                 # fatal).
                 pass
 
+    # TODO: Find a good way to allow user to use section tag in any html file
     def load_template_source(self, template_name, template_dirs=None):
         tried = []
         for filepath in self.get_template_sources(template_name, template_dirs):
@@ -77,16 +78,19 @@ class Loader(BaseLoader):
                  
                 
                 try:
+
                     if template_name == "base.html":
+
                         unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
                                                       template_name)
                         if unparse_template is None:
                             
                             unparse_template = file.read().decode(settings.FILE_CHARSET)
+                        unparse_template = FillSections (unparse_template)
                     else:
 
                         unparse_template = file.read().decode(settings.FILE_CHARSET)
-                     
+
                     return (unparse_template , filepath)
                 finally:
                     file.close()

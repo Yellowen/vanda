@@ -32,15 +32,23 @@ class TemplateManager (models.Manager):
         """
         Set a template as active and deactivate lastest active template.
         """
-        
-        print str (self.get_query_set ())
         pass
 
+
+    
+    
+    def CurrentDir (self):
+        """
+        Return the current active themplate directory name.
+        """
+        
+        current = super(TemplateManager , self).get_query_set ().get (Active=True).Name
+        return '%s/' % current
 
     def Current (self):
         """
         Return the current active themplate.
         """
-      
-        current = super(TemplateManager , self).get_query_set ().get (Active=True).Name
-        return '%s/' % current
+        
+        current = super(TemplateManager , self).get_query_set ().get (Active=True)
+        return current

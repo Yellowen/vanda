@@ -94,17 +94,20 @@ class HTMLParser (object):
 # TODO: this function is temporary and will remove with HTMLParser
 # as soosn as possible
 def tmp_BaseParser (template_stream):
+
     lines = template_stream.split ("\n")
     tag_pattern = re.compile ("{% section ('|\")[a-zA-Z0-9_\-]+('|\") %}")
     section_name_pattern = re.compile ("('|\")[a-zA-Z0-9_\-]+('|\")")
+    values =list ()
     for line in lines:
-        value = None
+
         # TODO: find a better way to deal with to section tag in a single line
         tag = tag_pattern.search (line)
         if tag is not None:
             
             section = section_name_pattern.search (line[tag.start(): tag.end ()])
             if section is not None:
+                print "dfsdfdsf"
                 values.append (line[tag.start(): tag.end ()][section.start () +1: section.end () -1])
             else:
                 # TODO: better exception raising
@@ -112,20 +115,33 @@ def tmp_BaseParser (template_stream):
 
 
     active_template = Template.objects.Current ()
-
+    print "> " , active_template
     for value in values:
-            layout, created = TemplateLayouts.objects.get_or_create (Template=active_template, Section=value)
+        print "--> " , value
+        # TODO: be sure to make section name in lower (icase sensetive).
+        layout, created = TemplateLayouts.objects.get_or_create (Template=active_template,\
+                                                                 Section=value.lower ())
+        print "---> " , created
         
     return template_stream
 
 
 
+def FillSections (stream):
+    """
+    Fill sections and depload tags.
+    """
+    active_template = Template.objects.Current ()
+    sections = TemplateLayouts.objects.filter (Template=active_template)
+    tmp_stream = ""
+    for section in sections:
+        pass
+
 
 def ParseBase (baseaddress , basefile):
-    
     try:
         # if cache file exists
-        print "> 1 > " , safe_join (baseaddress, 'cache')
+
         fd = open (safe_join (baseaddress, 'cache') , 'r')
         fdate = fd.readlines ()[0]
         fd.close ()
