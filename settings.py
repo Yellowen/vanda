@@ -172,3 +172,10 @@ DINA_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 
 
+# For working the contact send mail please complete flowing item
+# add by pollesangi for contact
+EMAIL_HOST = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''
+EMAIL_PORT = ''
+
