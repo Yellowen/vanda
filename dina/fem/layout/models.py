@@ -24,9 +24,6 @@ from django.utils.translation import ugettext as _
 # TODO: build a optional layout for each page.
 
 
-
-
-
 # Lets keep this model as simple as we can (lowest relations)
 # for making layout prepration faster.
 class TemplateLayouts (models.Model):
@@ -37,7 +34,10 @@ class TemplateLayouts (models.Model):
 
     Template = models.ForeignKey ('dina.DPM.models.Template')
     Section = models.CharField (max_length=50)
-    Contents = models.ManyToManyField ('Content')
+    Contents = models.ManyToManyField ('Content', blank=True ,null=True)
+    
+    class Meta:
+        unique_together = ("Template", "Section")
 
     
 # Content model need to completely optimize for next version
@@ -62,7 +62,7 @@ class Content (models.Model):
 
     # Params file hold that 0 and 2 type tag parameters like
     #     {% Name  param1 param2 .... %}
-    # parameters in Params field seperate with '&:' characters
+    # parameters in Params field seperate with '$:$' characters
     Params = models.CharField (max_length=256, null=True, blank=True)
 
 
@@ -70,5 +70,7 @@ class Content (models.Model):
     ModuleName = models.CharField (max_length=30)
 
 
-    # TODO: pair unique should add to this model
-    
+    # TODO: add the params field to unique_together
+    class Meta:
+        unique_together = ("App", "Name")
+

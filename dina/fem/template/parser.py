@@ -25,6 +25,7 @@ from django.conf import settings
 
 
 from dina.DPM.models import Template
+from dina.fem.layout.models import TemplateLayouts
 
 class TemplateSyntaxError (Exception):
     def __init__ (self, line , char):
@@ -109,9 +110,12 @@ def tmp_BaseParser (template_stream):
                 # TODO: better exception raising
                 raise "section without name."
 
-    
-    for i in values:
-        pass
+
+    active_template = Template.objects.Current ()
+
+    for value in values:
+            layout, created = TemplateLayouts.objects.get_or_create (Template=active_template, Section=value)
+        
     return template_stream
 
 

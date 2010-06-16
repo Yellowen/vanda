@@ -34,6 +34,7 @@ if [ -z "$1" ]; then
 fi      
 
 if [ "$param" = "todo" ]; then 
+    
     grep "# TODO" ./ -Rn
     exit 0
 fi
