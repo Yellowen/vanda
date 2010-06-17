@@ -43,18 +43,17 @@ class Section (object):
 
 
 # TODO: should complete in future for parsing base.html file
-class HTMLParser (object):
+class TemplateParser (object):
     """
     this class provide a simple template tag parser that allow dina
     to fill the specific position of a template.
     """
 
 
-    def __init__ (self, template_stream):
-        self.template = template_stream.split ("\n")
-        self.OPENMARK = "{%"
-        self.CLOSEMARK = "%}"
-        
+    def __init__ (self, baseaddress , basefile):
+        """
+        """
+        pass
     def __FindSectionTag (self , line):
         # TODO: check for exists section tag, if not skip
         open_tags = line.split (self.OPENMARK)
@@ -115,13 +114,12 @@ def tmp_BaseParser (template_stream):
 
 
     active_template = Template.objects.Current ()
-    print "> " , active_template
     for value in values:
-        print "--> " , value
+
         # TODO: be sure to make section name in lower (icase sensetive).
         layout, created = TemplateLayouts.objects.get_or_create (Template=active_template,\
                                                                  Section=value.lower ())
-        print "---> " , created
+
         
     return template_stream
 
@@ -131,11 +129,19 @@ def FillSections (stream):
     """
     Fill sections and depload tags.
     """
+    # TODO: build a cach for this function 
     active_template = Template.objects.Current ()
     sections = TemplateLayouts.objects.filter (Template=active_template)
-    tmp_stream = ""
+    depload = ""
+    result = stream
     for section in sections:
-        pass
+        tmp_stream = ""
+        contents = section.Contents.all ()
+        for content in contents:
+            tmp_stream = tmp_stream +  "{% %s %s %}\n" % \
+                         (content.Name, " ".join (content.Params.split("&:&")))
+            depload = depload + "{% load %s %}" % content.ModuleName
+        result = result.replace ("{% section %s %}")
 
 
 def ParseBase (baseaddress , basefile):

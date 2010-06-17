@@ -86,7 +86,7 @@ class Loader(BaseLoader):
                         if unparse_template is None:
                             
                             unparse_template = file.read().decode(settings.FILE_CHARSET)
-                        unparse_template = FillSections (unparse_template)
+                        #unparse_template = FillSections (unparse_template)
                     else:
 
                         unparse_template = file.read().decode(settings.FILE_CHARSET)
