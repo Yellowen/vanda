@@ -80,7 +80,7 @@ DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
 LOG_LEVEL = 0
 
 # Define the format of log strings
-LOG_FORMAT = '[%(asctime)s] %(name)s -> %(levelname)-8s : %(message)s'
+LOG_FORMAT = '[%(asctime)s] %(name)s, line:%(lineno)d %(levelname)-8s : %(message)s'
 # Define the date format that use in log strings
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 # Where to save logs
