@@ -68,6 +68,26 @@ APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
 
 DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
 
+# LOG options --------------------------------------------------------
+# In this section you can change the logger options
+# LOG_LEVEL specify the logger log level
+#CRITICAL =50
+#ERROR =40
+#WARNING =30
+#INFO =20
+#DEBUG =10
+#0 is for not set (log all levels)
+LOG_LEVEL = 0
+
+# Define the format of log strings
+LOG_FORMAT = '[%(asctime)s] %(name)s -> %(levelname)-8s : %(message)s'
+# Define the date format that use in log strings
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+# Where to save logs
+#LOG_FILE = FS_ROOT + "/dina.logs"
+#Define the mode of log file. default is 'w'
+#LOG_FILE_MODE = 'w'
+
 
 
 # Local time zone for this installation. Choices can be found here:
