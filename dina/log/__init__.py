@@ -56,7 +56,7 @@ except AttributeError:
 
 logging.basicConfig(**logparam)
 
-getLogger = logging.getLogger
+Logger = logging.getLogger
 
 
 
