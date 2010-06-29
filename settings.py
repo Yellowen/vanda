@@ -21,7 +21,7 @@
 # Django settings for Dina project.
 import os
 import django
-
+from dina.core.Signals import dina_init_done
 
 
 #+++ Remember to shut down the debug mode in official release
@@ -203,21 +203,31 @@ EMAIL_PORT = ''
 
 
 
-
 # IMPORTANT: this code peace is just for debuging
 # ----------------------------------------------------------------
-import sys, os
+#import sys, os
 
-print "__name__ =", __name__
-print "__file__ =", __file__
-print "os.getpid() =", os.getpid()
-print "os.getcwd() =", os.getcwd()
-print "os.curdir =", os.curdir
-print "sys.path =", repr(sys.path)
-print "sys.modules.keys() =", repr(sys.modules.keys())
-print "sys.modules.has_key('dina-project') =", sys.modules.has_key('dina-project')
-if sys.modules.has_key('dina-project'):
-  print "sys.modules['dina-project'].__name__ =", sys.modules['dina-project'].__name__
-  print "sys.modules['dina-project'].__file__ =", sys.modules['dina-project'].__file__
-  print "os.environ['DJANGO_SETTINGS_MODULE'] =", os.environ.get('DJANGO_SETTINGS_MODULE', None)
+#print "__name__ =", __name__
+#print "__file__ =", __file__
+#print "os.getpid() =", os.getpid()
+#print "os.getcwd() =", os.getcwd()
+#print "os.curdir =", os.curdir
+#print "sys.path =", repr(sys.path)
+#print "sys.modules.keys() =", repr(sys.modules.keys())
+#print "sys.modules.has_key('dina-project') =", sys.modules.has_key('dina-project')
+#if sys.modules.has_key('dina-project'):
+#  print "sys.modules['dina-project'].__name__ =", sys.modules['dina-project'].__name__
+#  print "sys.modules['dina-project'].__file__ =", sys.modules['dina-project'].__file__
+#  print "os.environ['DJANGO_SETTINGS_MODULE'] =", os.environ.get('DJANGO_SETTINGS_MODULE', None)
 #---------------------------------------------------------------------
+
+# INITIAL CODE ------------------------------------------------
+if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
+    # we have to export this environment variable to provide a init code .
+    os.environ['DJANGO_SETTINGS_MODULE']  = 'settings'
+    # this module import is just for initial code don't change it
+    # and don't use it in your code
+    from dina import cache
+
+
+#--------------------------------------------------------------

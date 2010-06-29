@@ -18,12 +18,14 @@
 # ---------------------------------------------------------------------------------
 
 from django.shortcuts import render_to_response as rr
-
+import os
 
 #!!! TODO: this view is just for testing and shall remove on release time.
 #REMOVE:START --------------------------------------
+
 def testview (requset ):
-    return rr ('default/index.html')
+
+    return rr ('index.html')
 
 
 

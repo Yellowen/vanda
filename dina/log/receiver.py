@@ -17,32 +17,20 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+from dina.log import Logger
+from dina.code.signals import *
 
+logger = Logger ('Receiver')
 
-from django.conf.urls.defaults import *
-from django.http import HttpResponseRedirect
+dina_init_done.connet (Receiver)
 
-import os
-from django.conf import settings
+def Receiver (sender, **kwargs):
+    """
+    General Receiver for all dina core signals.
+    """
+    tmp = "Sender: <%s> " % sender
+    for i in kwargs:
+        tmp = tmp + "%s : %s " % (i, kwargs[i])
 
-
-
-#REMOVE:START ----------------
-from views import testview
-#REMOVEL:END ------------------
-
-urlpatterns = patterns('',
-    #REMOVE:START -------------------------------------
-    (r'^test/$' , testview),
-    #REMOVE:END ---------------------------------------
-    
-                (r'^admin/', include('dina.urls')),
-                
-                (r'^$' , 'dina.fem.page.views.show_home'),
-                (r'^comments/', include('django.contrib.comments.urls')),
-                (r'^site_media/(.+)$' ,  'dina.core.server.MediaServ'), 
-                (r'^' , include('apps.urls')),                                      
-                       
-)
-
-
+    print "asdasdadadasdadadasddddddddddddddddddddddddddddddddddddd"
+    logger.info (tmp)
