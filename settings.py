@@ -80,7 +80,7 @@ DPM_CACHE = os.path.join (FS_ROOT , 'cache').replace ('\\' , '/')
 LOG_LEVEL = 0
 
 # Define the format of log strings
-LOG_FORMAT = '[%(asctime)s] %(name)s, line:%(lineno)d %(levelname)-8s : %(message)s'
+LOG_FORMAT = '[%(asctime)s] [%(name)s], line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 # Define the date format that use in log strings
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 # Where to save logs
@@ -227,7 +227,10 @@ if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
     os.environ['DJANGO_SETTINGS_MODULE']  = 'settings'
     # this module import is just for initial code don't change it
     # and don't use it in your code
+    from dina.log import Logger
+    logger = Logger ('Settings')
+    logger.info ("Initial code start point reached.")
     from dina import cache
-
+    logger.info ("Initial code End point reached.")
 
 #--------------------------------------------------------------
