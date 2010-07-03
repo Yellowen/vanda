@@ -187,6 +187,7 @@ DINA_APPS = [
     'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
+    'dina.auth',
     'apps.blog',
     'apps.contact',
     
@@ -232,10 +233,10 @@ if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
     logger.info ("Initial code start point reached.")
     # IMPORTANT: check this section for other errors and better algorithm
     from django.db.utils import DatabaseError
-    try:
-        from dina import cache
-    except DatabaseError:
-        logger.critical ("It seems than your database does not exists.")
-    logger.info ("Initial code End point reached.")
+#    try:
+#        from dina import cache
+#    except DatabaseError:
+#        logger.critical ("It seems than your database does not exists.")
+#    logger.info ("Initial code End point reached.")
 
 #--------------------------------------------------------------

@@ -18,32 +18,16 @@
 # ---------------------------------------------------------------------------------
 
 
-
 from django.conf.urls.defaults import *
-from django.http import HttpResponseRedirect
+import views
 
-import os
-from django.conf import settings
+# Uncomment the next two lines to enable the admin:
+# from django.contrib import admin
 
 
-
-#REMOVE:START ----------------
-from views import testview
-#REMOVEL:END ------------------
 
 urlpatterns = patterns('',
-    #REMOVE:START -------------------------------------
-    (r'^test/$' , testview),
-    #REMOVE:END ---------------------------------------
-    
-                (r'^admin/', include('dina.urls')),
-                
-                (r'^$' , 'dina.fem.page.views.show_home'),
-                (r'^comments/', include('django.contrib.comments.urls')),
-                (r'^site_media/(.+)$' ,  'dina.core.server.MediaServ'), 
-                (r'^accounts/' ,  include('dina.auth.urls')), 
-                (r'^' , include('apps.urls')),                                      
-                       
+
+			(r'login/' , views.login_view ),
+			(r'logout/' , views.logout_view ),
 )
-
-
