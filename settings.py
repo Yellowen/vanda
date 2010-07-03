@@ -21,7 +21,7 @@
 # Django settings for Dina project.
 import os
 import django
-from dina.core.Signals import dina_init_done
+
 
 
 #+++ Remember to shut down the debug mode in official release
@@ -230,7 +230,12 @@ if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
     from dina.log import Logger
     logger = Logger ('Settings')
     logger.info ("Initial code start point reached.")
-    from dina import cache
+    # IMPORTANT: check this section for other errors and better algorithm
+    from django.db.utils import DatabaseError
+    try:
+        from dina import cache
+    except DatabaseError:
+        logger.critical ("It seems than your database does not exists.")
     logger.info ("Initial code End point reached.")
 
 #--------------------------------------------------------------
