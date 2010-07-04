@@ -17,34 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.contrib.auth import authenticate, login , logout
-from django.http import HttpResponseRedirect
-from django.core.context_processors import csrf
-from django.shortcuts import render_to_response 
 from django import forms
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=30)
-    
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request , user)
-                return HttpResponseRedirect('/')# Redirect to a success page.
-            else:
-                return HttpResponseRedirect('/') # Return a 'disabled account' error message
-    else:
-        form = LoginForm() # An unbound form
-    c = {'form': form,}
-    c.update(csrf(request))
-    return render_to_response('login.html',c )
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect('/') # Redirect after LOGOUT
