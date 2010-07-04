@@ -21,7 +21,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
-from forms import LoginFrom
+from dina.auth.forms import *
     
 def login_view(request):
     if request.method == 'POST':
