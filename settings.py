@@ -190,7 +190,9 @@ DINA_APPS = [
     'dina.auth',
     'apps.blog',
     'apps.contact',
-    
+    'apps.profile',
+    'apps.addressbook',
+    'apps.phonebook',
 ]
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 
