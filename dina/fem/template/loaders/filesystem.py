@@ -27,16 +27,21 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import BaseLoader
 from django.utils._os import safe_join
 
+from dina.cache import Template 
+from dina.log import Logger
+from dina.fem.layout.parser import Parser
+
 # IMPORTANT: --------------------------------------------------------
 # This import section may change in the due to finding a better
 # Tree structur 
-from dina.DPM.models import Template
+#from dina.DPM.models import Template
 from dina.fem.template.parser import ParseBase , FillSections
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
     is_usable = True
     temp_index = []
+    logger = Logger ("FS template loader")
     def get_template_sources(self, template_name, template_dirs=None):
         """
         Returns the absolute paths to 'template_name', when appended to each
@@ -51,7 +56,7 @@ class Loader(BaseLoader):
         for template_dir in template_dirs:
             try:
 
-                active_template = Template.objects.CurrentDir ()
+                active_template = Template.current_template_dir ()
                 template_n = active_template + template_name
                 
                 
@@ -73,14 +78,20 @@ class Loader(BaseLoader):
         for filepath in self.get_template_sources(template_name, template_dirs):
 
             try:
-
-                file = open(filepath)
-                 
                 
+                
+                template_data, cached_template = Template.get_template (filepath, template_name)
+                parser = Parser (template_data)
+                parser.parse_data ()
+                file = open (filepath)
+                if cached_template:
+                    return (template_data, filepath)
+                else:
+                    pass
                 try:
 
                     if template_name == "base.html":
-
+                        
                         unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
                                                       template_name)
                         if unparse_template is None:
