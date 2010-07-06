@@ -66,7 +66,8 @@ FS_ROOT = os.path.dirname (__file__)
 # APP_ROOT conatain the logic path to app dir
 APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
 
-DPM_CACHE = os.path.join (FS_ROOT , 'dpm_cache').replace ('\\' , '/')
+# DINA_CACHE contain the path of a directory that all the cached data will live
+DINA_CACHE = os.path.join (FS_ROOT , '.cache').replace ('\\' , '/')
 
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
