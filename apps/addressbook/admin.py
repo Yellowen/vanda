@@ -24,8 +24,8 @@ from models import *
 
 class admin_addressbook(admin.ModelAdmin):
 	list_display = ["author" , "addressType" , "street" , "city" , "state", "country" ,"zipCode" ,]
-    list_filter = ["city" , "country" , ]
-    search_field = [ "zipCode" , ]
+	list_filter = ["city" , "country" , ]
+	search_field = [ "zipCode" , ]
     
     
 admin.site.register ( AddressBook,admin_addressbook )

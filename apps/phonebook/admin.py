@@ -25,7 +25,7 @@ from models import *
 
 class admin_phonesbook(admin.ModelAdmin):
 	list_display = ["author" , "numberType" , "number" ,]
-    list_filter = ["numberType" ,  ]
+	list_filter = ["numberType" ,  ]
     
     
 admin.site.register ( PhoneBook,admin_phonebook )
