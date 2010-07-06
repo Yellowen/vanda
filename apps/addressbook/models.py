@@ -31,14 +31,14 @@ class AddressBook(models.Model):
 	author = models.ForeignKey("auth.User")
 	street = models.CharField(max_length=30 , verbose_name=_("Street"))
 	
-	# TODO chenge city field to choice list for saving integration in user version
+	# TODO: chenge city field to choice list for saving integration in user version
 	
 	city = models.CharField(max_length=30 , verbose_name=_("City"))
 	state = models.CharField(max_length=30 , verbose_name=_("State"))
 	zipCode = models.CharField(max_length=10 , verbose_name=_("Zip Code"))
 	
 	
-	# TODO chenge contry field to choice list for saving integration in user version
+	# TODO: chenge contry field to choice list for saving integration in user version
 	
 	country = models.CharField(max_length=30 , verbose_name=_("Country"))
 	addressType = models.CharField(max_length=1 , choices = ADDRESS_TYPE_CHOICES , verbose_name=_("Address Type"))

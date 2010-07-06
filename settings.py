@@ -189,6 +189,7 @@ DINA_APPS = [
     'dina.fem.menu',
     'dina.fem.page',
     'dina.auth',
+    'dina.fem.layout',
     'apps.blog',
     'apps.contact',
     'apps.profile',

@@ -21,7 +21,8 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from dina.DPM.models import Template as DPMTemplate
+from dina.cache import Template as template_cache
+from dina.DPM.models import Template as DPM_template
 # TODO: build a optional layout for each page.
 
 
@@ -33,9 +34,14 @@ class TemplateLayouts (models.Model):
     in this model.
     """
 
-    Template = models.ForeignKey (DPMTemplate) 
+    Template = models.ForeignKey (DPM_template) 
     Section = models.CharField (max_length=50)
     Contents = models.ManyToManyField ('Content', blank=True ,null=True)
+
+
+    def save (self, force_insert=False, force_update=False):
+        self.Template = template_cache.template
+        super(TemplateLayouts, self).save (force_insert, force_update)
     
     class Meta:
         unique_together = ("Template", "Section")
@@ -47,6 +53,12 @@ class Content (models.Model):
     """
     This model will hold the Contents that sections should load.
     """
+    TYPE = [
+        ( '0' , _("Application Tag")),
+        ( '1' , _("Application View")),
+        ( '2' , _("Dina Application Tag")),
+        ]
+    
     App = models.CharField (max_length=80)
     # Type field is temporary field it will remove as soon as we can
     # Find a better way to deal with 3 type of contents.
@@ -59,7 +71,8 @@ class Content (models.Model):
 
     # Name field will hold the 0 and 2 type tag name like
     #    {% Name ... %}
-    Name = models.CharField (max_length=100)
+    
+    Name = models.CharField (max_length=100, choices=TYPE)
 
     # Params file hold that 0 and 2 type tag parameters like
     #     {% Name  param1 param2 .... %}
