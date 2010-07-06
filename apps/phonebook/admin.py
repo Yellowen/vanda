@@ -23,7 +23,7 @@ from models import *
 
 
 
-class admin_phonesbook(admin.ModelAdmin):
+class admin_phonebook(admin.ModelAdmin):
 	list_display = ["author" , "numberType" , "number" ,]
 	list_filter = ["numberType" ,  ]
     
