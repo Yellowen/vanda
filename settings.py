@@ -77,8 +77,8 @@ DINA_CACHE = os.path.join (FS_ROOT , '.cache').replace ('\\' , '/')
 #WARNING =30
 #INFO =20
 #DEBUG =10
-#0 is for not set (log all levels)
-LOG_LEVEL = 0
+VERBOSE = 0  # log all levels
+LOG_LEVEL = VERBOSE
 
 # Define the format of log strings
 LOG_FORMAT = '[%(asctime)s] [%(name)s], line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
