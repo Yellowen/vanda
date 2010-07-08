@@ -81,13 +81,14 @@ class Loader(BaseLoader):
                 
                 
                 template_data, cached_template = Template.get_template (filepath, template_name)
-                parser = Parser (template_data)
-                parser.parse_data ()
-                file = open (filepath)
+                
+                
                 if cached_template:
                     return (template_data, filepath)
                 else:
-                    pass
+                    parser = Parser (template_data)
+                    
+                    return (parser.parse_data (), filepath)
                 try:
 
                  #   if template_name == "base.html":

@@ -28,17 +28,22 @@ from dina.cache import Template as template_cache
 from dina.fem.layout.models import TemplateLayout
 
 
-class Parser (object):
+class Parser (object):    
     """
     Template parser for Dina
     """
-
+    # TODO: Find the best way to search and replace the sections tags
+    
 
     def __init__ (self, template_data):
-        
+
+        # unparsed data ( line by line )
         self.lines = template_data.split("\n")
+        # unparsed data, result will changed during the parse_data method
         self.result = template_data
+        # regex for {% secton SECTION_NAME %} tag
         self.tag_pattern = re.compile ("{% section ('|\")[a-zA-Z0-9_\-]+('|\") %}")
+        # regex for SECTION_NAME
         self.section_name_pattern = re.compile ("('|\")[a-zA-Z0-9_\-]+('|\")")
         self.sections = []
 
@@ -58,39 +63,37 @@ class Parser (object):
             # TODO: find a better way to deal with to section tag in a single line
             tag = self.tag_pattern.search (line)
             if tag is not None:
-                print "----> " , line[tag.start(): tag.end ()]
+
                 section = self.section_name_pattern.search (line[tag.start(): tag.end ()])
                 if section is not None:
-                    # sections will contain the name of sections
+                    # sec will contain the name of section
                     sec = line[tag.start(): tag.end ()][section.start () +1: section.end () -1]
-                    print ">>> " , sec
                     self.sections.append (sec)
                     try:
                         active_template = template_cache.current ()
                         layout = TemplateLayout.objects.get (Section=sec, Template=active_template)
                         tmp = list ()
                         for content in layout.Contents.all ():
+                            # section tag will replace by tag inside the tmp list
                             tmp.append ('%s %s %s %s' % ("{%", content, " ".join(content.Params.split("::")),\
                                                    "%}"))
+
+                        # this snippet replace the section tag by replacement tags
+                        # with a case-insensitive replace 
+                        # -------------------------------------------------------    
                         pattern = re.compile ("%s section ('|\")%s('|\") %s" % \
                                               ("{%", sec, "%}"), re.I)
                         self.result = re.sub (pattern,"\n".join (tmp), self.result, 0)
+                        # -------------------------------------------------------
                     except TemplateLayout.DoesNotExist:
                         pattern = re.compile ("%s section ('|\")%s('|\") %s" % \
                                                         ("{%", sec, "%}"), re.I)
                         self.result = re.sub (pattern," \n", self.result, 0)
 
-                    print "-------> Result: " , self.result
+                    
                 else:
                     # TODO: better exception raising
                     raise "section without name."
-
+        return self.result
  
-    def ireplace (self, pattern, old, new, count=0):
-        """
-        Case-insensitive replace.
-        """
-        pattern = re.compile(re.escape(old),re.I)
-        return re.sub(pattern,new,self,count)
-
         
