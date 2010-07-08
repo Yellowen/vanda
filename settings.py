@@ -77,8 +77,8 @@ DINA_CACHE = os.path.join (FS_ROOT , '.cache').replace ('\\' , '/')
 #WARNING =30
 #INFO =20
 #DEBUG =10
-#0 is for not set (log all levels)
-LOG_LEVEL = 0
+VERBOSE = 0  # log all levels
+LOG_LEVEL = VERBOSE
 
 # Define the format of log strings
 LOG_FORMAT = '[%(asctime)s] [%(name)s], line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
@@ -209,23 +209,29 @@ EMAIL_PORT = ''
 
 
 
-# IMPORTANT: this code peace is just for debuging
+# IMPORTANT: this code piece is just for debuging
 # ----------------------------------------------------------------
-#import sys, os
 
-#print "__name__ =", __name__
-#print "__file__ =", __file__
-#print "os.getpid() =", os.getpid()
-#print "os.getcwd() =", os.getcwd()
-#print "os.curdir =", os.curdir
-#print "sys.path =", repr(sys.path)
-#print "sys.modules.keys() =", repr(sys.modules.keys())
-#print "sys.modules.has_key('dina-project') =", sys.modules.has_key('dina-project')
-#if sys.modules.has_key('dina-project'):
-#  print "sys.modules['dina-project'].__name__ =", sys.modules['dina-project'].__name__
-#  print "sys.modules['dina-project'].__file__ =", sys.modules['dina-project'].__file__
-#  print "os.environ['DJANGO_SETTINGS_MODULE'] =", os.environ.get('DJANGO_SETTINGS_MODULE', None)
+if DEBUG : 
+    import sys, os
+
+    print "__name__ =", __name__
+    print "__file__ =", __file__
+    print "os.getpid() =", os.getpid()
+    print "os.getcwd() =", os.getcwd()
+    print "os.curdir =", os.curdir
+    print "sys.path =", repr(sys.path)
+    print "sys.modules.keys() =", repr(sys.modules.keys())
+    print "sys.modules.has_key('dina-project') =", sys.modules.has_key('dina-project')
+    
+    if sys.modules.has_key('dina-project'):
+        print "sys.modules['dina-project'].__name__ =", sys.modules['dina-project'].__name__
+        print "sys.modules['dina-project'].__file__ =", sys.modules['dina-project'].__file__
+        print "os.environ['DJANGO_SETTINGS_MODULE'] =", os.environ.get('DJANGO_SETTINGS_MODULE', None)
+
 #---------------------------------------------------------------------
+
+
 
 # INITIAL CODE ------------------------------------------------
 if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
