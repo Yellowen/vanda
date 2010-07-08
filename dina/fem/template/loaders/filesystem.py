@@ -90,19 +90,19 @@ class Loader(BaseLoader):
                     pass
                 try:
 
-                    if template_name == "base.html":
+                 #   if template_name == "base.html":
                         
-                        unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
-                                                      template_name)
-                        if unparse_template is None:
+                 #       unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
+                 #template_name)
+                 #       if unparse_template is None:
                             
-                            unparse_template = file.read().decode(settings.FILE_CHARSET)
+                 #           unparse_template = file.read().decode(settings.FILE_CHARSET)
                         #unparse_template = FillSections (unparse_template)
-                    else:
+                 #   else:
 
                         unparse_template = file.read().decode(settings.FILE_CHARSET)
 
-                    return (unparse_template , filepath)
+                        return (unparse_template , filepath)
                 finally:
                     file.close()
             except IOError:

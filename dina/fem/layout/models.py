@@ -28,7 +28,7 @@ from dina.DPM.models import Template as DPM_template
 
 # Lets keep this model as simple as we can (lowest relations)
 # for making layout prepration faster.
-class TemplateLayouts (models.Model):
+class TemplateLayout (models.Model):
     """
     The layout manager will store the default sections of each templates
     in this model.
@@ -41,7 +41,10 @@ class TemplateLayouts (models.Model):
 
     def save (self, force_insert=False, force_update=False):
         self.Template = template_cache.template
-        super(TemplateLayouts, self).save (force_insert, force_update)
+        super(TemplateLayout, self).save (force_insert, force_update)
+
+    def __unicode__ (self):
+        return "%s section for %s template" % (self.Section, self.Template.Name)
     
     class Meta:
         unique_together = ("Template", "Section")
@@ -67,12 +70,12 @@ class Content (models.Model):
     #       1. apps views output
     #       2. apps dina tag
     # TODO: find a better way to deal with contents types
-    Type = models.CharField (max_length=1)
+    Type = models.CharField (max_length=1, choices=TYPE)
 
     # Name field will hold the 0 and 2 type tag name like
     #    {% Name ... %}
     
-    Name = models.CharField (max_length=100, choices=TYPE)
+    Name = models.CharField (max_length=100)
 
     # Params file hold that 0 and 2 type tag parameters like
     #     {% Name  param1 param2 .... %}
@@ -83,8 +86,12 @@ class Content (models.Model):
     # {% load MduleName %}
     ModuleName = models.CharField (max_length=30)
 
-
+    def __unicode__ (self):
+        return "%s %s" % (self.Name, ' '.join (self.Params.split('$:$')))
+    
     # TODO: add the params field to unique_together
     class Meta:
         unique_together = ("App", "Name")
 
+
+    

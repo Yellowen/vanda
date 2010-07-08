@@ -25,7 +25,7 @@ from django.conf import settings
 
 
 from dina.DPM.models import Template
-from dina.fem.layout.models import TemplateLayouts
+from dina.fem.layout.models import TemplateLayout
 
 class TemplateSyntaxError (Exception):
     def __init__ (self, line , char):
@@ -117,7 +117,7 @@ def tmp_BaseParser (template_stream):
     for value in values:
 
         # TODO: be sure to make section name in lower (icase sensetive).
-        layout, created = TemplateLayouts.objects.get_or_create (Template=active_template,\
+        layout, created = TemplateLayout.objects.get_or_create (Template=active_template,\
                                                                  Section=value.lower ())
 
         

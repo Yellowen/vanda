@@ -112,7 +112,7 @@ Notes:
 	comment your name and contact a line or two after the license header. 
 	  e.g:
 	    
- 	    # Sameer Rahmani <lxsameer@gmail.com>
+ 	    # Sameer Rahmani <lxsameer@gnu.org>
 
 	* If you use an external module that make Dina depend on in please ask the Dina Developers
 	mailing list before that. So Dina Policy Committee can decide about the external code. We

@@ -19,7 +19,7 @@
 
 
 from django.contrib import admin
-from models import Content, TemplateLayouts
+from models import Content, TemplateLayout
 from django.conf import settings
 
 
@@ -31,4 +31,4 @@ class ContentAdmin (admin.ModelAdmin):
 
 
 admin.site.register (Content, ContentAdmin)
-admin.site.register (TemplateLayouts, TemplateLayoutsAdmin)
+admin.site.register (TemplateLayout, TemplateLayoutsAdmin)
