@@ -28,7 +28,7 @@ import django
 #@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+SCREEN_MODE = False # print debug info to the screen (stdout) .
 
 
 ADMINS = (
@@ -212,7 +212,7 @@ EMAIL_PORT = ''
 # IMPORTANT: this code piece is just for debuging
 # ----------------------------------------------------------------
 
-if DEBUG : 
+if DEBUG  and SCREEN_MODE : 
     import sys, os
 
     print "__name__ =", __name__
