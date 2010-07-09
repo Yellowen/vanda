@@ -37,6 +37,7 @@ class TemplateQueryCache (CacheObject):
 
         # TODO: add a config or a settings option that allow memory caching for
         # templates
+        self.memcache = None
         self.cache = {}
         logger.debug ("TemplateQueryCache class inti.")
         logger.info ("Current active template is %s" % self.template)
@@ -50,11 +51,13 @@ class TemplateQueryCache (CacheObject):
     def get_template (self, address, template_name):
         """
         Try to return the cache data for given template if there was any in
-        <DINA_CACHE>/templates/<TEMPLATE_NAME>/
+        <DINA_CACHE>/templates/<escaped TEMPLATE_NAME>/
+        escaped TEMPLATE_NAME is the same as TEMPLATE_NAME but '/' characters
+        replaced by '___' and comes with a '.cache' suffix
         otherwise return the normal file data.
         """
         
-        cache_data = self._get_cache (template_name)
+        cache_data = self._read_cache (template_name)
         if cache_data is None:
             cache_fd = open (address)
             cache_data = cache_fd.read ()
@@ -62,17 +65,9 @@ class TemplateQueryCache (CacheObject):
             return (cache_data, False)
         else:
             return (cache_data, True)
+
+        
     def _cache_template (self , templatename):
         pass
 
-    def _get_cache (self, cache_file_name):
-        """
-        try to read the cache file if it exists, if not return None.
-        """
-        address = "%s/%s" % (self._cache_dir, cache_file_name)
-        try:
-            cache_fd = open (address)
-            return cache_fd.read ()
-        except IOError:
-            return None
     

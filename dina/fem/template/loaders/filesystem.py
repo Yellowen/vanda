@@ -87,9 +87,9 @@ class Loader(BaseLoader):
                     return (template_data, filepath)
                 else:
                     parser = Parser (template_data)
-                    
-                    return (parser.parse_data (), filepath)
-                try:
+                    replaced_template_data = parser.parse_data ()
+                    return (replaced_template_data, filepath)
+#                try:
 
                  #   if template_name == "base.html":
                         
@@ -101,11 +101,11 @@ class Loader(BaseLoader):
                         #unparse_template = FillSections (unparse_template)
                  #   else:
 
-                        unparse_template = file.read().decode(settings.FILE_CHARSET)
+#                        unparse_template = file.read().decode(settings.FILE_CHARSET)
 
-                        return (unparse_template , filepath)
-                finally:
-                    file.close()
+ #                       return (unparse_template , filepath)
+  #              finally:
+   #                 file.close()
             except IOError:
                 tried.append(filepath)
         if tried:

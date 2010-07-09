@@ -37,6 +37,15 @@ class CacheObject (object):
         self._cache_dir = "%s/%s" % (settings.DINA_CACHE , cache_module_name)
         
 
+
+    # TODO: re-check the name convention for better solution
+    def _escape (self, str_):
+        """
+        escape the str_ for a unique filesystem name.
+        """
+        return  "%s.%s" % (str_.replace ("/" , "___"),"cache")
+        
+        
     def _check_for_cache_dir (self):
         """
         Check for exists cache dir. if cache dir does not exits
@@ -50,5 +59,15 @@ class CacheObject (object):
 
     
     
-        
+    def _read_cache (self, cache_file_name):
+        """
+        try to read the cache file if it exists, if not return None.
+        """
+        address = "%s/%s" % (self._cache_dir, self._escape (cache_file_name))
+        try:
+            cache_fd = open (address)
+            return cache_fd.read ()
+        except IOError:
+            return None
+
 
