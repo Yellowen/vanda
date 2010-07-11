@@ -36,7 +36,7 @@ class dailySchedule(models.Model):
         ('C','Close'),
         ('M','Move to next day'),
         )
-    author=models.ForeignKey("auth.User",editable=False,verbose_name=_("Author"))
+    author=models.ForeignKey("auth.User",verbose_name=_("Author"))
     order=models.IntegerField(verbose_name=_("Order"))
     priority=models.CharField(max_length=1,choices=PRIORITY_CHOISE,verbose_name=_("Priority"))
     description=models.TextField(verbose_name=_("Description"))
