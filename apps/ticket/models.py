@@ -24,7 +24,18 @@ from django.utils.translation import ugettext as _
 
 
 class Ticket(models.Model):
+    STATUS_CHOICE=(
+        ('O','Open'),
+        ('C','Close'),
+        ('A','Answer'),
+        ('Q','Question'),
+        )
     author=models.ForeignKey("auth.User",editable=False,verbose_name=_("Author"))
-    title=models.CharField(max_lenght=60,verbose_name=_("Title"))
-    description=Models.TextField(verbose_name=_("Description's"))
-    
+    title=models.CharField(max_length=60,verbose_name=_("Title"))
+    description=models.TextField(verbose_name=_("Description's"))
+    datetime=models.DateTimeField(auto_now_add=True,editable=False,verbose_name=_("Date and Time of Addind"))
+    status=models.CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))
+    reverse=models.ForeignKey("Ticket",verbose_name=_("Ticket"))
+
+    def __unicode__(self):
+        return self.title 
