@@ -35,7 +35,7 @@ class Ticket(models.Model):
     description=models.TextField(verbose_name=_("Description's"))
     datetime=models.DateTimeField(auto_now_add=True,editable=False,verbose_name=_("Date and Time of Addind"))
     status=models.CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))
-    reverse=models.ForeignKey("Ticket",verbose_name=_("Ticket"))
+    reverse=models.ForeignKey("Ticket",blank=True , null=True ,verbose_name=_("Ticket"))
 
     def __unicode__(self):
         return self.title 
