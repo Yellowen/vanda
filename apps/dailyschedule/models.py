@@ -41,7 +41,7 @@ class dailySchedule(models.Model):
     priority=models.CharField(max_length=1,choices=PRIORITY_CHOISE,verbose_name=_("Priority"))
     description=models.TextField(verbose_name=_("Description"))
     result=models.TextField(verbose_name=_("Result"))
-    date=models.DateField(editable=False,verbose_name=_("Date"))
+    date=models.DateField(verbose_name=_("Date"))
     status=models.CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))
     
     def __unicode__(self):
