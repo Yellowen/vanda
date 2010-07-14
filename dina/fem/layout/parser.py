@@ -45,6 +45,8 @@ class Parser (object):
         self.tag_pattern = re.compile ("{% section ('|\")[a-zA-Z0-9_\-]+('|\") %}")
         # regex for SECTION_NAME
         self.section_name_pattern = re.compile ("('|\")[a-zA-Z0-9_\-]+('|\")")
+
+        self.load_dep = "{% load_deps %}"
         self.sections = []
 
     def parse_data (self):
@@ -58,6 +60,7 @@ class Parser (object):
            
         Note: this section tag formation belong to version 0.2 of dina.
         """
+        deps = list ()
         for line in self.lines:
            
             # TODO: find a better way to deal with to section tag in a single line
@@ -73,10 +76,12 @@ class Parser (object):
                         active_template = template_cache.current ()
                         layout = TemplateLayout.objects.get (Section=sec, Template=active_template)
                         tmp = list ()
+
                         for content in layout.Contents.all ():
                             # section tag will replace by tag inside the tmp list
                             tmp.append ('%s %s %s %s' % ("{%", content, " ".join(content.Params.split("::")),\
                                                    "%}"))
+                            deps.append ("%s load %s %s" % ("{%", content.ModuleName , "%}")) 
 
                         # this snippet replace the section tag by replacement tags
                         # with a case-insensitive replace 
@@ -94,6 +99,7 @@ class Parser (object):
                 else:
                     # TODO: better exception raising
                     raise "section without name."
-        return self.result
+
+        return self.result.replace ("{% load_deps %}" , "\n".join (deps))
  
         

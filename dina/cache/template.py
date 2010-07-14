@@ -22,6 +22,8 @@
 from dina.DPM.models import Template
 from base import CacheObject
 from dina.log import Logger
+from dina.core.utils import modification_date , date_cmp
+
 
 logger = Logger ('Template cache class')
 
@@ -30,11 +32,29 @@ class TemplateQueryCache (CacheObject):
     This class will cache the Template model in DPM package for decreasing
     number of queries in Dina actions.
     """
+    
 
     def __init__ (self):
         super(TemplateQueryCache, self).__init__ ("templates")
         self.template = Template.objects.get (Active=True)
 
+        # load and parse the .modifies file inside of the template cache dir
+        # that contains some data about the latest modified time for templates
+        # that cached.
+        # .modifies file format are as follow:
+        # templatename::time
+        self.modifies = dict()
+        try:
+            fd = open ("%s/%s" % (self._cache_dir, ".modifies"))
+            tmplist = fd.readlines ()
+            fd.close ()
+            for i in tmplist:
+                tmp = i.split("::")
+                self.modifies[tmp[0].strip()] = tmp[1].strip()
+        except IOError:
+            pass
+
+                       
         # TODO: add a config or a settings option that allow memory caching for
         # templates
         self.memcache = None
@@ -56,7 +76,10 @@ class TemplateQueryCache (CacheObject):
         replaced by '___' and comes with a '.cache' suffix
         otherwise return the normal file data.
         """
-        
+        fdate = modification_date (address)
+        if self.modifies.has_key(template_name):
+            if date_cmp (self.modifies[template_name], fdate):
+                pass
         cache_data = self._read_cache (template_name)
         if cache_data is None:
             cache_fd = open (address)
@@ -70,4 +93,10 @@ class TemplateQueryCache (CacheObject):
     def _cache_template (self , templatename):
         pass
 
+    def _write_cache (self, absolute_path, filename, data):
+        """
+        build a cache file for given filename and write data in it.
+        """
+        
+        self._check_for_cache_dir()
     

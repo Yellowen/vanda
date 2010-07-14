@@ -71,3 +71,11 @@ class CacheObject (object):
             return None
 
 
+    def _write_cache (self, filename, data):
+        """
+        build a cache file for given filename and write data in it.
+        """
+        self._check_for_cache_dir()
+        fd = open ("%s/%s" % (self._cache_dir, self._escape (filename)), 'w+')
+        fd.write (data)
+        fd.close ()
