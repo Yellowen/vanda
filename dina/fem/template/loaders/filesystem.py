@@ -57,8 +57,10 @@ class Loader(BaseLoader):
             try:
 
                 active_template = Template.current_template_dir ()
-                template_n = active_template + template_name
-                
+                if template_name.split("/")[0] != "admin":
+                    template_n = active_template + template_name
+                else:
+                    template_n = template_name
                 
                 yield safe_join(template_dir, template_n)
                 
@@ -79,9 +81,13 @@ class Loader(BaseLoader):
 
             try:
                 
-                
-                template_data, cached_template = Template.get_template (filepath, template_name)
-                
+                try:
+                    template_data, cached_template = Template.get_template (filepath, template_name)
+                except OSError, io:
+                    
+                    self.logger.info ("%s", io)
+                    self.logger.info ("Template loading skipped, try next one.")
+                    raise IOError ()
                 
                 if cached_template:
                     return (template_data, filepath)
