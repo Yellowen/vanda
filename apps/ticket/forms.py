@@ -17,3 +17,16 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+from django import forms
+from django.utils.translation import ugettext as _
+
+class ticketform(forms.Form):
+    STATUS_CHOICE=(
+        ('O','Open'),
+        ('C','Close'),
+        ('A','Answer'),
+        ('Q','Question'),
+        )
+    title=forms.CharField(max_length=60,verbose_name=_("Title"))
+    description=forms.TextField(verbose_name=_("Description"))
+    status=forms..CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))
