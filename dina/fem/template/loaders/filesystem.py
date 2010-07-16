@@ -93,7 +93,8 @@ class Loader(BaseLoader):
                     return (template_data, filepath)
                 else:
                     parser = Parser (template_data)
-                    replaced_template_data = parser.parse_data ()
+                    replaced_template_data = parser.parse_data ()                    
+                    Template.write_cache (filepath, template_name, replaced_template_data)
                     return (replaced_template_data, filepath)
 #                try:
 

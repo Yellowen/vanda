@@ -8,7 +8,7 @@ db.devdb
 .DS_Store
 templates/*/cache
 syntax: glob
-
+.cache/
 *.pyc
 *~
 .settings/*

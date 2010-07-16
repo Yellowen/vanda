@@ -35,7 +35,7 @@ class CacheObject (object):
         if cache_module_name is None:
             raise NoCacheModuleName ("No cache module name specified.")
         self._cache_dir = "%s/%s" % (settings.DINA_CACHE , cache_module_name)
-        
+        self._check_for_cache_dir()
 
 
     # TODO: re-check the name convention for better solution
@@ -51,9 +51,10 @@ class CacheObject (object):
         Check for exists cache dir. if cache dir does not exits
         it will create the cache dir.
         """
-        if not os.path.exist (self._cache_dir):
+        if not os.path.exists (self._cache_dir):
             # TODO: Here we should deal with OSError [Error 13]: permission denied
             # exception .
+
             os.mkdir (self._cache_dir)
         return
 
