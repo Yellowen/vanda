@@ -21,4 +21,10 @@
 from django.contrib import admin
 from models import *
 
-admin.site.register (dailySchedule)
+class dailySchedule_admin(admin.ModelAdmin):
+    list_display=['order','author','priority','date','status',]
+    list_filter=['author','date','status',]
+    list_search=['author',]
+
+
+admin.site.register (dailySchedule , dailySchedule_admin)
