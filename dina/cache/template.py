@@ -24,8 +24,12 @@ from base import CacheObject
 from dina.log import Logger
 from dina.core.utils import modification_date , date_cmp
 
-
 logger = Logger ('Template cache class')
+
+
+        
+
+
 
 class TemplateQueryCache (CacheObject):
     """
@@ -66,6 +70,8 @@ class TemplateQueryCache (CacheObject):
     def current_template_dir (self):
         return "%s/" % self.template.Name
 
+
+
     def get_template (self, address, template_name):
         """
         Try to return the cache data for given template if there was any in
@@ -74,7 +80,6 @@ class TemplateQueryCache (CacheObject):
         replaced by '___' and comes with a '.cache' suffix
         otherwise return the normal file data.
         """
-        
         fdate = modification_date (address)
         if self.modifies.has_key(template_name):
             if date_cmp (self.modifies[template_name], fdate) == 0:

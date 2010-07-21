@@ -19,9 +19,11 @@
 
 import os
 import datetime
+from dina.core.perf import ExecTime
 
 
 # Return the last modification date for give file name
+@ExecTime
 def modification_date(filename):
     t = os.path.getmtime(filename)
     return str(datetime.datetime.fromtimestamp(t)).replace (" " , "-").replace (":","-")
@@ -31,6 +33,7 @@ def modification_date(filename):
 # if sdate greater that fdate result = 2
 # if fdate and sdate was equal result = 0
 # fdate and sdate should be string type date that seprated by '-' char
+
 def date_cmp (fdate, sdate):
     flist = fdate.split ("-")
     slist = sdate.split ("-")
