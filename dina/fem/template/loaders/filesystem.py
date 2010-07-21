@@ -35,7 +35,7 @@ from dina.fem.layout.parser import Parser
 # This import section may change in the due to finding a better
 # Tree structur 
 #from dina.DPM.models import Template
-from dina.fem.template.parser import ParseBase , FillSections
+
 # ------------------------------------------------------------------
 
 class Loader(BaseLoader):
@@ -80,6 +80,7 @@ class Loader(BaseLoader):
         for filepath in self.get_template_sources(template_name, template_dirs):
 
             try:
+
                 
                 try:
                     template_data, cached_template = Template.get_template (filepath, template_name)
@@ -96,23 +97,8 @@ class Loader(BaseLoader):
                     replaced_template_data = parser.parse_data ()                    
                     Template.write_cache (filepath, template_name, replaced_template_data)
                     return (replaced_template_data, filepath)
-#                try:
 
-                 #   if template_name == "base.html":
-                        
-                 #       unparse_template = ParseBase ("/".join (filepath.split("/")[:-1]),\
-                 #template_name)
-                 #       if unparse_template is None:
-                            
-                 #           unparse_template = file.read().decode(settings.FILE_CHARSET)
-                        #unparse_template = FillSections (unparse_template)
-                 #   else:
-
-#                        unparse_template = file.read().decode(settings.FILE_CHARSET)
-
- #                       return (unparse_template , filepath)
-  #              finally:
-   #                 file.close()
+                
             except IOError:
                 tried.append(filepath)
         if tried:
