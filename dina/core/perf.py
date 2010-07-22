@@ -1,4 +1,4 @@
-from timeit import Timer
+import time
 from dina.log import Logger
 
 class ExecTime (object):
@@ -14,11 +14,8 @@ class ExecTime (object):
         self.logger = Logger (self.f.__name__)
         
     def __call__ (self, *args):
-
-
-        t = Timer(stmt=self.f(*args))
-        try:
-            self.logger.info ("execution time : %s" % t.timeit())
-        except:
-            t.print_exc()
-
+        a = time.time ()
+        result = self.f(*args)
+        b = time.time ()
+        self.logger.info ("Execute in : %s seconds." % (b - a))
+        return result
