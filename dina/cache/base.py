@@ -54,7 +54,10 @@ class CacheObject (object):
         if not os.path.exists (self._cache_dir):
             # TODO: Here we should deal with OSError [Error 13]: permission denied
             # exception .
-
+            try:
+                os.mkdir (settings.DINA_CACHE)
+            except:
+                pass
             os.mkdir (self._cache_dir)
         return
 
