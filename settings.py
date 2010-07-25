@@ -60,6 +60,7 @@ DATABASES = {
 
 
 
+
 # FS_ROOT represent to the Dina root filesystem
 FS_ROOT = os.path.dirname (__file__)
 
@@ -68,6 +69,13 @@ APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
 
 # DINA_CACHE contain the path of a directory that all the cached data will live
 DINA_CACHE = os.path.join (FS_ROOT , '.cache').replace ('\\' , '/')
+
+WSGI = True
+if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI == True:
+    
+    DATABASES["default"]["NAME"] = "/".join ([FS_ROOT, DATABASES["default"]["NAME"]])
+
+
 
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
@@ -118,7 +126,7 @@ MEDIA_ROOT = os.path.join (FS_ROOT , 'site_media').replace ('\\' , '/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/site_media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -252,6 +260,34 @@ if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
     except DatabaseError:
         logger.critical ("It seems than your database does not exists.")
         logger.critical ("Please build your databse and syncdb it")
-    
 
+    logger.debug ("Running environment -----------------------------------")
+    logger.debug ("DEBUG = %s" % DEBUG)
+    logger.debug ("DATABASES : ---")
+    logger.debug ("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
+    logger.debug ("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
+    logger.debug ("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
+    logger.debug ("DATABASES -> PASSWORD = %s" % DATABASES["default"]["PASSWORD"])
+    logger.debug ("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
+    logger.debug ("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
+    logger.debug ("FS_ROOT = %s" % FS_ROOT)
+    logger.debug ("APP_ROOT = %s" % APP_ROOT)
+    logger.debug ("DINA_CACHE = %s" % DINA_CACHE)
+    logger.debug ("MEDIA_URL = %s" % MEDIA_URL)
+    logger.debug ("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
+    logger.debug ("TEMPLATE_LOADERS: ---")
+    for i in TEMPLATE_LOADERS:
+        logger.debug ("-- %s" % i)
+    logger.debug ("MIDDLEWARE_CLASSES: ---")
+    for i in MIDDLEWARE_CLASSES:
+        logger.debug ("-- %s" % i)
+    logger.debug ("TEMPLATE_DIRS: ---")
+    for i in TEMPLATE_DIRS:
+        logger.debug ("-- %s" % i)
+
+    logger.debug ("EMAIL_HOST = %s" % EMAIL_HOST)
+    logger.debug ("EMAIL_HOST_PASSWORD = %s" % EMAIL_HOST_PASSWORD)
+    logger.debug ("EMAIL_HOST_USER = %s" % EMAIL_HOST_USER)
+    logger.debug ("EMAIL_PORT = %s" % EMAIL_PORT)
+    logger.debug ("-------------------------------------------------------")
 #--------------------------------------------------------------
