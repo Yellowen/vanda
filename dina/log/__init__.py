@@ -21,7 +21,7 @@ import logging
 import os
 from django.conf import settings
 
-logparam = {'filemode' : 'w'}
+logparam = {'filemode' : 'a+'}
 
 try:
     logparam['level'] = settings.LOG_LEVEL
@@ -39,11 +39,12 @@ except AttributeError:
     pass
 
 try:
-    if not os.path.exists (settings.LOG_FILE):
-        fd = open (settings.LOG_FILE, 'w')
-        fd.close ()
+    if settings.LOG_FILE is not None:
+        if not os.path.exists (settings.LOG_FILE):
+            fd = open (settings.LOG_FILE, 'w')
+            fd.close ()
         
-    logparam['filename'] = settings.LOG_FILE
+        logparam['filename'] = settings.LOG_FILE
             
 except AttributeError:
     pass

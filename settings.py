@@ -70,10 +70,6 @@ APP_ROOT = os.path.join (FS_ROOT , 'apps').replace ('\\' , '/')
 # DINA_CACHE contain the path of a directory that all the cached data will live
 DINA_CACHE = os.path.join (FS_ROOT , '.cache').replace ('\\' , '/')
 
-WSGI = True
-if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI == True:
-    
-    DATABASES["default"]["NAME"] = "/".join ([FS_ROOT, DATABASES["default"]["NAME"]])
 
 
 
@@ -93,9 +89,25 @@ LOG_FORMAT = '[%(asctime)s] [%(name)s], line:%(lineno)d-> %(levelname)-8s : "%(m
 # Define the date format that use in log strings
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 # Where to save logs
-#LOG_FILE = FS_ROOT + "/dina.logs"
+LOG_FILE = None
 #Define the mode of log file. default is 'w'
-#LOG_FILE_MODE = 'w'
+#LOG_FILE_MODE = 'a+'
+
+WSGI = False
+
+try:
+    if os.environ['DJANGO_MODE'] == "WSGI":
+        WSGI = True
+except KeyError:
+    WSGI = False
+
+    
+if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI:
+    DATABASES["default"]["NAME"] = "/".join ([FS_ROOT, DATABASES["default"]["NAME"]])
+    if LOG_FILE is None:
+        LOG_FILE = FS_ROOT + "/dina.logs"
+
+
 
 
 
@@ -219,32 +231,12 @@ EMAIL_PORT = ''
 
 
 
-# IMPORTANT: this code piece is just for debuging
-# ----------------------------------------------------------------
-
-if DEBUG  and SCREEN_MODE : 
-    import sys, os
-
-    print "__name__ =", __name__
-    print "__file__ =", __file__
-    print "os.getpid() =", os.getpid()
-    print "os.getcwd() =", os.getcwd()
-    print "os.curdir =", os.curdir
-    print "sys.path =", repr(sys.path)
-    print "sys.modules.keys() =", repr(sys.modules.keys())
-    print "sys.modules.has_key('dina-project') =", sys.modules.has_key('dina-project')
-    
-    if sys.modules.has_key('dina-project'):
-        print "sys.modules['dina-project'].__name__ =", sys.modules['dina-project'].__name__
-        print "sys.modules['dina-project'].__file__ =", sys.modules['dina-project'].__file__
-        print "os.environ['DJANGO_SETTINGS_MODULE'] =", os.environ.get('DJANGO_SETTINGS_MODULE', None)
-
-#---------------------------------------------------------------------
 
 
 
 # INITIAL CODE ------------------------------------------------
-if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
+if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
+       
     # we have to export this environment variable to provide a init code .
     os.environ['DJANGO_SETTINGS_MODULE']  = 'settings'
     # this module import is just for initial code don't change it
@@ -253,6 +245,30 @@ if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None:
     logger = Logger ('Settings')
     logger.info ("Initial code start point reached.")
     # IMPORTANT: check this section for other errors and better algorithm
+
+    # IMPORTANT: this code piece is just for debuging
+    # ----------------------------------------------------------------
+
+    if DEBUG  and SCREEN_MODE : 
+        import sys, os
+
+        logger.debug ("__name__ = %s" % __name__)
+        logger.debug ("__file__ = %s" % __file__)
+        logger.debug ("os.getpid() = %s" % os.getpid())
+        logger.debug ("os.getcwd() = %s" % os.getcwd())
+        logger.debug ("os.curdir = %s" % os.curdir)
+        logger.debug ("sys.path = %s" % repr(sys.path))
+        logger.debug ("sys.modules.keys() = %s" % repr(sys.modules.keys()))
+        logger.debug ("sys.modules.has_key('dina-project') = %s" % sys.modules.has_key('dina-project'))
+    
+        if sys.modules.has_key('dina-project'):
+            logger.debug ("sys.modules['dina-project'].__name__ = %s", sys.modules['dina-project'].__name__)
+            logger.debug ("sys.modules['dina-project'].__file__ = %s" % sys.modules['dina-project'].__file__)
+            logger.debug ("os.environ['DJANGO_SETTINGS_MODULE'] = %s" % os.environ.get('DJANGO_SETTINGS_MODULE', None))
+            
+    #---------------------------------------------------------------------
+
+    
     from django.db.utils import DatabaseError
     try:
         from dina import cache
