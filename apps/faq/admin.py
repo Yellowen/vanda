@@ -22,3 +22,4 @@ from models import *
 
 admin.site.register(questionCategories)
 admin.site.register(questions)
+
