@@ -30,13 +30,13 @@ class page_admin (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title' , 'slug' )
     #+++ i should add an user name in list display
-    list_display = ('title' , 'slug' , 'home' , 'published' , 'get_absolute_url' , 'date')
+    list_display = ( 'title', 'category' , 'slug' , 'home' , 'published' , 'get_absolute_url' , 'date')
     list_filter = ('published' , )
     list_editable = ('published' , )
     # by setting fieldsets we decide to how should admin create section for this model look like
     fieldsets = (
          (None, {
-            'fields': (('title' , 'slug'), 'content' , ('published' , 'home'), )
+            'fields': ('category',('title' , 'slug'), 'content' , ('published' , 'home'), )
             
          , 'description' : _("Here you can build pages for fron view.") }),
          
@@ -49,8 +49,44 @@ class page_admin (admin.ModelAdmin):
             
         obj.save ()
 
+
+class section_admin (admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title' , 'slug' )
+    #+++ i should add an user name in list display                                                                          
+    list_display = ('title' , 'slug', 'published' , 'get_absolute_url' )
+    list_filter = ('published' , )
+    list_editable = ('published' , )
+    # by setting fieldsets we decide to how should admin create section for this model look like                            
+    fieldsets = (
+         (None, {
+            'fields': (('title' , 'slug'), 'description' , ('published'), 'image', )
+         }),)
+    class Media:
+        js = (media + '/js/jquery.js', media+'/js/wymeditor/jquery.wymeditor.js', media+'/js/htmleditor.js')
+
+
+
+class category_admin (admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title' , 'slug' )
+    #+++ i should add an user name in list display                                                                          
+    list_display = ('section' , 'title' , 'slug', 'published' , 'get_absolute_url' )
+    list_filter = ('published' , )
+    list_editable = ('published' , )
+    # by setting fieldsets we decide to how should admin create section for this model look like                            
+    fieldsets = (
+         (None, {
+            'fields': ('section' ,('title' , 'slug'), 'description' , ('published'),'image', )
+         }),)
+    class Media:
+        js = (media + '/js/jquery.js', media+'/js/wymeditor/jquery.wymeditor.js', media+'/js/htmleditor.js')
+
+
     
         
 admin.site.register (page , page_admin)
+admin.site.register (section , section_admin)
+admin.site.register (category , category_admin)
 
 
