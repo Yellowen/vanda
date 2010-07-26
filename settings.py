@@ -231,9 +231,6 @@ EMAIL_PORT = ''
 
 
 
-
-
-
 # INITIAL CODE ------------------------------------------------
 if os.environ.get ('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
        
