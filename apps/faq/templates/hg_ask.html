@@ -1,0 +1,10 @@
+{% extends 'base_html.html' %}
+{% block content %}
+<h2>{% trans "Asking question" %}</h2>
+{% trans "You can ask your question here. We will answer you soon and if your questions be usefull for others we will share it for other users" %}
+<br/><br/>
+<form  method="post" action="" width="50%">{% csrf_token %}
+                {{ f.as_p }}
+		<input type="submit" class="ui-button ui-state-default ui-corner-all submit" value="ارسال سوال">
+</form>
+{% endblock %}
