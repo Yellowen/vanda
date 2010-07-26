@@ -24,6 +24,11 @@ from models import *
 
 class AskForm(ModelForm):
     
+    def save (self , user_ ,force_insert=False, force_update=False):
+        instance = super(AskForm, self).save(commit=False)
+        instance.user = user_
+        instance.save ()
+        return instance
 
     class Meta:
         model = questions
