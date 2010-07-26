@@ -1,0 +1,21 @@
+{% extends 'base_html.html' %}
+{% load i18n %}
+{% block content %}
+
+<center>
+  <table border=0>
+	
+    {% for i in Items %}
+    {% cycle '<tr>' '' '' '' '' %}
+      <td width="20%" align="center">
+	<a href="/faq/{{i.id}}" class="category_list">
+	  <img border=0 src="/site_media/{{i.image}}" alt="{{i.description}}" title="{{i.description}}" >
+	  <br/>
+	  {{ i.name }}
+	</a>	
+      </td>
+    {% cycle '' '' '' '' '</tr>' %}
+    {% endfor %}
+  </table>
+</center>
+{% endblock %}
