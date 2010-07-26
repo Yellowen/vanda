@@ -21,7 +21,36 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+class section(models.Model):
+    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
+    slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique = True)
+    published = models.BooleanField (verbose_name = _("Publish ?") )
+    description = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
+    image = models.ImageField (upload_to = "page/sections/" , verbose_name=_("Section image's"))
+    
+    def __unicode__ (self):
+        return self.title
+    
+    def get_absolute_url (self):
+        return "/section/%s/" % self.slug
+
+class category (models.Model):
+    section = models.ForeignKey("section" , verbose_name=_("Section name"))
+    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
+    slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique= True)
+    published = models.BooleanField (verbose_name = _("Publish ?") )
+    description = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
+    image = models.ImageField (upload_to = "page/sections/" , verbose_name=_("Section image's"))
+
+    def __unicode__ (self):
+        return self.section.title + " -- > " + self.title
+
+    def get_absolute_url (self):
+        return "/category/%s/" % self.Slug
+
+
 class page (models.Model):
+    category = models.ForeignKey ( "category" , verbose_name=_("Category Name"))
     title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
     slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique = True)
     content = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
