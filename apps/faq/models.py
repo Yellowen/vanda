@@ -8,4 +8,15 @@ class questionCategories (models.Model):
     image = models.ImageField(verbose_name=_('Question category image'),height_field=None, width_field=None,max_length="7000",upload_to="uploads/faq_category/")
        
     def __unicode__(self):
-        return "%s" % self.name 
+        return "%s" % self.name
+
+class questions (models.Model):
+    user = models.ForeignKey (User)
+    category = models.ForeignKey(questionCategories)
+    title  = models.CharField (verbose_name = _('title') , blank=True ,max_length = 100)
+    question  = models.TextField (verbose_name = _('question') , blank=True )
+    answer  = models.TextField(verbose_name = _('answer') , null=True , blank=True )
+    public = models.BooleanField(verbose_name = _('public'))
+   
+    def __unicode__(self):
+        return "%s" % self.title
