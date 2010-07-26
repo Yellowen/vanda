@@ -35,3 +35,15 @@ from django.utils.translation import ugettext as _
 def show_category(req):
     FaqCategory = questionCategories.objects.all()
     return rtr ('faq_categories.html',{'Items' : FaqCategory })
+
+@login_required
+def show_questions(req,categoryId):
+    FaqQuestionsPublic = questions.objects.filter(category = categoryId , public = True)
+    FaqQuestionsPrivate = questions.objects.filter(category = categoryId , user = req.user)
+    return rtr ('faq_questions.html',{'Public' : FaqQuestionsPublic , 'Private' : FaqQuestionsPrivate })
+
+@login_required
+def show_detail(req,questionId):
+    FaqQuestion = questions.objects.filter(id == questionId)
+    return rtr ('faq_detail.html',{'Items' : FaqQuestion })
+
