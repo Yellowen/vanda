@@ -47,3 +47,21 @@ def show_detail(req,questionId):
     FaqQuestion = questions.objects.filter(id == questionId)
     return rtr ('faq_detail.html',{'Items' : FaqQuestion })
 
+@csrf_protect
+@login_required
+def ask (req):
+    a = User.objects.get (username=req.user)
+    
+    if req.method == "POST":
+	f = AskForm (req.POST)
+        if f.is_valid():
+            questions.title = requers.POST['title']
+            question.question = req.POST['question']
+            questions.save(req.user)
+            return rtr("faq.html",{"message":_('Thanks for your contact we will answer you soon'),"f":f}, context_instance=RequestContext(req))
+        else:
+            return rtr("faq_ask.html",{"error":_('Please fill in the blanks'),"f":f}, context_instance=RequestContext(req))
+    else:
+        f = AskForm ()
+        return rtr("faq_ask.html",{"f":f})
+
