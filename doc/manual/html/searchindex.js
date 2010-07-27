@@ -1,0 +1,1 @@
+Search.setIndex({desctypes:{},terms:{"\u0634\u0633\u06cc\u0628\u0633\u06cc\u0628":0,search:0,document:0,welcom:0,dina:0,index:0,modul:0,manual:0,indic:0,project:0,tabl:0,content:0,page:0},titles:["Welcome to Dina Project&#8217;s documentation!"],modules:{},descrefs:{},filenames:["index"]})
