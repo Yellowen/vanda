@@ -22,7 +22,7 @@
 param=$1
 commands='\n
 todo  \tList all TODOs that commented in the source code.\n
-sourceclean \tDelete all the *.pyc and *~ files.\n
+clean \tDelete all the *.pyc and *~ files.\n
 \n'
 
 if [ -z "$1" ]; then
@@ -40,7 +40,7 @@ if [ "$param" = "todo" ]; then
 fi
 
 
-if [ "$param" = "sourceclean" ]; then 
+if [ "$param" = "ceclean" ]; then 
     rm -v `find ./ -iname "*.pyc"`
         rm -v `find ./ -iname "*~"`
     exit 0
