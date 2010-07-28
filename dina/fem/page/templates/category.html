@@ -1,13 +1,42 @@
+
 {% extends "base_html.html" %}
 {% load i18n %}
 {% block content %}
-{% for cat in category %}
-<h2>
-  <a href="{{ cat.get_absolute_url }}">
-    {{ cat }}
-  </a>
-</h2>
 
-{% endfor %}
+<div id="section_left_panel">
+  <div id="section_left_panel_top">
+    <div id="section_left_panel_top_header">
+      <h3> {{ category_info.title }} </h3>
+    </div>
+    <div id="section_left_panel_top_des">
+      {{ category_info.description }}
+    </div>
+    <div id="section_left_panel_top_img">
+      <img src="/site_media/{{ category_info.image }}" />
+    </div>
+  </div>
+  <div id="section_left_panel_down">
+    {% for page in page_all %}
+      <h4>
+        <a href="{{ page.get_absolute_url }}">
+
+          {{ page }}
+
+	  </a>
+      </h4>
+    {% endfor %}
+
+  </div>
+</div>
+
+<div id="section_right_panel">
+  {% for cat in category_all %}
+  <h4>
+    <a href="{{ cat.get_absolute_url }}">
+      {{ cat }}
+    </a>
+  </h4>
+  {% endfor %}
+</div>
 
 {% endblock %}

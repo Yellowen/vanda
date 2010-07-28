@@ -40,6 +40,7 @@ urlpatterns = patterns('',
                 
                 (r'^$' , 'dina.fem.page.views.show_home'),
                 (r'^section/(.*)/$' , 'dina.fem.page.views.show_section'),
+                (r'^category/(.*)/$' , 'dina.fem.page.views.show_category'),
                 (r'^comments/', include('django.contrib.comments.urls')),
                 (r'^site_media/(.+)$' ,  'dina.core.server.MediaServ'), 
                 (r'^accounts/' ,  include('dina.auth.urls')), 

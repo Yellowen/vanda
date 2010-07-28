@@ -138,3 +138,24 @@ list-style-type: none;
 padding: 0px;
 margin: 0px;
 }
+
+
+#section_left_panel
+{
+    float:left;
+    position:relative;
+    width:70%;
+}
+
+#section_left_panel_top
+{}
+
+#section_left_panel_down
+{}
+
+#section_right_panel
+{
+    float:right;
+    position:relative;
+    width:30%;
+}

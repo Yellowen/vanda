@@ -40,13 +40,13 @@ class category (models.Model):
     slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique= True)
     published = models.BooleanField (verbose_name = _("Publish ?") )
     description = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
-    image = models.ImageField (upload_to = "page/sections/" , verbose_name=_("Section image's"))
+    image = models.ImageField (upload_to = "page/category/" , verbose_name=_("Category image's"))
 
     def __unicode__ (self):
-        return self.section.title + " -- > " + self.title
+        return  self.title
 
     def get_absolute_url (self):
-        return "/category/%s/" % self.Slug
+        return "/category/%s/" % self.slug
 
 
 class page (models.Model):
@@ -63,4 +63,4 @@ class page (models.Model):
 
     
     def get_absolute_url (self):
-        return "/page/%s/" % self.slug
+        return "/pages/%s/" % self.slug

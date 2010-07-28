@@ -55,8 +55,18 @@ def show_home (requset):
 def show_section (requset , Slug):
     try:
         section_info = section.objects.get (slug = Slug)
-        section_all = section.objects.all ()
-        category_all = category.objects.filter (section = section_info)
+        section_all = section.objects.filter ( published = True)
+        category_all = category.objects.filter (published = True ,section = section_info)
         return rr ( "section.html" , {"section_all" : section_all , "category_all" : category_all , "section_info" : section_info})
+    except:
+        raise Http404 ()
+
+
+def show_category (requset , Slug):
+    try:
+        category_info = category.objects.get (slug = Slug)
+        category_all = category.objects.filter ( published = True)
+        page_all = page.objects.filter (published = True ,category = category_info)
+        return rr ( "category.html" , {"category_all" : category_all , "page_all" : page_all , "category_info" : category_info})
     except:
         raise Http404 ()
