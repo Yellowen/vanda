@@ -1,0 +1,33 @@
+{% extends "base_html.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="section_left_panel">
+  <div id="section_left_panel_top">
+    {{ section_info }}
+  </div>
+  <div id="section_left_panel_down">
+    {% for cat in category_all %}
+      <h2>
+	<a href="{{ sec.get_absolute_url }}">
+	
+	  {{ sec }}
+	
+	</a>
+      </h2>  
+    {% endfor %}
+  
+  </div>
+</div>
+
+<div id="section_right_panel">
+  {% for sec in category_all %}
+  <h2>
+    <a href="{{ sec.get_absolute_url }}">
+      {{ sec }}
+    </a>
+  </h2>
+  {% endfor %}
+</div>
+
+{% endblock %}

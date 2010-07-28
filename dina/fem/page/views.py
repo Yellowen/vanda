@@ -50,3 +50,13 @@ def show_home (requset):
     t = Template (a.content).render (Context ())
     title = a.title
     return rr ('index_1.html' , {"title" : title , "content" : t})
+
+
+def show_section (requset , Slug):
+    try:
+        section_info = section.objects.get (slug = Slug)
+        section_all = section.objects.all ()
+        category_all = category.objects.filter (section = section_info)
+        return rr ( "section.html" , {"section_all" : section_all , "category_all" : category_all , "section_info" : section_info})
+    except:
+        raise Http404 ()

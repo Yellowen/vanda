@@ -30,6 +30,6 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
                        #+++ i should use named group url instead of normal one
                        (r'([^/]+)/$' , 'dina.fem.page.views.show_page'),
-                       
+#                       (r'(section/$' , 'dina.fem.page.views.show_section'),
                        
 )
