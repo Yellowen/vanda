@@ -99,7 +99,7 @@ class TemplateQueryCache (CacheObject):
             cache_data = cache_fd.read ()
             cache_fd.close ()
             logger.info ("Reading %s from FS." % template_name)
-            logger.info ("%s" % cache_data)
+
             return (cache_data, False)
 
 
