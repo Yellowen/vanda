@@ -6,10 +6,15 @@
 Welcome to Dina Project's documentation!
 ========================================
 Welcome to Dina Project manual
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
+
+   Users Manual <users/index.rst>
+   Developers Manual <devel/index.rst>
+
 
 Indices and tables
 ==================
