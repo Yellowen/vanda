@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dina-Project Development Policy &mdash; Dina v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Dina v0.2 documentation" href="../index.html" />
+    <link rel="up" title="Developers Manual" href="index.html" />
+    <link rel="prev" title="Developers Manual" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Developers Manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Dina v0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developers Manual</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dina-project-development-policy">
+<h1>Dina-Project Development Policy<a class="headerlink" href="#dina-project-development-policy" title="Permalink to this headline">¶</a></h1>
+<p>This document contain the mercurial repository structure and specific commit policies.
+If you have any idea please contact me at &lt;<a class="reference external" href="mailto:lxsameer&#37;&#52;&#48;gnu&#46;org">lxsameer<span>&#64;</span>gnu<span>&#46;</span>org</a>&gt;. if you find any bug in this document please file a bug in bug tracking system.
+Since now i call Dina-Project directory (root directory) &#8220;/&#8221; so / sign refer to dina-project directory .
+Please take a look at 2.2.1 section for definition of external applications.</p>
+<div class="section" id="general-policy">
+<h2>1. General Policy:<a class="headerlink" href="#general-policy" title="Permalink to this headline">¶</a></h2>
+<p>At Dina Developer Community we warmly welcome to those people who wants to join us. so
+as a Dina developers there is some notes that you should bear in mind:</p>
+<ul class="simple">
+<li>Respect to others not matter who you are.</li>
+<li>if some one make a mistake in the code call him at private and tell him kindly.</li>
+<li>Do not humiliate any one.</li>
+<li>( think more ).</li>
+</ul>
+</div>
+<div class="section" id="mercurial-repository-structure">
+<h2>2. Mercurial Repository Structure :<a class="headerlink" href="#mercurial-repository-structure" title="Permalink to this headline">¶</a></h2>
+<p>There is some important issue that you should be aware of as Dina developer.</p>
+<div class="section" id="media-files">
+<h3>2.1 Media files<a class="headerlink" href="#media-files" title="Permalink to this headline">¶</a></h3>
+<p>For a clean job its good to put just project itself under the dina-project repository,
+but in addition to project code we have some files that play important roll in project
+but are not the member of project itself for example , pictures and  are two important
+part of framework/CMS view . its not a good idea to put the image source files (GIMP <a href="#id1"><span class="problematic" id="id2">*</span></a>.xcf
+or Photoshop <a href="#id3"><span class="problematic" id="id4">*</span></a>.psd) in the project tree . we just use the image output not the source.
+but the source file is needed because of our license, and we don&#8217;t have any other
+repository for this purpose now. &#8220;So what should i do?&#8221;. please build a sub-directory
+under you template folder with the &#8220;media_source&#8221; and put you source file in there.</p>
+<blockquote>
+we will build a new repository and move those file ( because we don&#8217;t want to increase
+the size of Dina package ) to new repository.</blockquote>
+</div>
+<div class="section" id="applications">
+<h3>2.2 Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h3>
+<p>As decided in the Dina Developers Community, we will remove all external application
+from Dina main repository due to reach these goals:</p>
+<blockquote>
+<ul class="simple">
+<li>Have a clean source tree</li>
+<li>Minimalist package size</li>
+<li>Separating Dina main code from applications code</li>
+<li>Separating Dina task and bugs from applications one</li>
+<li>and etc.</li>
+</ul>
+</blockquote>
+<div class="section" id="what-are-external-applications">
+<h4>2.2.1 What are external applications ?<a class="headerlink" href="#what-are-external-applications" title="Permalink to this headline">¶</a></h4>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">define what exactly external application is</p>
+</div>
+<p>But as said in 1.1 we don&#8217;t have any other repository, so we have to put unnecessary apps
+in the /apps directory.</p>
+</div>
+</div>
+<div class="section" id="branches">
+<h3>2.3 Branches<a class="headerlink" href="#branches" title="Permalink to this headline">¶</a></h3>
+<p>We use default branch of mercurial repository as our unstable code repository. at each
+release we will build a branch ant name it as the release version. also we have a branch
+call &#8220;Stable&#8221; for our last stable code.</p>
+</div>
+<div class="section" id="tags">
+<h3>2.4 Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
+<p>We use tag for special point of development. The code should tagged with its developer
+GPG key with the meaningful message. for example important states of application of Dina
+itself should tagged with GPG key of their last developer.</p>
+</div>
+</div>
+<div class="section" id="developing-policies">
+<h2>3. Developing Policies:<a class="headerlink" href="#developing-policies" title="Permalink to this headline">¶</a></h2>
+<p>For gaining better and better team work ability, we need to follow these rulse:</p>
+<ul class="simple">
+<li>Dina Project release under the term of GPL version 2, so we have to put out license</li>
+</ul>
+<p>header at the beginning of our source files. the source header should be exactly like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># ----------------------------------------------------------------------------</span>
+<span class="c">#    Dina Project</span>
+<span class="c">#    Copyright(C) 2010  Dina Project Developer Community</span>
+<span class="c">#</span>
+<span class="c">#    This program is free software; you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation; either version 2 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License along</span>
+<span class="c">#    with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c">#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</span>
+<span class="c"># -----------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+<p>please do not add your name in the license header as the author. if you want to other
+developers know that your are the author of this peace of code or this section please
+comment your name and contact a line or two after the license header.
+e.g:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Sameer Rahmani &lt;lxsameer@gnu.org&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>If you use an external module that make Dina depend on in please ask the Dina Developers mailing list before that. So Dina Policy Committee can decide about the external code. We should not use external module or tools that are ncompatible with  GPL licenses.</li>
+<li>If you use a peace of borrowed code in your code your should specify the source and license of borrowed code, otherwise your code will be removed.</li>
+<li>If you have to use an external ( borrowed code ) within your source tree, please create a &#8220;COPYING&#8221; file and fill that with the external code license, and tell Dina Policy Committee about it.  !!! DO NOT USE GPL UNCOMPATIBLE CODE !!!</li>
+<li>Comment your code as much as possible, so that every other developer can easily understand what was you doing.</li>
+<li>Please READ PEP8 &lt;<a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">http://www.python.org/dev/peps/pep-0008/</a>&gt; and USE it as your main coding style in Dina Project.</li>
+<li>If you work on a new feature of new section please make a specification document for your work and put that document in /doc/devel/spec/ . Also make a user manual for your work and put that in /doc/user/ .</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if you work on a  application put your user and spec documents under: APPDIR/doc/{devel|user}/</p>
+</div>
+<ul class="simple">
+<li>If your looking for task to do, please take a look at task manager and bug manager system and pick a task that you want if the task or bug not assigned to any one else before. if it assigned before and you still want to work on it please contact to its author.</li>
+<li>File a bug when you find any and work on that. so other developers can find out about that bug. After finishing your work close the bug.</li>
+<li>If you made some changes in the code that other one works on it right now please contact the current author and tell him/her about your changes.</li>
+<li>The commit strings should be meaningful, and show what&#8217;s changed in code. Don&#8217;t enter lazy strings as commit message please.</li>
+<li>Broken or incomplete code should not committed.</li>
+<li>Never ever merge the branches with each other till you know what you do. After merging branches please tell every one about merging.</li>
+<li>Always add new code to default branch and never work on other branch unless you know what you do</li>
+<li>Never split the project heads until you know what you do.</li>
+<li>Never use -f option for &#8216;hg push&#8217; ( -f means force push )</li>
+<li>Always choose meaningful name for your code components.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Dina-Project Development Policy</a><ul>
+<li><a class="reference external" href="#general-policy">1. General Policy:</a></li>
+<li><a class="reference external" href="#mercurial-repository-structure">2. Mercurial Repository Structure :</a><ul>
+<li><a class="reference external" href="#media-files">2.1 Media files</a></li>
+<li><a class="reference external" href="#applications">2.2 Applications</a><ul>
+<li><a class="reference external" href="#what-are-external-applications">2.2.1 What are external applications ?</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#branches">2.3 Branches</a></li>
+<li><a class="reference external" href="#tags">2.4 Tags</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#developing-policies">3. Developing Policies:</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Developers Manual</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/devel/policy.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Developers Manual"
+             >previous</a> |</li>
+        <li><a href="../index.html">Dina v0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Developers Manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Dina developers community.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

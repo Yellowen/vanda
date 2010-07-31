@@ -1,0 +1,169 @@
+		Dina-Project Development Policy
+		         Version 1.0.0
+
+Copyright (C)  2009-10  Dina Project
+    Permission is granted to copy, distribute and/or modify this document
+ under the terms of the GNU Free Documentation License, Version 1.3
+ or any later version published by the Free Software Foundation;
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ A copy of the license is included in the section entitled "GNU
+ Free Documentation License".
+
+Notes:
+    This document contain the mercurial repository structure and specific commit policies.
+ If you have any idea please contact me at <lxsameer@gmail.com>. if you find any bug in this
+ document please file a bug in bug tracking system.
+
+    Since now i call Dina-Project directory (root directory) "/" so / sign refer to 
+ dina-project directory .
+
+    Please take a look at 2.2.1 section for definition of external applications.
+
+
+1. General Policy:
+    
+    At Dina Developer Community we warmly welcome to those people who wants to join us. so
+  as a Dina developers there is some notes that you should bear in mind:
+
+    * Respect to others not matter who you are.
+    * if some one make a mistake in the code call him at private and tell him kindly.
+    * Do not humiliate any one.
+    * ( think more ).
+    *
+    *
+
+2. Mercurial Repository Structure :
+    
+    There is some important issue that you should be aware of as Dina developer.
+
+  2.1 Media files
+
+    For a clean job its good to put just project itself under the dina-project repository, 
+ but in addition to project code we have some files that play important roll in project
+ but are not the member of project itself for example , pictures and  are two important
+ part of framework/CMS view . its not a good idea to put the image source files (GIMP *.xcf
+ or Photoshop *.psd) in the project tree . we just use the image output not the source.
+ but the source file is needed because of our license, and we don't have any other
+ repository for this purpose now. "So what should i do?". please build a sub-directory
+ under you template folder with the "media_source" and put you source file in there.
+ we will build a new repository and move those file ( because we don't want to increase
+ the size of Dina package ) to new repository.
+ 
+  2.2 Applications
+    
+    As decided in the Dina Developers Community, we will remove all external application
+ from Dina main repository due to reach these goals:
+      
+      * Have a clean source tree
+      * Minimalist package size
+      * Separating Dina main code from applications code
+      * Separating Dina task and bugs from applications one
+      * and etc.
+ 
+    2.2.1 What are external applications ?
+    	  
+	  ( define what exactly external application is )
+
+ But as said in 1.1 we don't have any other repository, so we have to put unnecessary apps
+ in the /apps directory.
+
+
+  2.3 Branches
+
+    We use default branch of mercurial repository as our unstable code repository. at each
+ release we will build a branch ant name it as the release version. also we have a branch 
+ call "Stable" for our last stable code.
+
+  2.4 Tags
+ 
+    We use tag for special point of development. The code should tagged with its developer
+ GPG key with the meaningful message. for example important states of application of Dina
+ itself should tagged with GPG key of their last developer.
+
+   
+3. Developing Policies:
+
+    For gaining better and better team work ability, we need to follow these rulse:
+
+    	* Dina Project release under the term of GPL version 2, so we have to put out license
+	header at the beginning of our source files. the source header should be exactly like:
+
+	     # ----------------------------------------------------------------------------
+	     #    Dina Project 
+	     #    Copyright(C) 2010  Dina Project Developer Community
+	     #
+	     #    This program is free software; you can redistribute it and/or modify
+	     #    it under the terms of the GNU General Public License as published by
+	     #    the Free Software Foundation; either version 2 of the License, or
+	     #    (at your option) any later version.
+	     #
+	     #    This program is distributed in the hope that it will be useful,
+	     #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+	     #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	     #    GNU General Public License for more details.
+	     #
+	     #    You should have received a copy of the GNU General Public License along
+	     #    with this program; if not, write to the Free Software Foundation, Inc.,
+	     #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+	     # -----------------------------------------------------------------------------
+
+	  please do not add your name in the license header as the author. if you want to other
+	developers know that your are the author of this peace of code or this section please
+	comment your name and contact a line or two after the license header. 
+	  e.g:
+	    
+ 	    # Sameer Rahmani <lxsameer@gnu.org>
+
+	* If you use an external module that make Dina depend on in please ask the Dina Developers
+	mailing list before that. So Dina Policy Committee can decide about the external code. We
+	should not use external module or tools that are incompatible with  GPL licenses.
+
+	* If you use a peace of borrowed code in your code your should specify the source and license
+	of borrowed code, otherwise your code will be removed. 
+
+	* If you have to use an external ( borrowed code ) within your source tree, please create a
+	"COPYING" file and fill that with the external code license, and tell Dina Policy Committee 
+	about it.  !!! DO NOT USE GPL UNCOMPATIBLE CODE !!!
+	
+	* Comment your code as much as possible, so that every other developer can easily understand
+	what was you doing.
+
+	* Please READ PEP8 <http://www.python.org/dev/peps/pep-0008/> and USE it as your main coding
+	style in Dina Project.
+
+	* If you work on a new feature of new section please make a specification document for your
+	work and put that document in /doc/devel/spec/
+	  
+	  Also make a user manual for your work and put that in /doc/user/ .
+	  Note: if you work on a application put your user and spec documents under:
+	  	 APPDIR/doc/{devel|user}/
+
+	* If your looking for task to do, please take a look at task manager and bug manager system 
+	and pick a task that you want if the task or bug not assigned to any one else before. if it
+	assigned before and you still want to work on it please contact to its author.
+
+	* File a bug when you find any and work on that. so other developers can find out about that
+	bug. After finishing your work close the bug.
+
+	* If you made some changes in the code that other one works on it right now please contact
+	the current author and tell him/her about your changes.
+
+	* The commit strings should be meaningful, and show what's changed in code. Don't enter lazy
+	 strings as commit message please.
+	
+	* Broken or incomplete code should not committed.
+
+	* Never ever merge the branches with each other till you know what you do. After merging branches
+	please tell every one about merging.
+
+	* Always add new code to default branch and never work on other branch unless you know what you do
+	     
+	* Never split the project heads until you know what you do.
+
+	* Never use -f option for 'hg push' ( -f means force push )
+
+	* Always choose meaningful name for your code components.
+
+
+
+
