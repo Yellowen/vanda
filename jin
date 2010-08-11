@@ -40,7 +40,7 @@ if [ "$param" = "todo" ]; then
 fi
 
 
-if [ "$param" = "ceclean" ]; then 
+if [ "$param" = "clean" ]; then 
     rm -v `find ./ -iname "*.pyc"`
         rm -v `find ./ -iname "*~"`
     exit 0

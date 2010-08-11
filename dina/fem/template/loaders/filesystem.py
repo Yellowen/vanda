@@ -59,9 +59,11 @@ class Loader(BaseLoader):
                 active_template = Template.current_template_dir ()
                 if template_name.split("/")[0] != "admin":
                     template_n = active_template + template_name
+                    
                 else:
                     template_n = template_name
-                
+
+                self.logger.debug (safe_join(template_dir, template_n))
                 yield safe_join(template_dir, template_n)
                 
             except UnicodeDecodeError:

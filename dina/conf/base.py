@@ -17,79 +17,16 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+from django.db import models
 
-class ConfigBase (type):
-    """
-    Meta class for all configuration classes.
-    """
-    
-    
-    def __new__ (cls , name ,bases , attrs):
-        """
-        Target configuration instance build here.
-        """
-        
-        super_new = super(ConfigBase , cls).__new__
+class ConfigBase (models.Model):
 
-        module = attrs.pop ('__module__')
-        new_class = super_new (cls , name , bases , {'__module__' : module} )
-        attr_meta = attrs.pop ('Meta', None)
-        if not attr_meta:
-            meta = getattr(new_class, 'Meta', None)
-        else:
-            meta = attr_meta
-            
-        if getattr(meta, 'label', None) is None:
-            kwargs = {'label' : name}
-        
-        print "Name: %s" % name
-        print "Base Classes:"
-        for i in bases:
-            print "\t%s" % i
-        
-        for i in attrs.keys ():
-            print "%s = %s" % (i , attrs[i])
-            
-
-        setattr(new_class , "sameer" , "rahmani")
-        return new_class
-        
-        
+    def save(self, *args, **kwargs):
+        self.__class__.objects.all ().delete ()
+        super(self.__name__, self).save (**kwargs)
 
 
 
 
-class Config (object) :
-    """
-    Dina Configuration framework base class.
-    """
-    
-    # Dina build a configuration interface for an application with
-    # a class that inherit from this class in the app source code
-    # and registered with dina.conf.register
-    #
-    # The config class can override completely ( view , url and ...)
-    
-    
-    __metaclass__ = ConfigBase
-    
-    
-    
-    def __init__ (self):
-        pass
-    
-    def __getattribute__ (self , name):
-        #object.__getattribute__ (self , name)
-        #print " = ".join (name)
-        return object.__getattribute__ (self , name)
-            
-    def __setattr__ (self , name , value):
-        print " = ".join (name,value)
-        self.__dict__[name] = int (value ) + 1 
 
 
-class test (Config):
-
-
-    b = 32
-    f = 40
