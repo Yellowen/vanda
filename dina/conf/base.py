@@ -26,6 +26,8 @@ class ConfigBase (models.Model):
         super(self.__name__, self).save (**kwargs)
 
 
+    class _config:
+        pass
 
 
 
