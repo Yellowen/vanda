@@ -17,23 +17,20 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-
-
-
 from django.http import Http404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from dina.DPM.models import Template
 from django.conf import settings
-
+from dina.log import Logger
 
 def MediaServ (request ,  path):
     current = Template.objects.CurrentDir ()
-    i = 0
-
+    logger = Logger ("MediaServ")
+    logger.info ("Path: %s" % path)
     # TODO: search in the TEMPLATE_DIRS for the statics files , not in the first element only
-    fd = open (settings.TEMPLATE_DIRS[0] + "/" + current + '/media/' + path ,  'r''')
+    fd = open (settings.TEMPLATE_DIRS[0] + "/" + current + '/media/' + path ,  'r')
     buf = fd. read ()
     fd.close ()
     mtype = 'plain/text'
