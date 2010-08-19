@@ -15,6 +15,7 @@ def conf_view (req, appname):
     logger.info ("APP name : %s" % appname)
     app_models = ContentType.objects.filter(app_label=appname)
     conf_models = list ()
+    form = None
     for i in app_models:
 
         if hasattr (i.model_class(), "_config"):
@@ -26,4 +27,4 @@ def conf_view (req, appname):
             conf_models.append ((i.model_class().__name__, form))
             
 
-    return HttpResponse ("OK")
+    return rtr ("admin/change_form.html", {"adminform" : form})

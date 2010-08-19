@@ -55,16 +55,16 @@ class Loader(BaseLoader):
             
         for template_dir in template_dirs:
             try:
-
+                admin = False
                 active_template = Template.current_template_dir ()
                 if template_name.split("/")[0] != "admin":
                     template_n = active_template + template_name
                     
                 else:
                     template_n = template_name
-
+                    admin = True
                 self.logger.debug (safe_join(template_dir, template_n))
-                yield safe_join(template_dir, template_n)
+                yield (safe_join(template_dir, template_n), admin)
                 
             except UnicodeDecodeError:
                 # The template dir name was a bytestring that wasn't valid UTF-8.
@@ -79,26 +79,28 @@ class Loader(BaseLoader):
     # TODO: Find a good way to allow user to use section tag in any html file
     def load_template_source(self, template_name, template_dirs=None):
         tried = []
-        for filepath in self.get_template_sources(template_name, template_dirs):
-
+        for filepath, admin in self.get_template_sources(template_name, template_dirs):
+            
             try:
-
-                
-                try:
-                    template_data, cached_template = Template.get_template (filepath, template_name)
-                except OSError, io:
-                    
-                    self.logger.info ("%s", io)
-                    self.logger.info ("Template loading skipped, try next one.")
-                    raise IOError ()
-                
-                if cached_template:
-                    return (template_data, filepath)
+                if admin:
+                    return (file (filepath).read (), filepath)
                 else:
-                    parser = Parser (template_data)
-                    replaced_template_data = parser.parse_data ()                    
-                    Template.write_cache (filepath, template_name, replaced_template_data)
-                    return (replaced_template_data, filepath)
+                
+                    try:
+                        template_data, cached_template = Template.get_template (filepath, template_name)
+                    except OSError, io:
+                    
+                        self.logger.info ("%s", io)
+                        self.logger.info ("Template loading skipped, try next one.")
+                        raise IOError ()
+                
+                    if cached_template:
+                        return (template_data, filepath)
+                    else:
+                        parser = Parser (template_data)
+                        replaced_template_data = parser.parse_data ()                    
+                        Template.write_cache (filepath, template_name, replaced_template_data)
+                        return (replaced_template_data, filepath)
 
                 
             except IOError:
