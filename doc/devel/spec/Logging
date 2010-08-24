@@ -1,6 +1,25 @@
 			Logging system specification
 
-Dina initialize its logging system configuration in the settings.py file. So each time
-that web server runs the settings.py script logging configuration initialized once.
+How does Logging system work ?
+==============================
 
-but login code 
+Logging subsystem code live under 'dina/log/__init__.py' at this time. It lookup for 
+the logging configuration in settings.py and provide a class called "Logger". Each 
+part of Dina that need logging system should build an instance from the Logger class,
+and use the instance for produce some logs. Dina initialize its logging system configuration 
+in the settings.py file. So each time that web server runs the settings.py script logging
+configuration initialized once. for more detail take a look at code comments.
+
+
+How to use logging system ?
+===========================
+
+Using the logger system is so simple, you can make an instance from the "Logger" class
+and use that to produce logs. Here is the explaination for "Logger" class.
+
+Logger (logger_name)
+Logger class use logger_name as the name of log producer, for example
+
+
+
+
