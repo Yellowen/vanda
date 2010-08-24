@@ -1,4 +1,5 @@
 		Dina Project - Brainstorm
+		     version 0.2.0
 
 Copyright (C)  2009-10  Dina Project
     Permission is granted to copy, distribute and/or modify this document
@@ -11,10 +12,17 @@ Copyright (C)  2009-10  Dina Project
 Contents
 -----------------------------------------------------------------------------------
 
+	0. About this document
 	1. Why does Dina exists?
 	2. Goals
-
+	3. Features
 -----------------------------------------------------------------------------------
+
+0. About this document
+
+   This document have a list of branstorms that involved in Dina Project. Due to
+current version and future version of Dina this document will contain the list 
+of brainstorms.
 
 1. Why does Dina exists ?
 
@@ -23,16 +31,29 @@ all the useful features (with respect to Django), that help rapid and easy devel
 Django did not provide some functionality that will be handy in web development
 because of Django philosophy. some feature like Config framework, Template Manager,
 Front-End Manager and etc. Django did not have such features because it choose to be
-a complete framework and (need to be complete)
+a complete framework.
 
 2. Goals
    
    The main idea behind the Dina Project is to fill the Django gaps and build as much as
 complete web framework/CMS that allow every user to use Dina how his/her want, and with
 no pain. Dina must fit with the knowledge level of its user. Each use must access to
-specific options that specify with his/her level of knowledge. ( need to be complete )
+specific options that specify with his/her level of knowledge.
 
+3. Features
+   
+   Feaatures listed in this section sorted by date. older come first
    Please take at look at docs/devel/spec/* for each section specification.
+
+   3.1 Logging subsystem (implemented)
+   3.2 Layout manager (implemented)
+   3.3 Config Framework (implemented)
+   3.4 Template manager (implemented)
+   3.5 Page subsystem (impemented)
+   3.6 Menu subsystem (impemented)
+   3.7 DPM (not completely impemented)
+   3.8 MediaServer (impemented) (need security check)
+   3.9 . . . 
 
 
 

@@ -1,0 +1,6 @@
+			Logging system specification
+
+Dina initialize its logging system configuration in the settings.py file. So each time
+that web server runs the settings.py script logging configuration initialized once.
+
+but login code 
