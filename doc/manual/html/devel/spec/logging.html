@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Loggin System specification &mdash; Dina v0.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Dina v0.2 documentation" href="../../index.html" />
+    <link rel="up" title="Dina features specifications" href="index.html" />
+    <link rel="prev" title="Dina features specifications" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Dina features specifications"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Dina v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Developers Manual</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Dina features specifications</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="loggin-system-specification">
+<h1>Loggin System specification<a class="headerlink" href="#loggin-system-specification" title="Permalink to this headline">¶</a></h1>
+<p>Dina use logging system to provide useful informations at the runtime that allow better
+and faster debugging. Also privent developers to use <cite>print</cite> statement in there code
+that could break Dina code under WSGI and mod_python.</p>
+<div class="section" id="how-does-logging-system-work">
+<h2>How does Logging system work ?<a class="headerlink" href="#how-does-logging-system-work" title="Permalink to this headline">¶</a></h2>
+<p>Logging subsystem code live under <tt class="docutils literal"><span class="pre">dina/log/__init__.py</span></tt> at this time. It lookup for
+the logging configuration in settings.py and provide a class called <a title="Logger" class="reference internal" href="#Logger"><tt class="xref docutils literal"><span class="pre">Logger</span></tt></a>. Each
+part of Dina that need logging system should build an instance from the Logger class,
+and use the instance for produce some logs. Dina initialize its logging system configuration
+in the settings.py file. So each time that web server runs the settings.py script logging
+configuration initialized once. for more detail take a look at code comments.</p>
+</div>
+<div class="section" id="how-to-use-logging-system">
+<h2>How to use logging system ?<a class="headerlink" href="#how-to-use-logging-system" title="Permalink to this headline">¶</a></h2>
+<p>Using the logger system is so simple, you can make an instance from the <a title="Logger" class="reference internal" href="#Logger"><tt class="xref docutils literal"><span class="pre">Logger</span></tt></a> class
+and use that to produce logs. Here is the explaination for <a title="Logger" class="reference internal" href="#Logger"><tt class="xref docutils literal"><span class="pre">Logger</span></tt></a> class.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Parameter names are just for better understanding and not exactly the same as real ones.</p>
+</div>
+<dl class="class">
+<dt id="Logger">
+<em class="property">class </em><tt class="descname">Logger</tt><big>(</big><em>logger_name</em><big>)</big><a class="headerlink" href="#Logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Logger class use <tt class="docutils literal"><span class="pre">logger_name</span></tt> as the name of log producer, for example:</p>
+<div class="highlight-python"><pre>[2010-08-25 11:54:42] [Template cache class], line:64-&gt; DEBUG    : "TemplateQueryCache class inti."</pre>
+</div>
+<p>The above log snippet taken from Dina log. You can see that <tt class="docutils literal"><span class="pre">Template</span> <span class="pre">cache</span> <span class="pre">class</span></tt> procude a <tt class="xref docutils literal"><span class="pre">DEBUG</span></tt>
+log in line <tt class="docutils literal"><span class="pre">64</span></tt> of its module. In this example <tt class="docutils literal"><span class="pre">Template</span> <span class="pre">cache</span> <span class="pre">class</span></tt> used as <tt class="docutils literal"><span class="pre">logger_name</span></tt> parameter
+for <a title="Logger" class="reference internal" href="#Logger"><tt class="xref docutils literal"><span class="pre">Logger</span></tt></a> class.</p>
+<dl class="method">
+<dt id="Logger.debug">
+<tt class="descclassname">Logger.</tt><tt class="descname">debug</tt><big>(</big><em>log_string</em><big>)</big><a class="headerlink" href="#Logger.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This method produce a log with the priority level of DEBUG and <tt class="docutils literal"><span class="pre">log_string</span></tt> data.</p>
+<dl class="method">
+<dt id="Logger.info">
+<tt class="descclassname">Logger.</tt><tt class="descname">info</tt><big>(</big><em>log_string</em><big>)</big><a class="headerlink" href="#Logger.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This method produce a log with the priority level of INFO and <tt class="docutils literal"><span class="pre">log_string</span></tt> data.</p>
+<dl class="method">
+<dt id="Logger.warning">
+<tt class="descclassname">Logger.</tt><tt class="descname">warning</tt><big>(</big><em>log_string</em><big>)</big><a class="headerlink" href="#Logger.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This method produce a log with the priority level of WARNING and <tt class="docutils literal"><span class="pre">log_string</span></tt> data.</p>
+<dl class="method">
+<dt id="Logger.error">
+<tt class="descclassname">Logger.</tt><tt class="descname">error</tt><big>(</big><em>log_string</em><big>)</big><a class="headerlink" href="#Logger.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This method produce a log with the priority level of ERROR and <tt class="docutils literal"><span class="pre">log_string</span></tt> data.</p>
+<dl class="method">
+<dt id="Logger.critical">
+<tt class="descclassname">Logger.</tt><tt class="descname">critical</tt><big>(</big><em>log_string</em><big>)</big><a class="headerlink" href="#Logger.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This method produce a log with the priority level of CRITICAL and <tt class="docutils literal"><span class="pre">log_string</span></tt> data.</p>
+<p>A simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">dina.log</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span> <span class="p">(</span><span class="s">&quot;test module&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="p">(</span><span class="s">&quot;Some log&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This code snippet will produce a log entry like:</p>
+<div class="highlight-python"><pre>[2010-08-25 11:54:42] [test module], line:4-&gt; INFO    : "Some log"</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Please read the official python documentation for logging module, current logging system use the python logging module.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Loggin System specification</a><ul>
+<li><a class="reference external" href="#how-does-logging-system-work">How does Logging system work ?</a></li>
+<li><a class="reference external" href="#how-to-use-logging-system">How to use logging system ?</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Dina features specifications</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/devel/spec/logging.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Dina features specifications"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Dina v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Developers Manual</a> &raquo;</li>
+          <li><a href="index.html" >Dina features specifications</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009-2010, Dina developers community.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

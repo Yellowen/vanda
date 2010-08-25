@@ -5,7 +5,7 @@
 
 Welcome to Dina Project's documentation!
 ========================================
-Welcome to Dina Project manual
+Welcome to Dina Project manuals. Here you can learn more about Dina project, usage and development.
 
 Contents:
 
