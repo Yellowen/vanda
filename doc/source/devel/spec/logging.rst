@@ -5,7 +5,7 @@ Dina use logging system to provide useful informations at the runtime that allow
 and faster debugging. Also privent developers to use `print` statement in there code
 that could break Dina code under WSGI and mod_python.
 
-How does Logging system work ?
+How does Logging system works ?
 ------------------------------
 
 Logging subsystem code live under ``dina/log/__init__.py`` at this time. It lookup for 

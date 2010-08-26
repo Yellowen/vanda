@@ -6,5 +6,7 @@ and internals of the part, and how to use that feature in your code.
 
 .. toctree::
    :maxdepth: 2
-
+   
+   Layout Manager <layout.rst>
    Logging System <logging.rst>
+
