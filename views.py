@@ -25,7 +25,7 @@ import os
 
 def testview (requset ):
 
-    return rr ('index.html')
+    return rr ('isndex.html')
 
 
 

@@ -224,6 +224,8 @@ DINA_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 
 
+if DEBUG:
+    INSTALLED_APPS.append ('dina.utils.django_extensions')
 # For working the contact send mail please complete flowing item
 # add by pollesangi for contact
 EMAIL_HOST = ''

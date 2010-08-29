@@ -5,4 +5,4 @@ if [ ! -z $1 ]
 param=$1
 fi
 mkdir -p cache
-python manage.py runserver $param  --adminmedia=./media/
+python manage.py runserver_plus $param  --adminmedia=./media/
