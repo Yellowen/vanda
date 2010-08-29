@@ -42,4 +42,6 @@ Dina use some applications and library in its code that mentioned below:
 Django - Release under BSD license ( external )
 mptt   - Release under New BSD license ( internal )
 jquery - Release under GPL version 2 license ( internal )
+django_extensions - Release under New BSD license
+
 
