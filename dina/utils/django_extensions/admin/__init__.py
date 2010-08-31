@@ -17,7 +17,7 @@ from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 from django.utils.text import get_text_list
 
-from django_extensions.admin.widgets import ForeignKeySearchInput
+from dina.utils.django_extensions.admin.widgets import ForeignKeySearchInput
 
 class ForeignKeyAutocompleteAdmin(admin.ModelAdmin):
     """Admin class for models using the autocomplete feature.
