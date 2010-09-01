@@ -44,5 +44,7 @@ class DinaConfig (models.Model):
 
 
 class AppsConfigs (models.Model):
-    pass
+    class Meta:
+        abstract = True
+
 

@@ -23,8 +23,8 @@ class ConfigBase (models.Model):
 
     def save(self, *args, **kwargs):
         self.__class__.objects.all ().delete ()
-        super(self.__name__, self).save (**kwargs)
-
+        #super(self.__class__, self).save (**kwargs)
+        models.Model.save (self,**kwargs)
 
     class _config:
         pass
