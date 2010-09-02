@@ -33,8 +33,8 @@ class shopCategories (models.Model):
         
 class products(models.Mode):
     name = models.CharField(max_length=100)
-    price = models.CharField(max_length=100)
-
+    price = models.CharField(max_length=100,null=True, blank=True)
+    category = models.ForeignKey(shopCategories)
     
     class Meta:
         abstract = True

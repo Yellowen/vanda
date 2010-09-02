@@ -44,7 +44,9 @@ urlpatterns = patterns('',
                 (r'^comments/', include('django.contrib.comments.urls')),
                 (r'^site_media/(.+)$' ,  'dina.core.server.MediaServ'), 
                 (r'^accounts/' ,  include('dina.auth.urls')), 
-                (r'^' , include('apps.urls')),                                      
+                (r'^' , include('apps.urls')),
+                (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+
                        
 )
 
