@@ -24,5 +24,5 @@ class Config (admin.ModelAdmin):
     pass
 
 
-admin.site.register (DinaConfig , Config)
+admin.site.register (GeneralConfiguration , Config)
 

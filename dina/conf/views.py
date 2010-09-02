@@ -1,30 +1,41 @@
+import sets
+from django.shortcuts import render_to_response as rtr
 from django.contrib.contenttypes.models import ContentType
-from django.conf import settings
-from django import forms
-from django.forms.formsets import formset_factory
-from django.forms.models import modelformset_factory
 from django.contrib import admin
+from django.utils.translation import ugettext as _
+
 from dina.log import Logger
-from dina.conf.base import ConfigBase
-from apps.testapp.models import config 
+
+
 
         
 
 def conf_view (req, appname):
     logger = Logger ("conf_view")
-    logger.info ("APP name : %s" % appname)
     app_models = ContentType.objects.filter(app_label=appname)
+    logger.info ("APP name : %s" % appname)
     conf_models = list ()
     form = None
+    app_models = [i.model_class() for i in app_models]
+    app_models_set = sets.Set(app_models)
+    registry = sets.Set (admin.site._registry)
+    if len ( app_models_set & registry) == 0:
+        return rtr ("admin/dina/info.html", {"app_label": appname,\
+                                             "msg": _("Warning: \"%s\" application does not provide a admin interface. (do not have a \"admin.py\")") % appname })
     for i in app_models:
 
-        if hasattr (i.model_class(), "_config"):
-            form = admin.ModelAdmin (i.model_class(), admin.site)
+        
+        if hasattr (i, "_config"):
+            logger.debug ("config model: %s" % i)
+            form = admin.ModelAdmin (i, admin.site)
             form.add_form_template = 'admin/dina/change_config.html'
             form.change_form_template = 'admin/dina/change_config.html'
-            conf_models.append (i.model_class())
-    if len (conf_models) > 1:
-        raise "conf_models has more that one element"
+            conf_models.append (i)
+
+    if  len (conf_models) != 1 :
+        return rtr ("admin/dina/info.html", {"app_label": appname,\
+                                             "msg": _("Warning: \"%s\" application does not provide a config model.") % appname })
+
     else:
         try:
             obj = conf_models[0].objects.all ()[0]
