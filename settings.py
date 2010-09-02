@@ -25,7 +25,7 @@ import django
 
 
 #+++ Remember to shut down the debug mode in official release
-#@@@ for more information about $$something$$ string take a look at doc/devel/coding.policy
+#@@@ for more information about $$something$$ string take a look at doc/devel/coyding.policy
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SCREEN_MODE = False # print debug info to the screen (stdout) .
@@ -158,6 +158,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.app_directories.Loader' ,
 )
 
 MIDDLEWARE_CLASSES = [
@@ -197,6 +198,7 @@ DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.messages',
     'django.contrib.redirects',
+    'django.contrib.sitemaps',
 ]
 
 

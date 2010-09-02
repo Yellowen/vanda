@@ -21,7 +21,7 @@
 
 from django.conf.urls.defaults import *
 from django.http import HttpResponseRedirect
-
+from django.contrib.sitemaps import  GenericSitemap
 import os
 from django.conf import settings
 
@@ -30,6 +30,11 @@ from django.conf import settings
 #REMOVE:START ----------------
 from views import testview
 #REMOVEL:END ------------------
+
+sitemaps = {
+#    'flatpages': FlatPageSitemap,
+}
+
 
 urlpatterns = patterns('',
     #REMOVE:START -------------------------------------
