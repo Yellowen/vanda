@@ -15,13 +15,7 @@
 
 
 {% block pretitle %}
-
-
-
-
-
-
-
+<!--
 <H1>{% trans "Main Panel" %}</h1>
 
 <div class="module">
@@ -62,8 +56,10 @@
 <p> {% trans "Use installer to install new packages from repositories or installing packages by hand." %} </p>
 </div>
 <br/>
-
+-->
 {% endblock %}
+
+
 
 
 
@@ -100,6 +96,10 @@
             {% endif %}
             </tr>
         {% endfor %}
+	    <tr>
+	      <td>&nbsp;</td>
+	      <td><a href="{{ app.app_url }}config/" class="settingslink">{% trans 'Settings' %}</a></td>
+	      </tr>
         </table>
         </div>
 	{% endifnotequal %}

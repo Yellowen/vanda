@@ -37,7 +37,7 @@ def AdminIndex (request , extra_context=None):
     for model, model_admin in site._registry.items():
         app_label = model._meta.app_label
         has_module_perms = user.has_module_perms(app_label)
-        
+
         if has_module_perms:
             perms = model_admin.get_model_perms(request)
 
@@ -52,6 +52,7 @@ def AdminIndex (request , extra_context=None):
                 if app_label in app_dict:
                     app_dict[app_label]['models'].append(model_dict)
                 else:
+                    # TODO: Settings should added just for apps with config models
                     app_dict[app_label] = {
                         'name': app_label.title(),
                         'app_url': app_label + '/',
@@ -72,6 +73,7 @@ def AdminIndex (request , extra_context=None):
         'app_list': app_list,
         'root_path': site.root_path,
     }
+#    print "======> ", app_list
     context.update(extra_context or {})
     context_instance = template.RequestContext(request, current_app=site.name)
     return rtr (site.index_template or 'admin/index.html', context,

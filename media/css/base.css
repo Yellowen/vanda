@@ -530,6 +530,13 @@ div.breadcrumbs {
     background: url(../img/admin/icon_changelink.gif) 0 .2em no-repeat;
 }
 
+
+.settingslink {
+    padding-left: 12px;
+    background: url(../img/admin/icon_settingslink.png) 0 .2em no-repeat;
+}
+
+
 .deletelink {
     padding-left: 12px;
     background: url(../img/admin/icon_deletelink.gif) 0 .25em no-repeat;

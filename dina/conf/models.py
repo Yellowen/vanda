@@ -35,13 +35,16 @@ class Config (models.Model):
         # A config model should contain only one record
         self.__class__.objects.all ().delete ()
         super (Config, self).save (**kwargs)
-        
+
+
+
+    def __unicode__ (self):
+        return "%s-%s" % (self.__class__._meta.app_label, self.__class__.__name__)
     class Meta:
         abstract = True
         
     class _config:
         pass
-
 
 
 
