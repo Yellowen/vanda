@@ -1,48 +1,41 @@
+============
 Dina Project 
 ============
+
 Contents
---------
+========
 1. License
-2. Dependencies license
+----------
++------------------------------------------------------------------+
+| **Dina Project Copyright (C) 2009-10  Dina developers community**|
++------------------------------------------------------------------+
+  
+  Dina is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published
+  by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
-1. License
-^^^^^^^^^^
-Dina Project
-Copyright (C) 2009-10  Dina developers community
+  Dina is distributed in the hope that it will be useful,but **WITHOUT ANY WARRANTY**; without even the implied warranty of
+  **MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE**.  See the GNU General Public License for more details.
 
-  Dina is free software; you can redistribute it and/or modify 
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software 
+  Foundation,Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-  Dina is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+  All the static files of Dina ( media files ) release under the term of GPL version 2.
 
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+  All the documents of Dina that locate in 'doc' directories release under the term of GNU FDL.
 
-  All the static files of Dina ( media files ) release under the term of
-  GPL version 2.
-
-  All the documents of Dina that locate in 'doc' directories release
-  under the term of GNU FDL.
-
-  All the HTML templates of Dina (*.html files that contain Django template
-  language) release under the term of GPL v2.
+  All the HTML templates of Dina (*.html files that contain Django template language) release under the term of GPL v2.
 
 2. Dependencies license
-^^^^^^^^^^^^^^^^^^^^^^^
-Dina use some applications and library in its code that mentioned below:
+-----------------------
++------------------------------------------------------------------------------+
+| **Dina use some applications and library in its code that mentioned below:** |
++------------------------------------------------------------------------------+
+  **Django** - Release under BSD license ( external )
 
-  Django - Release under BSD license ( external )
+  **mptt**   - Release under New BSD license ( internal )
 
-  mptt   - Release under New BSD license ( internal )
+  **jquery** - Release under GPL version 2 license ( internal )
 
-  jquery - Release under GPL version 2 license ( internal )
-
-  django_extensions - Release under New BSD license
+  **django_extensions** - Release under New BSD license
 
 
