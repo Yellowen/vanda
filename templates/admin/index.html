@@ -15,6 +15,8 @@
 
 
 {% block pretitle %}
+
+
 <!--
 <H1>{% trans "Main Panel" %}</h1>
 
@@ -96,10 +98,12 @@
             {% endif %}
             </tr>
         {% endfor %}
+	    {% ifnotequal app.name "Conf" %}
 	    <tr>
 	      <td>&nbsp;</td>
 	      <td><a href="{{ app.app_url }}config/" class="settingslink">{% trans 'Settings' %}</a></td>
 	      </tr>
+	    {% endifnotequal %}
         </table>
         </div>
 	{% endifnotequal %}
