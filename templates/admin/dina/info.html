@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% load i18n  adminmedia %}
+
+{% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} Warning{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="../../">{% trans "Home" %}</a> &rsaquo;
+     {{ app_label|capfirst|escape }}</a> &rsaquo; 
+     
+{% endif %}{% endblock %}
+
+
+
+
+{% block content %}<div id="content-main">
+{% block object-tools %}
+{% if not is_popup %}
+
+  <h1>{{ app_label}}</h1>
+  <p>{{ msg }}</p>
+  <a href="../../">{% trans "Back" %}</a>
+{% endif %}
+{% endblock %}
+</div>
+{% endblock %}

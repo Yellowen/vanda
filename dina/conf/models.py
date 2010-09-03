@@ -20,31 +20,48 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-# TODO: Add a dynamic field loader 
-class DinaConfig (models.Model):
+
+class Config (models.Model):
+    """
+    Dina config base class.
+
+    Each configuration model should inherit from this class.
+    so dina can find out that that model is a application model.
+    """
+
+
+    
+    def save(self, *args, **kwargs):
+        # A config model should contain only one record
+        self.__class__.objects.all ().delete ()
+        super (Config, self).save (**kwargs)
+        
+    class Meta:
+        abstract = True
+        
+    class _config:
+        pass
+
+
+
+
+
+class GeneralConfiguration (Config):
+    """
+    General Configuration for Dina.
+    """
+    
     # Fields
     site_name =  models.CharField (max_length = 50, verbose_name=_("Site Name"), \
                                    help_text=_("Site Name is a name that show in the title srction."),\
                                    default=_("Dina Project"))
     
-
     # Methods
-    def save(self, *args, **kwargs):
-        DinaConfig.objects.all ().delete ()
-        super(DinaConfig, self).save (*args , **kwargs)
-
-
-
-
     def __unicode__ (self):
         return "%s" % (self.site_name)
-    # Managers
-#    objects = sd
 
 
 
-class AppsConfigs (models.Model):
-    class Meta:
-        abstract = True
+
 
 

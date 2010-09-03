@@ -1,10 +1,12 @@
 from django.db import models
-from dina.conf.base import ConfigBase
+from dina.conf.models import Config
+
+
 class test (models.Model):
     name = models.CharField (max_length=30)
 
 
-class config (ConfigBase):
+class config (Config):
     active = models.BooleanField ()
     name = models.CharField (max_length=30)
     
