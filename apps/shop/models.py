@@ -23,15 +23,15 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 
-class shopCategories (models.Model):
-    name  = models.CharField (verbose_name=_('Shop category title')max_length = 100)
-    description = models.TextField(verbose_name=_('Shop category description'),null=True, blank=True)
-    image = models.ImageField(verbose_name=_('Shop category image'),height_field=None, width_field=None,max_length="7000",upload_to="uploads/shop/")
+class categories (models.Model):
+    name  = models.CharField (verbose_name=_('Category title')max_length = 100)
+    description = models.TextField(verbose_name=_('Category description'),null=True, blank=True)
+    image = models.ImageField(verbose_name=_('Category image'),height_field=None, width_field=None,max_length="7000",upload_to="uploads/shop/")
     
     def __unicode__(self):
         return "%s" % self.name
         
-class products(models.Mode):
+class items(models.Mode):
     name = models.CharField(max_length=100)
     price = models.CharField(max_length=100,null=True, blank=True)
     category = models.ForeignKey(shopCategories)

@@ -23,3 +23,11 @@
 
 ! i should add a premission check to menu view
 ! i should check for dpm cache dir existance
+ make urls SEO like : dina-project.com/blog/personal-docs/2010/may/one-of-my-personal-topics
+check sitemap.xml
+use  The syndication feed framework for all applications
+use rating for all applications
+use SlugField in apps model save like this :         self.slug =
+   '-'.join(self.title.split())#And clean title, and make sure this is
+   unique.
+use get_absolute_url in apps
