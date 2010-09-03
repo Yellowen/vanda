@@ -7,6 +7,7 @@ dina.logs
 db.devdb
 .DS_Store
 templates/*/cache
+doc/manual/*
 syntax: glob
 .cache/
 *.pyc
