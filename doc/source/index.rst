@@ -14,6 +14,7 @@ Contents:
 
    Users Manual <users/index.rst>
    Developers Manual <devel/index.rst>
+   README <README.rst>
 
 
 Indices and tables
