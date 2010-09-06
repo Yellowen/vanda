@@ -36,8 +36,9 @@ class admin_post (admin.ModelAdmin):
 
 
     
+class admin_category(admin.ModelAdmin):
+    pass
 
-
-
+admin.site.register(category, admin_categoryx)
 admin.site.register (post , admin_post)
 

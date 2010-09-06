@@ -23,12 +23,20 @@ from django.utils.translation import ugettext as _
 
 # Create your models here.
 
+class category (models.Model):
+    title = models.CharField (max_lenght=250 , verbose_name=("Title"))
+    slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This gield will fill automaticaly by title"))
+    description = models.TextField()
+
+    def __unicode__(self):
+        return self.title
+
 class post (models.Model):
     """
     Entry model that hold posts
     """
-    title = models.CharField (max_length=20 , verbose_name=_("Title"))
-    slug = models.SlugField (max_length=20 , verbose_name=_("Slug") , help_text = _("This field will fill automaticly by title field."))
+    title = models.CharField (max_length=250 , verbose_name=_("Title"))
+    slug = models.SlugField (max_length=100 , verbose_name=_("Slug") , help_text = _("This field will fill automaticly by title field."))
     author = models.ForeignKey ("auth.User" , editable = False , verbose_name = _("Author"))
     datetime = models.DateTimeField (auto_now_add = True , editable=False , verbose_name = _('Date and Time'))
     text = models.TextField (verbose_name = _('Text'))
