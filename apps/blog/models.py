@@ -31,6 +31,7 @@ class category (models.Model):
 	('music' , _('Music')),
 	('book' , _('Book')),
 	('film' , _('Film')),
+	('person' , _('Person or band')),
     ]
     category_type = models.CharField (max_length=250 , verbose_name=("Type"),choices=CATS)
     slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This Field will fill automaticaly by title"))
