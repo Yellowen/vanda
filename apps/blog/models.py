@@ -48,7 +48,8 @@ class post (models.Model):
     author = models.ForeignKey ("auth.User" , editable = False , verbose_name = _("Author"))
     datetime = models.DateTimeField (auto_now_add = True , editable=False , verbose_name = _('Date and Time'))
     text = models.TextField (verbose_name = _('Text'))
-    
+    category = models.ForeignKey (category , unique=True)   
+
     def __unicode__ (self):
         return self.title
     def get_absolute_url (self):
