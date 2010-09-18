@@ -25,7 +25,15 @@ from django.utils.translation import ugettext as _
 
 class category (models.Model):
     title = models.CharField (max_length=250 , verbose_name=("Title"))
-    slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This gield will fill automaticaly by title"))
+    CATS = [
+        ('text' , _('Text')),
+        ('link' , _('Link')),
+	('music' , _('Music')),
+	('book' , _('Book')),
+	('film' , _('Film')),
+    ]
+    category_type = models.CharField (max_length=250 , verbose_name=("Type"),choices=CATS)
+    slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This Field will fill automaticaly by title"))
     description = models.TextField()
 
     def __unicode__(self):
