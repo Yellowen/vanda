@@ -105,6 +105,10 @@ class Order(models.Model):
     products = models.ManyToManyField(Product,
                                       through='ProductInOrder')
 
+classStatusCode(models.Model):
+    short_name = models.CharField(max_length=10)
+    name = models.CharField(max_length=300)
+    description = models.TextField()
 
 
 
