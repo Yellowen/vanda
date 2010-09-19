@@ -82,8 +82,8 @@ class ProductDetail(models.Model):
                                  self.attribute,
                                  self.value)
 
-
-
-
-
+class Customer(models.Model):
+    user = models.ForeignKey(User)
+    address = models.ForeignKey('CustomerAddress')
+    phone_number = PhoneNumberField(blank=True)
 
