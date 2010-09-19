@@ -1,21 +1,18 @@
 import os
 import sys
 
-try:
-	configs = __import__ ("dina.settings", globals(), locals(), [], -1)
-except ImportError:
-       pass
+# WARNING: Serving media files via the same process as dina is performance bottlenect
+# we should able to serve media from another server of we have to fork some process
+# to run media server 
 
-#if configs.MEDIA_SERVER == "l"
-#pid = os.fork ()
-pid = 0
-if pid:
-	pass	
-else:
-	os.environ['PYTHON_EGG_CACHE'] = '~/.python_egg'
-	sys.path.append(os.path.join (os.path.dirname (__file__) , '../').replace ("\\" , "/"))
-	os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-	os.environ['DJANGO_MODE'] = 'WSGI'
-	print "====> ", os.environ
-	import django.core.handlers.wsgi
-	application = django.core.handlers.wsgi.WSGIHandler()
+
+# TODO: Build some process for serving media
+
+
+os.environ['PYTHON_EGG_CACHE'] = '~/.python_egg'
+sys.path.append(os.path.join (os.path.dirname (__file__) , '../').replace ("\\" , "/"))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+os.environ['DJANGO_MODE'] = 'WSGI'
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
