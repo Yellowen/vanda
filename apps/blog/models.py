@@ -25,7 +25,16 @@ from django.utils.translation import ugettext as _
 
 class category (models.Model):
     title = models.CharField (max_length=250 , verbose_name=("Title"))
-    slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This gield will fill automaticaly by title"))
+    CATS = [
+        ('text' , _('Text')),
+        ('link' , _('Link')),
+	('music' , _('Music')),
+	('book' , _('Book')),
+	('film' , _('Film')),
+	('person' , _('Person or band')),
+    ]
+    category_type = models.CharField (max_length=250 , verbose_name=("Type"),choices=CATS)
+    slug = models.SlugField (max_length=100 , verbose_name=_("Slug"),help_text = _("This Field will fill automaticaly by title"))
     description = models.TextField()
 
     def __unicode__(self):
@@ -40,7 +49,8 @@ class post (models.Model):
     author = models.ForeignKey ("auth.User" , editable = False , verbose_name = _("Author"))
     datetime = models.DateTimeField (auto_now_add = True , editable=False , verbose_name = _('Date and Time'))
     text = models.TextField (verbose_name = _('Text'))
-    
+    category = models.ForeignKey (category , unique=True)   
+
     def __unicode__ (self):
         return self.title
     def get_absolute_url (self):
