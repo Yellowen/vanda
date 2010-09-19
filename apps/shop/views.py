@@ -58,4 +58,14 @@ field=None):
      else:
          raise Http404
      return obj
+def checkout(request, template_name='orders/checkout.html'):
+     cart = get_shopping_cart(request)
+     googleCart, googleSig = sign_google_cart(cart)
+     ctx = {'cart': cart,
+               'googleCart': googleCart,
+               'googleSig': googleSig,
+               'googleMerchantKey': settings.GOOGLE_MERCHANT_KEY,
+               'googleMerchantID': settings.GOOGLE_MERCHANT_ID}
+     return render_to_response(template_name, ctx,
+context_instance=RequestContext(request))
 
