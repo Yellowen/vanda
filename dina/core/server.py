@@ -48,3 +48,7 @@ def MediaServ (request ,  path):
         
 
 
+class Server (object):
+
+    def __init__ (self, request, path):
+        self.request = request

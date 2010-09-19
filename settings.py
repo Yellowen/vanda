@@ -23,7 +23,6 @@ import os
 import django
 
 
-
 #+++ Remember to shut down the debug mode in official release
 #@@@ for more information about $$something$$ string take a look at doc/devel/coyding.policy
 DEBUG = True
@@ -170,6 +169,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware' ,
 ]
+
+MEDIA_SERVING_BACKEND = "local://"
+
+
 
 
 ROOT_URLCONF = 'urls'
