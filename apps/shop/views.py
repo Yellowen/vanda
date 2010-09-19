@@ -18,3 +18,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
+def shopping_cart(request, template_name='shopping_cart.html'):
+    cart = get_shopping_cart(request)
+    ctx = {'cart': cart}
+    return render_to_response(template_name, ctx,
+context_instance=RequestContext(request))
+
+
