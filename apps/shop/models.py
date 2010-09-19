@@ -96,6 +96,14 @@ class CustomerAddress(models.Model):
     state = USStateField(blank=True)
     country = models.CharField(max_length=150)
 
+class Order(models.Model):
+    customer = models.ForeignKey(User, blank=True, null=True)
+    status_code = models.ForeignKey('StatusCode')
+    date_placed = models.DateTimeField()
+    total_price = models.DecimalField(max_digits=7, decimal_places=2)
+    comments = models.TextField(blank=True)
+    products = models.ManyToManyField(Product,
+                                      through='ProductInOrder')
 
 
 
