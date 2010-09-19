@@ -87,3 +87,16 @@ class Customer(models.Model):
     address = models.ForeignKey('CustomerAddress')
     phone_number = PhoneNumberField(blank=True)
 
+class CustomerAddress(models.Model):
+    line_1 = models.CharField(max_length=300)
+    line_2 = models.CharField(max_length=300)
+    line_3 = models.CharField(max_length=300)
+    city = models.CharField(max_length=150)
+    postalcode = models.CharField(max_length=10)
+    state = USStateField(blank=True)
+    country = models.CharField(max_length=150)
+
+
+
+
+
