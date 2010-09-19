@@ -25,4 +25,17 @@ def shopping_cart(request, template_name='shopping_cart.html'):
     return render_to_response(template_name, ctx,
 context_instance=RequestContext(request))
 
+def add_to_cart(request, queryset, object_id=None, slug=None,
+                slug_field='slug', template_name='add_to_cart.
+                html'):
+
+    obj = lookup_object(queryset, object_id, slug, slug_field)
+    quantity = request.GET.get('quantity', 1)
+    cart = get_shopping_cart(request)
+    cart.add_item(obj, quantity)
+    update_shopping_cart(request, cart)
+    ctx = {'object': obj, 'cart': cart}
+    return render_to_response(template_name, ctx,
+context_instance=RequestContext(request))
+
 
