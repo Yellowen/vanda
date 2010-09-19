@@ -110,5 +110,12 @@ classStatusCode(models.Model):
     name = models.CharField(max_length=300)
     description = models.TextField()
 
+classProductInOrder(models.Model):
+    order = models.ForeignKey(Order)
+    product = models.ForeignKey(Product)
+    unit_price = models.DecimalField(max_digits=7, decimal_places=2)
+    total_price = models.DecimalField(max_digits=7, decimal_places=2)
+    quantity = models.PositiveIntegerField()
+    comments = models.TextField(blank=True)
 
 
