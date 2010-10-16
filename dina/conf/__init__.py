@@ -18,3 +18,5 @@
 # ---------------------------------------------------------------------------------
 
 from dina.conf.models import GeneralConfiguration
+from dina.conf.models import Config
+from django.db.models import *
