@@ -87,6 +87,7 @@ def setting (conf.Config):
     allow_anonymous_comment = conf.BooleanField (default=False,\
                                     verbose_name=_("Allow anonymous comments?"),\
                                     help_text=_("Allow to un-registered user to comment your posts."))
+    post_per_page = conf.IntegerField (default=10, verbose_name=_("How many post per page?"))
 
     class Meta:
         verbose_name_plural = _("Blog Settings")
