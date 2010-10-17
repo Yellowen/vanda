@@ -1,14 +1,16 @@
-{% etends 'base.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 {% block content %}
 
 {% for post in posts.object_list %} 
-<h3><a href="/bog/post/{{ post.slug }}">{{ post.title }}<a></h3></br><br /> 
+<h3>{{ post.title }}</a></h3>
 <h5>{% trans 'Author' %}: {{ post.author}}</h5>                                                                                                     
-<p>{{ post.content|linebreaks }}</p><br />                                                                                                             
+<p>{{ post.content|linebreaks }}</p>
+<p><a href="/bog/post/{{ post.slug }}">{% trans 'Read more' %}</a></p>
+<p>{% trans 'Date' %}: {{ post.datetime }}</p>
 {% endfor %}
 
-{% posts.has_previous %}                                                                                                                         
+{% if posts.has_previous %}                                                                                                                         
 <a href="?page={{ posts.previous_page_number }}">{% trans 'previous' %}</a>
 {% endif %}                                                                                                                                            
 
@@ -19,6 +21,4 @@
 {% if posts.has_next %}                                                                                                                             
 <a href="?page={{ posts.next_page_number }}">{% trans 'next' %}</a>
 {% endif %}   
-
-
 {% endblock %}

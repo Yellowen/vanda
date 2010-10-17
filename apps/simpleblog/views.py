@@ -19,13 +19,18 @@
 
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
+from django.core.paginator import Paginator
+
 from models import *
 
 
-def blog_index (request):
+def blog_index (req):
     # TODO: add a filter to retrive last month posts only
     post_list = Post.objects.all ()
-    paginator = Paginator(post_list, settings.post_per_page)
+    ppp = 10
+    if hasattr (Setting, 'post_per_page'):
+        ppp = Setting.post_per_page
+    paginator = Paginator(post_list, ppp)
     
     try:                                                                                                                                                   
         page = int(req.GET.get('page', '1'))                                                                                                           

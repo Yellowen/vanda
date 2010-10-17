@@ -23,7 +23,7 @@ from django.utils.translation import ugettext as _
 
 from dina import conf
 
-def Category (models.Model):
+class Category (models.Model):
     """
     each post will be tagged for several category.
     """
@@ -40,15 +40,18 @@ def Category (models.Model):
         verbose_name = _('Category')
 
 
-def Post (models.Model):
+class Post (models.Model):
     title = models.CharField (max_length=250, verbose_name=_("Title"))
     slug = models.SlugField (max_length=100, verbose_name=_("Slug"),\
                              help_text = _("This field will fill automaticly by title field."))
-    content = models.TextField (verbose_name=_("Title"))
+    content = models.TextField (verbose_name=_("Content"))
     categories = models.ManyToManyField (Category, verbose_name=_("Categories"))
     author = models.ForeignKey (User, verbose_name=_("Author"))
     datetime = models.DateTimeField (auto_now_add=True, editable=False,\
                                      verbose_name=_('Date and Time'))
+
+
+
 
     def __unicode__ (self):
         return self.title
@@ -62,7 +65,7 @@ def Post (models.Model):
 
 
 
-def Comment (models.Model):
+class Comment (models.Model):
     post = models.ForeignKey (Post, verbose_name=_("Post"))
     author = models.ForeignKey (User, verbose_name=_("Author"), blank=True,\
                                 null=True)
@@ -83,7 +86,7 @@ def Comment (models.Model):
         verbose_name = _('Comment')
 
 
-def setting (conf.Config):
+class Setting (conf.Config):
     allow_anonymous_comment = conf.BooleanField (default=False,\
                                     verbose_name=_("Allow anonymous comments?"),\
                                     help_text=_("Allow to un-registered user to comment your posts."))

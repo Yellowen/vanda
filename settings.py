@@ -214,7 +214,7 @@ DINA_APPS = [
     'dina.fem.page',
     'dina.auth',
     'dina.fem.layout',
-    'apps.blog',
+    'apps.simpleblog',
     'apps.contact',
     'apps.profile',
     'apps.addressbook',

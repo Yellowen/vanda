@@ -26,7 +26,8 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('',
-
+                       (r'^$', 'apps.simpleblog.views.blog_index'),
+                       
                        
                        
                        
