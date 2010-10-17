@@ -25,7 +25,8 @@ from models import *
 def blog_index (request):
     # TODO: add a filter to retrive last month posts only
     post_list = Post.objects.all ()
-    paginator = Paginator(post_list, 20)
+    paginator = Paginator(post_list, settings.post_per_page)
+    
     try:                                                                                                                                                   
         page = int(req.GET.get('page', '1'))                                                                                                           
     except ValueError:                                                                                                                                     
@@ -36,4 +37,4 @@ def blog_index (request):
     except (EmptyPage, InvalidPage):                                                                                                                       
         posts = paginator.page(paginator.num_pages)                                                                                                 
                                                              
-
+    return rr ('blog.html', {"posts" : posts})

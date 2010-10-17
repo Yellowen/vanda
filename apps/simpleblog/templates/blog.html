@@ -1,0 +1,24 @@
+{% etends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+{% for post in posts.object_list %} 
+<h3><a href="/bog/post/{{ post.slug }}">{{ post.title }}<a></h3></br><br /> 
+<h5>{% trans 'Author' %}: {{ post.author}}</h5>                                                                                                     
+<p>{{ post.content|linebreaks }}</p><br />                                                                                                             
+{% endfor %}
+
+{% posts.has_previous %}                                                                                                                         
+<a href="?page={{ posts.previous_page_number }}">{% trans 'previous' %}</a>
+{% endif %}                                                                                                                                            
+
+<span class="current">                                                                                                                                 
+  Page {{ posts.number }} of {{ posts.paginator.num_pages }}.                                                                                  
+</span>                                                                                                                                                
+
+{% if posts.has_next %}                                                                                                                             
+<a href="?page={{ posts.next_page_number }}">{% trans 'next' %}</a>
+{% endif %}   
+
+
+{% endblock %}

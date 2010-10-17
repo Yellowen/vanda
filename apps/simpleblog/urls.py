@@ -27,8 +27,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
 
-                       (r'pages/' , include ('dina.fem.page.urls')),
-                       (r'blog/' , include ('apps.simpleblog.urls')),
-                       (r'contact/' , include ('apps.contact.urls')),
+                       
+                       
                        
 )
