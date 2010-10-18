@@ -13,7 +13,6 @@ class PostAdmin (admin.ModelAdmin):
     list_filter = ['author', 'categories']
     search_fields = ['title', 'content',]
     filter_horizontal = ['categories',]
-    #list_display_links =['pk']
     list_editable = [ 'slug',]
     prepopulated_fields = {"slug": ("title",)}
     fieldsets = (
@@ -35,6 +34,10 @@ class CommentAdmin (admin.ModelAdmin):
     search_fields = ['nick', 'content', 'author', 'post']
 
 
+class SettingAdmin (admin.ModelAdmin):
+    pass
+
 admin.site.register (Comment, CommentAdmin)
 admin.site.register (Post, PostAdmin)
 admin.site.register (Category, CategoryAdmin)
+admin.site.register (Setting, SettingAdmin)

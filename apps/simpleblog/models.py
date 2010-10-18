@@ -21,7 +21,7 @@ from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 
-from dina import conf
+from dina.conf import Config
 
 class Category (models.Model):
     """
@@ -50,8 +50,16 @@ class Post (models.Model):
     datetime = models.DateTimeField (auto_now_add=True, editable=False,\
                                      verbose_name=_('Date and Time'))
 
+    def get_content (self):
+        setting = Settings.get_all ()
+        maxbl = 400
+        if hasattr (setting, "max_body_length"):
+            maxbl = setting.max_body_length
+        return "%s..." % self.content[:maxbl]
 
 
+    def comments (self):
+        return Comment.objects.filter(post=self)
 
     def __unicode__ (self):
         return self.title
@@ -86,12 +94,13 @@ class Comment (models.Model):
         verbose_name = _('Comment')
 
 
-class Setting (conf.Config):
-    allow_anonymous_comment = conf.BooleanField (default=False,\
+class Setting (Config):
+    allow_anonymous_comment = models.BooleanField (default=False,\
                                     verbose_name=_("Allow anonymous comments?"),\
                                     help_text=_("Allow to un-registered user to comment your posts."))
-    post_per_page = conf.IntegerField (default=10, verbose_name=_("How many post per page?"))
-
+    post_per_page = models.IntegerField (default=10, verbose_name=_("How many post per page?"))
+    max_body_length = models.IntegerField (default=400, verbose_name=_("Maximume character in content"))
+    
     class Meta:
         verbose_name_plural = _("Blog Settings")
         verbose_name = _('Setting')

@@ -21,6 +21,9 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
+from dina.log import Logger
+
+
 class Config (models.Model):
     """
     Dina config base class.
@@ -29,17 +32,28 @@ class Config (models.Model):
     so dina can find out that that model is a application model.
     """
 
-
+    logger = Logger ("Config class")
     
     def save(self, *args, **kwargs):
         # A config model should contain only one record
+        self.logger.debug ("Save method start")
+        
         self.__class__.objects.all ().delete ()
-        super (Config, self).save (**kwargs)
+        
+        self.logger.debug ("Save method middle")
+        super (Config, self).save (*args, **kwargs)
+        self.logger.debug ("Save method end")
 
+
+        
+    def get_all (self):
+        return self.objects.get(id=1)
+        
 
 
     def __unicode__ (self):
         return "%s-%s" % (self.__class__._meta.app_label, self.__class__.__name__)
+    
     class Meta:
         abstract = True
         

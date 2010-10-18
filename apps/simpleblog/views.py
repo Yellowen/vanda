@@ -43,3 +43,9 @@ def blog_index (req):
         posts = paginator.page(paginator.num_pages)                                                                                                 
                                                              
     return rr ('blog.html', {"posts" : posts})
+
+
+
+
+
+
