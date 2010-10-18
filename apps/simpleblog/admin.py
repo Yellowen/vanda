@@ -34,10 +34,10 @@ class CommentAdmin (admin.ModelAdmin):
     search_fields = ['nick', 'content', 'author', 'post']
 
 
-class SettingAdmin (admin.ModelAdmin):
-    pass
+#class SettingAdmin (admin.ModelAdmin):
+#    pass
 
 admin.site.register (Comment, CommentAdmin)
 admin.site.register (Post, PostAdmin)
 admin.site.register (Category, CategoryAdmin)
-admin.site.register (Setting, SettingAdmin)
+#admin.site.register (Setting, SettingAdmin)

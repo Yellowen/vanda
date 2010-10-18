@@ -39,7 +39,7 @@ def conf_view (req, appname):
     logger.debug ("APP name : %s" % appname)
     conf_models = list ()
     form = None
-
+    
     # Build set from models list and site._registry, so we can
     # easily check for the applications that have a registerd ModelAdmin
     # those application that don't have a ModelAdmin did not have a Admin
@@ -78,6 +78,6 @@ def conf_view (req, appname):
             return form.change_view (req, admin.util.quote(str(obj.pk)), )
         except IndexError:
             # Load the new add view for first data entry
-            return form.add_view (req,  form_url='/admin/')
+            return form.add_view (req)#, form_url='/admin/')
     
     
