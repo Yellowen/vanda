@@ -62,6 +62,8 @@ def conf_view (req, appname):
             # Change the defualt add and change view of generated ModelAdmin
             # to build a form from config model
             form = admin.ModelAdmin (i, admin.site)
+
+            # TODO: use ConfigAdmin class as a admin interface for Config
             form.add_form_template = 'admin/dina/change_config.html'
             form.change_form_template = 'admin/dina/change_config.html'
             form.fieldsets = i.ConfigAdmin.fieldsets
