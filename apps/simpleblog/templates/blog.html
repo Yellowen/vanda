@@ -5,7 +5,7 @@
 {% for post in posts.object_list %} 
 <h3>{{ post.title }}</a></h3>
 <h5>{% trans 'Author' %}: {{ post.author}}</h5>                                                                                                     
-<p>{{ post.content|linebreaks }}</p>
+<p>{{ post.get_content|linebreaks }}</p>
 <p><a href="/bog/post/{{ post.slug }}">{% trans 'Read more' %}</a></p>
 <p>{% trans 'Date' %}: {{ post.datetime }} | {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
 {% endfor %}

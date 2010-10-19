@@ -19,7 +19,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext as _
-
+from django.contrib import admin
 
 from dina.log import Logger
 
@@ -36,17 +36,16 @@ class Config (models.Model):
     
     def save(self, *args, **kwargs):
         # A config model should contain only one record
-        self.logger.debug ("Save method start")
-        
         self.__class__.objects.all ().delete ()
-        
-        self.logger.debug ("Save method middle")
         super (Config, self).save (*args, **kwargs)
-        self.logger.debug ("Save method end")
+        self.logger.debug ("Config saved for %s" % self.__class__._meta.app_label)
 
 
-        
-    def get_all (self):
+    @classmethod
+    def configs (self):
+        """
+        A wrapper around current configuration.
+        """
         return self.objects.get(id=1)
         
 
@@ -57,9 +56,11 @@ class Config (models.Model):
     class Meta:
         abstract = True
         
-    class _config:
+    class ConfigAdmin:
+        # TODO: make ConfigAdmin as a admin interface for config model
+        # hint: need to build a meta class for ConfigAdmin
         pass
-
+        
 
 
 

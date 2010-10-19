@@ -56,7 +56,7 @@ def conf_view (req, appname):
 
         # Check for _config subclass inside of model, only config classes
         # have one
-        if hasattr (i, "_config"):
+        if hasattr (i, "ConfigAdmin"):
             logger.debug ("config model: %s" % i)
 
             # Change the defualt add and change view of generated ModelAdmin
@@ -64,6 +64,7 @@ def conf_view (req, appname):
             form = admin.ModelAdmin (i, admin.site)
             form.add_form_template = 'admin/dina/change_config.html'
             form.change_form_template = 'admin/dina/change_config.html'
+            form.fieldsets = i.ConfigAdmin.fieldsets
             conf_models.append (i)
 
 

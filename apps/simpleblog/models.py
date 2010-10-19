@@ -21,12 +21,13 @@ from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 
-from dina.conf import Config
+from dina import conf
 
 class Category (models.Model):
     """
     each post will be tagged for several category.
     """
+    
     title = models.CharField (max_length=250, verbose_name=_("Title"))
     slug = models.SlugField (max_length=100, verbose_name=_("Slug"),\
                              help_text = _("This Field will fill automaticaly by title"))
@@ -41,6 +42,13 @@ class Category (models.Model):
 
 
 class Post (models.Model):
+    """
+    Post model.
+    Notes:
+          Use get_content() instead of content
+          author and datetime will be filled automaticly.
+    """
+    
     title = models.CharField (max_length=250, verbose_name=_("Title"))
     slug = models.SlugField (max_length=100, verbose_name=_("Slug"),\
                              help_text = _("This field will fill automaticly by title field."))
@@ -51,21 +59,31 @@ class Post (models.Model):
                                      verbose_name=_('Date and Time'))
 
     def get_content (self):
-        setting = Settings.get_all ()
+        """
+        Return suitable content by looking up settings.
+        """
+        
+        setting = Setting.configs ()
         maxbl = 400
-        if hasattr (setting, "max_body_length"):
+        if setting.max_body_length:
             maxbl = setting.max_body_length
         return "%s..." % self.content[:maxbl]
 
 
     def comments (self):
+        """
+        Return the comments related to current post.
+        """
         return Comment.objects.filter(post=self)
 
+    
     def __unicode__ (self):
         return self.title
+
     
     def get_absolute_url (self):
         return "/blog/post/%s" % self.slug
+
     
     class Meta:
         verbose_name_plural = _("Posts")
@@ -74,6 +92,16 @@ class Post (models.Model):
 
 
 class Comment (models.Model):
+    """
+    Comment model.
+    Notes:
+           Author of a comment may be empty if 'allow_anonymous' config set
+           to True. In this case nick will hold the nickname that user provided
+
+           But if author filled with current user->username then nick fill with
+           the same value.
+    """
+    
     post = models.ForeignKey (Post, verbose_name=_("Post"))
     author = models.ForeignKey (User, verbose_name=_("Author"), blank=True,\
                                 null=True)
@@ -83,26 +111,40 @@ class Comment (models.Model):
     datetime = models.DateTimeField (auto_now_add=True, editable=False,\
                                      verbose_name=_('Date and Time'))
 
+    
     def __unicode__ (self):
         return "Comment on %s - %s" % (self.post.title, "%s..." % self.content[:30])
+
     
     def get_absolute_url (self):
         return "/blog/comments/%s" % self.id
+
     
     class Meta:
         verbose_name_plural = _("Comments")
         verbose_name = _('Comment')
 
 
-class Setting (Config):
-    allow_anonymous_comment = models.BooleanField (default=False,\
+class Setting (conf.Config):
+    """
+    Configuration model.
+    """
+    
+    allow_anonymous_comment = conf.BooleanField (default=False,\
                                     verbose_name=_("Allow anonymous comments?"),\
                                     help_text=_("Allow to un-registered user to comment your posts."))
-    post_per_page = models.IntegerField (default=10, verbose_name=_("How many post per page?"))
-    max_body_length = models.IntegerField (default=400, verbose_name=_("Maximume character in content"))
+    post_per_page = conf.IntegerField (default=10, verbose_name=_("How many post per page?"))
+    max_body_length = conf.IntegerField (default=400, verbose_name=_("Maximume character in content"))
     
     class Meta:
         verbose_name_plural = _("Blog Settings")
         verbose_name = _('Setting')
 
     
+    class ConfigAdmin:
+        fieldsets = (
+        (None, {
+            'fields': (('allow_anonymous_comment', 'post_per_page'),'max_body_length')
+        }),
+        
+    )
