@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class='blog'>
+
+<div class='post'>
+<h3 class="title">{{ post.title }}</a></h3>
+<h5 class="author">{% trans 'Author' %}: {{ post.author}}</h5>
+<p class="content">{{ post.content|linebreaks }}</p>
+<p class="date">{% trans 'Date' %}: {{ post.datetime }}</p> | <p class="commentcount"> {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
+</div>
+
+<br />
+
+<a href="/blog/comment/{{ post.slug }}">Add new comment</a>
+<div class="commetns">
+  {% for comment in comments.object_list %}
+<div class="comment">
+<h3>{{ comment.nick }}</h3>
+<p class="content">{{ comment.content }}</p>
+<p class="date">{{ comment.datetime }}</p>
+</div>
+{% endfor %}
+
+
+{% if comments.has_previous %}                                                                                                                         
+<a href="?page={{ comments.previous_page_number }}">{% trans 'previous' %}</a>
+{% endif %}                                                                                                                                            
+
+  <span class="current">                                                                                                                                 
+    Page {{ posts.number }} of {{ comments.paginator.num_pages }}.                                                                                  
+  </span>                                                                                                                                                
+  
+  {% if comments.has_next %}                                                                                                                             
+  <a href="?page={{ comments.next_page_number }}">{% trans 'next' %}</a>
+  {% endif %}   
+</div>
+</div>
+{% endblock %}

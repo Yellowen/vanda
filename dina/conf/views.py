@@ -17,7 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-import sets
+
 
 from django.shortcuts import render_to_response as rtr
 from django.contrib.contenttypes.models import ContentType

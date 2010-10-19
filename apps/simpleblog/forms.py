@@ -17,22 +17,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.conf.urls.defaults import *
+from django import forms
+from captcha.fields import CaptchaField
 
+class CommentForm (forms.Form):
+    nick = forms.CharField (max_length=40)
+    comment = forms.CharField (widget=forms.Textarea)
+    captcha = CaptchaField ()
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-
-
-
-urlpatterns = patterns('',
-                       (r'^$', 'apps.simpleblog.views.blog_index'),
-                       (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
-                       (r'^comment/([^/]+)/$', 'apps.simpleblog.views.post_comment'),
-                       url(r'^captcha/', include('captcha.urls')),
-
-                       
-                       
-                       
-                       
-)

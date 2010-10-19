@@ -215,6 +215,7 @@ DINA_APPS = [
     'dina.auth',
     'dina.fem.layout',
     'apps.simpleblog',
+    'captcha',
     'apps.contact',
     'apps.profile',
     'apps.addressbook',

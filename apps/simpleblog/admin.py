@@ -33,6 +33,10 @@ class CommentAdmin (admin.ModelAdmin):
     list_filter = ['author',]
     search_fields = ['nick', 'content', 'author', 'post']
 
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        obj.save ()
+
 
 #class SettingAdmin (admin.ModelAdmin):
 #    pass

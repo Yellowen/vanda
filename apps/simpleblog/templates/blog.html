@@ -2,12 +2,16 @@
 {% load i18n %}
 {% block content %}
 
+<div class="blog">
 {% for post in posts.object_list %} 
-<h3>{{ post.title }}</a></h3>
-<h5>{% trans 'Author' %}: {{ post.author}}</h5>                                                                                                     
-<p>{{ post.get_content|linebreaks }}</p>
-<p><a href="/bog/post/{{ post.slug }}">{% trans 'Read more' %}</a></p>
-<p>{% trans 'Date' %}: {{ post.datetime }} | {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
+<div class='post'>
+
+<h3 class="title">{{ post.title }}</a></h3>
+<h5 class="author">{% trans 'Author' %}: {{ post.author}}</h5>
+<p class="content">{{ post.get_content|linebreaks }}</p>
+<p class="readmore"><a href="/blog/post/{{ post.slug }}">{% trans 'Read more' %}</a></p>
+<p class="date">{% trans 'Date' %}: {{ post.datetime }}</p> | <p class="commentcount"> {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
+</div>
 {% endfor %}
 
 {% if posts.has_previous %}                                                                                                                         
@@ -21,4 +25,6 @@
 {% if posts.has_next %}                                                                                                                             
 <a href="?page={{ posts.next_page_number }}">{% trans 'next' %}</a>
 {% endif %}   
+</div>
+
 {% endblock %}

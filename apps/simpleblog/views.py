@@ -20,16 +20,19 @@
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+from decorators import check_auth
 
 from models import *
-
+from forms import *
 
 def blog_index (req):
     # TODO: add a filter to retrive last month posts only
     post_list = Post.objects.all ()
     ppp = 10
-    if hasattr (Setting, 'post_per_page'):
-        ppp = Setting.post_per_page
+    setting = Setting.configs()
+    if setting.post_per_page:
+        ppp = setting.post_per_page
     paginator = Paginator(post_list, ppp)
     
     try:                                                                                                                                                   
@@ -45,7 +48,51 @@ def blog_index (req):
     return rr ('blog.html', {"posts" : posts})
 
 
+def post_view (request, slug_):
+    
+    post = Post.objects.get (slug=slug_)
+    comments_list = post.comments ()
+    cpp = 10
+    setting = Setting.configs ()
+    if setting.comment_per_page:
+        cpp = setting.comment_per_page
+        
+    paginator = Paginator(comments_list, cpp)
+    
+    try:                                                                                                                                                   
+        page = int(request.GET.get('page', '1'))                                                                                                           
+    except ValueError:                                                                                                                                     
+        page = 1                                                                                                                                       
+        
+    try:                                                                                                                                                   
+        comments = paginator.page(page)                                                                                                                
+    except (EmptyPage, InvalidPage):                                                                                                                       
+        comments = paginator.page(paginator.num_pages)                                                                                                 
+                                                             
+    return rr ('post_view.html', {"post" : post, 'comments' : comments})
 
 
+@check_auth
+def post_comment (request, slug):
+    if request.method == "POST":
+        form = CommentForm (request.POST)
+        
+        if form.is_valid ():
+            post = Post.objects.get (slug=slug)
+            com = Comment (nick=form.cleaned_data['nick'],\
+                           post=post,\
+                           content=form.cleaned_data['comment'])
+            com.save ()
+            return HttpResponseRedirect ('/blog/post/%s' % slug)
+        
+        else:
+            form = CommentForm (request.POST)
+            return rr ('comment_form.html', {'form' : form},\
+                       context_instance=RequestContext(request))
 
+    else:
+        form = CommentForm ()
+        # TODO: add latest comment to bottom of view
+        return rr ('comment_form.html', {'form' : form},\
+                   context_instance=RequestContext(request))
 

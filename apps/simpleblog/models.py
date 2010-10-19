@@ -51,6 +51,7 @@ class Post (models.Model):
     
     title = models.CharField (max_length=250, verbose_name=_("Title"))
     slug = models.SlugField (max_length=100, verbose_name=_("Slug"),\
+                             unique=True,\
                              help_text = _("This field will fill automaticly by title field."))
     content = models.TextField (verbose_name=_("Content"))
     categories = models.ManyToManyField (Category, verbose_name=_("Categories"))
@@ -74,8 +75,9 @@ class Post (models.Model):
         """
         Return the comments related to current post.
         """
-        return Comment.objects.filter(post=self)
+        return Comment.objects.filter(post=self).order_by('-datetime')
 
+    
     
     def __unicode__ (self):
         return self.title
@@ -130,10 +132,12 @@ class Setting (conf.Config):
     Configuration model.
     """
     
-    allow_anonymous_comment = conf.BooleanField (default=False,\
+    allow_anonymous_comment = conf.BooleanField (default=True,\
                                     verbose_name=_("Allow anonymous comments?"),\
                                     help_text=_("Allow to un-registered user to comment your posts."))
+    
     post_per_page = conf.IntegerField (default=10, verbose_name=_("How many post per page?"))
+    comment_per_page = conf.IntegerField (default=10, verbose_name=_("How many comment per page?"))
     max_body_length = conf.IntegerField (default=400, verbose_name=_("Maximume character in content"))
     
     class Meta:
@@ -144,7 +148,7 @@ class Setting (conf.Config):
     class ConfigAdmin:
         fieldsets = (
         (None, {
-            'fields': (('allow_anonymous_comment', 'post_per_page'),'max_body_length')
+            'fields': (('allow_anonymous_comment', 'max_body_length'), ('post_per_page',  'comment_per_page'))
         }),
         
     )

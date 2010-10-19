@@ -17,22 +17,28 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.conf.urls.defaults import *
+from django.http import HttpResponseRedirect
+
+from models import Setting
 
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+class check_auth (object):
+    """
+    Check for allowing anonymous comment in settings if its set to
+    False and user did not authenticated it redirect to '/login/'
+    """
+    
+    def __init__ (self, func, redirect='/login/'):
+        
+        self.func = func
+        self.redirect = redirect
 
+        
+    def __call__ (self, request, *args, **kwargs):
+        
+        setting = Setting.configs ()
+        
+        if not (setting.allow_anonymous_comment and request.user.is_authenticated()):
+            return HttpResponseRedirect (self.redirect)
+        return self.func (request, *args, **kwargs)
 
-
-urlpatterns = patterns('',
-                       (r'^$', 'apps.simpleblog.views.blog_index'),
-                       (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
-                       (r'^comment/([^/]+)/$', 'apps.simpleblog.views.post_comment'),
-                       url(r'^captcha/', include('captcha.urls')),
-
-                       
-                       
-                       
-                       
-)
