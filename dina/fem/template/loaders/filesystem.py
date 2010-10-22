@@ -75,11 +75,14 @@ class Loader(BaseLoader):
         for filepath, admin in self.get_template_sources(template_name,\
                                                          template_dirs):
             try:
+                self.logger.debug("filepath: %s" % filepath)
                 return (file(filepath).read(), filepath)
-            except OSError, io:
-                self.logger.info("%s", io)
-                self.logger.info(\
-                    "Template loading skipped, try next one.")
+            #except OSError, io:
+            #    self.logger.info("%s", io)
+            #    self.logger.info(\
+            #        "Template loading skipped, try next one.")
+            #    raise IOError()
+            except IOError:
                 tried.append(filepath)
         if tried:
             error_msg = "Tried %s" % tried

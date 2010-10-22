@@ -153,11 +153,12 @@ SECRET_KEY = '$3%mti-%a0$)-h3x-ak_92s&o2p8j96r&kwbbjv&w936@1b9#d'
 TEMPLATE_LOADERS = (
     # TODO: add a template loader for loading templates from a compress archive
     # TODO: add a template loader for loading templates from web
+    
     'dina.fem.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
+    'django.template.loaders.filesystem.load_template_source',
+    #'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.load_template_source',
-    'django.template.loaders.app_directories.Loader' ,
 )
 
 MIDDLEWARE_CLASSES = [
@@ -167,7 +168,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.redirects.middleware.RedirectFallbackMiddleware' ,
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
 MEDIA_SERVING_BACKEND = "local://"
@@ -214,8 +215,6 @@ DINA_APPS = [
     'dina.fem.page',
     'dina.auth',
     'dina.fem.layout',
-    'apps.simpleblog',
-    'captcha',
     'apps.contact',
     'apps.profile',
     'apps.addressbook',
@@ -224,12 +223,15 @@ DINA_APPS = [
     'apps.ticket',
     'apps.dailyschedule',
     'apps.testapp',
+    'apps.simpleblog',
+    'captcha',
 ]
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] 
 
 if DEBUG:
     INSTALLED_APPS.append ('dina.utils.django_extensions')
+
 # For working the contact send mail please complete flowing item
 # add by pollesangi for contact
 EMAIL_HOST = ''

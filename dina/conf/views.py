@@ -26,7 +26,6 @@ from django.utils.translation import ugettext as _
 
 from dina.log import Logger
 
-       
 
 def conf_view (req, appname):
     """
@@ -45,8 +44,8 @@ def conf_view (req, appname):
     # those application that don't have a ModelAdmin did not have a Admin
     # interface
     app_models = [i.model_class() for i in app_models]
-    app_models_set = sets.Set(app_models)
-    registry = sets.Set (admin.site._registry)
+    app_models_set = set(app_models)
+    registry = set (admin.site._registry)
     if len ( app_models_set & registry) == 0:
         return rtr ("admin/dina/info.html", {"app_label": appname,\
                                              "msg": _("Warning: \"%s\" application does not provide a admin interface. (do not have a \"admin.py\")") % appname })
