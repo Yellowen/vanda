@@ -59,6 +59,7 @@ class menu_node(template.Node):
         return  out
 
 
+
     def render(self, context):
         smenu = menu.objects.get (title = self.title)
         output = self.draw_menu (smenu , context)
