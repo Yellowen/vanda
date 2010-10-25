@@ -26,26 +26,24 @@ from decorators import check_auth
 from models import *
 from forms import *
 
-def blog_index (req):
+
+def blog_index(req):
     # TODO: add a filter to retrive last month posts only
-    post_list = Post.objects.all ()
+    post_list = Post.objects.all().order_by('-datetime')
     ppp = 10
     setting = Setting.configs()
     if setting.post_per_page:
         ppp = setting.post_per_page
     paginator = Paginator(post_list, ppp)
-    
-    try:                                                                                                                                                   
-        page = int(req.GET.get('page', '1'))                                                                                                           
-    except ValueError:                                                                                                                                     
-        page = 1                                                                                                                                       
-        
-    try:                                                                                                                                                   
-        posts = paginator.page(page)                                                                                                                
-    except (EmptyPage, InvalidPage):                                                                                                                       
-        posts = paginator.page(paginator.num_pages)                                                                                                 
-                                                             
-    return rr ('blog.html', {"posts" : posts})
+    try:
+        page = int(req.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        posts = paginator.page(paginator.num_pages)
+    return rr('blog.html', {"posts": posts})
 
 
 def post_view (request, slug_):
@@ -96,3 +94,22 @@ def post_comment (request, slug):
         return rr ('comment_form.html', {'form' : form},\
                    context_instance=RequestContext(request))
 
+
+def category_index(req, slug_):
+    # TODO: add a filter to retrive last month posts only
+    category = Category.objects.get(slug=slug_)
+    post_list = category.post_set.all().order_by('-datetime')
+    ppp = 10
+    setting = Setting.configs()
+    if setting.post_per_page:
+        ppp = setting.post_per_page
+    paginator = Paginator(post_list, ppp)
+    try:
+        page = int(req.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        posts = paginator.page(paginator.num_pages)
+    return rr('blog.html', {"posts": posts})

@@ -79,7 +79,8 @@ class app_admin (admin.ModelAdmin):
 
 class temp_admin (admin.ModelAdmin):
     list_display = ('Name' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Active')
-    list_display_links = ('Name' , 'Active' , )
+    list_display_links = ('Name',)
+    list_editable = ('Active',)
     #list_filter = ('Publish' , )
     list_per_page = 15
     ordering = ('Name' , )

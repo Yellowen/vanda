@@ -2,28 +2,44 @@
 {% load i18n %}
 {% block content %}
 
-<div class="blog">
-{% for post in posts.object_list %} 
-<div class='post'>
 
-<h3 class="title">{{ post.title }}</a></h3>
-<h5 class="author">{% trans 'Author' %}: {{ post.author}}</h5>
-<p class="content">{{ post.get_content|linebreaks }}</p>
-<p class="readmore"><a href="/blog/post/{{ post.slug }}">{% trans 'Read more' %}</a></p>
-<p class="date">{% trans 'Date' %}: {{ post.datetime }}</p> | <p class="commentcount"> {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
-</div>
+{% for post in posts.object_list %} 
+    <div class="entry">
+      <div class="entry_meta">
+      	<ul class="post-categories">
+	  {% for category in post.categories.all %}
+	  <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
+	{% endfor %}
+	  </ul>
+        <ul>
+          <li><a href="http://sharp.loginpath.com/news/rockable-press-launches/#comments" title="Comment on Rockable Press Launches">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+          <li class="date">{{ post.datetime.ctime }}</li>
+        </ul>
+      </div>
+
+      <h1 class="a_heading"><a href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h1>
+      <p>{{ post.get_content|linebreaks }}</p>
+      <p class="button"><a href="/blog/post/{{ post.slug }}">{% trans 'More' %}</a></p>
+      <br class="clear" />
+    </div>
+    <br class="clear" />
 {% endfor %}
 
-{% if posts.has_previous %}                                                                                                                         
-<a href="?page={{ posts.previous_page_number }}">{% trans 'previous' %}</a>
-{% endif %}                                                                                                                                            
+    
+
+
+<div class="wp-pagenavi">
 
 <span class="current">                                                                                                                                 
-  Page {{ posts.number }} of {{ posts.paginator.num_pages }}.                                                                                  
+ <span class="pages"> Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
 </span>                                                                                                                                                
+{% if posts.has_previous %}                                                                                                                         
+<a href="?page={{ posts.previous_page_number }}" class="page">{% trans 'previous' %}</a>
+{% endif %}                                                                                                                                            
+
 
 {% if posts.has_next %}                                                                                                                             
-<a href="?page={{ posts.next_page_number }}">{% trans 'next' %}</a>
+<a href="?page={{ posts.next_page_number }}" class="page">{% trans 'next' %}</a>
 {% endif %}   
 </div>
 

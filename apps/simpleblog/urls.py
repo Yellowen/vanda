@@ -24,15 +24,13 @@ from django.conf.urls.defaults import *
 # from django.contrib import admin
 
 
-
 urlpatterns = patterns('',
-                       (r'^$', 'apps.simpleblog.views.blog_index'),
-                       (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
-                       (r'^comment/([^/]+)/$', 'apps.simpleblog.views.post_comment'),
-                       url(r'^captcha/', include('captcha.urls')),
+                    (r'^$', 'apps.simpleblog.views.blog_index'),
+                    (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
+                    (r'^category/([^/]+)/$',\
+                     'apps.simpleblog.views.category_index'),
+                    (r'^comment/([^/]+)/$', \
+                     'apps.simpleblog.views.post_comment'),
+                    url(r'^captcha/', include('captcha.urls')),
 
-                       
-                       
-                       
-                       
 )
