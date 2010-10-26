@@ -18,7 +18,7 @@
 # ---------------------------------------------------------------------------------
 
 from django.conf.urls.defaults import *
-
+from feed import LatestPosts
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -26,6 +26,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
                     (r'^$', 'apps.simpleblog.views.blog_index'),
+                    (r'^feed/$', LatestPosts()),
                     (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
                     (r'^category/([^/]+)/$',\
                      'apps.simpleblog.views.category_index'),
