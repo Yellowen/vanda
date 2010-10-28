@@ -23,15 +23,19 @@ from django.utils.translation import ugettext as _
 
 from dina import conf
 
-class Category (models.Model):
+class Category(models.Model):
     """
     each post will be tagged for several category.
     """
     
-    title = models.CharField (max_length=250, verbose_name=_("Title"))
-    slug = models.SlugField (max_length=100, verbose_name=_("Slug"),\
-                             help_text = _("This Field will fill automaticaly by title"))
-    description = models.TextField(verbose_name=_("Description"))
+    title = models.CharField(max_length=250,\
+                             unique=True, verbose_name=_("Title"))
+    slug = models.SlugField(max_length=100,\
+                            verbose_name=_("Slug"),\
+                            help_text=_("This Field will fill\
+                            automaticaly by title"))
+    # TODO: should be completed
+    #Icon = models.ImageField(upload_to="//",verbose_name=_("Description"))
 
     def __unicode__(self):
         return self.title
