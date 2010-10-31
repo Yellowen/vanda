@@ -201,6 +201,7 @@ DINA_APPS = [
     'apps.contact',
     'apps.testapp',
     'apps.simpleblog',
+    'apps.jqmenu',
     'captcha',
 ]
 
