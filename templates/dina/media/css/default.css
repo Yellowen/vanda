@@ -49,11 +49,13 @@ a:active {
 }
 
 #content {
- float: left;
+    direction : rtl;
+ margin : 0 2% ;
  color: #2e3436;
  background: #eeeeec;
  min-height: 550px;
- width: 80%;
+ width: 96%;
+ float : right;
  display: inline;
 }
 
