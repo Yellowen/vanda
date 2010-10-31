@@ -33,6 +33,10 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SCREEN_MODE = False  # print debug info to the screen (stdout) .
 
+# Session time controller
+SESSION_COOKIE_AGE = 3600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 ADMINS = (
     #+++ this section should filled with installer system
