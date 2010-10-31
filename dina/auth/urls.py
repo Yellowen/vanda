@@ -19,6 +19,7 @@
 
 
 from django.conf.urls.defaults import *
+from django.contrib.auth.views import login, logout
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -27,6 +28,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
 
-			(r'login/' , 'dina.auth.views.login_view' ),
-			(r'logout/' , 'dina.auth.views.logout_view' ),
+			(r'login/' , login ),
+			(r'logout/' , logout ),
 )
