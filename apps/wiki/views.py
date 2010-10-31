@@ -12,7 +12,10 @@ def search_page(request):
             return rtr("search.html",{"form":f})
         else:
             pages = Page.objects.filter(name__contains = f.cleaned_data["text"])
-            return rtr("search.html", {"form":f,"pages":pages})
+            contents = []
+            if f.cleaned_data["search_content"]:
+                contents = Page.objects.filter(contents__contains = f.cleaned_data["text"])
+            return rtr("search.html", {"form":f,"pages":pages,"contents":contents})
     f = SearchForm()
     return rtr("search.html", {"form":f})
 

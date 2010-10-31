@@ -18,5 +18,15 @@
  {% endfor %}
  </ul>
  {% endif %}
+
+ {% if contents %}
+ <h2>Search result for page content</h2>
+ <ul>
+ {% for page in contents %}
+ <li><a href="wiki/{{page.name}}/>{{page.name}}</a>"</li>
+ {% endfor %}
+ </ul>
+ {% endif %}
+
 </body>
 </html>
