@@ -1,9 +1,25 @@
 from models import Page
 from django.shortcuts import render_to_response as rtr
 from django.http import HttpResponseRedirect
+
 import markdown
 
+
+def search_page(request):
+    if request.method == "POST":
+        f = SearchForm(request.POST)
+        if not f.is_valid():
+            return rtr("search.html",{"form":f})
+        else:
+            pages = Page.objects.filter(name__contains = f.cleaned_data["text"])
+            return rtr("search.html", {"form":f,"pages":pages})
+    f = SearchForm()
+    return rtr("search.html", {"form":f})
+
+specialPages = {"SearchPage":search_page}
 def view_page(request, page_name):
+    if page_name in specialPages:
+        return specialPages[page_name](request)
     try:
         page = Page.objects.get(pk=page_name)
     except Page.DoesNotExist:

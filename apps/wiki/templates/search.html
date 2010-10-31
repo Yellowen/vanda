@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+
+<body>
+ <h1>Search Page</h1>
+
+ <form method="post" action="">
+   {{form}}
+   <input type="submit" value="search">
+ </form>
+ {% if pages %}
+ <h2>Search result for page name</h2>
+ <ul>
+ {% for page in pages %}
+ <li><a href="wiki/{{page.name}}/>{{page.name}}</a>"</li>
+ {% endfor %}
+ </ul>
+ {% endif %}
+</body>
+</html>
