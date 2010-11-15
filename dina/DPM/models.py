@@ -77,7 +77,6 @@ class Template (models.Model):
     Dina Template class each template will have an entry here
     that make it easy to manage them.
     """
-    
     Name = models.CharField (max_length = 30,  unique = True , verbose_name = _('Template Name') )
     SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"), blank=True , null=True)
     Author = models.CharField (max_length = 30 , verbose_name = _('Author') , blank=True , null=True)

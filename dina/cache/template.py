@@ -27,18 +27,12 @@ from dina.core.utils import modification_date , date_cmp
 logger = Logger ('Template cache class')
 
 
-        
-
-
-
 class TemplateQueryCache (CacheObject):
     """
     This class will cache the Template model in DPM package for decreasing
     number of queries in Dina actions.
     """
-    
-
-    def __init__ (self):
+    def __init__(self):
         super(TemplateQueryCache, self).__init__ ("templates")
         self.template = Template.objects.get (Active=True)
 

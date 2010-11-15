@@ -26,12 +26,10 @@ import os
 
 #+++ Remember to shut down the debug mode in official release
 
-""" @@@ for more information about $$something$$
-    string take a look at doc/devel/coyding.policy """
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-SCREEN_MODE = False  # print debug info to the screen (stdout) .
+# print debug info to the screen (stdout) .
+SCREEN_MODE = os.getenv("SCREENMODE") or False
 
 # Session time controller
 SESSION_COOKIE_AGE = 3600
@@ -41,8 +39,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 ADMINS = (
     #+++ this section should filled with installer system
     ('$$ADMIN_NAME$$', '$$ADMIN_MAIL$$'),
-    # example
-    # ('Your Name', 'your_email@domain.com'),
 )
 
 
@@ -88,7 +84,8 @@ VERBOSE = 0  # log all levels
 LOG_LEVEL = VERBOSE
 
 # Define the format of log strings
-LOG_FORMAT = '[%(asctime)s] [%(name)s], line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+LOG_FORMAT = '[%(asctime)s] [%(name)s], \
+line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 
 # Define the date format that use in log strings
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -108,7 +105,8 @@ except KeyError:
 
 
 if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI:
-    DATABASES["default"]["NAME"] = "/".join([FS_ROOT, DATABASES["default"]["NAME"]])
+    DATABASES["default"]["NAME"] = "/".join([FS_ROOT,\
+                                             DATABASES["default"]["NAME"]])
     if LOG_FILE is None:
         LOG_FILE = FS_ROOT + "/dina.logs"
 
@@ -238,7 +236,6 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
 
     if DEBUG  and SCREEN_MODE:
         import sys
-        import os
 
         logger.debug("__name__ = %s" % __name__)
         logger.debug("__file__ = %s" % __file__)
@@ -247,16 +244,20 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
         logger.debug("os.curdir = %s" % os.curdir)
         logger.debug("sys.path = %s" % repr(sys.path))
         logger.debug("sys.modules.keys() = %s" % repr(sys.modules.keys()))
-        logger.debug("sys.modules.has_key('dina-project') = %s" % sys.modules.has_key('dina-project'))
-        if sys.modules.has_key('dina-project'):
-            logger.debug("sys.modules['dina-project'].__name__ = %s", sys.modules['dina-project'].__name__)
-            logger.debug("sys.modules['dina-project'].__file__ = %s" % sys.modules['dina-project'].__file__)
-            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" % os.environ.get('DJANGO_SETTINGS_MODULE', None))
+        logger.debug("sys.modules.has_key('dina-project') = %s" % \
+                     sys.modules.has_key('dina-project'))
+        if 'dina-project' in sys.modules:
+            logger.debug("sys.modules['dina-project'].__name__ = %s",\
+                         sys.modules['dina-project'].__name__)
+            logger.debug("sys.modules['dina-project'].__file__ = %s" %\
+                         sys.modules['dina-project'].__file__)
+            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" %\
+                         os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
 
     from django.db.utils import DatabaseError
     try:
-        # from dina import cache
+        from dina import cache
         logger.info("Initial code End point reached.")
     except DatabaseError:
         logger.critical("It seems than your database does not exists.")
@@ -268,7 +269,8 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
     logger.debug("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
     logger.debug("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
     logger.debug("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
-    logger.debug("DATABASES -> PASSWORD = %s" % DATABASES["default"]["PASSWORD"])
+    logger.debug("DATABASES -> PASSWORD = %s" %\
+                 DATABASES["default"]["PASSWORD"])
     logger.debug("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
     logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
     logger.debug("FS_ROOT = %s" % FS_ROOT)
