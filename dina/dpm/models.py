@@ -29,6 +29,14 @@ class Package (models.Model):
     name = models.CharField(max_length=40, \
                             verbose_name=_("Name"))
     version = models.VersionField(verbose_name=_("Version"))
+    section = models.CharField(max_length=20, verbose_name=_("Section"))
+    priority = models.CharField(max_length=15, verbose_name=_("Priority"))
+    maintainer = models.CharField(max_length=60, verbose_name=_("Maintainer"))
+    uploaders = models.CharField(max_length=100, blank=True, null=True, \
+                                 verbose_name=_("Uploaders"))
+    homepage = models.UrlField(blank=True, null=True, \
+                               verbose_name=_("Home Page"))
+
     sign = models.SignField(verbose_name=_("Sign"))
 
     def __unicode__(self):
