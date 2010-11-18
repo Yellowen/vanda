@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---------------------------------------------------------------------------------
 #    Dina Project 
 #    Copyright (C) 2010  Dina Project Community
@@ -18,11 +17,26 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+"""
+This file demonstrates two different styles of tests (one doctest and one
+unittest). These will both pass when you run "manage.py test".
 
-urlpatterns = patterns(
-    'django.views.generic.list_detail',
-    url(r'^product/$', 'object_list',
-        {'queryset': Product.objects.all()}),
-    url(r'^product/(?P<slug>[-\w]+)/$', 'object_detail',
-        {'queryset': Product.objects.all()}))
+Replace these with more appropriate tests for your application.
+"""
+
+from django.test import TestCase
+
+class SimpleTest(TestCase):
+    def test_basic_addition(self):
+        """
+        Tests that 1 + 1 always equals 2.
+        """
+        self.failUnlessEqual(1 + 1, 2)
+
+__test__ = {"doctest": """
+Another way to test that 1 + 1 is equal to 2.
+
+>>> 1 + 1 == 2
+True
+"""}
 

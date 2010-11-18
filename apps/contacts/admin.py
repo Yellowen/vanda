@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---------------------------------------------------------------------------------
 #    Dina Project 
 #    Copyright (C) 2010  Dina Project Community
@@ -19,10 +18,14 @@
 # ---------------------------------------------------------------------------------
 
 
-urlpatterns = patterns(
-    'django.views.generic.list_detail',
-    url(r'^product/$', 'object_list',
-        {'queryset': Product.objects.all()}),
-    url(r'^product/(?P<slug>[-\w]+)/$', 'object_detail',
-        {'queryset': Product.objects.all()}))
+from django.contrib import admin
+from models import *
 
+
+class admin_addressbook(admin.ModelAdmin):
+	list_display = ["author" , "addressType" , "street" , "city" , "state", "country" ,"zipCode" ,]
+	list_filter = ["city" , "country" , ]
+	search_field = [ "zipCode" , ]
+    
+    
+admin.site.register ( AddressBook,admin_addressbook )

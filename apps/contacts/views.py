@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---------------------------------------------------------------------------------
 #    Dina Project 
 #    Copyright (C) 2010  Dina Project Community
@@ -18,11 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+from django.core.context_processors import csrf
+from django.core.mail import send_mail
+from django.shortcuts import render_to_response as rr
+from django.http import Http404
+from django import forms
+from models import *
 
-urlpatterns = patterns(
-    'django.views.generic.list_detail',
-    url(r'^product/$', 'object_list',
-        {'queryset': Product.objects.all()}),
-    url(r'^product/(?P<slug>[-\w]+)/$', 'object_detail',
-        {'queryset': Product.objects.all()}))
+
 
