@@ -18,15 +18,13 @@
 # ---------------------------------------------------------------------------------
 
 from django.conf.urls.defaults import *
-
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-
-
+import views
 
 urlpatterns = patterns('',
-
-
-                       
+                       (r'^$', views.all_category_view ), 
+                       (r'^category/(.*)/$' , views.category_view),
+                       (r'(.*)/$' , views.contact_view),
 )
+
+
+

@@ -21,30 +21,72 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+# Create your models here.
 
+class category (models.Model):
+    """
+         Entry class that hold category for contact.
+    """
+    title = models.CharField(max_length=20 , verbose_name=_("Title"))
+    slug = models.SlugField (max_length=20 , verbose_name=_("Slug") , help_text = _("This field will fill automaticly by title field."))
+    published = models.BooleanField (verbose_name = _("Publish ?") )
+    category_order = models.IntegerField ( verbose_name = _("Order's"))
+    description = models.TextField (verbose_name = _("Discription's"))
+    def __unicode__ (self):
+        return self.title
+    def get_absolute_url (self):
+        return "/contact/category/%s" % self.slug
+    
+class contact (models.Model):
+    """
+         Entry class that hold Contact information and viewing config.
+    """
+    #This part holding Necessary information
+    name = models.CharField(max_length=20 , verbose_name=_("Name"))
+    slug = models.SlugField (max_length=20 , verbose_name=_("Slug") , help_text = _("This field will fill automaticly by Name field."))
+    published = models.BooleanField (verbose_name = _("Publish ?") )
+    contact_order = models.IntegerField ( verbose_name = _("Order's"))
+    category_id = models.ForeignKey(category)
+    author = models.ForeignKey ("auth.User" , editable = True , verbose_name = _("Author"))
+    
+    #This part holding Optional information
+    contact_position = models.CharField(max_length=20 , verbose_name=_("Contact's Position"))
+    contact_position_flag = models.BooleanField (verbose_name = _("Contact's Position") )
 
-class AddressBook(models.Model):
-	ADDRESS_TYPE_CHOICES = (
-        ('H', 'Home'),
-        ('W', 'Work')
-	)
-	author = models.ForeignKey("auth.User")
-	street = models.CharField(max_length=30 , verbose_name=_("Street"))
-	
-	# TODO: chenge city field to choice list for saving integration in user version
-	
-	city = models.CharField(max_length=30 , verbose_name=_("City"))
-	state = models.CharField(max_length=30 , verbose_name=_("State"))
-	zipCode = models.CharField(max_length=10 , verbose_name=_("Zip Code"))
-	
-	
-	# TODO: chenge contry field to choice list for saving integration in user version
-	
-	country = models.CharField(max_length=30 , verbose_name=_("Country"))
-	addressType = models.CharField(max_length=1 , choices = ADDRESS_TYPE_CHOICES , verbose_name=_("Address Type"))
-	
-	def __unicode__(self):
-		return "%s" % self.street + " ," + self.city + " ," + self.state + " ," + self.country
-	
-	def get_absolute_url(self):
-		return "/addressbook/%s" % self.id
+    email = models.EmailField(verbose_name=_("E-mail Address"))
+    email_flag = models.BooleanField(verbose_name=_("E-mail Address"))
+    
+    street_address = models.CharField(max_length=120 , verbose_name=_("Street Address"))
+    street_address_flag = models.BooleanField(verbose_name=_("Street Address"))
+    
+    town = models.CharField(max_length= 30 , verbose_name=_("Town/Suburb"))
+    town_flag = models.BooleanField( verbose_name=_("Town/Suburb"))
+    
+    state = models.CharField( max_length = 30 , verbose_name = _("State/County"))
+    state_flag = models.BooleanField(verbose_name = _("State/County"))
+    
+    postalcode = models.CharField(max_length = 10 , verbose_name = _("Postalcode/Zip"))
+    postalcode_flag = models.BooleanField(verbose_name = _("Postalcode/Zip"))
+    
+    tell = models.CharField(max_length = 15 ,verbose_name = _("Telephone"))
+    tell_flag = models.BooleanField(verbose_name = _("Telephone"))
+    
+    cell = models.CharField(max_length = 15 ,verbose_name = _("Cell Phone"))
+    cell_flag = models.BooleanField(verbose_name = _("Cell Phone"))
+    
+    fax = models.CharField(max_length = 15 ,verbose_name = _("Fax"))
+    fax_flag = models.BooleanField(verbose_name = _("Fax"))
+    
+    weburl = models.URLField(verify_exists=True, max_length=200, verbose_name = _("Web Site URL's"))
+    weburl_flag = models.BooleanField(verbose_name = _("Web Site URL's"))
+    
+    miscellaneous = models.TextField ( verbose_name = _("Miscellaneous Information"))
+    miscellaneous_flag = models.BooleanField(verbose_name = _("Miscellaneous Information"))
+    
+    def __unicode__ (self):
+        return self.name
+    def get_absolute_url (self):
+        return "/contact/%s" % self.slug
+    
+    
+    

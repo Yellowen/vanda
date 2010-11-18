@@ -21,11 +21,19 @@
 from django.contrib import admin
 from models import *
 
+class admin_category (admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+    list_display = ["title"  , "published" , "category_order" , "description",]
+    list_filter = ["category_order" , "title" , "published" , ]
+    search_field = [ "title" , ]
 
-class admin_addressbook(admin.ModelAdmin):
-	list_display = ["author" , "addressType" , "street" , "city" , "state", "country" ,"zipCode" ,]
-	list_filter = ["city" , "country" , ]
-	search_field = [ "zipCode" , ]
-    
-    
-admin.site.register ( AddressBook,admin_addressbook )
+class admin_contact (admin.ModelAdmin):
+    fieldsets = (
+        ('Necessary information', {
+            'fields': ('name', 'slug', 'published', 'contact_order' , 'category_id' ,'author')
+        }),
+        ('Optional information', {
+            'classes': ('collapse',),
+            'fields': ('contact_position', 'email', 'street_address' ,'town' ,'state' ,'postalcode' ,'tell' ,'cell' ,'fax' ,'weburl' ,'miscellaneous' )
+        }),
+        ('Optional parameter view', {
