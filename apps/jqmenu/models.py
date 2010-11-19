@@ -21,21 +21,33 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+
 class Menu(models.Model):
-    name = models.CharField(max_length=30 , verbose_name=_('name'))
+    name = models.CharField(max_length=30, verbose_name=_('name'))
     slug = models.SlugField()
 
     def __unicode__(self):
-       return self.name
+        return self.name
+
+    class Meta:
+        verbose_name = _("Menu")
+        verbose_name_plural = _("Menus")
 
 
 class MenuItem(models.Model):
-    title = models.CharField(max_length=60 , verbose_name=_('title'))
-    image = models.ImageField(upload_to="menuimage",null=True , blank = True , verbose_name=_('image'))
-    parent = models.ForeignKey('self', blank=True ,null = True , verbose_name=_("Menu parent"))
+    title = models.CharField(max_length=60, verbose_name=_('title'))
+    image = models.ImageField(upload_to="menuimage", null=True, \
+                              blank=True, verbose_name=_('image'))
+    parent = models.ForeignKey('self', blank=True, null=True, \
+                               verbose_name=_("Menu parent"))
     hasparent = models.BooleanField(verbose_name=_("menu has parent"))
     menu = models.ForeignKey(Menu)
-    url = models.CharField(max_length=100,verbose_name=_("Link URL"))
+    url = models.CharField(max_length=100, verbose_name=_("Link URL"))
     order = models.IntegerField(verbose_name=_("Menu order's"))
+
     def __unicode__(self):
-       return self.title             
+        return self.title
+
+    class Meta:
+        verbose_name = _("Menu Item")
+        verbose_name_plural = _("Menu Itams")
