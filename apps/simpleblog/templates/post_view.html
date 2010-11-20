@@ -17,8 +17,8 @@
 	  <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
 	{% endfor %}
 	  </ul>
-        <ul>
-          <li><a href="http://sharp.loginpath.com/news/rockable-press-launches/#comments" title="Comment on Rockable Press Launches">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+        <ul class="post-categories">
+          <li><a href="/comments/" >{{ post.comments.count }} {% trans 'Comments' %}</a></li>
           <li class="date">{{ post.datetime.ctime }}</li>
         </ul>
       </div>

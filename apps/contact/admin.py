@@ -37,3 +37,12 @@ class admin_contact (admin.ModelAdmin):
             'fields': ('contact_position', 'email', 'street_address' ,'town' ,'state' ,'postalcode' ,'tell' ,'cell' ,'fax' ,'weburl' ,'miscellaneous' )
         }),
         ('Optional parameter view', {
+            'classes': ('collapse',),
+            'fields': ('contact_position_flag', 'email_flag', 'street_address_flag' ,'town_flag' ,'state_flag' ,'postalcode_flag' ,'tell_flag' ,'cell_flag' ,'fax_flag' ,'weburl_flag' ,'miscellaneous_flag' )
+        }),
+    )
+
+    
+    
+admin.site.register (category ,admin_category )
+admin.site.register (contact ,admin_contact )

@@ -20,14 +20,15 @@
 from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
-
+from django.template import Template, Context
 from dina import conf
+
 
 class Category(models.Model):
     """
     each post will be tagged for several category.
     """
-    
+
     title = models.CharField(max_length=250,\
                              unique=True, verbose_name=_("Title"))
     slug = models.SlugField(max_length=100,\
@@ -44,6 +45,7 @@ class Category(models.Model):
         verbose_name_plural = _("Categories")
         verbose_name = _('Category')
         ordering = ["title"]
+
 
 class Post (models.Model):
     """
@@ -71,7 +73,9 @@ class Post (models.Model):
         maxbl = 400
         if setting.max_body_length:
             maxbl = setting.max_body_length
-        return "%s..." % self.content[:maxbl]
+        # TODO: add ... to end of content
+        return Template("%s" % self.content[:maxbl]
+                                  ).render(Context())
 
     def comments(self):
         """
@@ -91,7 +95,6 @@ class Post (models.Model):
     class Meta:
         verbose_name_plural = _("Posts")
         verbose_name = _('Post')
-
 
 
 class Comment (models.Model):
