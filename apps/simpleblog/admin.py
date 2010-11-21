@@ -11,13 +11,13 @@ class CategoryAdmin (admin.ModelAdmin):
 class PostAdmin (admin.ModelAdmin):
     list_display = ['title', 'slug', 'author', 'datetime', ]
     list_filter = ['author', 'categories']
-    search_fields = ['title', 'content',]
+    search_fields = ['title', 'body',]
     filter_horizontal = ['categories',]
     list_editable = [ 'slug',]
     prepopulated_fields = {"slug": ("title",)}
     fieldsets = (
         (None, {
-            'fields': (('title', 'slug'),'content', 'categories')
+            'fields': (('title', 'slug'),'body', 'categories')
         }),
         
     )

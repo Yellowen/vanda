@@ -59,7 +59,7 @@ class Post (models.Model):
                             unique=True,\
                             help_text=_("This field will fill automaticly \
                             by title field."))
-    content = models.TextField(verbose_name=_("Content"))
+    body = models.TextField(verbose_name=_("Content"))
     categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
     author = models.ForeignKey(User, verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,\
@@ -74,8 +74,15 @@ class Post (models.Model):
         if setting.max_body_length:
             maxbl = setting.max_body_length
         # TODO: add ... to end of content
-        return Template("%s" % self.content[:maxbl]
-                                  ).render(Context())
+        return self.content()
+        #return Template("%s<p> ...</p>" % self.body[:maxbl]
+        #                          ).render(Context())
+
+    def content(self):
+        """
+        return HTMLize body content.
+        """
+        return Template(self.body).render(Context())
 
     def comments(self):
         """
