@@ -17,7 +17,10 @@
 
 <ul>
 {% for i in items %}
-<li><a href="{{ i.url }}">{{ i.title }}</a></li>
+<li>
+  
+  <a href="{{ i.url }}">{{ i.title }}</a>
+</li>
 {% endfor %}
 </ul>
 {% endif %}

@@ -13,21 +13,23 @@
 {% endblock %}
 </head>
 <body>
-	<div id="wrapper">
-         <div id="header">
-		 
-		       <H1>Dina Project</H1>		 
-		       <p>Impossible is Impossible</p>
-			   
-	 </div>
-	 {% block top-side %}
-         <div id="navigation">
-	   <div class="center">
-	     
-		 {% menu_class "top" %}
-		 </div>
-	 </div>
-	 {% endblock %}
+  <div id="wrapper">
+    {% block top-side %}
+    <div id="navigation">
+      <div class="link">
+      <a href="/" >{% trans 'Home' %}</a>
+      </div>
+	{% menu_class "top" %}
+
+    </div>
+    {% endblock %}
+
+    <div id="header">
+      
+      <H1>Dina Project</H1>		 
+      <p>Impossible is Impossible</p>
+      
+    </div>
 	 {% block body %}
 		 <div id="content">
 		      
