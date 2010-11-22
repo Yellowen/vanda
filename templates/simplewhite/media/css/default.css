@@ -23,7 +23,7 @@
 body {
     font-family: Courier, monospace;
     font-size: 13px;
-    background: #efefef;
+    background: #2e3436;
 }
 
 //p {
@@ -46,6 +46,7 @@ a:active {
 #wrapper { 
     margin: 0 auto;
     width: 100%;
+    background: #eeeeec;
 }
 
 #content {
@@ -53,7 +54,7 @@ a:active {
     //direction : ltr;
     //margin: 15px 2% ;
     color: #2e3436;
-    background: #fff;
+    background: #eeeeec;
     min-height: 350px;
     width: 70%;
     float : left;
@@ -75,35 +76,43 @@ a:active {
     margin-left: 200px;
 }
 #header {
+    font-family:"Trebuchet MS",sans-serif;
     color: #000;
     width: 100%;
     float: left;
-    height: 80px;
-    background: #efefef;
+    height: 70px;
+    background: #d3d7cf;
 }
 
 #header h1 {
     //padding-left: 20px;
     //padding-top: 15px;;
-    margin: 10px auto auto 0;
-    color: #222;
+    margin-top: 10px;
+    text-align: center;
+    color: #2e3436;
 }
-#header span {
+#header p {
     color: #000;
-    float: left;
-    margin: 0 0 auto auto;
-    //padding-left: 30px;
+    //float: left;
+    font-size: 12px;
+    text-align: center;
 }
+
+
+
 
 
 #navigation {
     
-    float: left;
-    width: 100%;
+    //float: left;
+    //border-bottom: 1px dotted black;
+    width: 10%;
+    margin-left:auto;
+    margin-right: auto;
     height: 25px;
-    color: #000;
-    margin: auto auto;
-    background: #fff;
+    color: #000;    
+    background: #eeeeec;
+    
 }
 
 .post-categories {
@@ -120,6 +129,7 @@ a:active {
 }
 #navigation ul {
     list-style-type: none;
+    
 }
 #navigation ul a {
     padding-left: 0px;
@@ -132,24 +142,25 @@ a:active {
 
 
 #footer { 
-;
     width: 100%;
     height: 80px;
-
     clear: both;
-    color: #333;
-    background: #eee;
+    color: #eeeeec;
+    background: #2e3436;
 }
 
-#footer a{
+#footer a {
     padding-left: 0px;
-    color: #000;
+    color: #729fcf;
 }
 
+.copyright {
+    padding-top: 30px;
+}
 
 #rightcolumn { 
-    color: #222;
-    background: #fff;
+    color: #2e3436;
+    background: #eeeeec;
     //height: 350px;
     width: 20%;
     float: right; 
