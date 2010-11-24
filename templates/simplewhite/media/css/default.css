@@ -26,10 +26,6 @@ body {
     background: #2e3436;
 }
 
-//p {
-//    padding: 10px;
-//}
-
 a {
     padding: 0px;
     text-decoration: none;
@@ -51,8 +47,6 @@ a:active {
 
 #content {
 
-    //direction : ltr;
-    //margin: 15px 2% ;
     color: #2e3436;
     background: #eeeeec;
     min-height: 350px;
@@ -68,7 +62,7 @@ a:active {
 
 #content p, a {
     padding-left: 50px;
-    //margin-top: -15px;
+
 }
 
 
@@ -80,23 +74,40 @@ a:active {
     color: #000;
     width: 100%;
     float: left;
-    height: 70px;
+    height: 75px;
     background: #d3d7cf;
 }
 
 #header h1 {
-    //padding-left: 20px;
-    //padding-top: 15px;;
+    padding-left: 20px;
     margin-top: 10px;
-    text-align: center;
     color: #2e3436;
 }
 #header p {
     color: #000;
-    //float: left;
+    padding-left: 75px;
     font-size: 12px;
-    text-align: center;
 }
+
+.right {
+    margin-top: -50px;
+    float: right;
+}
+
+.right ul {
+    float: right;
+    list-style-type: none;
+}
+
+.right li {
+    font-size: 26px;
+    //margin-top: 25px;
+    width: 100px;
+    text-align: center;
+    float: left;
+    border-left: 1px dotted black;
+}
+
 
 
 #navigation {
@@ -110,18 +121,6 @@ a:active {
     
 }
 
-.post-categories {
-    list-style-type: none;
-}
-
-.post-categories a {
-    padding-left: 0px;
-    padding-right: 20px;
-    float: left;
-    margin-top: 3px;
-    margin-left: -10px;
-    display: block;
-}
 #navigation .link{    
     float: left;
     border-right: 1px solid white;
