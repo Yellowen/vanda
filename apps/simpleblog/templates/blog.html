@@ -7,14 +7,17 @@
 <div>
     <div class="entry">
       <div class="entry_meta">
-        <ul>
-          <li><a href="" title="Comment on Rockable Press Launches">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+
+      <h2 class="a_heading"><a href="/blog/post/{{ post.slug }}">{{ post.title.capitalize }}</a></h2>
+      <div class="post_content">
+	<ul>
+          <li><a href="">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
           <li class="date">{{ post.datetime.ctime }}</li>
         </ul>
       </div>
-
-      <h1 class="a_heading"><a href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h1>
+      <br><br>
       <p>{{ post.get_content|linebreaks }}</p>
+      </div>
       <p class="button"><a href="/blog/post/{{ post.slug }}">{% trans 'More' %}</a></p>
       <br class="clear" />
     </div>
