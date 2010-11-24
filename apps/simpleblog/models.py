@@ -114,26 +114,26 @@ class Comment (models.Model):
            But if author filled with current user->username then nick fill with
            the same value.
     """
-    
-    post = models.ForeignKey (Post, verbose_name=_("Post"))
-    author = models.ForeignKey (User, verbose_name=_("Author"), blank=True,\
+
+    post = models.ForeignKey(Post, verbose_name=_("Post"))
+    author = models.ForeignKey(User, verbose_name=_("Author"), blank=True,\
                                 null=True)
-    nick = models.CharField (max_length=40, verbose_name=_("Nickname"), blank=True,\
-                                null=True)
-    email = models.EmailField (blank=True, null=True, verbose_name=_("Email (Optional)"))
-    content = models.TextField (verbose_name=_("Your Comment"))
-    datetime = models.DateTimeField (auto_now_add=True, editable=False,\
+    nick = models.CharField(max_length=40,
+                            verbose_name=_("Nickname"), blank=True,\
+                            null=True)
+    email = models.EmailField(blank=True, null=True,
+                              verbose_name=_("Email (Optional)"))
+    content = models.TextField(verbose_name=_("Your Comment"))
+    datetime = models.DateTimeField(auto_now_add=True, editable=False,\
                                      verbose_name=_('Date and Time'))
 
-    
-    def __unicode__ (self):
-        return "Comment on %s - %s" % (self.post.title, "%s..." % self.content[:30])
+    def __unicode__(self):
+        return "Comment on %s - %s" % (
+            self.post.title, "%s..." % self.content[:30])
 
-    
-    def get_absolute_url (self):
+    def get_absolute_url(self):
         return "/blog/comments/%s" % self.id
 
-    
     class Meta:
         verbose_name_plural = _("Comments")
         verbose_name = _('Comment')
