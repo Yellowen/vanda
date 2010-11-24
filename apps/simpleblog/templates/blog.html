@@ -4,15 +4,11 @@
 
 
 {% for post in posts.object_list %} 
+<div>
     <div class="entry">
       <div class="entry_meta">
-      	<ul class="post-categories">
-	  {% for category in post.categories.all %}
-	  <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
-	{% endfor %}
-	  </ul>
         <ul>
-          <li><a href="http://sharp.loginpath.com/news/rockable-press-launches/#comments" title="Comment on Rockable Press Launches">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+          <li><a href="" title="Comment on Rockable Press Launches">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
           <li class="date">{{ post.datetime.ctime }}</li>
         </ul>
       </div>
@@ -21,6 +17,13 @@
       <p>{{ post.get_content|linebreaks }}</p>
       <p class="button"><a href="/blog/post/{{ post.slug }}">{% trans 'More' %}</a></p>
       <br class="clear" />
+    </div>
+    
+    <ul class="category"><p>{% trans 'Tag' %}:</p>
+      {% for category in post.categories.all %}
+      <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
+      {% endfor %}
+    </ul>
     </div>
     <br class="clear" />
 {% endfor %}
