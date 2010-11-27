@@ -28,13 +28,8 @@
       
       <H1>Dina Project</H1>		 
       <p>Impossible is Impossible</p>
-      <div class="right">
-	<ul>
-	  <li>RSS Feeds</li>
-	  <li>Atom Feeds</li>
-	  </ul>
-      </div>
-    </div>
+          {% block banner %}
+    {% endblock %}
 	 {% block body %}
 		 <div id="content">
 		      
@@ -54,8 +49,10 @@
 		   <ul>
 		     {% menu_class "side" %}
 		   </ul>
-		   		 
+		  {% block left-column %}
+ 		   {% endblock %}
 		 </div>
+		 
 		 {% endblock %}
 
 		 <div id="footer">

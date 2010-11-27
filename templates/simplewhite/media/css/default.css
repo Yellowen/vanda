@@ -256,10 +256,13 @@ a:active {
 }
 
 .category li {
-    //width: 100px;
-    //text-align: center;
-    padding-left: 0px;
-
     float: left;
-    //border-right: 1px dotted black;
 }
+
+.category a {
+    padding: 5px;
+}
+.paging{
+padding: 20px;
+}
+

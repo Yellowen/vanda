@@ -1,5 +1,25 @@
+
 {% extends 'base.html' %}
 {% load i18n %}
+{% load blog %}
+{% block banner %}
+      <div class="right">
+	<ul>
+	  <li><a href="/feed/" style="padding: 0;">RSS Feeds</a></li>
+	  <li>Atom Feeds</li>
+	  </ul>
+      </div>
+    </div>
+{% endblock %}
+
+{% block left-column %}
+<div class="box">
+<h2>{% trans 'Categories' %}</h2>
+{% categories %}
+</div>
+{% endblock %}
+
+
 {% block content %}
 
 
@@ -12,17 +32,18 @@
         <li><a href="">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
         <li class="date">{{ post.datetime.ctime }}</li>
       </ul>
-    </div>
-    <br>
+      <br>
     <p>{{ post.get_content|linebreaks }}
-    <a href="/blog/post/{{ post.slug }}">{% trans 'More' %}</a></p>
+      <br>
+    <a href="/blog/post/{{ post.slug }}">{% trans 'Read More' %} . . .</a></p>
+    <br>
     <br class="clear" />
-  </div>
-  
+    </div>
+</div>
 
-  <ul class="category"><p>{% trans 'Tag' %}:</p>
+  <ul class="category"><p>{% trans 'Tags' %}: </p>
     {% for category in post.categories.all %}
-    <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
+    <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag"> {{ category }}</a> | </li>
     {% endfor %}
   </ul>
 </div>
@@ -32,7 +53,7 @@
     
 
 
-<div class="wp-pagenavi">
+<div class="paging">
 
 <span class="current">                                                                                                                                 
  <span class="pages"> Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
