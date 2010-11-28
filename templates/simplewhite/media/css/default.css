@@ -190,8 +190,10 @@ a:active {
     background: #eeeeec;
     //height: 350px;
     width: 20%;
-    float: right; 
-    border-left: 1px;
+    float: right;
+    border-left: 1px dotted black;
+    text-align: center;
+    padding-top: 20px;
 }
 
 #rightcolumn ul {
