@@ -46,6 +46,13 @@ if [ "$param" = "clean" ]; then
     exit 0
 fi
     
+if ["$param" = "docs" ]; then
+    cur=`pwd`
+    cd ./doc
+    make html
+    cd $cur
+fi
+
 
 
 echo "Error: jin command '$param' not found ! "

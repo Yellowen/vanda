@@ -23,7 +23,10 @@
 #    Dina packages are simply any django application, but they packaged for
 #    Dina Package Manager (DPM).
 # -----------------------------------------------------------------------------
-
+#    dinit will build a basic dina packaging environment for easy development
+#    dinit make some files inside a folder with the name of "dina" inside of
+#    application source tree.
+# TODO: build dinit development documentation in Sphinx
 import os
 import sys
 import json
@@ -33,18 +36,34 @@ from optparse import OptionParser
 # TODO: gather a complete list of licenses
 # via http://www.gnu.org/licenses/license-list.html
 licenses = {
-    "free": {
+    "compatibel": {
         "1": "GNU General Public License (GPL) version 3",
         "2": "GNU General Public License (GPL) version 2",
         },
-    "open": {
+    "non-compatible": {
         },
     "nonfree": {
         }
     }
 
+config = {
+    "name": "",
+    "package": "",
+    "version": "",
+    "section": "",
+    "priority": "",
+    "uploaders": "",
+    "maintainer": "",
+    "home": "",
+    "vcs-home": "",
+    "vcs-browse": "",
+    "depend": "",
+    "suggest": "",
+    "short_description": "",
+    "description": "",
+}
 parser = OptionParser()
-parser.add_option("-a", "--auto", dest="auto",\
+parser.add_option("-a", "--auto", dest="auto",
                   help="Try to build control file automaticaly")
 
 option, args = parser.parse_args()
@@ -54,13 +73,28 @@ if __name__ == "__main__":
     try:
         os.mkdir("dina")
     except OSError, e:
-        err = e.split("]")
-        print e.strip()
-        os.exit(1)
+        err = str(e).split("]")
+        print str(e).strip()
+        sys.exit(1)
 
-    if option.auto:
-        pass
+    print ">>>>>>>>>>>>>>>> ", option.auto
+    if True:
+        fd = open("dina/control", "w+")
+        # TODO: retrive version and name of the package from the parent directory
+        # just like debian package building system
 
+        name = raw_input("Package name: ")
+        config["name"] = name.capitalize()
+        config["package"] = name.lower().replace(" ", "-")
+        while(1):
+            version =raw_input("Version: ")
+            if len(version.split(".")) == 3:
+                config["version"] = version
+                break
+            print "Version should be a 3 section type"
+        fd.write(json.dumps(config).replace(", ", ",\n"))
+        fd.close()
+        print "Done"
     else:
         pkg = dict()
         name = raw_input("Application name: ")
