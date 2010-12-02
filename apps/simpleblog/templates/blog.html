@@ -25,35 +25,36 @@
 
 {% for post in posts.object_list %} 
 <div>
-  <div class="entry">
-    <h1 class="a_heading"><a href="/blog/post/{{ post.slug }}">{{ post.title }}</a></h1>
-    <div class="entry_meta">
-      <ul>
-        <li><a href="">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
-        <li class="date">{{ post.datetime.ctime }}</li>
-      </ul>
-      <br>
-    <p>{{ post.get_content|linebreaks }}
-      <br>
-    <a href="/blog/post/{{ post.slug }}">{% trans 'Read More' %} . . .</a></p>
-    <br>
-    <br class="clear" />
-    </div>
-</div>
+    <div class="entry">
+      <div class="entry_meta">
 
-  <ul class="category"><p>{% trans 'Tags' %}: </p>
-    {% for category in post.categories.all %}
-    <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag"> {{ category }}</a> | </li>
-    {% endfor %}
-  </ul>
-</div>
+      <h2 class="a_heading"><a href="/blog/post/{{ post.slug }}">{{ post.title.capitalize }}</a></h2>
+      <div class="post_content">
+	<ul>
+          <li><a href="">{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+          <li class="date">{{ post.datetime.ctime }}</li>
+        </ul>
+      </div>
+      <br><br>
+      <p>{{ post.get_content|linebreaks }}</p>
+      </div>
+      <p class="button"><a href="/blog/post/{{ post.slug }}">{% trans 'More' %}</a></p>
+      <br class="clear" />
+    </div>
+    
+    <ul class="category"><p>{% trans 'Tag' %}:</p>
+      {% for category in post.categories.all %}
+      <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
+      {% endfor %}
+    </ul>
+    </div>
     <br class="clear" />
 {% endfor %}
 
     
 
 
-<div class="paging">
+<div class="wp-pagenavi">
 
 <span class="current">                                                                                                                                 
  <span class="pages"> Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>

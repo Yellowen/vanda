@@ -258,7 +258,11 @@ a:active {
 }
 
 .category li {
+    //width: 100px;
+    //text-align: center;
+    //padding-left: 30px;
     float: left;
+    border-right: 1px dotted black;
 }
 
 .category a {
@@ -268,3 +272,15 @@ a:active {
 padding: 20px;
 }
 
+.post_content li {
+    width: auto;
+    margin-top: 2px;
+    text-align: center;
+    //padding-left: 30px;
+    float: left;
+}
+
+p.entry_meta:first-line  {
+    padding-left: 60px;
+    
+}
