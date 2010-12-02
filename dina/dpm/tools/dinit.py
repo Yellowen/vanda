@@ -27,6 +27,7 @@
 #    dinit make some files inside a folder with the name of "dina" inside of
 #    application source tree.
 # TODO: build dinit development documentation in Sphinx
+
 import os
 import sys
 import json
@@ -63,8 +64,8 @@ config = {
     "description": "",
 }
 parser = OptionParser()
-parser.add_option("-a", "--auto", dest="auto",
-                  help="Try to build control file automaticaly")
+parser.add_option("-l", "--license", dest="license",
+                  help="The license of package.")
 
 option, args = parser.parse_args()
 
@@ -77,29 +78,24 @@ if __name__ == "__main__":
         print str(e).strip()
         sys.exit(1)
 
-    print ">>>>>>>>>>>>>>>> ", option.auto
-    if True:
-        fd = open("dina/control", "w+")
-        # TODO: retrive version and name of the package from the parent directory
-        # just like debian package building system
+    # TODO: retrive version and name of the package
+    # from the parent directory just like debian
+    # package building system
+    dirname = os.getcwd().split("/")[-1].split("-")
+    if len(dirname) < 2:
+        print """Erro: Your project directory name
+        shoud be in NAME-VERSION format."
+        sys.exit(1)
+    name = dirname[0]
+    version = dirname[1:].replace(" ", "_")
+    config["name"] = name.capitalize()
+    config["package"] = name.lower().replace(" ", "_")
+    if len(version.split(".")) == 3:
+        config["version"] = version
+        print "Version should be a 3 section type"
+        sys.exit(1)
 
-        name = raw_input("Package name: ")
-        config["name"] = name.capitalize()
-        config["package"] = name.lower().replace(" ", "-")
-        while(1):
-            version =raw_input("Version: ")
-            if len(version.split(".")) == 3:
-                config["version"] = version
-                break
-            print "Version should be a 3 section type"
-        fd.write(json.dumps(config).replace(", ", ",\n"))
-        fd.close()
-        print "Done"
-    else:
-        pkg = dict()
-        name = raw_input("Application name: ")
-        # TODO: check for illegal characters
-        pkg['name'] = name.strip().replace(' ', '_')
-        version = raw_input("Application version: ")
-        pkg['version'] = version.strip().replace(" ", "_")
-        # TODO: check for GPL compatiblity and Section
+    fd = open("dina/control", "w+")
+    fd.write(json.dumps(config).replace(", ", ",\n"))
+    fd.close()
+    print "Done"

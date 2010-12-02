@@ -203,7 +203,9 @@ a:active {
     margin: 0px;
 }
 
-
+#rightcolumn .box{
+    
+}
 #section_left_panel
 {
     float:left;
@@ -284,3 +286,4 @@ p.entry_meta:first-line  {
     padding-left: 60px;
     
 }
+
