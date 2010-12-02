@@ -63,11 +63,14 @@ config = {
     "short_description": "",
     "description": "",
 }
+
 parser = OptionParser()
+# TODO: add license option
 parser.add_option("-l", "--license", dest="license",
                   help="The license of package.")
 
 option, args = parser.parse_args()
+
 
 if __name__ == "__main__":
 
@@ -83,8 +86,8 @@ if __name__ == "__main__":
     # package building system
     dirname = os.getcwd().split("/")[-1].split("-")
     if len(dirname) < 2:
-        print """Erro: Your project directory name
-        shoud be in NAME-VERSION format."
+        print "Error: Your project directory name shoud be in NAME-VERSION format."
+        os.rmdir("dina")
         sys.exit(1)
     name = dirname[0]
     version = dirname[1:].replace(" ", "_")
@@ -93,9 +96,18 @@ if __name__ == "__main__":
     if len(version.split(".")) == 3:
         config["version"] = version
         print "Version should be a 3 section type"
+        os.rmdir("dina")
         sys.exit(1)
 
     fd = open("dina/control", "w+")
     fd.write(json.dumps(config).replace(", ", ",\n"))
     fd.close()
+    # TODO: add copyright file
+    # TODO: add watch file
+    # TODO: add patch folder
+    # TODO: add README.dina
+    # TODO: add preintall.py
+    # TODO: add postinstall.py
+    # TODO: add prerm.py
+    # TODO: add postrm.py
     print "Done"
