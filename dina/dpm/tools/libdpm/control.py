@@ -21,6 +21,7 @@
 import json
 from libdpm.utils import safe_join
 
+
 class Control (object):
     """
     Control class is a interface to dina/control file.
@@ -30,5 +31,14 @@ class Control (object):
         self._control = json.loads(file(safe_join(cwd, "control")))
 
     def validate(self):
-        if "package" not in self._control:
-            raise 
+        if "Package" not in self._control.keys():
+            raise self.DoesNotValid("'Package' field was not found.")
+        if "Maintainer" not is self._control.keys():
+            raise self.DoesNotValid("'Maintainer' field was not found.")
+        if "Priority" not in self._control.keys():
+            raise self.DoesNotValid("'Priority' field was not found.")
+        if "Section" not in self._control.keys():
+            raise self.DoesNotValid("'Section' field was not found.")
+        
+    class DoesNotValid (Exception):
+        pass
