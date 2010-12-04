@@ -78,11 +78,12 @@ if __name__ == "__main__":
         os.rmdir("dina")
         sys.exit(1)
     name = dirname[0]
-    version = dirname[1:].replace(" ", "_")
+    version = "".join(dirname[1:]).replace(" ", "_")
     config._control["Source"] = name.capitalize().replace(" ", "_")
     config._control["Package"] = name.lower().replace(" ", "_")
     if len(version.split(".")) == 3:
         config._control["Version"] = version
+    else:
         print "Version should be a 3 section type"
         os.rmdir("dina")
         sys.exit(1)

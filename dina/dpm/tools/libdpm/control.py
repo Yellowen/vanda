@@ -58,7 +58,7 @@ class Control (object):
             self._new = new
 
     def _exists(self):
-        if os.path.exits(self.path):
+        if os.path.exists(self.path):
             return True
         else:
             return False
@@ -88,17 +88,17 @@ class Control (object):
         write data to disk.
         """
         flag = None
-        exi = self.exists()
-        if exi and not self.new:
+        exi = self._exists()
+        if exi and not self._new:
             flag = "a+"
-        elif exi and self.new:
+        elif exi and self._new:
             flag = "w+"
-        elif not exi and self.new:
+        elif not exi and self._new:
             flag = "w+"
-        elif not exi and not self.new:
+        elif not exi and not self._new:
             raise self.ControlDoesNotExist()
         fd = open(self.path, flag)
-        fd.write(json.dumps(self._control))
+        fd.write(json.dumps(self._control).replace(",", ",\n"))
         fd.close()
         return True
 
