@@ -34,7 +34,7 @@ class Control (object):
             if self.exits():
                 self._control = json.loads(file(self.path).read())
             else:
-                raise self.ControlDoesNotExist()
+                raise self.DoesNotExist()
         else:
             self._control = {
                 "Source": "",
@@ -100,9 +100,10 @@ class Control (object):
         fd = open(self.path, flag)
         fd.write(json.dumps(self._control))
         fd.close()
+        return True
 
     class DoesNotValid (Exception):
         pass
 
-    class ControlDoesNotExist (Exception):
+    class DoesNotExist (Exception):
         pass

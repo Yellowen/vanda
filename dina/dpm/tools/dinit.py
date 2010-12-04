@@ -33,6 +33,9 @@ import sys
 import json
 from optparse import OptionParser
 
+from libdpm.control import Control
+from libdpm.utils import safe_join
+
 
 # TODO: gather a complete list of licenses
 # via http://www.gnu.org/licenses/license-list.html
@@ -47,22 +50,6 @@ licenses = {
         }
     }
 
-config = {
-    "name": "",
-    "package": "",
-    "version": "",
-    "section": "",
-    "priority": "",
-    "uploaders": "",
-    "maintainer": "",
-    "home": "",
-    "vcs-home": "",
-    "vcs-browse": "",
-    "depend": "",
-    "suggest": "",
-    "short_description": "",
-    "description": "",
-}
 
 parser = OptionParser()
 # TODO: add license option
@@ -85,23 +72,23 @@ if __name__ == "__main__":
     # from the parent directory just like debian
     # package building system
     dirname = os.getcwd().split("/")[-1].split("-")
+    config = Control(safe_join(os.getcwd(), "dina"), new=True)
     if len(dirname) < 2:
         print "Error: Your project directory name shoud be in NAME-VERSION format."
         os.rmdir("dina")
         sys.exit(1)
     name = dirname[0]
     version = dirname[1:].replace(" ", "_")
-    config["name"] = name.capitalize()
-    config["package"] = name.lower().replace(" ", "_")
+    config._control["Source"] = name.capitalize().replace(" ", "_")
+    config._control["Package"] = name.lower().replace(" ", "_")
     if len(version.split(".")) == 3:
-        config["version"] = version
+        config._control["Version"] = version
         print "Version should be a 3 section type"
         os.rmdir("dina")
         sys.exit(1)
 
-    fd = open("dina/control", "w+")
-    fd.write(json.dumps(config).replace(", ", ",\n"))
-    fd.close()
+    config.flush()
+    # TODO: add changelog
     # TODO: add copyright file
     # TODO: add watch file
     # TODO: add patch folder
