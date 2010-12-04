@@ -18,6 +18,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+import os
 import json
 from libdpm.utils import safe_join
 
@@ -27,18 +28,81 @@ class Control (object):
     Control class is a interface to dina/control file.
     """
 
-    def __init__(self, cwd):
-        self._control = json.loads(file(safe_join(cwd, "control")))
+    def __init__(self, cwd, new=None):
+        self.path = safe_join(cwd, "control")
+        if not new:
+            if self.exits():
+                self._control = json.loads(file(self.path).read())
+            else:
+                raise self.ControlDoesNotExist()
+        else:
+            self._control = {
+                "Source": "",
+                "Package": "",
+                "Version": "",
+                "Section": "",
+                "Priority": "",
+                "Uploaders": "",
+                "Maintainer": "",
+                "Home": "",
+                "Vcs-home": "",
+                "Vcs-browse": "",
+                "Depends": "",
+                "Build-Depends": "",
+                "Recommends": "",
+                "Suggest": "",
+                "Description": {"Short": "",
+                                "Extra": "",
+                                }
+                }
+            self._new = new
+
+    def _exists(self):
+        if os.path.exits(self.path):
+            return True
+        else:
+            return False
 
     def validate(self):
+        """
+        validate current data
+        """
+        # TODO: build a complete validation method
+        return True
         if "Package" not in self._control.keys():
             raise self.DoesNotValid("'Package' field was not found.")
-        if "Maintainer" not is self._control.keys():
+        else:
+            pass
+
+        if "Maintainer" not in self._control.keys():
             raise self.DoesNotValid("'Maintainer' field was not found.")
+
         if "Priority" not in self._control.keys():
             raise self.DoesNotValid("'Priority' field was not found.")
+
         if "Section" not in self._control.keys():
             raise self.DoesNotValid("'Section' field was not found.")
-        
+
+    def flush(self):
+        """
+        write data to disk.
+        """
+        flag = None
+        exi = self.exists()
+        if exi and not self.new:
+            flag = "a+"
+        elif exi and self.new:
+            flag = "w+"
+        elif not exi and self.new:
+            flag = "w+"
+        elif not exi and not self.new:
+            raise self.ControlDoesNotExist()
+        fd = open(self.path, flag)
+        fd.write(json.dumps(self._control))
+        fd.close()
+
     class DoesNotValid (Exception):
+        pass
+
+    class ControlDoesNotExist (Exception):
         pass
