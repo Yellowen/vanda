@@ -31,7 +31,7 @@ class Control (object):
     def __init__(self, cwd, new=None):
         self.path = safe_join(cwd, "control")
         if not new:
-            if self.exits():
+            if self._exists():
                 self._control = json.loads(file(self.path).read())
             else:
                 raise self.DoesNotExist()
@@ -96,8 +96,9 @@ class Control (object):
         elif not exi and self._new:
             flag = "w+"
         elif not exi and not self._new:
-            raise self.ControlDoesNotExist()
+            raise self.DoesNotExist()
         fd = open(self.path, flag)
+        self.validate()
         fd.write(json.dumps(self._control).replace(",", ",\n"))
         fd.close()
         return True

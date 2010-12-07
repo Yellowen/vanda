@@ -19,6 +19,8 @@
 # -----------------------------------------------------------------------------
 
 import os
+import bzip2
+from shutil import copyfile, copytree
 
 from control import Control
 from utils import safe_join
@@ -35,12 +37,23 @@ class Package (object):
             # initialize Package from a tarball file
 
             # TODO: package class should initilized from a tarball
+            pass
         else:
             # initialize a empty package shell
-            self._path = safe_join(path, "dina")
+            self._config = safe_join(path, "dina")
+            self._path = path
             if os.path.exists(self._path):
                 try:
-                    self.control = Control(self._path)
+                    self.control = Control(self._config)
                 except Control.DoesNotExist():
+                    # TODO: handle control errors
                     raise
-
+        
+    def flush(self):
+        """
+        Build the package.
+        """
+        if self.control.validate():
+            
+            copytree("%s/.." % self._path.rstrip(), "/tmp/")
+            
