@@ -50,9 +50,7 @@ urlpatterns = patterns('',
                 (r'^site_media/(.+)$' ,  'dina.core.server.MediaServ'), 
                 (r'^accounts/' ,  include('dina.auth.urls')), 
                 (r'^' , include('apps.urls')),
-                (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
-
-                       
+                (r'^sitemap\.xml$', 
+                 'django.contrib.sitemaps.views.sitemap',
+                 {'sitemaps': sitemaps})
 )
-
-
