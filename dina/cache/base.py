@@ -31,10 +31,10 @@ class CacheObject (object):
     some IO transactions.
     """
     def __init__ (self, cache_module_name=None):
-        super(CacheObject, self).__init__ ()
+        super(CacheObject, self).__init__()
         if cache_module_name is None:
-            raise NoCacheModuleName ("No cache module name specified.")
-        self._cache_dir = "%s/%s" % (settings.DINA_CACHE , cache_module_name)
+            raise NoCacheModuleName("No cache module name specified.")
+        self._cache_dir = "%s/%s" % (settings.DINA_CACHE, cache_module_name)
         self._check_for_cache_dir()
 
 
@@ -43,7 +43,7 @@ class CacheObject (object):
         """
         escape the str_ for a unique filesystem name.
         """
-        return  "%s.%s" % (str_.replace ("/" , "___"),"cache")
+        return  "%s.%s" % (str_.replace ("/", "___"), "cache")
         
         
     def _check_for_cache_dir (self):
@@ -55,10 +55,10 @@ class CacheObject (object):
             # TODO: Here we should deal with OSError [Error 13]: permission denied
             # exception .
             try:
-                os.mkdir (settings.DINA_CACHE)
+                os.mkdir(settings.DINA_CACHE)
             except:
                 pass
-            os.mkdir (self._cache_dir)
+            os.mkdir(self._cache_dir)
         return
 
     
@@ -67,10 +67,10 @@ class CacheObject (object):
         """
         try to read the cache file if it exists, if not return None.
         """
-        address = "%s/%s" % (self._cache_dir, self._escape (cache_file_name))
+        address = "%s/%s" % (self._cache_dir, self._escape(cache_file_name))
         try:
-            cache_fd = open (address)
-            return cache_fd.read ()
+            cache_fd = open(address)
+            return cache_fd.read()
         except IOError:
             return None
 
@@ -80,6 +80,6 @@ class CacheObject (object):
         build a cache file for given filename and write data in it.
         """
         self._check_for_cache_dir()
-        fd = open ("%s/%s" % (self._cache_dir, self._escape (filename)), 'w+')
-        fd.write (data)
-        fd.close ()
+        fd = open("%s/%s" % (self._cache_dir, self._escape(filename)), 'w+')
+        fd.write(data)
+        fd.close()
