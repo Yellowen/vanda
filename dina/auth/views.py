@@ -17,7 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.contrib.auth import authenticate, login , logout
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
@@ -30,7 +30,7 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                login(request , user)
+                login(request, user)
                 return HttpResponseRedirect('/') # Redirect to a success page.
             else:
                 return HttpResponseRedirect('/') # Return a 'disabled account' error message
@@ -38,7 +38,7 @@ def login_view(request):
         form = LoginForm() # An unbound form
     c = {'form': form,}
     c.update(csrf(request))
-    return render_to_response('login.html',c )
+    return render_to_response('login.html', c)
 
 
 def logout_view(request):

@@ -16,6 +16,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
+
 import os
 
 from django.conf.urls.defaults import *
@@ -38,13 +39,11 @@ def wrap(view, cacheable=False):
 
 urlpatterns = patterns('',
 
-    #  (r'^dpm/', include('dina.core.urls')),
+    # (r'^dpm/', include('dina.core.urls')),
     (r'^core/$', 'dina.core.views.pkgm_mng'),                   
     (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),
     # regex should change according to django naming policy
     (r'^([A-Za-z][A-Za-z0-9]{1,30})/config/$', 'dina.conf.views.conf_view'),    
     url(r'^$', wrap(admin_index), name='index'),
     (r'^', include(admin.site.urls)),
-                       
-                       
 )

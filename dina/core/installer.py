@@ -18,9 +18,6 @@
 # ---------------------------------------------------------------------------------
 
 
-
-
-
 import os
 import tarfile
 import shutil
@@ -51,27 +48,27 @@ class installer (object):
         os.chdir ('/tmp/')
 
         # build a random unique name
-        dirname = 'dina_' + str (random.randrange (1 , 1000))
+        dirname = 'dina_' + str (random.randrange (1, 1000))
         self.dirname = dirname
 
         # build a dir
         os.mkdir(dirname)
 
         # Copy archive and its meta data to /tmp
-        shutil.copy2 (self.path , '/tmp/' + dirname + "/tmp_archive")
+        shutil.copy2(self.path, '/tmp/' + dirname + "/tmp_archive")
 
         # Change the current working directory to /tmp
-        os.chdir ('/tmp/' + dirname)
+        os.chdir('/tmp/' + dirname)
 
         #extract the file name from path
-        archive =  "tmp_archive"#self.path.split('/')[-1]
+        archive = "tmp_archive"#self.path.split('/')[-1]
         
         # open archive file for extraction
-        tar = tarfile.open (archive)
+        tar = tarfile.open(archive)
 
         # extract the archive file
-        tar.extractall ()
-        tar.close ()
+        tar.extractall()
+        tar.close()
 
 
     def _read_index (self):
@@ -127,21 +124,21 @@ class installer (object):
         else:
             target_dir = settings.TEMPLATE_DIRS
 
-        shutil.copytree (self.obj.Name , target_dir + "/" + self.obj.Name)
-        os.rmdir ('/tmp/' + self.dirname)
-        os.chdir (self.return_path)
+        shutil.copytree (self.obj.Name, target_dir + "/" + self.obj.Name)
+        os.rmdir('/tmp/' + self.dirname)
+        os.chdir(self.return_path)
         
         return self.obj
         
             
             
 
-    def _parser (self , file):
+    def _parser (self, file):
         """Parse the file to a python dictionary"""
         #+++ here i should add a conf validator
         #+++ here i should add a ; for end of line
         try:
-            fd = open (file , "r")
+            fd = open(file, "r")
             lines = fd.readlines ()
             fd.close ()
         except:

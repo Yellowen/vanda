@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
 import os
 import datetime
 from dina.core.perf import ExecTime
@@ -26,7 +27,7 @@ from dina.core.perf import ExecTime
 @ExecTime
 def modification_date(filename):
     t = os.path.getmtime(filename)
-    return str(datetime.datetime.fromtimestamp(t)).replace (" " , "-").replace (":","-")
+    return str(datetime.datetime.fromtimestamp(t)).replace (" ", "-").replace (":", "-")
 
 
 # Compare fdate with sdate. if fdate was greater than sdate result = 1
@@ -35,13 +36,11 @@ def modification_date(filename):
 # fdate and sdate should be string type date that seprated by '-' char
 
 def date_cmp (fdate, sdate):
-    flist = fdate.split ("-")
-    slist = sdate.split ("-")
-    for i in range (0, len(flist)):
+    flist = fdate.split("-")
+    slist = sdate.split("-")
+    for i in range(0, len(flist)):
         if flist[i] > slist[i]:
             return 1
         elif flist[i] < slist[i]:
             return 2
     return 0
-
-

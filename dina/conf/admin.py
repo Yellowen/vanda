@@ -24,5 +24,5 @@ class Config (admin.ModelAdmin):
     pass
 
 
-admin.site.register (GeneralConfiguration , Config)
+admin.site.register (GeneralConfiguration, Config)
 

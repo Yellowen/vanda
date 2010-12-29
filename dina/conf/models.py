@@ -36,9 +36,9 @@ class Config (models.Model):
     
     def save(self, *args, **kwargs):
         # A config model should contain only one record
-        self.__class__.objects.all ().delete ()
-        super (Config, self).save (*args, **kwargs)
-        self.logger.debug ("Config saved for %s" % self.__class__._meta.app_label)
+        self.__class__.objects.all().delete()
+        super (Config, self).save(*args, **kwargs)
+        self.logger.debug("Config saved for %s" % self.__class__._meta.app_label)
 
 
     @classmethod
@@ -70,7 +70,7 @@ class GeneralConfiguration (Config):
     """
     
     # Fields
-    site_name =  models.CharField (max_length = 50, verbose_name=_("Site Name"), \
+    site_name =  models.CharField(max_length = 50, verbose_name=_("Site Name"), \
                                    help_text=_("Site Name is a name that show in the title srction."),\
                                    default=_("Dina Project"))
     
