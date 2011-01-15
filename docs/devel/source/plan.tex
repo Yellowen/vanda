@@ -1,15 +1,18 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
-@setfilename sample.info
-@settitle Sample Manual 1.0
+@setfilename Plan.tex
+@settitle Debbox Development Plan 1.0
 @c %**end of header
 @copying
-This is a short example of a complete Texinfo file, version 1.0.
+Debbox development plan document, version 1.0.
 
-Copyright @copyright{} 2005 Free Software Foundation, Inc.
+Copyright @copyright{} 2011 Some Hackers In Town street computing group.
 @end copying
 @titlepage
-@title Sample Title
+@title Debbox Development Plan
+@subtitle Version 1.0
+@author By:
+@author Sameer Rahmani
 
 @c The following two commands start the copyright page.
 @page
@@ -20,21 +23,14 @@ Copyright @copyright{} 2005 Free Software Foundation, Inc.
 @c Output the table of contents at the beginning.
 @contents
 
-@ifnottex
-@node Top
-@top Short Sample
-
-This is a short sample Texinfo file.
-@end ifnottex
-
 @menu
-* First Chapter::    The first chapter is the
-only chapter in this sample.
+* Idea::    The ideas behind Debbox.
+* Requirements::   The requirements for building Debbox V0
 * Index::            Complete index.
 @end menu
 
-@node First Chapter
-@chapter First Chapter
+@node Idea
+@chapter Idea
 
 @cindex chapter, first
 
@@ -50,6 +46,10 @@ This is the first item.
 @item
 This is the second item.
 @end enumerate
+
+@node Requirements
+@chapter Requirements
+something here and here
 
 @node Index
 @unnumbered Index
