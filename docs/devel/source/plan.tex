@@ -24,32 +24,51 @@ Copyright @copyright{} 2011 Some Hackers In Town street computing group.
 @contents
 
 @menu
-* Idea::    The ideas behind Debbox.
+* Debbox idea::    The ideas behind Debbox.
 * Requirements::   The requirements for building Debbox V0
-* Index::            Complete index.
+
 @end menu
 
-@node Idea
-@chapter Idea
-
-@cindex chapter, first
-
-This is the first chapter.
-@cindex index entry, another
-
-Here is a numbered list.
-
-@enumerate
+@c TODO: add an Introduction chapter that talk about this article
+@node Debbox idea
+@firstparagraphindent insert
+@chapter Debbox idea
+There is just a few administration web application around and most of them is dead now (not developed any more), and those
+which is active have their own issues, for example:
+@itemize
 @item
-This is the first item.
-
+Do not following popular standards like LBS.
 @item
-This is the second item.
-@end enumerate
+Stick with just some sort of software like Apache web server
+@item
+Don't have a user friendly UI
+@item
+Do not support multiple server configuration
+@item 
+Configuring server in a nasty way.
+@item
+and etc
+@end itemize
+
+Also system administrators limited to softwares which their administration panel provide them.
+Most of the time there is no choice, for example most of the current panels user Apache as their
+default web server and did not support other web servers like lighttpd or nginx.
+
+The main idea behind Debbox is to build a modern administration panel for Debian GNU/Linux operating 
+system. Building for Debian GNU/Linux did not mean that Debbox should work on Debian, Debbox should
+follow Debian provided standards like FHS (Filesystem Hierarchy standard), python-policy or php-policy
+and so on. one of the weakness of other panel is that administrator will confuse by using them for example
+Kloxo configure apache web server in an strange way and those administrator who use kloxo for the first time
+should search for a user virtualhost file in GNU/Linux root partition to change that by hand at that is a pain 
+in the ass problem. So by following Debian standards, Debbox will be Admin friendly panel. 
+
+@c add more idea about debbox       
 
 @node Requirements
 @chapter Requirements
-something here and here
+
+After understanding Debbox idea, now it's time to ask this question: What does Debbox need for a 'Just working' version?
+
 
 @node Index
 @unnumbered Index
