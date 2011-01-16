@@ -5,9 +5,9 @@
 @c %**end of header
 @copying
 Debbox development plan document, version 1.0.
-
 Copyright @copyright{} 2011 Some Hackers In Town street computing group.
 @end copying
+
 @titlepage
 @title Debbox Development Plan
 @subtitle Version 1.0
@@ -18,21 +18,24 @@ Copyright @copyright{} 2011 Some Hackers In Town street computing group.
 @page
 @vskip 0pt plus 1filll
 @insertcopying
+
+@page
+This document belongs to Debbox project and discuss the Development plan for version 0 of Debbox. if you're not 
+a Debbox developer this document is not for you.
+
 @end titlepage
 
 @c Output the table of contents at the beginning.
 @contents
 
-@menu
-* Debbox idea::    The ideas behind Debbox.
-* Requirements::   The requirements for building Debbox V0
-
-@end menu
 
 @c TODO: add an Introduction chapter that talk about this article
-@node Debbox idea
+@node What is Debbox?
 @firstparagraphindent insert
-@chapter Debbox idea
+@chapter What is Debbox?
+Debbox is an administration panel only for Debian GNU/Linux, that provide an easy to use UI for Admin user and normal users. 
+
+@section What is the advantage of Debbox?
 There is just a few administration web application around and most of them is dead now (not developed any more), and those
 which is active have their own issues, for example:
 @itemize
@@ -62,13 +65,44 @@ Kloxo configure apache web server in an strange way and those administrator who 
 should search for a user virtualhost file in GNU/Linux root partition to change that by hand at that is a pain 
 in the ass problem. So by following Debian standards, Debbox will be Admin friendly panel. 
 
+Most of other panels did not respect to the level of user knowledge, and design the UI as they pleased. Because of that
+some normal users with low computer knowledge will not feel comfortable with the UI. but Debbox load the UI with the details
+ that user will understand probably, and let user to specify his/her level.
+
+Those reasons that mentioned above are just some of many problem that my friends and i face to them in our career. So
+we decided to build a new Web application that fit our needs.
+
+
 @c add more idea about debbox       
 
-@node Requirements
-@chapter Requirements
+@node Planning
+@chapter Planning
+The important task in creating a software product is extracting the requirements or requirements analysis. 
+@section Requirements
+After analyzing other panels weaknesses and advantages we generate a list of requirement for Debbox as follow:
+@c START OF LIST
+@itemize
+@c SOME EXAMPLE OF USING texinfo lists
+@c to not edit this example (lxsameer) will remove them
+@item
+item 1
+@item
+item2
+@itemize
+@item 
+subitem1
+@end itemize
+@item
+item3
+@enumerate 
+@item
+subitem 4
+@end enumerate
+@c ADD you list here -------------------
 
-After understanding Debbox idea, now it's time to ask this question: What does Debbox need for a 'Just working' version?
-
+@c -------------------------------------
+@end itemize
+@c END OF LIST
 
 @node Index
 @unnumbered Index
