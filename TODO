@@ -1,0 +1,5 @@
+------------ Development ------------
+[ ] Add django-command-extension to project only for debugging
+[ ] Remove runserver.sh from each Release
+[ ] Build some processes/threads for serving static files (need a
+   decision between processes and threads)
