@@ -29,9 +29,6 @@ import time
 from optparse import OptionParser
 
 import django
-from fapws import base
-import fapws._evwsgi as evwsgi
-from fapws.contrib import django_handler, views
 
 parser = OptionParser()
 parser.set_defaults(
@@ -54,20 +51,14 @@ options, args = parser.parse_args()
 os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
 
 # since we don't use threads, internal checks are no more required
-sys.setcheckinterval = 100000 
+sys.setcheckinterval = 100000
 
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
-print 'start on', (options.host, options.port)
-evwsgi.start(options.host, options.port)
-evwsgi.set_base_module(base)
+if options.backend == "fapws3":
+    from debbox.lib.fapws3 import FAPWSServer
+    server = FAPWSServer(options.host, options.port)
 
-
-def generic(environ, start_response):
-    res=django_handler.handler(environ, start_response)
-    return [res]
-
-evwsgi.wsgi_cb(('', generic))
-evwsgi.set_debug(0)
-evwsgi.run()
+print 'Start on ', (options.host, options.port)
+server.start()
