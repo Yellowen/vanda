@@ -35,7 +35,7 @@ parser.set_defaults(
     port='8000',
     backend='gevent',
     host='127.0.0.1',
-    settings='src.settings',
+    settings='debbox.settings',
 )
 
 parser.add_option('--port', dest='port')
@@ -56,6 +56,7 @@ sys.setcheckinterval = 100000
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
+sys.path.insert(1, "debbox/")
 if options.backend == "fapws3":
     from debbox.lib.fapws3 import FAPWSServer
     server = FAPWSServer(options.host, options.port)
