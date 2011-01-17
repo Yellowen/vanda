@@ -19,9 +19,10 @@
 # -----------------------------------------------------------------------------
 
 PWD=`pwd`
-virtualenv --clear "$PWD/env"
+virtualenv $1 "$PWD/env"
 source $PWD/env/bin/activate
 easy_install pil
 easy_install django
 easy_install fapws3
+easy_install gevent
 deactivate
