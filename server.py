@@ -61,6 +61,10 @@ if options.backend == "fapws3":
     from debbox.core.servers.fapws3 import FAPWSServer
     server = FAPWSServer(options.host, options.port)
 elif options.backend == "gevent":
-    from debbox.core.servers.fapws3 import FAPWSServer
+    from debbox.core.servers.GEvent import GEventServer
+    server = GEventServer(options.host, int(options.port))
+else:
+    print "Error: Invalid web server backend."
+    sys.exit(1)
 print 'Start on ', (options.host, options.port)
 server.start()
