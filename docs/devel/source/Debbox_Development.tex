@@ -54,36 +54,15 @@ If some one make a mistake in the code call him at private and tell him kindly.
 Do not humiliate any one.
 @end itemize
 
-@section Developing Policies:
+@section Developing Policies
 For gaining better and better team work ability, we need to follow these rulse:
 @sp 1
 @itemize
 @item
 Debbox Project release under the term of GPL version 2, so we have to put out license
-header at the beginning of our source files. the source header should be exactly like
-@quotation
-@c TODO need escaping
-@code{
-# ----------------------------------------------------------------------------- \
-#    Debbox - Modern administration panel for Debian GNU/Linux \
-#    Copyright (C) 2011 Some Hackers In Town \
-#\
-#    This program is free software; you can redistribute it and/or modify\
-#    it under the terms of the GNU General Public License as published by\
-#    the Free Software Foundation; either version 2 of the License, or\
-#    (at your option) any later version.\
-#\
-#    This program is distributed in the hope that it will be useful,\
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of\
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
-#    GNU General Public License for more details.\
-#\
-#    You should have received a copy of the GNU General Public License along\
-#    with this program; if not, write to the Free Software Foundation, Inc.,\
-#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.\
-# -----------------------------------------------------------------------------\
-}
-@end quotation
+header at the beginning of our source files. take a look at a python file to find out how to use 
+license header.
+
 please do not add your name in the license header as the author. if you want to other developers know that your are
 the author of this piece of code or this section please comment your name and contact in a line or two after the license header. 
 e.g
@@ -91,12 +70,32 @@ e.g
 @quotation
 @code{# Sameer Rahmani <lxsameer@@gnu.org>}
 @end quotation
+@sp 1
 @item
 If you use an external module that make Debbox depend on that please ask in the Dina Developers mailing list before using that.
 So Debbox Policy Committee can decide about the external code. We should not use external module or tools that are ncompatible with  GPL licenses.
 @item
 If you use a piece of borrowed code in your code, you should specify the source and license of borrowed code, otherwise your code will be removed. 
-
+@item
+If you have to use an external (borrowed code) within Debbox source tree, please create a "COPYING" file and fill that with the external code license after get the agreement of Debbox Policy Committee .  @strong{!!! DO NOT USE GPL INCOMPATIBLE CODE !!!}
+@item
+Comment your code as much as possible, so that every developer can easily understand what did you do.
+@item
+Please read PEP8 @url{http://www.python.org/dev/peps/pep-0008/} and @strong{USE} it as your main coding style in Debbox Project.
+@sp 1
+@quotation Note
+You can use some tools like @file{pep8} for check your coding style. Also some editors like Emacs can easily check your coding style while 
+editing your code.
+@end quotation
+@sp 1
+@item
+If you made some changes in the code that other one works on it right now please contact the current author and tell him/her about your changes.
+@item
+The commit strings should be meaningful, and show what's changed in code. Don't enter lazy strings as commit message please.
+@item
+Do not commit broken or incomplete code.
+@item
+Never ever merge the branches with each other till you know what you're doing. After merging branches please tell every one about merging.
 @end itemize
 
 
@@ -144,6 +143,25 @@ so if you don't want tu install one of them, just comment the corresponding code
 @strong{Warning}: Do not commit you comments (see above note) in @file{envcreator.sh} on the main Repository.
 @end quotation
 @sp 1
+Virtual environment will simulate a naked *nix environment with minimal dependencies installed. To activating provided virtualenv you can do like thise
+@sp 1
+@command{$ . env/bin/activate}
+@sp 1
+and for exit the virtual environment use @command{deactivate} command.
+
+@section Running Debbox server
+By installing requirement and building a virtual environment, now its time to run Web server of Debbox. There is two web server backend for Debbox, 
+FAPWS3 and GEvent. both of them are fastest web servers in all ages. Sine there is some fundamental difference between those two Debbox allow user
+to choose one of them. GEvent is the default backend. for running Debbox web server you can use the @command{server.py} command after switching to 
+virtual environment like:
+@sp 1
+@command{$ python server.py}
+@sp 1
+The above command run the default backend on the @emph{localhost:8000}. If you want to change the backend use @option{--backend} option just like:
+@sp 1
+@command{$ python server.py --backend=fapws3}
+@sp 1
+for more information about @command{server.py} take a look at its help output.
 @node Index
 @unnumbered Index
 
