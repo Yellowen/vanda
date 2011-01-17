@@ -58,8 +58,9 @@ if options.pythonpath:
 
 sys.path.insert(1, "debbox/")
 if options.backend == "fapws3":
-    from debbox.lib.fapws3 import FAPWSServer
+    from debbox.core.servers.fapws3 import FAPWSServer
     server = FAPWSServer(options.host, options.port)
-
+elif options.backend == "gevent":
+    from debbox.core.servers.fapws3 import FAPWSServer
 print 'Start on ', (options.host, options.port)
 server.start()
