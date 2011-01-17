@@ -32,10 +32,76 @@ Free Documentation License".
 @c Output the table of contents at the beginning.
 @contents
 @menu
-* Requirements::        Requirements for developing Debbox
+* Development Policies::        The policies that each developer should be aware of.
+* Requirements::        Requirements for developing Debbox.
 * Index::            Complete index.
 @end menu
 @c TODO: add an Introduction chapter that talk about this article
+@node Development Policies
+@chapter Development Policies
+@c TODO: use the email command to make lxsameer@gnu.org an email
+In this chapter you will read the most important policies for developing Debbox. If you have any idea please contact me at @email{lxsameer@@gnu.org}.
+@section General Policies    
+At Debbox Developers Community we warmly welcome those people who wants to join us. so
+as a Debbox developer there is some notes that you should bear in mind:
+@sp 1
+@itemize
+@item
+Respect to others not matter who you are.
+@item
+If some one make a mistake in the code call him at private and tell him kindly.
+@item
+Do not humiliate any one.
+@end itemize
+
+@section Developing Policies:
+For gaining better and better team work ability, we need to follow these rulse:
+@sp 1
+@itemize
+@item
+Debbox Project release under the term of GPL version 2, so we have to put out license
+header at the beginning of our source files. the source header should be exactly like
+@quotation
+@c TODO need escaping
+@code{
+# ----------------------------------------------------------------------------- \
+#    Debbox - Modern administration panel for Debian GNU/Linux \
+#    Copyright (C) 2011 Some Hackers In Town \
+#\
+#    This program is free software; you can redistribute it and/or modify\
+#    it under the terms of the GNU General Public License as published by\
+#    the Free Software Foundation; either version 2 of the License, or\
+#    (at your option) any later version.\
+#\
+#    This program is distributed in the hope that it will be useful,\
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of\
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
+#    GNU General Public License for more details.\
+#\
+#    You should have received a copy of the GNU General Public License along\
+#    with this program; if not, write to the Free Software Foundation, Inc.,\
+#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.\
+# -----------------------------------------------------------------------------\
+}
+@end quotation
+please do not add your name in the license header as the author. if you want to other developers know that your are
+the author of this piece of code or this section please comment your name and contact in a line or two after the license header. 
+e.g
+@sp 1
+@quotation
+@code{# Sameer Rahmani <lxsameer@@gnu.org>}
+@end quotation
+@item
+If you use an external module that make Debbox depend on that please ask in the Dina Developers mailing list before using that.
+So Debbox Policy Committee can decide about the external code. We should not use external module or tools that are ncompatible with  GPL licenses.
+@item
+If you use a piece of borrowed code in your code, you should specify the source and license of borrowed code, otherwise your code will be removed. 
+
+@end itemize
+
+
+
+
 @node Requirements
 @firstparagraphindent insert
 @chapter Requirements
@@ -46,7 +112,7 @@ for Debbox development.
 @section Required packages
 Debbox will use an isolated environment in the deployed state, to prevent unwanted changes in the
 Host OS. Here is a list of required packages with their details for building a Debbox virtual environment:
-
+@sp 1
 @itemize
 @item
 @strong{python-virtualenv}: Debbox use this script to create e virtual environments.
