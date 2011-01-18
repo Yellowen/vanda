@@ -21,6 +21,31 @@ DATABASES = {
 }
 
 ROOT_PATH = os.path.dirname(__file__)
+
+# LOG options --------------------------------------------------------
+# In this section you can change the logger options
+# LOG_LEVEL specify the logger log level
+#CRITICAL =50
+#ERROR =40
+#WARNING =30
+#INFO =20
+#DEBUG =10
+VERBOSE = 0  # log all levels
+LOG_LEVEL = VERBOSE
+
+# Define the format of log strings
+LOG_FORMAT = '[%(asctime)s] [%(name)s], \
+line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+
+# Define the date format that use in log strings
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+LOG_MAX_BYTES = 2 * 1024 * 1024  #2Mb
+LOG_BACKUP_COUNT = 5
+LOG_FILENAME = os.path.join(ROOT_PATH, "../log/debbox")
+if not DEBUG:
+    LOG_FILENAME = "/var/log/debbox"
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
