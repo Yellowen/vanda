@@ -58,7 +58,7 @@ LOG_LEVEL = VERBOSE
 #    %(process)d         Process ID (if available)
 #    %(message)s         The result of record.getMessage(), computed just as
 #                        the record is emitted
-LOG_FORMAT = '[%(asctime)s -  %(funcName)s] [%(filename)s], \
+LOG_FORMAT = '[%(asctime)s] [%(filename)s-%(funcName)s], \
 line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 
 # Define the date format that use in log strings
