@@ -23,45 +23,31 @@ from logging.handlers import RotatingFileHandler
 from django.conf import settings
 
 
-class LoggerBase (object):
-    """
-    Debbox Main logger class.
-    """
+logparam = {}
+handlerparam = {}
 
-    def __init__(self, **kwarg):
-        self._log = None
-        logparam = {}
-        handlerparam = {}
-        try: logparam['level'] = settings.LOG_LEVEL
-        except AttributeError: pass
+try: logparam['level'] = settings.LOG_LEVEL
+except AttributeError: pass
 
-        try: logparam['format'] = settings.LOG_FORMAT
-        except AttributeError: pass
+try: logparam['format'] = settings.LOG_FORMAT
+except AttributeError: pass
 
-        try: logparam['datefmt'] = settings.LOG_DATE_FORMAT
-        except AttributeError: pass
+try: logparam['datefmt'] = settings.LOG_DATE_FORMAT
+except AttributeError: pass
 
-        try: handlerparam['maxBytes'] = settings.LOG_MAX_BYTES
-        except AttributeError: pass
+try: handlerparam['maxBytes'] = settings.LOG_MAX_BYTES
+except AttributeError: pass
 
-        try: handlerparam['backupCount'] = settings.LOG_BACKUP_COUNT
-        except AttributeError: pass
+try: handlerparam['backupCount'] = settings.LOG_BACKUP_COUNT
+except AttributeError: pass
 
-        LOG_FILENAME = "/var/log/debbox"
-        try: LOG_FILENAME = settings.LOG_FILENAME
-        except AttributeError: pass
+LOG_FILENAME = "/var/log/debbox"
+try: LOG_FILENAME = settings.LOG_FILENAME
+except AttributeError: pass
 
-        logparam.update(kwarg)
-        logging.basicConfig(**logparam)
-        self._log = logging.getLogger("TODO")
-        handler = RotatingFileHandler(
-              LOG_FILENAME, **handlerparam)
-        self._log.addHandler(handler)
 
-    def info(self, s):
-        return self._log.info(s)
-
-    def debug(self, s):
-        return self._log.debug(s)
-
-logger = LoggerBase()
+logging.basicConfig(**logparam)
+logger = logging.getLogger("TODO")
+handler = RotatingFileHandler(
+      LOG_FILENAME, **handlerparam)
+logger.addHandler(handler)

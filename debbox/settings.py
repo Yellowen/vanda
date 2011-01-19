@@ -34,7 +34,7 @@ VERBOSE = 0  # log all levels
 LOG_LEVEL = VERBOSE
 
 # Define the format of log strings
-LOG_FORMAT = '[%(asctime)s] [%(name)s], \
+LOG_FORMAT = '[%(asctime)s] [%(filename)s], \
 line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 
 # Define the date format that use in log strings
