@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 import os
 import logging
+from logging.handlers import RotatingFileHandler
 
 from django.conf import settings
 
@@ -27,8 +28,8 @@ class LoggerBase (object):
     Debbox Main logger class.
     """
 
-    def _init__(self, **kwarg):
-
+    def __init__(self, **kwarg):
+        self._log = None
         logparam = {}
         handlerparam = {}
         try: logparam['level'] = settings.LOG_LEVEL
@@ -51,18 +52,16 @@ class LoggerBase (object):
         except AttributeError: pass
 
         logparam.update(kwarg)
-        self.logger = logging.basicConfig(**logparam)
-
-        self.logger = logging.getLogger("TODO")
-        handler = logging.handlers.RotatingFileHandler(
+        logging.basicConfig(**logparam)
+        self._log = logging.getLogger("TODO")
+        handler = RotatingFileHandler(
               LOG_FILENAME, **handlerparam)
-        self.logger.addHandler(handler)
-        self.logger("asdasdasdasdadasdqweqweqweq")
+        self._log.addHandler(handler)
 
     def info(self, s):
-        return self.logger.info(s)
+        return self._log.info(s)
 
     def debug(self, s):
-        return self.logger.debug(s)
+        return self._log.debug(s)
 
 logger = LoggerBase()
