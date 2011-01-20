@@ -25,11 +25,11 @@ ROOT_PATH = os.path.dirname(__file__)
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
 # LOG_LEVEL specify the logger log level
-#CRITICAL =50
-#ERROR =40
-#WARNING =30
-#INFO =20
-#DEBUG =10
+CRITICAL = 50
+ERROR = 40
+WARNING = 30
+INFO = 20
+DEBUG = 10
 VERBOSE = 0  # log all levels
 LOG_LEVEL = VERBOSE
 
