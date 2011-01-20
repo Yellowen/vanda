@@ -43,6 +43,7 @@ class PAMAuthentication (object):
         self._service = settings.PAM_SERVICE
         self._pam.start(self._service)
 
+    @classmethod
     def _conv(auth, query_list, userData):
         logge.info("> ",auth)
         logger.info(">> ", query_list)
@@ -68,20 +69,21 @@ class PAMAuthentication (object):
 
     def authenticate(self, **kwarg):
         if "username" in kwarg:
-            self.username = kwarg["password"]
+            self.username = kwarg["username"]
         else:
             raise UsernNameNotProvided()
 
         if "password" in kwarg:
-            self.password = kwarg["username"]
+            self.password = kwarg["password"]
         else:
             raise PasswordNotProvided()
 
-        self._pam.set_item(PAM.PAM_USER, self.usernmae)
+        self._pam.set_item(PAM.PAM_USER, self.username)
         self._pam.set_item(PAM.PAM_CONV, self._conv)
 
         try:
             self._pam.authenticate()
+            print "sdasdasdasd"
             try:
                 user = User.objects.get(username=self.username)
             except User.DoesNotExists:

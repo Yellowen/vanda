@@ -120,7 +120,7 @@ TEMPLATE_LOADERS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'core.auth.pam.backed',
+    'core.auth.pam.backend.PAMAuthentication',
     )
 
 MIDDLEWARE_CLASSES = (
