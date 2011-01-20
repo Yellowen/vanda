@@ -19,6 +19,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+# TODO: admin should select the pam service via an UI
+PAM_SERVICE = "passwd"
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -116,6 +118,10 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'core.auth.pam.backed',
+    )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
