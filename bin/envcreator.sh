@@ -25,4 +25,5 @@ easy_install pil
 easy_install django
 easy_install fapws3
 easy_install gevent
+easy_install pam
 deactivate
