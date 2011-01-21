@@ -3,3 +3,4 @@
 build/
 env/
 log/
+debbox/db.devdb

@@ -43,13 +43,6 @@ class PAMAuthentication (object):
         self._service = settings.PAM_SERVICE
         self._pam.start(self._service)
 
-    @classmethod
-    def _conv(auth, query_list, userData):
-        logge.info("> ",auth)
-        logger.info(">> ", query_list)
-        logger.info(">>> ", userData)
-        return [(self.password, 0)]
-
     def get_user(self, user_id):
         # TODO: get_user should return user corresponded to current
         # authentication method not passwd only
@@ -63,7 +56,7 @@ class PAMAuthentication (object):
             try:
                 user = User.object.get(username=username())
                 return user
-            except User.DoesNotExists:
+            except User.DoesNotExist:
                 # CHECK: should this method return none for invalid user
                 return None
 
@@ -77,16 +70,19 @@ class PAMAuthentication (object):
             self.password = kwarg["password"]
         else:
             raise PasswordNotProvided()
+        self._pam.start("passwd")
 
         self._pam.set_item(PAM.PAM_USER, self.username)
-        self._pam.set_item(PAM.PAM_CONV, self._conv)
+        self._pam.set_item(PAM.PAM_CONV,
+                           lambda auth, query, ud: [(self.password,
+                                                     0)])
 
         try:
             self._pam.authenticate()
-            print "sdasdasdasd"
+
             try:
                 user = User.objects.get(username=self.username)
-            except User.DoesNotExists:
+            except User.DoesNotExist:
                 user = User(username=self.username, password=self.password)
                 # TODO: pam backend should check for a list of admin users
                 if self.username == "root":
