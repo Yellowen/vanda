@@ -27,7 +27,10 @@ class JSONConfParser (BaseParser):
     """
     def __config__(self):
         if self._buf:
-            self._dict = json.loads(self._buf)
+            try:
+                self._dict = json.loads(self._buf)
+            except:
+                raise self.TypeNotSupported
         else:
             return None
 
