@@ -48,13 +48,45 @@ There is no need to configuring Debbox logger by default. In any case you can co
 @sp 1
 @itemize
 @item
-@strong{VERBOSE}: This option allow you to choose a level for Debbox Logger. for example if you set this option to @strong{WARNING}, only logs 
+@strong{@code{VERBOSE}}: This option allow you to choose a level for Debbox Logger. for example if you set this option to @strong{WARNING}, only logs 
 higher than @strong{WARNING} level will be appear in logger output. default value of this option is @strong{0}, so logger ouput will contains all the logs in all logger levels.
 
 @item
-@strong{LOG_FORMAT}: This option indicate the format of logger output string.
+@strong{@code{LOG_FORMAT}}: This option indicate the format of logger output string.
+@item
+@strong{@code{LOG_MAX_BYTES}}: Numbers of bytes that will put in the Debbox log files. If logger reache this limit, it will create an archive from current log file in the same directory.
+@item
+@strong{@code{LOG_BACKUP_COUNT}}: Numbers of backups for log file. also you can think of it as current log file archives.
+@strong{@code{LOG_FILENAME}}: Where to store log recordes.
 @end itemize
+@sp 1
+@center
+@quotation Note
+For the list of complete options of logger take a look at @file{settings.py}.
+@end quotation
+@sp 1
 
+@section Logger usage
+For using Debbox logger all you need it to import it and use it. for example:
+@sp 1
+@example
+@code{from core.log import logger}
+
+
+@code{def someview(request):}
+@code{    logger.debug("Hello logger")}
+@end example
+@sp 1
+Above example will produce:
+@example
+@code{[2011-01-22 05:50:02] [views.py-someview], line:5-> DEBUG     : "Hello logger"}
+@end example
+@sp1
+As you can see in Debbox logger record, default configuration of Debbox logger have some interesting information in the log record like where log produced (in this example views.py module at someview function in line 5) and the time of record.
+@sp1
+@quotation See Also
+For more information about logger take a look at official python logger documentation.
+@end quotation
 @node Index
 @unnumbered Index
 
