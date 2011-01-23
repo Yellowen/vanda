@@ -1,1 +1,2 @@
-from parsers import JSON
+from parsers.JSON import JSONConfParser
+from parser import Parser
