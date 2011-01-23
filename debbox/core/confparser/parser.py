@@ -43,7 +43,7 @@ class BaseParser (object):
         self.load()
 
     def _read(self):
-        return self._file.read()
+        return file(self._file).read()
 
     def load(self):
         pass
@@ -74,7 +74,9 @@ class BaseParser (object):
             try:
                 fd = open(self._file, "w")
                 fd.write(self.__unicode__)
-            except:
+            except Exception, e:
+                logger.warn("%s failed to commit configurations. Error: %s" %\
+                            (self.__name__, e))
                 raise
 
     # TODO: need extra consideration
@@ -105,28 +107,42 @@ class BaseParser (object):
         pass
 
 
-
 class Parser (object):
     """
     Config parser class for debbox. this class will load config drivers
     and finde suitable driver for current configuration file.
     """
 
-    def __init__(self, conf_file):
+    def __init__(self, conf_file, driver=None):
         """
         conf_file is the path of target configuration.
+        if conf_file does not exists driver parameter should
+        specify the config parser driver for building new
+        configuration file.
         """
+        self.driver = None
         if os.path.exists(conf_file):
             self._file = conf_file
+            from core.confparser.parsers import drivers
+
+            self._drivers = drivers
+            self._init_external_drivers()
+            self._buf = self._read_configuration()
+            self.find_suitable_driver()
+
         else:
-            raise self.DoesNotExist()
+            if not driver:
+                raise self.DoesNotExist()
+            else:
+                self.driver = driver
+                try:
+                    fd = open(conf_file, 'w')
+                    fd.close()
+                except:
+                    raise
 
-        from core.confparser.parsers import drivers
-
-        self._drivers = drivers
-        self._init_external_drivers()
-        self._buf = self._read_configuration()
-        self.find_suitable_driver()
+                self._file = conf_file
+                self.driver = driver(self._file)
 
     def _init_external_drivers(self):
         """
@@ -155,10 +171,30 @@ class Parser (object):
                              -1)
 
             logger.debug("cls type: %s", str(type(cls)))
-            self.driver = cls.__dict__[name].is_suitable(self._buf)
-            if self.driver:
+            drv = cls.__dict__[name].is_suitable(self._buf)
+            if drv:
                 break
+        self.driver = drv(self._file)
         logger.debug("suitable confparser driver selected: %s" % self.driver)
+
+    def __getitem__(self, key):
+        """
+        return the value of given config_name
+        valie <= Parser_instanse[key]
+        """
+        return self.driver[key]
+
+    def __setitem__(self, key, value):
+        """
+        set the value of given key name to value.
+        """
+        self.driver[key] = value
+
+    def commit(self):
+        """
+        write current configuration to config file.
+        """
+        self.driver.commit()
 
     class DoesNotExist (Exception):
         pass
