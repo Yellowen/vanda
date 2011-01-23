@@ -33,6 +33,7 @@ class BaseParser (object):
         self._file = inputfile
         self.cached = cached
         self._dict = {}
+        # TODO: does caching is required?
         if os.path.exists(self._file) and cached:
             self._buf = self._read()
             # parse the string to config
@@ -100,14 +101,9 @@ class BaseParser (object):
         """
         pass
 
-    class IsNotSuitable (Exception):
-        pass
-
     class KeyError (Exception):
         pass
 
-    class TypeNotSupported (Exception):
-        pass
 
 
 class Parser (object):
