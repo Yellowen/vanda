@@ -18,6 +18,9 @@
 # -----------------------------------------------------------------------------
 
 import os
+
+from django.conf import settings
+
 from core.log import logger
 
 
@@ -73,6 +76,16 @@ class BaseParser (object):
             except:
                 raise
 
+    # TODO: need extra consideration
+    @classmethod
+    def is_suitable(cls, buf):
+        """
+        check whether current class is suite for parsing  buf conf string
+        or not. if current class is a suitable parser then return class else
+        return None
+        """
+        pass
+
     def __config__(self):
         """
         This method parse the self._buf string to a dictionary. and should
@@ -87,6 +100,9 @@ class BaseParser (object):
         """
         pass
 
+    class IsNotSuitable (Exception):
+        pass
+
     class KeyError (Exception):
         pass
 
@@ -95,4 +111,58 @@ class BaseParser (object):
 
 
 class Parser (object):
-    pass
+    """
+    Config parser class for debbox. this class will load config drivers
+    and finde suitable driver for current configuration file.
+    """
+
+    def __init__(self, conf_file):
+        """
+        conf_file is the path of target configuration.
+        """
+        if os.path.exists(conf_file):
+            self._file = conf_file
+        else:
+            raise self.DoesNotExist()
+
+        from core.confparser.parsers import drivers
+
+        self._drivers = drivers
+        self._init_external_drivers()
+        self._buf = self._read_configuration()
+        self.find_suitable_driver()
+
+    def _init_external_drivers(self):
+        """
+        Update the _driver_list with external drivers that may defines in
+        settings.py by CONF_PARSERS option
+        """
+        try:
+            self._drivers.extend(settings.CONF_PARSERS)
+        except AttributeError:
+            pass
+
+    def _read_configuration(self):
+        return file(self._file).read()
+
+    def find_suitable_driver(self):
+        """
+        try to load first match driver.
+        """
+        for driver in self._drivers:
+            # TODO: need a good exception handling.
+            path = ".".join(driver.split(".")[:-1])
+            name = driver.split(".")[-1]
+            cls = __import__(path, globals(),
+                             locals(),
+                             [name,],
+                             -1)
+
+            logger.debug("cls type: %s", str(type(cls)))
+            self.driver = cls.__dict__[name].is_suitable(self._buf)
+            if self.driver:
+                break
+        logger.debug("suitable confparser driver selected: %s" % self.driver)
+
+    class DoesNotExist (Exception):
+        pass

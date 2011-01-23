@@ -18,6 +18,8 @@
 # -----------------------------------------------------------------------------
 
 import json
+
+from core.log import logger
 from core.confparser.parser import BaseParser
 
 
@@ -36,3 +38,16 @@ class JSONConfParser (BaseParser):
 
     def __unicode__(self):
             return json.dumps(self._dict)
+
+    @classmethod
+    def is_suitable(cls, buf):
+        if buf:
+            try:
+                tmp = json.loads(buf)
+                return cls
+
+            except Exception, e:
+                logger.debug("JSONConfParser > %s > TypeNotSupported" % e)
+                return None
+        else:
+            return None
