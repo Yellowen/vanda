@@ -173,8 +173,12 @@ class Parser (object):
             logger.debug("cls type: %s", str(type(cls)))
             drv = cls.__dict__[name].is_suitable(self._buf)
             if drv:
+                self.driver = drv(self._file)
                 break
-        self.driver = drv(self._file)
+
+        if not self.driver:
+            raise self.TypeNotSupported()
+
         logger.debug("suitable confparser driver selected: %s" % self.driver)
 
     def __getitem__(self, key):
@@ -197,4 +201,7 @@ class Parser (object):
         self.driver.commit()
 
     class DoesNotExist (Exception):
+        pass
+
+    class TypeNotSupported (Exception):
         pass

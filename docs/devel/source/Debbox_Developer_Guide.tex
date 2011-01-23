@@ -34,6 +34,7 @@ Free Documentation License".
 @menu
 * Development Policies::        The policies that each developer should be aware of.
 * Requirements::        Requirements for developing Debbox.
+* Config Parser::       Configuration file parser.
 * Index::            Complete index.
 @end menu
 @c TODO: add an Introduction chapter that talk about this article
@@ -163,6 +164,18 @@ The above command run the default backend on the @emph{localhost:8000}. If you w
 @sp 1
 for more information about @command{server.py} take a look at its help output.
 Now you can use Debbox by connecting to @command{localhost:8000} 
+
+@node Config Parser
+@chapter Config Parser
+Debbox provide a very easy to use and flexible configuration parser for developers. all you need to do is to build an instance of @code{Parser} 
+class and pass your configuration file address to it. then you will have a dictionary like object (not all the time because some configuration files
+like json type configuration files are different) that contains your configuration. 
+@sp1
+@quotation Note
+there is some confparser driver for @code{Parser} class that allow @code{Parser} to parse specific type of configuration file, so if you pass an unkown type 
+configuration file you will get a @code{Parser.TypeNotSupported} exception.
+@end quotation
+@sp1
 @node Index
 @unnumbered Index
 
