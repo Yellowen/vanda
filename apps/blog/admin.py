@@ -19,7 +19,9 @@
 
 
 from django.contrib import admin
-from models import *
+from models import category
+from models import post
+
 
 class admin_post (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
@@ -41,4 +43,3 @@ class admin_category(admin.ModelAdmin):
 
 admin.site.register(category, admin_category)
 admin.site.register (post , admin_post)
-

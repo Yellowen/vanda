@@ -41,6 +41,6 @@ def blog (request):
 
 def comments (request, slug):
     get_object_or_404(post, slug=slug)
-    render = {"post" : p ,}
+    render = {"post" : post ,}
     render.update(csrf(request))            #for fixing bug#29883
     return rr ('comments.html' , render)

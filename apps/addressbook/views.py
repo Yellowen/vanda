@@ -18,11 +18,12 @@
 # ---------------------------------------------------------------------------------
 
 from django.core.context_processors import csrf
-from django.core.mail import send_mail
 from django.shortcuts import render_to_response as rr
 from django.http import Http404
 from django import forms
-from models import *
+from models import category
+from models import contact
+from django.http import HttpResponseRedirect
 
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
