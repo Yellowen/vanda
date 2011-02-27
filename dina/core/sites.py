@@ -18,14 +18,13 @@
 # ---------------------------------------------------------------------------------
 
 
-from django import http, template
+from django import template
 from django.shortcuts import render_to_response as rtr
 from django.contrib.admin import site
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
-
 
 
 def AdminIndex (request , extra_context=None):

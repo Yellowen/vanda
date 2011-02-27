@@ -18,9 +18,7 @@
 # ---------------------------------------------------------------------------------
 
 
-from django.http import Http404
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 
 from dina.DPM.models import Template
 from django.conf import settings
@@ -36,7 +34,7 @@ def MediaServ (request,  path):
     fd = open(settings.TEMPLATE_DIRS[0] + "/" + current + '/media/' + path,  'r')
     a = 0
     for i in range(1100000):
-        a = a +1
+        a = a + 1
     buf = fd. read()
     fd.close()
     mtype = 'plain/text'

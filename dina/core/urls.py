@@ -18,8 +18,11 @@
 # ---------------------------------------------------------------------------------
 
 
-from django.conf.urls.defaults import *
-from views import *
+from django.conf.urls.defaults import patterns
+from views import pkgm_mng
+from views import installer
+from views import installer_test
+from views import desc
 
 urlpatterns = patterns('',
                        (r'^$', pkgm_mng),

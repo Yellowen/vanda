@@ -19,7 +19,6 @@
 
 from django.db import models
 from django.utils.translation import ugettext as _
-from django.contrib import admin
 
 from dina.log import Logger
 
@@ -77,9 +76,3 @@ class GeneralConfiguration (Config):
     # Methods
     def __unicode__ (self):
         return "%s" % (self.site_name)
-
-
-
-
-
-
