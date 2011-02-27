@@ -19,7 +19,9 @@
 
 
 from django.contrib import admin
-from models import *
+from models import category
+from models import contact
+
 
 class admin_category (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
