@@ -13,4 +13,4 @@ def edit_page(request, page_name):
         content = page.contents
     except Page.DoesNotExist:
         content = ""
-    return rtr("edit.html",{"page_name":page_name,"content":content}
+    return rtr("edit.html",{"page_name":page_name,"content":content})
