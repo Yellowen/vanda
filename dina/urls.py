@@ -17,19 +17,16 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-import os
 
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include
+from django.conf.urls.defaults import url
 from django.contrib import admin
 from django.utils.functional import update_wrapper
 
-
 from dina.core.sites import admin_index
 
-
 admin.autodiscover()
-
-
 
 def wrap(view, cacheable=False):
     def wrapper(*args, **kwargs):
@@ -38,7 +35,6 @@ def wrap(view, cacheable=False):
         
 
 urlpatterns = patterns('',
-
     # (r'^dpm/', include('dina.core.urls')),
     (r'^core/$', 'dina.core.views.pkgm_mng'),                   
     (r'^menu/menu/$', 'dina.fem.menu.views.change_list'),
