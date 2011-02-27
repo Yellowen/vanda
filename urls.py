@@ -18,13 +18,8 @@
 # ---------------------------------------------------------------------------------
 
 
-
-from django.conf.urls.defaults import *
-from django.http import HttpResponseRedirect
-from django.contrib.sitemaps import  GenericSitemap
-import os
-from django.conf import settings
-
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include
 
 
 #REMOVE:START ----------------
@@ -35,22 +30,19 @@ sitemaps = {
 #    'flatpages': FlatPageSitemap,
 }
 
-
 urlpatterns = patterns('',
     #REMOVE:START -------------------------------------
     (r'^test/$', testview),
     #REMOVE:END ---------------------------------------
     
-                (r'^admin/', include('dina.urls')),
-                
-                (r'^$', 'dina.fem.page.views.show_home'),
-                (r'^section/(.*)/$', 'dina.fem.page.views.show_section'),
-                (r'^category/(.*)/$', 'dina.fem.page.views.show_category'),
-                (r'^comments/', include('django.contrib.comments.urls')),
-                (r'^site_media/(.+)$',  'dina.core.server.MediaServ'), 
-                (r'^accounts/',  include('dina.auth.urls')), 
-                (r'^', include('apps.urls')),
-                (r'^sitemap\.xml$', 
-                 'django.contrib.sitemaps.views.sitemap',
-                 {'sitemaps': sitemaps})
+    (r'^admin/', include('dina.urls')),
+    
+    (r'^$', 'dina.fem.page.views.show_home'),
+    (r'^section/(.*)/$', 'dina.fem.page.views.show_section'),
+    (r'^category/(.*)/$', 'dina.fem.page.views.show_category'),
+    (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^site_media/(.+)$',  'dina.core.server.MediaServ'), 
+    (r'^accounts/',  include('dina.auth.urls')), 
+    (r'^', include('apps.urls')),
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
 )
