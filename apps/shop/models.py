@@ -20,11 +20,10 @@
 
 
 from django.db import models
-from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 
 class Catalog(models.Model):
-    name = models.CharField(max_length=255
+    name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=150)
     publisher = models.CharField(max_length=300)
     description = models.TextField()
@@ -47,13 +46,13 @@ class Product(models.Model):
                                             decimal_places=2)
 
 class CatalogCategory(models.Model):
-   catalog = models.ForeignKey('Catalog',
-                                related_name='categories')
-   parent = models.ForeignKey('self', blank=True, null=True,
-                               related_name='children')
-   name = models.CharField(max_length=300)
-   slug = models.SlugField(max_length=150)
-   description = models.TextField(blank=True)
+    catalog = models.ForeignKey('Catalog',
+                                 related_name='categories')
+    parent = models.ForeignKey('self', blank=True, null=True,
+                                related_name='children')
+    name = models.CharField(max_length=300)
+    slug = models.SlugField(max_length=150)
+    description = models.TextField(blank=True)
 
     def __unicode__(self):
         if self.parent:
@@ -105,17 +104,15 @@ class Order(models.Model):
     products = models.ManyToManyField(Product,
                                       through='ProductInOrder')
 
-classStatusCode(models.Model):
+class StatusCode(models.Model):
     short_name = models.CharField(max_length=10)
     name = models.CharField(max_length=300)
     description = models.TextField()
 
-classProductInOrder(models.Model):
+class ProductInOrder(models.Model):
     order = models.ForeignKey(Order)
     product = models.ForeignKey(Product)
     unit_price = models.DecimalField(max_digits=7, decimal_places=2)
     total_price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField()
     comments = models.TextField(blank=True)
-
-

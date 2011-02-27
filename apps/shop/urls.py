@@ -19,6 +19,10 @@
 # ---------------------------------------------------------------------------------
 
 
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import url
+from models import Product
+
 
 urlpatterns = patterns(
     'django.views.generic.list_detail',
@@ -26,4 +30,3 @@ urlpatterns = patterns(
         {'queryset': Product.objects.all()}),
     url(r'^product/(?P<slug>[-\w]+)/$', 'object_detail',
         {'queryset': Product.objects.all()}))
-

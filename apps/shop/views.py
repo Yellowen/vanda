@@ -25,9 +25,8 @@ def shopping_cart(request, template_name='shopping_cart.html'):
     return render_to_response(template_name, ctx,
 context_instance=RequestContext(request))
 
-def add_to_cart(request, queryset, object_id=None, slug=None,
-                slug_field='slug', template_name='add_to_cart.
-                html'):
+def add_to_cart(request, queryset, object_id=None, slug=None, slug_field='slug', template_name='add_to_cart.
+        html'):
 
     obj = lookup_object(queryset, object_id, slug, slug_field)
     quantity = request.GET.get('quantity', 1)
@@ -90,4 +89,3 @@ class Cart(object):
         self.items.append(item)
     def remove_item(self, itemid):
         self.items = filter(lambda x: x.itemid != itemid, self.items)
-
