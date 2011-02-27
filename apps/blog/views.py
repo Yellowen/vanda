@@ -17,10 +17,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
 from django.core.context_processors import csrf
-from django.shortcuts import get_object_or_404, render_to_response as rr
-from django.http import Http404
-from models import *
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response as rr
+from models import post
 
 
 def blog (request):
@@ -40,6 +41,6 @@ def blog (request):
 
 def comments (request, slug):
     get_object_or_404(post, slug=slug)
-    render = {"post" : p ,}                
+    render = {"post" : p ,}
     render.update(csrf(request))            #for fixing bug#29883
     return rr ('comments.html' , render)

@@ -19,6 +19,7 @@
 # ---------------------------------------------------------------------------------
 
 
+
 urlpatterns = patterns(
     'django.views.generic.list_detail',
     url(r'^product/$', 'object_list',

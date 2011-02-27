@@ -18,10 +18,10 @@
 # ---------------------------------------------------------------------------------
 
 
-import os
-
 from django.contrib import admin
-from models import *
+from models import application
+from models import Repo
+from models import Template
 from django.conf import settings
 from django.core.management import call_command
 
@@ -71,10 +71,6 @@ class app_admin (admin.ModelAdmin):
         
         
     #------------------------------------------------------------------
-
-            
-        
-    
 
 
 class temp_admin (admin.ModelAdmin):

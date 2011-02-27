@@ -17,7 +17,6 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 import os
-import shutil
 import random
 import simplejson as json
 from django.conf import settings
