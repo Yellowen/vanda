@@ -66,7 +66,7 @@ class Repository (object):
     #def _getUrl (self):
     #    return self.url
     
-   # url = property (fget = _getUrl, fset= _setUrl)
+    # url = property (fget = _getUrl, fset= _setUrl)
 
 
 

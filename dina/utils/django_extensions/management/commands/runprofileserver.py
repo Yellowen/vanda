@@ -143,7 +143,7 @@ class Command(BaseCommand):
             USE_CPROFILE = options.get('use_cprofile', False)
             USE_LSPROF = options.get('use_lsprof', False)
             if USE_LSPROF:
-               USE_CPROFILE = True
+                USE_CPROFILE = True
             if USE_CPROFILE:
                 try:
                     import cProfile
