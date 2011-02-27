@@ -19,13 +19,12 @@
 
 
 from django.contrib import admin
-from models import *
+from models import AddressBook
 
 
 class admin_addressbook(admin.ModelAdmin):
 	list_display = ["author" , "addressType" , "street" , "city" , "state", "country" ,"zipCode" ,]
 	list_filter = ["city" , "country" , ]
 	search_field = [ "zipCode" , ]
-    
-    
+
 admin.site.register ( AddressBook,admin_addressbook )

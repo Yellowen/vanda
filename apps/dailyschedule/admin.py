@@ -19,7 +19,7 @@
 
 
 from django.contrib import admin
-from models import *
+from models import dailySchedule
 
 class dailySchedule_admin(admin.ModelAdmin):
     list_display=['order','author','priority','date','status',]

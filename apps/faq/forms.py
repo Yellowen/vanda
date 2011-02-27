@@ -17,8 +17,6 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django import forms
-from django.utils.translation import ugettext as _
 from django.forms import ModelForm
 from models import *
 
@@ -33,4 +31,3 @@ class AskForm(ModelForm):
     class Meta:
         model = questions
         exclude=['answer','user','public']
-    

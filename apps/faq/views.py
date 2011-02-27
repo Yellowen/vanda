@@ -17,19 +17,17 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.forms import ModelForm
+
 from django.shortcuts import render_to_response as rtr
-from django.http import Http404 , HttpResponseRedirect  , HttpResponse
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.core.mail import EmailMultiAlternatives
-from django.forms import ModelForm
-from models import *
+from models import questionCategories
+from models import questions
 from forms import AskForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import ugettext as _
+
 
 @login_required
 def show_category(req):
@@ -53,9 +51,9 @@ def ask (req):
     a = User.objects.get (username=req.user)
     
     if req.method == "POST":
-	f = AskForm (req.POST)
+        f = AskForm (req.POST)
         if f.is_valid():
-            questions.title = requers.POST['title']
+            questions.title = request.POST['title']
             question.question = req.POST['question']
             questions.save(req.user)
             return rtr("faq.html",{"message":_('Thanks for your contact we will answer you soon'),"f":f}, context_instance=RequestContext(req))
@@ -64,4 +62,3 @@ def ask (req):
     else:
         f = AskForm ()
         return rtr("faq_ask.html",{"f":f})
-
