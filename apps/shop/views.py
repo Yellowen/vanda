@@ -55,19 +55,19 @@ field=None):
     elif slug and slug_field:
         kwargs = {slug_field: slug}
         obj = queryset.get(**kwargs)
-     else:
-         raise Http404
-     return obj
+    else:
+        raise Http404
+    return obj
 
 def checkout(request, template_name='checkout.html'):
-     cart = get_shopping_cart(request)
-     googleCart, googleSig = sign_google_cart(cart)
-     ctx = {'cart': cart,
+    cart = get_shopping_cart(request)
+    googleCart, googleSig = sign_google_cart(cart)
+    ctx = {'cart': cart,
                'googleCart': googleCart,
                'googleSig': googleSig,
                'googleMerchantKey': settings.GOOGLE_MERCHANT_KEY,
                'googleMerchantID': settings.GOOGLE_MERCHANT_ID}
-     return render_to_response(template_name, ctx,
+    return render_to_response(template_name, ctx,
 context_instance=RequestContext(request))
 
 
@@ -78,16 +78,16 @@ class Cart(object):
             self.product = product
             self.quantity = quantity
 
-	def __init__(self):
-     	    self.items = list()
-            self.unique_item_id = 0
-	def _get_next_item_id(self):
-    	    self.unique_item_id += 1
-            return self.unique_item_id
+    def __init__(self):
+        self.items = list()
+        self.unique_item_id = 0
+    def _get_next_item_id(self):
+        self.unique_item_id += 1
+        return self.unique_item_id
         next_item_id = property(_get_next_item_id)
-	def add_item(self, product, quantity=1):
-    	    item = Item(self.next_item_id, product, quantity)
-            self.items.append(item)
-	def remove_item(self, itemid):
-    	    self.items = filter(lambda x: x.itemid != itemid, self.items)
+    def add_item(self, product, quantity=1):
+        item = Item(self.next_item_id, product, quantity)
+        self.items.append(item)
+    def remove_item(self, itemid):
+        self.items = filter(lambda x: x.itemid != itemid, self.items)
 
