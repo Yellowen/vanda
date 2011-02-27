@@ -17,8 +17,10 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from models import admin
+
+from django.contrib import admin
 from models import GeneralConfiguration
+
 
 class Config (admin.ModelAdmin):
     pass

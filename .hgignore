@@ -21,3 +21,4 @@ syntax: glob
 *.e4p
 *.wpr
 data/*
+db.sqlite
