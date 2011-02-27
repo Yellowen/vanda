@@ -21,7 +21,9 @@
 
 
 from django.contrib import admin
-from models import *
+from models import category
+from models import page
+from models import section
 from django.utils.translation import ugettext as _
 
 

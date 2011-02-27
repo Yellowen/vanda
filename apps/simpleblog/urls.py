@@ -17,21 +17,18 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.conf.urls.defaults import *
-from feed import LatestPosts
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include
+from django.conf.urls.defaults import url
+from feed import LatestPosts
 
 
 urlpatterns = patterns('',
-                    (r'^$', 'apps.simpleblog.views.blog_index'),
-                    (r'^feed/$', LatestPosts()),
-                    (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
-                    (r'^category/([^/]+)/$',\
-                     'apps.simpleblog.views.category_index'),
-                    (r'^comment/([^/]+)/$', \
-                     'apps.simpleblog.views.post_comment'),
-                    url(r'^captcha/', include('captcha.urls')),
-
+    (r'^$', 'apps.simpleblog.views.blog_index'),
+    (r'^feed/$', LatestPosts()),
+    (r'^post/([^/]+)/$', 'apps.simpleblog.views.post_view'),
+    (r'^category/([^/]+)/$', 'apps.simpleblog.views.category_index'),
+    (r'^comment/([^/]+)/$', 'apps.simpleblog.views.post_comment'),
+    url(r'^captcha/', include('captcha.urls')),
 )

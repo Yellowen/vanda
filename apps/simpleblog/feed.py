@@ -1,8 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.translation import ugettext as _
-
-from models import *
+from models import Post
 
 
 class LatestPosts (Feed):

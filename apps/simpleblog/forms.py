@@ -24,4 +24,3 @@ class CommentForm (forms.Form):
     nick = forms.CharField (max_length=40)
     comment = forms.CharField (widget=forms.Textarea)
     captcha = CaptchaField ()
-

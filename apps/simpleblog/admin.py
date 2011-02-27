@@ -1,5 +1,7 @@
 from django.contrib import admin
-from models import *
+from models import Category
+from models import Comment
+from models import Post
 
 class CategoryAdmin (admin.ModelAdmin):
     list_display = ['title', 'slug',]
