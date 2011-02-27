@@ -17,18 +17,13 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.conf.urls.defaults import *
 
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include
 
 
 urlpatterns = patterns('',
-
-                       (r'pages/' , include ('dina.fem.page.urls')),
-                       (r'blog/' , include ('apps.simpleblog.urls')),
-                       (r'contact/' , include ('apps.contact.urls')),
-                       
+    (r'pages/' , include ('dina.fem.page.urls')),
+    (r'blog/' , include ('apps.simpleblog.urls')),
+    (r'contact/' , include ('apps.contact.urls')),
 )
