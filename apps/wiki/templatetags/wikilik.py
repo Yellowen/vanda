@@ -2,7 +2,8 @@ from django import template
 import re
 
 
-wikilink = re.compile("\\b(A-Z][a-z]+[A-Z][a-z]+)\\b"
+wikilink = re.compile("\\b(A-Z][a-z]+[A-Z][a-z]+)\\b")
+                      
 register = template.Library()
 
 @register.filter

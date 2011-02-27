@@ -29,4 +29,4 @@ class ticketform(forms.Form):
         )
     title=forms.CharField(max_length=60,verbose_name=_("Title"))
     description=forms.TextField(verbose_name=_("Description"))
-    status=forms..CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))
+    status=forms.CharField(max_length=1,choices=STATUS_CHOICE,verbose_name=_("Status"))

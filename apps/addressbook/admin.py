@@ -19,7 +19,6 @@
 
 
 from django.contrib import admin
-from models import *
 
 class admin_category (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
@@ -35,5 +34,4 @@ class admin_contact (admin.ModelAdmin):
         ('Optional information', {
             'classes': ('collapse',),
             'fields': ('contact_position', 'email', 'street_address' ,'town' ,'state' ,'postalcode' ,'tell' ,'cell' ,'fax' ,'weburl' ,'miscellaneous' )
-        }),
-        ('Optional parameter view', {
+        }),)
