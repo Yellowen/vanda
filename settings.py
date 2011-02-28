@@ -25,7 +25,8 @@ import os
 
 
 #+++ Remember to shut down the debug mode in official release
-PROJECT_NAME = "dina-project"
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 # print debug info to the screen (stdout) .
@@ -64,13 +65,16 @@ DATABASES = {
 
 
 # FS_ROOT represent to the Dina root filesystem
-FS_ROOT = os.path.dirname(__file__)
+FS_ROOT = os.path.dirname(__file__).replace('\\', '/')
 
 # APP_ROOT conatain the logic path to app dir
 APP_ROOT = os.path.join(FS_ROOT, 'apps').replace('\\', '/')
 
 # DINA_CACHE contain the path of a directory that all the cached data will live
 DINA_CACHE = os.path.join(FS_ROOT, '.cache').replace('\\', '/')
+
+# DIR_NAME contains the name of project
+DIR_NAME = FS_ROOT.split('/')[-1]
 
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
@@ -237,7 +241,7 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
     # IMPORTANT: this code piece is just for debuging
     # ----------------------------------------------------------------
 
-    if DEBUG  and SCREEN_MODE:
+    if DEBUG and SCREEN_MODE:
         import sys
         
         logger.debug("__name__ = %s" % __name__)
@@ -248,19 +252,19 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
         logger.debug("sys.path = %s" % repr(sys.path))
         logger.debug("sys.modules.keys() = %s" % repr(sys.modules.keys()))
         logger.debug("sys.modules.has_key('%s') = %s" % \
-                     (PROJECT_NAME, sys.modules.has_key(PROJECT_NAME)))
-        if PROJECT_NAME in sys.modules:
+                     (DIR_NAME, sys.modules.has_key(DIR_NAME)))
+        if DIR_NAME in sys.modules:
             logger.debug("sys.modules['%s'].__name__ = %s",\
-                         (PROJECT_NAME, sys.modules[PROJECT_NAME].__name__))
+                         (DIR_NAME, sys.modules[DIR_NAME].__name__))
             logger.debug("sys.modules['%s'].__file__ = %s" %\
-                         (PROJECT_NAME, sys.modules[PROJECT_NAME].__file__))
+                         (DIR_NAME, sys.modules[DIR_NAME].__file__))
             logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" %\
                          os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
 
     from django.db.utils import DatabaseError
     try:
-        from dina import cache
+        from dina import cache #@UnusedImport
         logger.info("Initial code End point reached.")
     except DatabaseError:
         logger.critical("It seems than your database does not exists.")
