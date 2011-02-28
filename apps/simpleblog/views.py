@@ -17,12 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from decorators import check_auth
-
 from models import Category
 from models import Comment
 from models import Post

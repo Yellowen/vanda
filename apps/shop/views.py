@@ -17,6 +17,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
+from django.http import Http404
 
 
 def shopping_cart(request, template_name='shopping_cart.html'):
@@ -25,8 +26,7 @@ def shopping_cart(request, template_name='shopping_cart.html'):
     return render_to_response(template_name, ctx,
 context_instance=RequestContext(request))
 
-def add_to_cart(request, queryset, object_id=None, slug=None, slug_field='slug', template_name='add_to_cart.
-html'):
+def add_to_cart(request, queryset, object_id=None, slug=None, slug_field='slug', template_name='add_to_cart.html'):
 
     obj = lookup_object(queryset, object_id, slug, slug_field)
     quantity = request.GET.get('quantity', 1)
@@ -38,8 +38,7 @@ html'):
 context_instance=RequestContext(request))
 
 
-def remove_from_cart(request, cart_item_id,
-                     template_name='remove_from_cart.html'):
+def remove_from_cart(request, cart_item_id, template_name='remove_from_cart.html'):
     cart = get_shopping_cart(request)
     cart.remove_item(cart_item_id)
     update_shopping_cart(request, cart)
@@ -47,8 +46,7 @@ def remove_from_cart(request, cart_item_id,
     return render_to_response(template_name, ctx,
 context_instance=RequestContext(request))
 
-def lookup_object(queryset, object_id=None, slug=None, slug_
-field=None):
+def lookup_object(queryset, object_id=None, slug=None, slug_field=None):
     if object_id is not None:
         obj = queryset.get(pk=object_id)
     elif slug and slug_field:

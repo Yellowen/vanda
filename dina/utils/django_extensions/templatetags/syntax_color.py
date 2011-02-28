@@ -73,5 +73,3 @@ def colorize_table(value,arg=None):
         return mark_safe(highlight(value,get_lexer(value,arg),HtmlFormatter(linenos='table')))
     except ClassNotFound:
         return value
-
-    
