@@ -17,11 +17,3 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django.core.context_processors import csrf
-from django.core.mail import send_mail
-from django.shortcuts import render_to_response as rr
-from django.http import Http404
-from django import forms
-from models import *
-
-

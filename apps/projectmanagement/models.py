@@ -37,5 +37,3 @@ class ProjectManagement(models.Model):
     
     def get_absolute_url(self):
         return "/project/%s" % self.id
-
-

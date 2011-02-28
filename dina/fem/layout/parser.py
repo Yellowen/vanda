@@ -19,11 +19,6 @@
 
 import re
 
-from django.utils._os import safe_join
-from django.conf import settings
-
-from dina.core.utils import modification_date , date_cmp
-from dina.DPM.models import Template
 from dina.cache import Template as template_cache
 from dina.fem.layout.models import TemplateLayout
 

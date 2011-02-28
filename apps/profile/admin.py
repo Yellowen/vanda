@@ -19,7 +19,7 @@
 
 
 from django.contrib import admin
-from models import *
+from models import UserProfile
 
 class admin_user_profile (admin.ModelAdmin):
     list_display = ["nickname"  , "birthday" , "picture" , "description",]
@@ -29,4 +29,4 @@ class admin_user_profile (admin.ModelAdmin):
     
     
 
-admin.site.register ( UserProfile,admin_user_profile )
+admin.site.register (UserProfile, admin_user_profile )

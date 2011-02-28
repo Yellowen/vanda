@@ -19,7 +19,7 @@
 
 
 from django.contrib import admin
-from models import *
+from models import Ticket
 
 
 class admin_ticket(admin.ModelAdmin):

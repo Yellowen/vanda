@@ -19,13 +19,12 @@
 
 
 from django.contrib import admin
-from models import *
-
+from models import PhoneBook
 
 
 class admin_phonebook(admin.ModelAdmin):
-	list_display = ["author" , "numberType" , "number" ,]
-	list_filter = ["numberType" ,  ]
+    list_display = ["author" , "numberType" , "number" ,]
+    list_filter = ["numberType" ,  ]
     
     
-admin.site.register ( PhoneBook,admin_phonebook )
+admin.site.register (PhoneBook, admin_phonebook )

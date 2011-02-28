@@ -19,8 +19,9 @@
 
 
 from django import template
-from django.template import Template , Context
-from apps.jqmenu.models import *
+from django.template import Context
+from apps.jqmenu.models import Menu
+from apps.jqmenu.models import MenuItem
 from django.template.loader import get_template
 
 register = template.Library()

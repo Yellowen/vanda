@@ -18,7 +18,8 @@
 # ---------------------------------------------------------------------------------
 
 from django.contrib import admin
-from models import *
+from models import menu
+from models import item
 from django.utils.translation import ugettext as _
 
 
@@ -43,5 +44,3 @@ class item_admin (admin.ModelAdmin):
 
 admin.site.register (menu , menu_admin)
 admin.site.register (item , item_admin)
-
-

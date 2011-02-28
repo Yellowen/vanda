@@ -18,7 +18,8 @@
 # ---------------------------------------------------------------------------------
 
 from django.contrib import admin
-from models import *
+from models import questionCategories
+from models import questions
 
 admin.site.register(questionCategories)
 admin.site.register(questions)

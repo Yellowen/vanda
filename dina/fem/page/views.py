@@ -25,7 +25,9 @@
 
 from django.template import Template , Context
 from django.http import Http404
-from models import *
+from models import page
+from models import category
+from models import section
 from django.shortcuts import render_to_response as rr
 
 def show_page (request , Slug):

@@ -23,8 +23,11 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from decorators import check_auth
 
-from models import *
-from forms import *
+from models import Category
+from models import Comment
+from models import Post
+from models import Setting
+from forms import CommentForm
 
 
 def blog_index(req):

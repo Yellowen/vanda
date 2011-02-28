@@ -26,7 +26,7 @@ def shopping_cart(request, template_name='shopping_cart.html'):
 context_instance=RequestContext(request))
 
 def add_to_cart(request, queryset, object_id=None, slug=None, slug_field='slug', template_name='add_to_cart.
-        html'):
+html'):
 
     obj = lookup_object(queryset, object_id, slug, slug_field)
     quantity = request.GET.get('quantity', 1)

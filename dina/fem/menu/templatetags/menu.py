@@ -20,7 +20,7 @@
 
 from django import template
 from django.template import Template , Context
-from dina.fem.menu.models import *
+from dina.fem.menu.models import menu
 from django.template.loader import get_template
 from dina.core.dev import dassert
 register = template.Library()
