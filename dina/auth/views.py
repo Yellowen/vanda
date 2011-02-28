@@ -17,12 +17,14 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from dina.auth.forms import LoginForm
-    
+
+ 
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']

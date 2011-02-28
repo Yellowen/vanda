@@ -25,9 +25,10 @@ from views import installer_test
 from views import desc
 
 urlpatterns = patterns('',
-                       (r'^$', pkgm_mng),
-
-                       (r'^installer/test/$', installer_test),
-                       (r'^installer/apply/' , apply),
-                       (r'^installer/([A-Za-z0-9]{40})/$', desc),                       
-                       (r'^installer/$', installer),)
+    (r'^$', pkgm_mng),
+    
+    (r'^installer/test/$', installer_test),
+    (r'^installer/apply/' , apply),
+    (r'^installer/([A-Za-z0-9]{40})/$', desc),                       
+    (r'^installer/$', installer),
+)
