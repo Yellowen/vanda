@@ -282,6 +282,7 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
     logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
     logger.debug("FS_ROOT = %s" % FS_ROOT)
     logger.debug("APP_ROOT = %s" % APP_ROOT)
+    logger.debug("DIR_NAME = %s" % DIR_NAME)
     logger.debug("DINA_CACHE = %s" % DINA_CACHE)
     logger.debug("MEDIA_URL = %s" % MEDIA_URL)
     logger.debug("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
