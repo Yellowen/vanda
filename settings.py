@@ -200,14 +200,17 @@ DINA_APPS = [
     'dina.fem.page',
     'dina.auth',
     'dina.fem.layout',
+    'captcha',
+]
+
+USER_APPS = [
     'apps.contact',
     'apps.testapp',
     'apps.simpleblog',
     'apps.jqmenu',
-    'captcha',
 ]
 
-INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:]
+INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] + USER_APPS[:]
 
 if DEBUG:
     INSTALLED_APPS.append('dina.utils.django_extensions')
