@@ -25,7 +25,7 @@ import os
 
 
 #+++ Remember to shut down the debug mode in official release
-
+PROJECT_NAME = "dina-project"
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 # print debug info to the screen (stdout) .
@@ -239,7 +239,7 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
 
     if DEBUG  and SCREEN_MODE:
         import sys
-
+        
         logger.debug("__name__ = %s" % __name__)
         logger.debug("__file__ = %s" % __file__)
         logger.debug("os.getpid() = %s" % os.getpid())
@@ -247,13 +247,13 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
         logger.debug("os.curdir = %s" % os.curdir)
         logger.debug("sys.path = %s" % repr(sys.path))
         logger.debug("sys.modules.keys() = %s" % repr(sys.modules.keys()))
-        logger.debug("sys.modules.has_key('dina-project') = %s" % \
-                     sys.modules.has_key('dina-project'))
-        if 'dina-project' in sys.modules:
-            logger.debug("sys.modules['dina-project'].__name__ = %s",\
-                         sys.modules['dina-project'].__name__)
-            logger.debug("sys.modules['dina-project'].__file__ = %s" %\
-                         sys.modules['dina-project'].__file__)
+        logger.debug("sys.modules.has_key('%s') = %s" % \
+                     (PROJECT_NAME, sys.modules.has_key(PROJECT_NAME)))
+        if PROJECT_NAME in sys.modules:
+            logger.debug("sys.modules['%s'].__name__ = %s",\
+                         (PROJECT_NAME, sys.modules[PROJECT_NAME].__name__))
+            logger.debug("sys.modules['%s'].__file__ = %s" %\
+                         (PROJECT_NAME, sys.modules[PROJECT_NAME].__file__))
             logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" %\
                          os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
