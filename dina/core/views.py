@@ -77,4 +77,4 @@ def apply (request):
         dpm = DPM.DPM()
         #+++ a removal test should come here
         dpm.install(pkglist)
-        return HR(a)
+        return HR("a")
