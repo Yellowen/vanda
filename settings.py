@@ -109,7 +109,7 @@ except KeyError:
 
 
 if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI:
-    DATABASES["default"]["NAME"] = "/".join([FS_ROOT,\
+    DATABASES["default"]["NAME"] = "/".join([FS_ROOT, \
                                              DATABASES["default"]["NAME"]])
     if LOG_FILE is None:
         LOG_FILE = FS_ROOT + "/dina.logs"
@@ -228,7 +228,7 @@ EMAIL_PORT = ''
 if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
 
     # we have to export this environment variable to provide a init code .
-    os.environ['DJANGO_SETTINGS_MODULE']  = 'settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
     # this module import is just for initial code don't change it
     # and don't use it in your code
     from dina.log import Logger
@@ -252,11 +252,11 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
         logger.debug("sys.modules.has_key('%s') = %s" % \
                      (DIR_NAME, sys.modules.has_key(DIR_NAME)))
         if DIR_NAME in sys.modules:
-            logger.debug("sys.modules['%s'].__name__ = %s",\
+            logger.debug("sys.modules['%s'].__name__ = %s", \
                          (DIR_NAME, sys.modules[DIR_NAME].__name__))
-            logger.debug("sys.modules['%s'].__file__ = %s" %\
+            logger.debug("sys.modules['%s'].__file__ = %s" % \
                          (DIR_NAME, sys.modules[DIR_NAME].__file__))
-            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" %\
+            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" % \
                          os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
 
