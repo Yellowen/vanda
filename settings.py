@@ -199,7 +199,6 @@ DINA_APPS = [
     'dina.DPM',
     'dina.conf',
     'dina.fem.layout',
-    'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
     'dina.auth',
@@ -209,7 +208,6 @@ DINA_APPS = [
 
 USER_APPS = [
     'apps.contact',
-    'apps.testapp',
     'apps.simpleblog',
     'apps.jqmenu',
 ]
