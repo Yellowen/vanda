@@ -34,4 +34,4 @@ class codec (object):
         Get src file and copy that to dst
         """
         
-        shutil.copy ( src[7:] , dst)
+        shutil.copy (src[7:] , dst)

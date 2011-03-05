@@ -24,6 +24,6 @@ from django.contrib.auth.views import logout
 
 
 urlpatterns = patterns('',
-	(r'login/', login ),
-	(r'logout/', logout ),
+	(r'login/', login),
+	(r'logout/', logout),
 )

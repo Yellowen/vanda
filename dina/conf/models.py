@@ -69,8 +69,8 @@ class GeneralConfiguration (Config):
     """
     
     # Fields
-    site_name =  models.CharField(max_length = 50, verbose_name=_("Site Name"), \
-                                   help_text=_("Site Name is a name that show in the title srction."),\
+    site_name = models.CharField(max_length=50, verbose_name=_("Site Name"), \
+                                   help_text=_("Site Name is a name that show in the title srction."), \
                                    default=_("Dina Project"))
     
     # Methods

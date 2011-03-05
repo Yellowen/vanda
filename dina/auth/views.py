@@ -38,7 +38,7 @@ def login_view(request):
                 return HttpResponseRedirect('/') # Return a 'disabled account' error message
     else:
         form = LoginForm() # An unbound form
-    c = {'form': form,}
+    c = {'form': form, }
     c.update(csrf(request))
     return render_to_response('login.html', c)
 

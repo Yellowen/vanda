@@ -80,7 +80,7 @@ class TemplateQueryCache (CacheObject):
             if date_cmp (self.modifies[template_name], fdate) == 0:
                 # no need to reparse the template, there is a up2date cache before
                 logger.info("Reading %s from cache." % template_name)
-                return (self._read_cache(template_name),  True)
+                return (self._read_cache(template_name), True)
                 
             else:
                 

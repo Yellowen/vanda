@@ -80,14 +80,14 @@ class installer (object):
 
         #+++ here i should add an exception handler --------------
         #+++ here i should add an sha1 validator 
-        if dic["type"].lower ()  == "application":
+        if dic["type"].lower () == "application":
 
-            self.obj = application (Name = dic["name"])
+            self.obj = application (Name=dic["name"])
             self.obj.url = dic["url"]
 
         elif dic["type"].lower () == "template":
 
-            self.obj = template (Name = dic["name"])
+            self.obj = template (Name=dic["name"])
 
             self.obj.Default = False
             #+++ here i should add the difference field
@@ -143,7 +143,7 @@ class installer (object):
             fd.close ()
         except:
             print "Error: The file %s does not exists or permission denid !" % (file)
-            return -1
+            return - 1
         dic = {}
         for i in lines:
             if i[0] != '#':
@@ -168,8 +168,8 @@ def update_apps ():
     iapp = ()
     appurl = ()
     for i in papp:
-        iapp += ('apps.' + str (i.Name) , )
-        appurl += (("r'"+ str(i.url ) + "' , 'apps."  + str(i.Name) + ".urls'" ) , )
+        iapp += ('apps.' + str (i.Name) ,)
+        appurl += (("r'" + str(i.url) + "' , 'apps." + str(i.Name) + ".urls'") ,)
     settings.INSTALLED_APPS += iapp
         
     os.unlink (settings.FS_ROOT + "/confs/__init__.py")
@@ -184,7 +184,7 @@ def update_apps ():
         
         for i in appurl:
             print i 
-            fd.write ("[" + i+  "] , ")
+            fd.write ("[" + i + "] , ")
     #else:
     #    fd.write ("published_url = defaults.patterns ('' , " + str (appurl).replace ('"' , '') )
     fd.write ("\n]")

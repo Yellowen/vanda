@@ -43,7 +43,7 @@ class DPM (object):
     Dina Package manager.
     """
     
-    def __init__ (self ):
+    def __init__ (self):
         
         # Setting up cache directory path
         if settings.DPM_CACHE :
@@ -54,7 +54,7 @@ class DPM (object):
         else:
             self.cache = '/tmp/'
 
-        self.id = random.randrange (100 ,200)
+        self.id = random.randrange (100 , 200)
         
         # retrive all repositories
         confs = rp.objects.all ()
@@ -73,13 +73,13 @@ class DPM (object):
         
         for i in conflist:
             
-            url =i.url.split (' ')[0]
+            url = i.url.split (' ')[0]
             try:
                 codename = i.url.split (' ')[1]
             except:
                 codename = "stable"
-            sections =i.url.split (' ')[2:]
-            repos.append (Repository (url , self.cache , codename , sections ))
+            sections = i.url.split (' ')[2:]
+            repos.append (Repository (url , self.cache , codename , sections))
             return repos
 
 
@@ -101,7 +101,7 @@ class DPM (object):
         for i in self._repositories:
             addr = self.cache + "repo/" + i.name
             
-            dirs = os.listdir ( addr )
+            dirs = os.listdir (addr)
             for j in dirs:
                 
                 if j[0] == '.':
@@ -129,12 +129,12 @@ class DPM (object):
                             pass
                         else:
                             # provide a cache for for package information in above format
-                            tmppkgs[psha1] = pname  + "::" + psha1 + "::" + pversion + "::" + paddress + "::" + shortdesc
+                            tmppkgs[psha1] = pname + "::" + psha1 + "::" + pversion + "::" + paddress + "::" + shortdesc
                     
                             
-                    l1  = list (set (pkgs ) ^ set (tmppkgs))
+                    l1 = list (set (pkgs) ^ set (tmppkgs))
                     
-                    l2  = list (set (pkgs ) ^ set (l1))
+                    l2 = list (set (pkgs) ^ set (l1))
 
                     diffs = list ()
                     if len (l2) > 0:

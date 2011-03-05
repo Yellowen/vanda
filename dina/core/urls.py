@@ -29,6 +29,6 @@ urlpatterns = patterns('',
     
     (r'^installer/test/$', installer_test),
     (r'^installer/apply/' , apply),
-    (r'^installer/([A-Za-z0-9]{40})/$', desc),                       
+    (r'^installer/([A-Za-z0-9]{40})/$', desc),
     (r'^installer/$', installer),
 )

@@ -35,7 +35,7 @@ def gentree (x):
     # define res as a Safestring
     res = Template ('').render (Context ())
     for i in x.get_children ():
-        res = res +  gentree (i)
+        res = res + gentree (i)
     
     for i in x.items.all ():
         con["items"].append (i)
@@ -48,10 +48,10 @@ def gentree (x):
 #+++ TODO: add permission checker for menu editing
 @user_passes_test(lambda u: u.is_superuser , login_url='/admin/')
 def change_list (request):
-    root_menus = menu.objects.filter (parent = None)
+    root_menus = menu.objects.filter (parent=None)
     tree = "<ul>\n"
     for i in root_menus:
         tree = tree + gentree (i)
     tree = tree + "</ul>\n"
     t = Template (tree)
-    return rr ('admin/change_tree.html', {"msg" : "Menu View" , "app_label" : "Menu" ,"tree" : t.render (Context ())})
+    return rr ('admin/change_tree.html', {"msg" : "Menu View" , "app_label" : "Menu" , "tree" : t.render (Context ())})

@@ -38,7 +38,7 @@ class Repository (object):
     Dina Repository Class
     """
 
-    def __init__ (self, _url, cache, codename="stable", sections=["main",]):
+    def __init__ (self, _url, cache, codename="stable", sections=["main", ]):
         self.protocol = _url.split (':')[0]
         self.codec = codec.getCodec (self.protocol)
         if not self.codec :
@@ -76,7 +76,7 @@ class Repository (object):
         Download the given file.
         """
         if not addr:
-            return -1
+            return - 1
         filename = addr.split ('/')[-1]
         try:
             self.codec.getFile (self.url + addr, self.cache)
@@ -115,7 +115,7 @@ class Repository (object):
 
         for i in self.sections:
             
-            addr.append({"url" :  self.url + "/dists/" + self.codename + "/" +  i  + "/Packages.json", "cache_dir" : self.codename + "_" +  i})
+            addr.append({"url" :  self.url + "/dists/" + self.codename + "/" + i + "/Packages.json", "cache_dir" : self.codename + "_" + i})
             
         dirs = os.listdir (self.cache + "repo/" + self.name)
         for i in addr:

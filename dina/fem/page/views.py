@@ -18,11 +18,6 @@
 # ---------------------------------------------------------------------------------
 
 
-
-
-
-
-
 from django.template import Template , Context
 from django.http import Http404
 from models import page
@@ -30,9 +25,10 @@ from models import category
 from models import section
 from django.shortcuts import render_to_response as rr
 
+
 def show_page (request , Slug):
     try:
-        a = page.objects.get (slug = Slug)
+        a = page.objects.get (slug=Slug)
         #+++ here i add some tag to render for content
         if a.published == True:
             t = Template (a.content).render (Context ())
@@ -45,7 +41,7 @@ def show_page (request , Slug):
 
 def show_home (requset):
     try:
-        a = page.objects.get (home = True)
+        a = page.objects.get (home=True)
     except:
         #+++ i should add a default home page
         a = page.objects.get (id=1)
@@ -56,19 +52,19 @@ def show_home (requset):
 
 def show_section (requset , Slug):
     try:
-        section_info = section.objects.get (slug = Slug)
-        section_all = section.objects.filter ( published = True)
-        category_all = category.objects.filter (published = True ,section = section_info)
-        return rr ( "section.html" , {"section_all" : section_all , "category_all" : category_all , "section_info" : section_info})
+        section_info = section.objects.get (slug=Slug)
+        section_all = section.objects.filter (published=True)
+        category_all = category.objects.filter (published=True , section=section_info)
+        return rr ("section.html" , {"section_all" : section_all , "category_all" : category_all , "section_info" : section_info})
     except:
         raise Http404 ()
 
 
 def show_category (requset , Slug):
     try:
-        category_info = category.objects.get (slug = Slug)
-        category_all = category.objects.filter ( published = True)
-        page_all = page.objects.filter (published = True ,category = category_info)
-        return rr ( "category.html" , {"category_all" : category_all , "page_all" : page_all , "category_info" : category_info})
+        category_info = category.objects.get (slug=Slug)
+        category_all = category.objects.filter (published=True)
+        page_all = page.objects.filter (published=True , category=category_info)
+        return rr ("category.html" , {"category_all" : category_all , "page_all" : page_all , "category_info" : category_info})
     except:
         raise Http404 ()

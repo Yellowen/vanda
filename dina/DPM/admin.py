@@ -50,10 +50,10 @@ class inst_admin (admin.ModelAdmin):
 
 class app_admin (admin.ModelAdmin):
     list_display = ('Name' , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
-    list_display_links = ('Name' , 'Publish' , )
-    list_filter = ('Publish' , )
+    list_display_links = ('Name' , 'Publish' ,)
+    list_filter = ('Publish' ,)
     list_per_page = 15
-    ordering = ('Name' , )
+    ordering = ('Name' ,)
     search_fields = ('Name' ,)
     
     
@@ -79,7 +79,7 @@ class temp_admin (admin.ModelAdmin):
     list_editable = ('Active',)
     #list_filter = ('Publish' , )
     list_per_page = 15
-    ordering = ('Name' , )
+    ordering = ('Name' ,)
     search_fields = ('Name' ,)
     
     

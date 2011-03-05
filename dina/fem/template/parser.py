@@ -35,7 +35,7 @@ class TemplateSyntaxError (Exception):
 
 class Section (object):
 
-    def __init__ (self,  **params):
+    def __init__ (self, **params):
         self.Name = params["name"]
         self.Width = params["width"]
         self.Height = params["height"]
@@ -97,7 +97,7 @@ def tmp_BaseParser (template_stream):
     lines = template_stream.split ("\n")
     tag_pattern = re.compile ("{% section ('|\")[a-zA-Z0-9_\-]+('|\") %}")
     section_name_pattern = re.compile ("('|\")[a-zA-Z0-9_\-]+('|\")")
-    values =list ()
+    values = list ()
     for line in lines:
 
         # TODO: find a better way to deal with to section tag in a single line
@@ -107,7 +107,7 @@ def tmp_BaseParser (template_stream):
             section = section_name_pattern.search (line[tag.start(): tag.end ()])
             if section is not None:
 
-                values.append (line[tag.start(): tag.end ()][section.start () +1: section.end () -1])
+                values.append (line[tag.start(): tag.end ()][section.start () + 1: section.end () - 1])
             else:
                 # TODO: better exception raising
                 raise "section without name."
@@ -117,7 +117,7 @@ def tmp_BaseParser (template_stream):
     for value in values:
 
         # TODO: be sure to make section name in lower (icase sensetive).
-        layout, created = TemplateLayout.objects.get_or_create (Template=active_template,\
+        layout, created = TemplateLayout.objects.get_or_create (Template=active_template, \
                                                                  Section=value.lower ())
 
         
@@ -138,7 +138,7 @@ def FillSections (stream):
         tmp_stream = ""
         contents = section.Contents.all ()
         for content in contents:
-            tmp_stream = tmp_stream +  "{% %s %s %}\n" % \
+            tmp_stream = tmp_stream + "{% %s %s %}\n" % \
                          (content.Name, " ".join (content.Params.split("&:&")))
             depload = depload + "{% load %s %}" % content.ModuleName
         result = result.replace ("{% section %s %}")
@@ -165,7 +165,7 @@ def ParseBase (baseaddress , basefile):
     
     
     sdate = modification_date (safe_join (baseaddress, basefile))
-    res =  date_cmp (fdate, sdate)
+    res = date_cmp (fdate, sdate)
     
     # TODO: handle the situation that fdate contain invalid date format
     

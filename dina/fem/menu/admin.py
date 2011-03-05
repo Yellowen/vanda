@@ -17,18 +17,18 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
+
 from django.contrib import admin
 from models import menu
 from models import item
 from django.utils.translation import ugettext as _
 
 
-
 class menu_admin (admin.ModelAdmin):
     # by setting fieldsets we decide to how should admin create section for this model look like
     fieldsets = (
          (None, {
-            'fields': (('title' , 'parent'), ('items' , 'publish'), )
+            'fields': (('title' , 'parent'), ('items' , 'publish'),)
         }),
          (_('Advance'), {
             'classes': ('collapse',),

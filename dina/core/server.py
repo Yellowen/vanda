@@ -26,12 +26,12 @@ from dina.log import Logger
 from dina.core.perf import ExecTime
 
 @ExecTime
-def MediaServ (request,  path):
+def MediaServ (request, path):
     current = Template.objects.CurrentDir()
     logger = Logger("MediaServ")
     logger.info("Path: %s" % path)
     # TODO: search in the TEMPLATE_DIRS for the statics files, not in the first element only
-    fd = open(settings.TEMPLATE_DIRS[0] + "/" + current + '/media/' + path,  'r')
+    fd = open(settings.TEMPLATE_DIRS[0] + "/" + current + '/media/' + path, 'r')
     a = 0
     for i in range(1100000):
         a = a + 1

@@ -36,7 +36,7 @@ class TemplateLayout (models.Model):
 
     Template = models.ForeignKey (DPM_template) 
     Section = models.CharField (max_length=50)
-    Contents = models.ManyToManyField ('Content', blank=True ,null=True)
+    Contents = models.ManyToManyField ('Content', blank=True , null=True)
 
 
     def save (self, force_insert=False, force_update=False):
@@ -57,9 +57,9 @@ class Content (models.Model):
     This model will hold the Contents that sections should load.
     """
     TYPE = [
-        ( '0' , _("Application Tag")),
-        ( '1' , _("Application View")),
-        ( '2' , _("Dina Application Tag")),
+        ('0' , _("Application Tag")),
+        ('1' , _("Application View")),
+        ('2' , _("Dina Application Tag")),
         ]
     
     App = models.CharField (max_length=80)

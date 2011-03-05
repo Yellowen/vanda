@@ -20,7 +20,6 @@
 
 import os
 import sys
-import json
 from optparse import OptionParser
 from libdpm.control import Control
 
@@ -45,6 +44,3 @@ if __name__ == "__main__":
         control = Control(conf_dict)
     except Config.DoesNotValid, err:
         print "Validation Error: ", str(err)
-        
-
-    

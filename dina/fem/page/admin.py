@@ -30,59 +30,59 @@ from django.utils.translation import ugettext as _
 media = '/media'
 class page_admin (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    search_fields = ('title' , 'slug' )
+    search_fields = ('title' , 'slug')
     #+++ i should add an user name in list display
-    list_display = ( 'title', 'category' , 'slug' , 'home' , 'published' , 'get_absolute_url' , 'date')
-    list_filter = ('published' , )
-    list_editable = ('published' , )
+    list_display = ('title', 'category' , 'slug' , 'home' , 'published' , 'get_absolute_url' , 'date')
+    list_filter = ('published' ,)
+    list_editable = ('published' ,)
     # by setting fieldsets we decide to how should admin create section for this model look like
     fieldsets = (
          (None, {
-            'fields': ('category',('title' , 'slug'), 'content' , ('published' , 'home'), )
+            'fields': ('category', ('title' , 'slug'), 'content' , ('published' , 'home'),)
             
          , 'description' : _("Here you can build pages for fron view.") }),
          
          )
     class Media:
-        js = (media + '/js/jquery.js', media+'/js/wymeditor/jquery.wymeditor.js', media+'/js/htmleditor.js')
+        js = (media + '/js/jquery.js', media + '/js/wymeditor/jquery.wymeditor.js', media + '/js/htmleditor.js')
     def save_model (self, request, obj, form, change):
         if obj.home == True:
-            a = page.objects.filter ( home = True).update (home = False)
+            a = page.objects.filter (home=True).update (home=False)
             
         obj.save ()
 
 
 class section_admin (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    search_fields = ('title' , 'slug' )
+    search_fields = ('title' , 'slug')
     #+++ i should add an user name in list display                                                                          
-    list_display = ('title' , 'slug', 'published' , 'get_absolute_url' )
-    list_filter = ('published' , )
-    list_editable = ('published' , )
+    list_display = ('title' , 'slug', 'published' , 'get_absolute_url')
+    list_filter = ('published' ,)
+    list_editable = ('published' ,)
     # by setting fieldsets we decide to how should admin create section for this model look like                            
     fieldsets = (
          (None, {
-            'fields': (('title' , 'slug'), 'description' , ('published'), 'image', )
+            'fields': (('title' , 'slug'), 'description' , ('published'), 'image',)
          }),)
     class Media:
-        js = (media + '/js/jquery.js', media+'/js/wymeditor/jquery.wymeditor.js', media+'/js/htmleditor.js')
+        js = (media + '/js/jquery.js', media + '/js/wymeditor/jquery.wymeditor.js', media + '/js/htmleditor.js')
 
 
 
 class category_admin (admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    search_fields = ('title' , 'slug' )
+    search_fields = ('title' , 'slug')
     #+++ i should add an user name in list display                                                                          
-    list_display = ('section' , 'title' , 'slug', 'published' , 'get_absolute_url' )
-    list_filter = ('published' , )
-    list_editable = ('published' , )
+    list_display = ('section' , 'title' , 'slug', 'published' , 'get_absolute_url')
+    list_filter = ('published' ,)
+    list_editable = ('published' ,)
     # by setting fieldsets we decide to how should admin create section for this model look like                            
     fieldsets = (
          (None, {
-            'fields': ('section' ,('title' , 'slug'), 'description' , ('published'),'image', )
+            'fields': ('section' , ('title' , 'slug'), 'description' , ('published'), 'image',)
          }),)
     class Media:
-        js = (media + '/js/jquery.js', media+'/js/wymeditor/jquery.wymeditor.js', media+'/js/htmleditor.js')
+        js = (media + '/js/jquery.js', media + '/js/wymeditor/jquery.wymeditor.js', media + '/js/htmleditor.js')
 
 
     

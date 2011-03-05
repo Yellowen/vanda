@@ -36,7 +36,7 @@ def rese (path , js):
     brk = list ()
     for i in lst:
         # Check the i (that is a file or directory) for being directory
-        if os.path.isdir (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/')):
+        if os.path.isdir (os.path.join (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/')):
 
             # if it is then call this function again with new path that is i
             lst2 = lst2[:] + rese (path + "/" + i + "/", js)[0][:]
@@ -45,9 +45,9 @@ def rese (path , js):
             #if it is not . then parse the file name for name version.
             di = dict () 
             name = i.split("-")[0]
-            di["Package"] =  name
+            di["Package"] = name
             version = ".".join (i.split ("-")[1].split(".")[:3])
-            di["Version"] =  version
+            di["Version"] = version
             # Generate the SHA1 hash for package for its validation in future
             m = hashlib.sha1 ()
             m.update (file (path + "/" + i , 'r').read())
@@ -55,7 +55,7 @@ def rese (path , js):
             # address element will point to package file , and store to Packages.json file
             di["Address"] = os.path.join (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/')
             # Open the packege file for gathering more information from package
-            fd = tf.open (os.path.join (os.path.dirname (path + "/"  + i) , i).replace ('\\' , '/'))
+            fd = tf.open (os.path.join (os.path.dirname (path + "/" + i) , i).replace ('\\' , '/'))
             try:
                 # extract the Package.json file in /tmp
                 try:
@@ -68,7 +68,7 @@ def rese (path , js):
                 try:
                     # Try to read the json content
                     ff = open ("/tmp/dpm_pkg/" + i + "/Package.json")
-                    acc =  ff.read ().lower()
+                    acc = ff.read ().lower()
                     
                     ff.close ()
                     jobj = json.loads (acc + "\n")
@@ -105,7 +105,7 @@ def rese (path , js):
             lst2.append (di)
             
     #ret = js[:] + lst2[:]
-    ret =  lst2[:]
+    ret = lst2[:]
     
     #return the Packages json content
     return [ret , brk]
@@ -129,12 +129,12 @@ if url[-1] == "/":
     url = url[:-1]
 
 b = list ()
-[a , c]  = rese (url , b)
+[a , c] = rese (url , b)
 shutil.rmtree ('/tmp/dpm_pkg/')
 if len (c) > 0 :
     print "dpm-scanpackages find some broken packages:"
     for i in c:
-        print "___C " +  i
+        print "___C " + i
 
     print "Check Package.json file inside of packages for valid JSON formation or existance."
 else:

@@ -49,5 +49,5 @@ class ExecTime (object):
         z = time.clock ()
         b = time.time ()
         
-        self.logger.debug ("Execute in : %s seconds. Process time: %s" % ((b - a), (z-y)))
+        self.logger.debug ("Execute in : %s seconds. Process time: %s" % ((b - a), (z - y)))
         return result
