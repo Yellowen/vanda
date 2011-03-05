@@ -1,9 +1,0 @@
-# Sphinx inventory version 1
-# Project: Dina
-# Version: 0.2
-Logger.info method devel/spec/logging.html
-Logger.warning method devel/spec/logging.html
-Logger.debug method devel/spec/logging.html
-Logger.error method devel/spec/logging.html
-Logger.critical method devel/spec/logging.html
-Logger class devel/spec/logging.html
