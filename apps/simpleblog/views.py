@@ -21,6 +21,8 @@
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import InvalidPage
 from django.http import HttpResponseRedirect
 from decorators import check_auth
 from models import Category

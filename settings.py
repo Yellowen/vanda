@@ -214,8 +214,8 @@ USER_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] + USER_APPS[:]
 
-if DEBUG:
-    INSTALLED_APPS.append('dina.utils.django_extensions')
+#if DEBUG:
+#    INSTALLED_APPS.append('dina.utils.django_extensions')
 
 # For working the contact send mail please complete flowing item
 # add by pollesangi for contact
@@ -260,47 +260,47 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
                          os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
 
-    from django.db.utils import DatabaseError
-    try:
-        from dina import cache #@UnusedImport
-        logger.info("Initial code End point reached.")
-    except DatabaseError:
-        logger.critical("It seems than your database does not exists.")
-        logger.critical("Please build your databse and syncdb it")
-
-    logger.debug("Running environment -----------------------------------")
-    logger.debug("DEBUG = %s" % DEBUG)
-    logger.debug("DATABASES : ---")
-    logger.debug("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
-    logger.debug("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
-    logger.debug("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
-    logger.debug("DATABASES -> PASSWORD = %s" %\
-                 DATABASES["default"]["PASSWORD"])
-    logger.debug("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
-    logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
-    logger.debug("FS_ROOT = %s" % FS_ROOT)
-    logger.debug("APP_ROOT = %s" % APP_ROOT)
-    logger.debug("DIR_NAME = %s" % DIR_NAME)
-    logger.debug("DINA_CACHE = %s" % DINA_CACHE)
-    logger.debug("MEDIA_URL = %s" % MEDIA_URL)
-    logger.debug("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
-    logger.debug("TEMPLATE_LOADERS: ---")
-
-    for i in TEMPLATE_LOADERS:
-        logger.debug("-- %s" % i)
-    logger.debug("MIDDLEWARE_CLASSES: ---")
-
-    for i in MIDDLEWARE_CLASSES:
-        logger.debug("-- %s" % i)
-    logger.debug("TEMPLATE_DIRS: ---")
-
-    for i in TEMPLATE_DIRS:
-        logger.debug("-- %s" % i)
-
-    logger.debug("EMAIL_HOST = %s" % EMAIL_HOST)
-    logger.debug("EMAIL_HOST_PASSWORD = %s" % EMAIL_HOST_PASSWORD)
-    logger.debug("EMAIL_HOST_USER = %s" % EMAIL_HOST_USER)
-    logger.debug("EMAIL_PORT = %s" % EMAIL_PORT)
-    logger.debug("-------------------------------------------------------")
+#    from django.db.utils import DatabaseError
+#    try:
+#        from dina import cache #@UnusedImport
+#        logger.info("Initial code End point reached.")
+#    except DatabaseError:
+#        logger.critical("It seems than your database does not exists.")
+#        logger.critical("Please build your databse and syncdb it")
+#
+#    logger.debug("Running environment -----------------------------------")
+#    logger.debug("DEBUG = %s" % DEBUG)
+#    logger.debug("DATABASES : ---")
+#    logger.debug("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
+#    logger.debug("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
+#    logger.debug("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
+#    logger.debug("DATABASES -> PASSWORD = %s" %\
+#                 DATABASES["default"]["PASSWORD"])
+#    logger.debug("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
+#    logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
+#    logger.debug("FS_ROOT = %s" % FS_ROOT)
+#    logger.debug("APP_ROOT = %s" % APP_ROOT)
+#    logger.debug("DIR_NAME = %s" % DIR_NAME)
+#    logger.debug("DINA_CACHE = %s" % DINA_CACHE)
+#    logger.debug("MEDIA_URL = %s" % MEDIA_URL)
+#    logger.debug("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
+#    logger.debug("TEMPLATE_LOADERS: ---")
+#
+#    for i in TEMPLATE_LOADERS:
+#        logger.debug("-- %s" % i)
+#    logger.debug("MIDDLEWARE_CLASSES: ---")
+#
+#    for i in MIDDLEWARE_CLASSES:
+#        logger.debug("-- %s" % i)
+#    logger.debug("TEMPLATE_DIRS: ---")
+#
+#    for i in TEMPLATE_DIRS:
+#        logger.debug("-- %s" % i)
+#
+#    logger.debug("EMAIL_HOST = %s" % EMAIL_HOST)
+#    logger.debug("EMAIL_HOST_PASSWORD = %s" % EMAIL_HOST_PASSWORD)
+#    logger.debug("EMAIL_HOST_USER = %s" % EMAIL_HOST_USER)
+#    logger.debug("EMAIL_PORT = %s" % EMAIL_PORT)
+#    logger.debug("-------------------------------------------------------")
 
 #--------------------------------------------------------------
