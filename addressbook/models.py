@@ -88,5 +88,3 @@ class contact (models.Model):
     def get_absolute_url (self):
         return "/contact/%s" % self.slug
     
-    
-    
