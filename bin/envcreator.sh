@@ -19,6 +19,7 @@
 # -----------------------------------------------------------------------------
 
 PWD=`pwd`
+mkdir log
 virtualenv $1 "$PWD/env"
 source $PWD/env/bin/activate
 easy_install pil
