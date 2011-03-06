@@ -3,4 +3,6 @@
 build/
 env/
 log/
-debbox/db.devdb
+debbox/db.sqlite
+debbox/.project
+debbox/.pydevproject
