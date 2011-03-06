@@ -54,7 +54,7 @@ class PAMAuthentication (object):
                 username = fields[0]
         if username:
             try:
-                user = User.object.get(username=username())
+                user = User.objects.get(username=username())
                 return user
             except User.DoesNotExist:
                 # CHECK: should this method return none for invalid user
@@ -64,7 +64,7 @@ class PAMAuthentication (object):
         if "username" in kwarg:
             self.username = kwarg["username"]
         else:
-            raise UsernNameNotProvided()
+            raise UserNameNotProvided()
 
         if "password" in kwarg:
             self.password = kwarg["password"]
