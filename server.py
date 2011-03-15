@@ -62,7 +62,12 @@ if options.backend == "fapws3":
     server = FAPWSServer(options.host, options.port)
 elif options.backend == "gevent":
     from debbox.core.servers.GEvent import GEventServer
-    server = GEventServer(options.host, int(options.port))
+    __me__ = os.path.abspath(__file__)
+    keyfile = os.path.join(os.path.dirname(__me__), 'ssl/server.key')
+    certfile = os.path.join(os.path.dirname(__me__), 'ssl/server.crt')
+    server = GEventServer(options.host, int(options.port),
+                          keyfile=keyfile,
+                          certfile=certfile)
 else:
     print "Error: Invalid web server backend."
     sys.exit(1)
