@@ -5,6 +5,7 @@
    decision between processes and threads)
 [ ] Allow to choose between web server backends (GEvent, Fapws3)
 [ ] Modular conf parser
+[ ] 2 way SSL
 
 -- Logsystem --
 [ ] Add timestamp and line number of log in log/debbox
