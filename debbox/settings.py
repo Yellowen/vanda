@@ -65,7 +65,7 @@ line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 
 # Define the date format that use in log strings
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-LOG_MAX_BYTES = 2 * 1024 * 1024  #2Mb
+LOG_MAX_BYTES = 2 * 1024 * 1024  # 2Mb
 LOG_BACKUP_COUNT = 5
 LOG_FILENAME = os.path.join(ROOT_PATH, "../log/debbox")
 if not DEBUG:
@@ -79,7 +79,7 @@ if not DEBUG:
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Tehran'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -97,7 +97,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, "statics").replace('\\', '/') 
+MEDIA_ROOT = os.path.join(ROOT_PATH, "statics").replace('\\', '/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -135,8 +135,6 @@ ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, "templates").replace('\\', '/'),
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -145,6 +143,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+
 )
+
+
+LOGIN_URL = "/login/"
+LOGOUT_URL = "/logout/"

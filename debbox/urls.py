@@ -1,9 +1,14 @@
 from django.conf.urls.defaults import patterns
 
-# from django.contrib import admin
-# admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^$', 'views.tmpindex'),
-    # (r'^admin/', include(admin.site.urls)),
+    # Login url use Django default login view
+    (r'^login/$',
+     'django.contrib.auth.views.login',
+     {'template_name': 'auth/login.html'}),
+
+    # Logout url use Django default logout view
+    (r'^logout/$', 'django.contrib.auth.views.logout'),
+
+    (r'^$', 'views.dashboard'),
 )
