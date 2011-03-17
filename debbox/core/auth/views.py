@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response as rr
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from forms import LoginForm
@@ -53,3 +54,8 @@ def Login(request):
         return rr("auth/login.html",
                   {"form": form},
                   context_instance=RequestContext(request))
+
+
+def Logout(request):
+    logout(request)
+    return HttpResponseRedirect(settings.LOGIN_URL)

@@ -6,8 +6,8 @@ urlpatterns = patterns('',
     (r'^login/$',
      'debbox.core.auth.views.Login'),
 
-    # Logout url use Django default logout view
-    (r'^logout/$', 'django.contrib.auth.views.logout'),
+    # Logout url
+    (r'^logout/$', 'debbox.core.auth.views.Logout'),
 
     (r'^$', 'views.dashboard'),
 )
