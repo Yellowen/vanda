@@ -14,4 +14,5 @@ def dashboard(request):
     """
     User Dashboard. index page for Debbox.
     """
+    logger.info("here")
     return HttpResponse("It Works huuuuuuuuuuuuray")

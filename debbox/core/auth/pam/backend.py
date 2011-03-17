@@ -17,20 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import PAM
+from core.auth.pam import pam
 
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from core.log import logger
-
-
-class UserNameNotProvided (Exception):
-    pass
-
-
-class PasswordNotProvided (Exception):
-    pass
 
 
 class PAMAuthentication (object):
@@ -38,60 +30,28 @@ class PAMAuthentication (object):
     PAM authentication backend for django.
     """
 
-    def __init__(self):
-        self._pam = PAM.pam()
-        self._service = settings.PAM_SERVICE
-        self._pam.start(self._service)
+    def authenticate(self, username=None, password=None):
+        if pam.authenticate(username, password):
+            try:
+                user = User.objects.get(username=username)
+            except:
+                user = User(username=username, password='None')
+
+                # Setting up root user
+                root_user = getattr(settings, 'PAM_SUPERUSER', "root")
+                if user.username == root_user:
+                    user.is_superuser = True
+                    user.is_staff = True
+
+                user.save()
+            logger.debug("Loging '%s' user in." % username)
+            return user
+        logger.warn("Login failed with username: %s password: %s" % \
+                    (username, password))
+        return None
 
     def get_user(self, user_id):
-        # TODO: get_user should return user corresponded to current
-        # authentication method not passwd only
-        passwd = file("/etc/passwd").readlines()
-        username = ""
-        for line in passwd:
-            fields = line.split(":")
-            if fields[2] == int(user_id):
-                username = fields[0]
-        if username:
-            try:
-                user = User.objects.get(username=username())
-                return user
-            except User.DoesNotExist:
-                # CHECK: should this method return none for invalid user
-                return None
-
-    def authenticate(self, **kwarg):
-        if "username" in kwarg:
-            self.username = kwarg["username"]
-        else:
-            raise UserNameNotProvided()
-
-        if "password" in kwarg:
-            self.password = kwarg["password"]
-        else:
-            raise PasswordNotProvided()
-        self._pam.start("passwd")
-
-        self._pam.set_item(PAM.PAM_USER, self.username)
-        self._pam.set_item(PAM.PAM_CONV,
-                           lambda auth, query, ud: [(self.password,
-                                                     0)])
-
         try:
-            self._pam.authenticate()
-
-            try:
-                user = User.objects.get(username=self.username)
-            except User.DoesNotExist:
-                user = User(username=self.username, password=self.password)
-                # TODO: pam backend should check for a list of admin users
-                if self.username == "root":
-                    user.is_staff = True
-                    user.is_superuser = True
-            user.save()
-            return user
-
-        except PAM.error, response:
-            logger.warn("Login attempt failed. username: '%s' password: '%s'" % \
-                        (self.username, self.password))
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
             return None
