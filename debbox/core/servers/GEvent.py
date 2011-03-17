@@ -20,23 +20,27 @@
 import traceback
 
 from gevent import monkey; monkey.patch_all()
-from gevent.wsgi import WSGIServer
+from gevent.pywsgi import WSGIServer
 
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.signals import got_request_exception
+
+from debbox.core.log import logger
 
 
 class GEventServer (object):
     """
     GEvent server backend class.
     """
-    def __init__(self, host, port):
+    def __init__(self, host, port, **ssl):
         self.host = host
         self.port = port
+        self.ssl = ssl
 
     def start(self):
         got_request_exception.connect(self.exception_printer)
-        WSGIServer((self.host, self.port), WSGIHandler()).serve_forever()
+        logger.info("Starting SSL connection with %s" % self.ssl)
+        WSGIServer((self.host, self.port), WSGIHandler(), **self.ssl).serve_forever()
 
     def exception_printer(self, sender, **kwargs):
         traceback.print_exc()
