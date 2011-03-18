@@ -20,7 +20,7 @@ DATABASES = {
     }
 }
 # TODO: admin should select the pam service via an UI
-PAM_SERVICE = "passwd"
+PAM_SERVICE = "debbox"
 
 ROOT_PATH = os.path.dirname(__file__)
 

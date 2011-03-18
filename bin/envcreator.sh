@@ -20,8 +20,8 @@
 
 PWD=`pwd`
 mkdir log
-virtualenv $1 "$PWD/env"
-source $PWD/env/bin/activate
+virtualenv "$PWD/env"
+. $PWD/env/bin/activate
 easy_install pil
 easy_install django
 easy_install fapws3
