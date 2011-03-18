@@ -6,6 +6,10 @@
 [ ] Allow to choose between web server backends (GEvent, Fapws3)
 [ ] Modular conf parser
 [ ] 2 way SSL
+[ ] master and slave process
+[ ] deamonize the master process
+[ ] provide a debug switch 
+[ ] allow to redirect the stdout and strerr if debug mode is off
 
 -- Logsystem --
 [ ] Add timestamp and line number of log in log/debbox
