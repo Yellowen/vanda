@@ -31,7 +31,8 @@ class PAMAuthentication (object):
     """
 
     def authenticate(self, username=None, password=None):
-        if pam.authenticate(username, password):
+        service = settings.PAM_SERVICE
+        if pam.authenticate(username, password, service):
             try:
                 user = User.objects.get(username=username)
             except:
