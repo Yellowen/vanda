@@ -37,6 +37,12 @@ class GEventServer (object):
 
     def start(self):
         got_request_exception.connect(self.exception_printer)
+        from debbox.core.log import logger
+        logger.debug(">> SSL: %s" % self.ssl)
+        print self.ssl
+        for i in self.ssl:
+            print ">>> ", file(self.ssl[i]).read()
+            print
         WSGIServer((self.host, self.port), WSGIHandler(),
                    **self.ssl).serve_forever()
 

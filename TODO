@@ -14,3 +14,4 @@
 
 -- Deb package --
 [ ] build a user and group called debbox
+[ ] add debbox user to ssl-cert
