@@ -72,7 +72,7 @@ class Debbox (object):
         server = WebServer(self.options.host, int(self.options.port),
                            self.ssl["key"], self.ssl["cert"],
                            self.options.settings,
-                           self.ptions.debug)
+                           self.options.debug)
         server.start()
 
     def stop(self):
