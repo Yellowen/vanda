@@ -20,6 +20,8 @@
 
 import os
 
+from debbox.core.servers import WebServer
+
 
 class DebboxDaemon (object):
     """
@@ -27,7 +29,7 @@ class DebboxDaemon (object):
     as a deamon.
     """
 
-    def __init__(self, options):
+    def __init__(self, options, config_dir="/etc/debbox/"):
         self.options = options
         self.pidfile = options.pidfile
 
@@ -55,6 +57,11 @@ class DebboxDaemon (object):
             print "Debbox is already running."
             return
 
+        server = WebServer(self.options.host, int(self.options.port),
+                           self.keyfile, self.certfile, self.options.settings,
+                           self.ptions.debug)
+        server.start()
+
     def stop(self):
         """
         Stop the debbox server.
@@ -72,3 +79,9 @@ class DebboxDaemon (object):
                   (self._masterpid, self._slavepid)
         else:
             print "Debbox is not running."
+
+    def read_configs(self):
+        """
+        read the Debbox configuration files inside /etc/.
+        """
+        pass

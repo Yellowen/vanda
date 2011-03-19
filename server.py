@@ -18,14 +18,10 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-# This modules runs fapws3 or gevent webserver and pass the requests to
-# django wsgi handlers
-
-import os
 import sys
 
 from optparse import OptionParser
-from debbox.core.servers import WebServer
+
 from debbox.core.daemon import DebboxDaemon
 
 
@@ -46,7 +42,6 @@ parser.add_option('--debug', dest='debug')
 parser.add_option('--pidfile', dest='pidfile')
 parser.add_option('--settings', dest='settings')
 parser.add_option('--pythonpath', dest='pythonpath')
-
 
 options, args = parser.parse_args()
 
@@ -69,25 +64,3 @@ elif options.action == "status":
 else:
     print "Error: what is '%s'" % options.action
     sys.exit(1)
-
-
-pid = os.fork()
-
-if pid:
-    # parent process ===========================
-    print "PID >> ", pid
-    if options.debug:
-        os.waitpid(pid, 0)
-
-else:
-    # child process ============================
-
-    # TODO: Get the ssl keys in the run time dynamically (fit to debian)
-    __me__ = os.path.abspath(__file__)
-    keyfile = os.path.join(os.path.dirname(__me__), 'ssl/server.key')
-    certfile = os.path.join(os.path.dirname(__me__), 'ssl/server.crt')
-
-    server = WebServer(options.host, int(options.port),
-                       keyfile, certfile, options.settings,
-                       options.debug)
-    server.start()
