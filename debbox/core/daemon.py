@@ -23,13 +23,13 @@ import os
 from debbox.core.servers import WebServer
 
 
-class DebboxDaemon (object):
+class Debbox (object):
     """
     Daemon class of debbox, this class runs the debbox
     as a deamon.
     """
 
-    def __init__(self, options, config_dir="/etc/debbox/"):
+    def __init__(self, options):
         self.options = options
         self.pidfile = options.pidfile
 

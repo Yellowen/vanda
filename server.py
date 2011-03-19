@@ -22,7 +22,7 @@ import sys
 
 from optparse import OptionParser
 
-from debbox.core.daemon import DebboxDaemon
+from debbox.core.daemon import Debbox
 
 
 parser = OptionParser()
@@ -31,12 +31,14 @@ parser.set_defaults(
     backend='gevent',
     host='127.0.0.1',
     debug=False,
+    conf="/etc/debbox/debbox.conf",
     pidfile="/var/run/debbox.pid",
     settings='debbox.settings',
 )
 
 parser.add_option('-k', dest='action')
 parser.add_option('--port', dest='port')
+parser.add_option('-c', dest='conf')
 parser.add_option('--host', dest='host')
 parser.add_option('--debug', dest='debug')
 parser.add_option('--pidfile', dest='pidfile')
@@ -51,7 +53,7 @@ if options.pythonpath:
 
 sys.path.insert(1, "debbox/")
 
-daemon = DebboxDaemon(options)
+daemon = Debbox(options)
 if options.action == "start":
     daemon.start()
 
