@@ -34,12 +34,14 @@ parser.set_defaults(
     backend='gevent',
     host='127.0.0.1',
     debug=True,
+    pidfile="/var/run/debbox.pid",
     settings='debbox.settings',
 )
 
 parser.add_option('--port', dest='port')
 parser.add_option('--host', dest='host')
 parser.add_option('--debug', dest='debug')
+parser.add_option('--pidfile', dest='pidfile')
 parser.add_option('--settings', dest='settings')
 parser.add_option('--pythonpath', dest='pythonpath')
 
@@ -53,10 +55,13 @@ sys.path.insert(1, "debbox/")
 pid = os.fork()
 
 if pid:
-    # parent process
+    # parent process ===========================
     print "PID >> ", pid
+    if options.debug:
+        os.waitpid(pid, 0)
+
 else:
-    # child process
+    # child process ============================
 
     # TODO: Get the ssl keys in the run time dynamically (fit to debian)
     __me__ = os.path.abspath(__file__)
