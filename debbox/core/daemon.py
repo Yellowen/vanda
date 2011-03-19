@@ -191,7 +191,6 @@ class Debbox (object):
 
         # TODO: Where should we chdir? where is the safe place?
         self.io_redirect()
-        print "io redirect"
         self._masterpid = os.getpid()
         self.logger.debug("Master process at %s" % self._masterpid)
 
