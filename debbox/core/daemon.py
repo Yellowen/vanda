@@ -20,6 +20,7 @@
 
 import os
 import sys
+import stat
 import atexit
 import logging
 from pwd import getpwnam
@@ -38,8 +39,10 @@ class Logger (object):
         logparam = {}
         handlerparam = {}
 
-        logparam['level'] = config.get("Log", "leve")
-        logparam['format'] = config.get("Log", "format")
+        logparam['level'] = config.get("Log", "level")
+        format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
+                 ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+        logparam['format'] = format_
         logparam['datefmt'] = config.get("Log", "date_format")
         handlerparam['maxBytes'] = config.get("Log", "max_size")
         handlerparam['backupCount'] = config.get("Log", "backups")
@@ -90,27 +93,30 @@ class Debbox (object):
         try:
             self.slave_user = self.config.get("User", "user", "debbox")
         except NoSectionError:
-            self.slave_user = "nobody"
+            print "Error: Can't find a suitable username in config file."
+            sys.exist(1)
 
         try:
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
-            self.slave_group = "nogroup"
+            print "Error: Can't find a suitable group name in config file."
+            sys.exist(1)
 
         # Setting up log directory
         self.logfolder = self.config.get("Log", "folder")
         if not os.path.exists(self.logfolder):
             try:
                 os.makedirs(self.logfolder)
-                uid = getpwnam(self.slave_user)[2]
-                gid = getpwnam(self.slave_user)[3]
-                os.chown(self.logfolder, uid, gid)
-                os.chmod(self.log.folder, 770)
-
             except OSError, e:
                 print e
                 sys.exit(1)
-        log = Logger(self.config, "master.log")
+        uid = getpwnam(self.slave_user)[2]
+        gid = getpwnam(self.slave_user)[3]
+        os.chown(self.logfolder, uid, gid)
+        os.chmod(self.logfolder, stat.S_IXUSR | stat.S_IRUSR | stat.S_IWUSR | \
+                 stat.S_IXGRP | stat.S_IWGRP | stat.S_IRGRP)
+
+        log = Logger(self.config, "/".join((self.logfolder, "master.log")))
         self.logger = log.logger
 
         # Registering a cleanup method
@@ -173,7 +179,7 @@ class Debbox (object):
 
         if pid > 0:
             # Exist from parent
-            self.logger.debug("First fork exit" % pid)
+            self.logger.debug("First fork exit")
             sys.exit(0)
 
         os.umask(027)
