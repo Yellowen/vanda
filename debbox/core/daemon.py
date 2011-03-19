@@ -156,8 +156,8 @@ class Debbox (object):
             return True
 
         else:
-            os.unlink(self.mpid)
-            os.unlink(self.mpid)
+            os.remove(self.mpid)
+            os.remove(self.mpid)
             return False
 
     def start(self):
@@ -207,8 +207,8 @@ class Debbox (object):
             file(self.mpid, "w+").write(str(self._masterpid))
             # TODO: find a way to build slave pid file in better time
             file(self.spid, "w+").write(str(slavepid))
-            if self.options.debug:
-                os.waitpid(slavepid, 0)
+            # TODO: this wait should be override by MasterServer main loop
+            os.waitpid(slavepid, 0)
         else:
             # Slave process
             server = WebServer(self.options.host, int(self.options.port),
