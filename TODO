@@ -11,3 +11,7 @@
 -- Logsystem --
 [ ] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
+
+-- Deb package --
+[ ] build a user and group called debbox
+[ ] 

@@ -79,10 +79,18 @@ class Debbox (object):
         Debbox destructor.
         """
         if os.path.exists(self.mpid):
-            os.remove(self.mpid)
+            try:
+                os.remove(self.mpid)
+            except OSError, e:
+                print "<<<<<<< ", e
+                raise
 
         if os.path.exists(self.spid):
-            os.remove(self.spid)
+            try:
+                os.remove(self.spid)
+            except OSError, e:
+                print "<<<<<<< ", e
+                raise
 
     def _status(self):
         """
@@ -151,22 +159,21 @@ class Debbox (object):
         if slavepid > 0:
             # Master Process
             print "here in Master"
-            file(self.mpid, "w+").write(self._masterpid)
+            file(self.mpid, "w+").write(str(self._masterpid))
+            # TODO: find a way to build slave pid file in better time
+            file(self.spid, "w+").write(str(slavepid))
             if self.options.debug:
                 os.waitpid(slavepid, 0)
         else:
             # Slave process
             print "here in slave"
-            os.setuid()
             uid = getpwnam(self.slave_user)[2]
-            # TODO: should we use slave_user for gid too?
-            gid = getpwnam(self.slave_group)[3]
-            os.setuid(uid)
-            os.setgid(gid)
+            #gid = getpwnam(self.slave_user)[3]
+            os.setuid(int(uid))
+            #os.setgid(int(gid))
             os.umask(027)
             self.io_redirect()
             self._slavepid = os.getpid()
-            file(self.spid, "w+").write(self._slavepid)
             print "running webserver"
             server = WebServer(self.options.host, int(self.options.port),
                                self.ssl["key"], self.ssl["cert"],
