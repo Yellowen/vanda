@@ -124,14 +124,14 @@ class Debbox (object):
             try:
                 os.remove(self.mpid)
             except OSError, e:
-                print "<<<<<<< ", e
+                self.logger.info("Error msg: %s" % e)
                 raise
 
         if os.path.exists(self.spid):
             try:
                 os.remove(self.spid)
             except OSError, e:
-                print "<<<<<<< ", e
+                self.logger.info("Error msg: %s" % e)
                 raise
 
     def _status(self):
@@ -167,19 +167,18 @@ class Debbox (object):
         pid = None
         try:
             pid = os.fork()
-            print ">>>> First fork pid: ", pid
+            self.logger.debug("First fork pid: %s" % pid)
         except OSError:
             raise self.CantFork("Can't create the master process.")
 
         if pid > 0:
             # Exist from parent
-            print "exit from first pid"
+            self.logger.debug("First fork exit" % pid)
             sys.exit(0)
 
         os.umask(027)
         try:
             self._sid = os.setsid()
-            print "siid"
         except OSError:
             # TODO: check the exception
             raise
@@ -188,19 +187,18 @@ class Debbox (object):
         self.io_redirect()
         print "io redirect"
         self._masterpid = os.getpid()
-        print ">>> _master", self._masterpid
+        self.logger.debug("Master process at %s" % self._masterpid)
 
         # Second Fork =======================================
         slavepid = None
         try:
             slavepid = os.fork()
-            print "second fork ,,, ", slavepid
+            self.logger.debug("Second fork pid: %s" % slavepid)
         except OSError:
             raise self.CantFork("Can't create the slave process")
 
         if slavepid > 0:
             # Master Process
-            print "here in Master"
             file(self.mpid, "w+").write(str(self._masterpid))
             # TODO: find a way to build slave pid file in better time
             file(self.spid, "w+").write(str(slavepid))
@@ -208,15 +206,16 @@ class Debbox (object):
                 os.waitpid(slavepid, 0)
         else:
             # Slave process
-            print "here in slave"
+
             uid = getpwnam(self.slave_user)[2]
             #gid = getpwnam(self.slave_user)[3]
             os.setuid(int(uid))
             #os.setgid(int(gid))
             os.umask(027)
+            print "Running webserver on SSL connection at https://%s:%s/" % \
+                  (self.options.host, self.options.port)
             self.io_redirect()
             self._slavepid = os.getpid()
-            print "running webserver"
             server = WebServer(self.options.host, int(self.options.port),
                                self.ssl["key"], self.ssl["cert"],
                                self.options.settings,
