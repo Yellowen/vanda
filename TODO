@@ -3,19 +3,25 @@
 [ ] Remove runserver.sh from each Release
 [ ] Build some processes/threads for serving static files (need a
    decision between processes and threads)
-[ ] Allow to choose between web server backends (GEvent, Fapws3)
-[ ] Modular conf parser
+[-] Allow to choose between web server backends (GEvent, Fapws3)
+[X] Modular conf parser
 [ ] 2 way SSL
 [ ] replacing optparser with argparser when migrating to python2.7
-[ ] master and slave process
-[ ] deamonize the master process
-[ ] provide a debug switch 
-[ ] allow to redirect the stdout and strerr if debug mode is off
+[X] master and slave process
+[X] deamonize the master process
+[X] provide a debug switch 
+[X] allow to redirect the stdout and strerr if debug mode is off
+[ ] provide a foreground option
 
 -- Logsystem --
-[ ] Add timestamp and line number of log in log/debbox
+[X] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
 
 -- Deb package --
 [ ] build a user and group called debbox
 [ ] add debbox user to ssl-cert
+
+
+-- issues --
+[ ] loggin into files
+[ ] gevent warning (threading is already imported)
