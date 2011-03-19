@@ -41,7 +41,10 @@ class Debbox (object):
 
         self.options = options
         self.piddir = options.piddir.rstrip("/")
-        self.pidfile = options.pidfile
+
+        # debbox pid files
+        self.mpid = "/".join((self.piddir, "debbox_master.pid"))
+        self.spid = "/".join((self.piddir, "debbox_slave.pid"))
 
         # creating configuration object
         self.config = ConfigParser()
@@ -68,23 +71,30 @@ class Debbox (object):
         """
         Debbox destructor.
         """
-        if os.path.exist(self.pidfile):
-            os.remove(self.pidfile)
+        if os.path.exist(self.mpid):
+            os.remove(self.mpid)
+
+        if os.path.exist(self.spid):
+            os.remove(self.spid)
 
     def _status(self):
         """
         checking for debbox processes.
         """
-        if not os.path.exists(self.pidfile):
+        if not os.path.exists(self.mpid):
+            return False
+        if not os.path.exists(self.spid):
             return False
 
-        self._masterpid, self._slavepid = file(self.pidfile).readlines()
+        self._masterpid = file(self.mpid).readlines()[0]
+        self._slavepid = file(self.spid).readlines()[0]
         if os.path.exists("/proc/%s" % self._masterpid) and \
            os.path.exists("/proc/%s" % self._slavepid):
             return True
 
         else:
-            os.unlink(self.pidfile)
+            os.unlink(self.mpid)
+            os.unlink(self.mpid)
             return False
 
     def start(self):
@@ -160,11 +170,17 @@ class Debbox (object):
         """
         Return the status of debbox server.
         """
-        if self._status():
-            print "Debbox is running with Master: %s Slave: %s" % \
-                  (self._masterpid, self._slavepid)
+        if os.path.exists(self.mpid):
+            print "Debbox Master process is running with '%s' pid" % \
+                  file(self.mpid).readlines()[0]
         else:
-            print "Debbox is not running."
+            print "Debbox Master is not running."
+
+        if os.path.exists(self.spid):
+            print "Debbox Slave process is running with '%s' pid" % \
+                  file(self.spid).readlines()[0]
+        else:
+            print "Debbox Slave is not running."
 
     def io_redirect(self):
         if not self.options.debug:
