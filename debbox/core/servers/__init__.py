@@ -20,12 +20,8 @@
 
 import os
 import sys
-import time
-
-import django
 
 from GEvent import GEventServer
-from debbox.core.log import logger
 
 
 class WebServer (object):
@@ -53,8 +49,8 @@ class WebServer (object):
                               certfile=self._cert)
 
         if self._debug:
-
-            logger.info("Starting SSL connection with CERT:%s KEY: %S" % \
+            from debbox.core.log import logger
+            logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
                         (self._cert, self._key))
             print 'Start SSL connection on ', (self.host, self.port)
         server.start()
