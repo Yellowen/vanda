@@ -139,6 +139,7 @@ class Debbox (object):
         if slavepid:
             # Master Process
             print "here in Master"
+            file(self.mpid, "w+").write(self._masterpid)
             if self.options.debug:
                 os.waitpid(slavepid, 0)
         else:
@@ -152,6 +153,7 @@ class Debbox (object):
             os.umask(027)
             self.io_redirect()
             self._slavepid = os.getpid()
+            file(self.spid, "w+").write(self._slavepid)
             server = WebServer(self.options.host, int(self.options.port),
                                self.ssl["key"], self.ssl["cert"],
                                self.options.settings,
@@ -193,7 +195,7 @@ class Debbox (object):
             os.dup2(si.fileno(), sys.stdin.fileno())
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
-
+    
     class CantFork (Exception):
         pass
 
