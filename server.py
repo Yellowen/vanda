@@ -32,17 +32,24 @@ parser.set_defaults(
     host='127.0.0.1',
     debug=False,
     conf="/etc/debbox/debbox.conf",
-    pidfile="/var/run/",
+    piddir="/var/run/",
     settings='debbox.settings',
 )
 
-parser.add_option('-k', dest='action')
-parser.add_option('--port', dest='port')
-parser.add_option('-c', dest='conf')
-parser.add_option('--host', dest='host')
-parser.add_option('--debug', dest='debug')
-parser.add_option('--piddir', dest='piddir')
-parser.add_option('--settings', dest='settings')
+parser.add_option('-k', dest='action',
+                  help="Do ACTION on debbox. ACTION like {start|stop|status}")
+parser.add_option('--port', dest='port',
+                  help="Run web server on PORT.")
+parser.add_option('-c', dest='conf',
+                  help="Use CONF config file. default is /etc/debbox/debbox.conf")
+parser.add_option('--host', dest='host',
+                  help="Run web server on HOST.")
+parser.add_option('--debug', dest='debug', action="store_true",
+                  help="Activate debug mode.")
+parser.add_option('--piddir', dest='piddir',
+                  help="Stotr pid files in PIDDIR folder")
+parser.add_option('--settings', dest='settings',
+                  help="Django settings.py file")
 parser.add_option('--pythonpath', dest='pythonpath')
 
 options, args = parser.parse_args()

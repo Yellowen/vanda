@@ -22,7 +22,7 @@ import os
 import sys
 import atexit
 from pwd import getpwnam  
-from ConfigParser import ConfigParser
+from ConfigParser import ConfigParser, NoSectionError
 
 from debbox.core.servers import WebServer
 
@@ -61,8 +61,15 @@ class Debbox (object):
         self.stderr = stderr
 
         # Webserver should run under which user and group
-        self.slave_user = self.config.get("User", "user", "debbox")
-        self.slave_group = self.config.get("User", "group", "debbox")
+        try:
+            self.slave_user = self.config.get("User", "user", "debbox")
+        except NoSectionError:
+            self.slave_user = "nobody"
+
+        try:
+            self.slave_group = self.config.get("User", "group", "debbox")
+        except NoSectionError:
+            self.slave_group = "nogroup"
 
         # Registering a cleanup method
         atexit.register(self.__cleanup__)
@@ -71,10 +78,10 @@ class Debbox (object):
         """
         Debbox destructor.
         """
-        if os.path.exist(self.mpid):
+        if os.path.exists(self.mpid):
             os.remove(self.mpid)
 
-        if os.path.exist(self.spid):
+        if os.path.exists(self.spid):
             os.remove(self.spid)
 
     def _status(self):
@@ -114,29 +121,34 @@ class Debbox (object):
         except OSError:
             raise self.CantFork("Can't create the master process.")
 
-        if pid:
+        if pid > 0:
             # Exist from parent
+            print "exit from first pid"
             sys.exit(0)
 
         os.umask(027)
         try:
             self._sid = os.setsid()
+            print "siid"
         except OSError:
             # TODO: check the exception
             raise
 
         # TODO: Where should we chdir? where is the safe place?
         self.io_redirect()
+        print "io redirect"
         self._masterpid = os.getpid()
+        print ">>> _master", self._masterpid
 
         # Second Fork =======================================
         slavepid = None
         try:
             slavepid = os.fork()
+            print "second fork ,,, ", slavepid
         except OSError:
             raise self.CantFork("Can't create the slave process")
 
-        if slavepid:
+        if slavepid > 0:
             # Master Process
             print "here in Master"
             file(self.mpid, "w+").write(self._masterpid)
@@ -144,6 +156,7 @@ class Debbox (object):
                 os.waitpid(slavepid, 0)
         else:
             # Slave process
+            print "here in slave"
             os.setuid()
             uid = getpwnam(self.slave_user)[2]
             # TODO: should we use slave_user for gid too?
@@ -154,6 +167,7 @@ class Debbox (object):
             self.io_redirect()
             self._slavepid = os.getpid()
             file(self.spid, "w+").write(self._slavepid)
+            print "running webserver"
             server = WebServer(self.options.host, int(self.options.port),
                                self.ssl["key"], self.ssl["cert"],
                                self.options.settings,
@@ -195,7 +209,7 @@ class Debbox (object):
             os.dup2(si.fileno(), sys.stdin.fileno())
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
-    
+
     class CantFork (Exception):
         pass
 
