@@ -53,7 +53,12 @@ if options.pythonpath:
 
 sys.path.insert(1, "debbox/")
 
-daemon = Debbox(options)
+try:
+    daemon = Debbox(options)
+except Debbox.CantFindConfigFile:
+    print "Error: Can't find '%s' configuration file." % options.conf
+    sys.exit(1)
+
 if options.action == "start":
     daemon.start()
 

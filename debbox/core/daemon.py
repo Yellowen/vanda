@@ -19,6 +19,7 @@
 # -----------------------------------------------------------------------------
 
 import os
+from ConfigParser import ConfigParser
 
 from debbox.core.servers import WebServer
 
@@ -32,6 +33,17 @@ class Debbox (object):
     def __init__(self, options):
         self.options = options
         self.pidfile = options.pidfile
+
+        # creating configuration object
+        self.config = ConfigParser()
+        if os.path.exists(self.options.conf):
+            self.config.read(self.options.conf)
+        else:
+            raise self.CantFindConfigFile()
+
+        self.ssl = {"key": self.config.get("SSL", "key"),
+                    "cert": self.config.get("SSL", "cert"),
+                    }
 
     def _status(self):
         """
@@ -58,7 +70,8 @@ class Debbox (object):
             return
 
         server = WebServer(self.options.host, int(self.options.port),
-                           self.keyfile, self.certfile, self.options.settings,
+                           self.ssl["key"], self.ssl["cert"],
+                           self.options.settings,
                            self.ptions.debug)
         server.start()
 
@@ -80,8 +93,5 @@ class Debbox (object):
         else:
             print "Debbox is not running."
 
-    def read_configs(self):
-        """
-        read the Debbox configuration files inside /etc/.
-        """
+    class CantFindConfigFile (Exception):
         pass
