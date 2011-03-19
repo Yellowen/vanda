@@ -32,7 +32,7 @@ parser.set_defaults(
     host='127.0.0.1',
     debug=False,
     conf="/etc/debbox/debbox.conf",
-    pidfile="/var/run/debbox.pid",
+    pidfile="/var/run/",
     settings='debbox.settings',
 )
 
@@ -41,7 +41,7 @@ parser.add_option('--port', dest='port')
 parser.add_option('-c', dest='conf')
 parser.add_option('--host', dest='host')
 parser.add_option('--debug', dest='debug')
-parser.add_option('--pidfile', dest='pidfile')
+parser.add_option('--piddir', dest='piddir')
 parser.add_option('--settings', dest='settings')
 parser.add_option('--pythonpath', dest='pythonpath')
 

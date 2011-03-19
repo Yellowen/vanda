@@ -21,6 +21,7 @@
 import os
 import sys
 import atexit
+from pwd import getpwnam  
 from ConfigParser import ConfigParser
 
 from debbox.core.servers import WebServer
@@ -39,6 +40,7 @@ class Debbox (object):
         """
 
         self.options = options
+        self.piddir = options.piddir.rstrip("/")
         self.pidfile = options.pidfile
 
         # creating configuration object
@@ -54,6 +56,10 @@ class Debbox (object):
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
+
+        # Webserver should run under which user and group
+        self.slave_user = self.config.get("User", "user", "debbox")
+        self.slave_group = self.config.get("User", "group", "debbox")
 
         # Registering a cleanup method
         atexit.register(self.__cleanup__)
@@ -111,21 +117,36 @@ class Debbox (object):
 
         # TODO: Where should we chdir? where is the safe place?
         self.io_redirect()
+        self._masterpid = os.getpid()
 
         # Second Fork =======================================
+        slavepid = None
         try:
-            self._slavepid = os.fork()
+            slavepid = os.fork()
         except OSError:
             raise self.CantFork("Can't create the slave process")
 
-        if self._slavepid:
+        if slavepid:
             # Master Process
-
-        server = WebServer(self.options.host, int(self.options.port),
-                           self.ssl["key"], self.ssl["cert"],
-                           self.options.settings,
-                           self.options.debug)
-        server.start()
+            print "here in Master"
+            if self.options.debug:
+                os.waitpid(slavepid, 0)
+        else:
+            # Slave process
+            os.setuid()
+            uid = getpwnam(self.slave_user)[2]
+            # TODO: should we use slave_user for gid too?
+            gid = getpwnam(self.slave_group)[3]
+            os.setuid(uid)
+            os.setgid(gid)
+            os.umask(027)
+            self.io_redirect()
+            self._slavepid = os.getpid()
+            server = WebServer(self.options.host, int(self.options.port),
+                               self.ssl["key"], self.ssl["cert"],
+                               self.options.settings,
+                               self.options.debug)
+            server.start()
 
     def stop(self):
         """
