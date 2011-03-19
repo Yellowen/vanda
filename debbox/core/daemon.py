@@ -21,7 +21,6 @@
 import os
 import sys
 import stat
-import signal
 import atexit
 import logging
 from pwd import getpwnam
@@ -239,9 +238,9 @@ class Debbox (object):
         mpid = file(self.mpid).readlines()[0]
         spid = file(self.spid).readlines()[0]
         print "Stopping master process."
-        os.kill(mpid, signal.SIGTERM)
+        os.kill(int(mpid), 15)
         print "Stopping slave process."
-        os.kill(spid, signal.SIGTERM)
+        os.kill(int(spid), 15)
         self.__cleanup__()
         sys.exit(0)
 
