@@ -26,6 +26,7 @@ import sys
 
 from optparse import OptionParser
 from debbox.core.servers import WebServer
+from debbox.core.daemon import DebboxDaemon
 
 
 parser = OptionParser()
@@ -33,11 +34,12 @@ parser.set_defaults(
     port='8000',
     backend='gevent',
     host='127.0.0.1',
-    debug=True,
+    debug=False,
     pidfile="/var/run/debbox.pid",
     settings='debbox.settings',
 )
 
+parser.add_option('-k', dest='action')
 parser.add_option('--port', dest='port')
 parser.add_option('--host', dest='host')
 parser.add_option('--debug', dest='debug')
@@ -47,10 +49,27 @@ parser.add_option('--pythonpath', dest='pythonpath')
 
 
 options, args = parser.parse_args()
+
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
+
 sys.path.insert(1, "debbox/")
+
+daemon = DebboxDaemon(options)
+if options.action == "start":
+    daemon.start()
+
+elif options.action == "stop":
+    daemon.stop()
+
+elif options.action == "status":
+    daemon.status()
+
+else:
+    print "Error: what is '%s'" % options.action
+    sys.exit(1)
+
 
 pid = os.fork()
 
