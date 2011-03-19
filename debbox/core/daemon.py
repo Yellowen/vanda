@@ -21,10 +21,35 @@
 import os
 import sys
 import atexit
-from pwd import getpwnam  
+import logging
+from pwd import getpwnam
+from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser, NoSectionError
 
 from debbox.core.servers import WebServer
+
+
+class Logger (object):
+    """
+    Debbox Master Process Logger.
+    """
+
+    def __init__(self, config, logfile):
+        logparam = {}
+        handlerparam = {}
+
+        logparam['level'] = config.get("Log", "leve")
+        logparam['format'] = config.get("Log", "format")
+        logparam['datefmt'] = config.get("Log", "date_format")
+        handlerparam['maxBytes'] = config.get("Log", "max_size")
+        handlerparam['backupCount'] = config.get("Log", "backups")
+        LOG_FILENAME = logfile
+        logging.basicConfig(**logparam)
+        logger = logging.getLogger("Master")
+        handler = RotatingFileHandler(
+            LOG_FILENAME, **handlerparam)
+        logger.addHandler(handler)
+        self.logger = logger
 
 
 class Debbox (object):
@@ -56,6 +81,7 @@ class Debbox (object):
         self.ssl = {"key": self.config.get("SSL", "key"),
                     "cert": self.config.get("SSL", "cert"),
                     }
+
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
@@ -70,6 +96,22 @@ class Debbox (object):
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
             self.slave_group = "nogroup"
+
+        # Setting up log directory
+        self.logfolder = self.config.get("Log", "folder")
+        if not os.path.exists(self.logfolder):
+            try:
+                os.makedirs(self.logfolder)
+                uid = getpwnam(self.slave_user)[2]
+                gid = getpwnam(self.slave_user)[3]
+                os.chown(self.logfolder, uid, gid)
+                os.chmod(self.log.folder, 770)
+
+            except OSError, e:
+                print e
+                sys.exit(1)
+        log = Logger(self.config, "master.log")
+        self.logger = log.logger
 
         # Registering a cleanup method
         atexit.register(self.__cleanup__)

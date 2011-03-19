@@ -68,8 +68,7 @@ LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 LOG_MAX_BYTES = 2 * 1024 * 1024  # 2Mb
 LOG_BACKUP_COUNT = 5
 LOG_FILENAME = os.path.join(ROOT_PATH, "../log/debbox")
-if not DEBUG:
-    LOG_FILENAME = "/var/log/debbox"
+LOG_FILENAME = "/var/log/debbox/webserver.log"
 
 
 # Local time zone for this installation. Choices can be found here:
