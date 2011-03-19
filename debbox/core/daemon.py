@@ -21,6 +21,7 @@
 import os
 import sys
 import stat
+import signal
 import atexit
 import logging
 from pwd import getpwnam
@@ -120,7 +121,7 @@ class Debbox (object):
         self.logger = log.logger
 
         # Registering a cleanup method
-        atexit.register(self.__cleanup__)
+        #atexit.register(self.__cleanup__)
 
     def __cleanup__(self):
         """
@@ -212,6 +213,10 @@ class Debbox (object):
                 os.waitpid(slavepid, 0)
         else:
             # Slave process
+            server = WebServer(self.options.host, int(self.options.port),
+                               self.ssl["key"], self.ssl["cert"],
+                               self.options.settings,
+                               self.options.debug)
 
             uid = getpwnam(self.slave_user)[2]
             #gid = getpwnam(self.slave_user)[3]
@@ -222,10 +227,6 @@ class Debbox (object):
                   (self.options.host, self.options.port)
             self.io_redirect()
             self._slavepid = os.getpid()
-            server = WebServer(self.options.host, int(self.options.port),
-                               self.ssl["key"], self.ssl["cert"],
-                               self.options.settings,
-                               self.options.debug)
             server.start()
 
     def stop(self):
@@ -235,6 +236,14 @@ class Debbox (object):
         if not self._status():
             print "Debbox is not running."
             return
+        mpid = file(self.mpid).readlines()[0]
+        spid = file(self.spid).readlines()[0]
+        print "Stopping master process."
+        os.kill(mpid, signal.SIGTERM)
+        print "Stopping slave process."
+        os.kill(spid, signal.SIGTERM)
+        self.__cleanup__()
+        sys.exit(0)
 
     def status(self):
         """
