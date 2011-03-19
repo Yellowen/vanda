@@ -18,58 +18,52 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-# I borrow some lines from fapws3 and gevent samples.
-
 # This modules runs fapws3 or gevent webserver and pass the requests to
 # django wsgi handlers
 
 import os
 import sys
-import time
-from optparse import OptionParser
 
-import django
+from optparse import OptionParser
+from debbox.core.server import WebServer
+
 
 parser = OptionParser()
 parser.set_defaults(
     port='8000',
     backend='gevent',
     host='127.0.0.1',
+    debug=True,
     settings='debbox.settings',
 )
 
 parser.add_option('--port', dest='port')
 parser.add_option('--host', dest='host')
-parser.add_option('--backend', dest='backend')
+parser.add_option('--debug', dest='debug')
 parser.add_option('--settings', dest='settings')
 parser.add_option('--pythonpath', dest='pythonpath')
 
 
 options, args = parser.parse_args()
-
-
-os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
-
-# since we don't use threads, internal checks are no more required
-sys.setcheckinterval = 100000
-
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
 sys.path.insert(1, "debbox/")
-if options.backend == "fapws3":
-    from debbox.core.servers.fapws3 import FAPWSServer
-    server = FAPWSServer(options.host, options.port)
-elif options.backend == "gevent":
-    from debbox.core.servers.GEvent import GEventServer
+
+pid = os.fork()
+
+if pid:
+    # parent process
+    pass
+else:
+    # child process
+
+    # TODO: Get the ssl keys in the run time dynamically (fit to debian)
     __me__ = os.path.abspath(__file__)
     keyfile = os.path.join(os.path.dirname(__me__), 'ssl/server.key')
     certfile = os.path.join(os.path.dirname(__me__), 'ssl/server.crt')
-    server = GEventServer(options.host, int(options.port),
-                          keyfile=keyfile,
-                          certfile=certfile)
-else:
-    print "Error: Invalid web server backend."
-    sys.exit(1)
-print 'Start on ', (options.host, options.port)
-server.start()
+
+    server = WebServer(options.host, int(options.port),
+                       keyfile, certfile, options.settings,
+                       options.debug)
+    server.start()

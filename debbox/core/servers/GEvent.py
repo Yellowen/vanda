@@ -25,8 +25,6 @@ from gevent.pywsgi import WSGIServer
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.signals import got_request_exception
 
-from debbox.core.log import logger
-
 
 class GEventServer (object):
     """
@@ -39,8 +37,8 @@ class GEventServer (object):
 
     def start(self):
         got_request_exception.connect(self.exception_printer)
-        logger.info("Starting SSL connection with %s" % self.ssl)
-        WSGIServer((self.host, self.port), WSGIHandler(), **self.ssl).serve_forever()
+        WSGIServer((self.host, self.port), WSGIHandler(),
+                   **self.ssl).serve_forever()
 
     def exception_printer(self, sender, **kwargs):
         traceback.print_exc()

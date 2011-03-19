@@ -6,6 +6,7 @@
 [ ] Allow to choose between web server backends (GEvent, Fapws3)
 [ ] Modular conf parser
 [ ] 2 way SSL
+[ ] replacing optparser with argparser when migrating to python2.7
 
 -- Logsystem --
 [ ] Add timestamp and line number of log in log/debbox
