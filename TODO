@@ -7,6 +7,10 @@
 [ ] Modular conf parser
 [ ] 2 way SSL
 [ ] replacing optparser with argparser when migrating to python2.7
+[ ] master and slave process
+[ ] deamonize the master process
+[ ] provide a debug switch 
+[ ] allow to redirect the stdout and strerr if debug mode is off
 
 -- Logsystem --
 [ ] Add timestamp and line number of log in log/debbox
