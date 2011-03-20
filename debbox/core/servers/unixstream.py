@@ -56,9 +56,9 @@ class UnixStream(BaseServer):
 
         if not hasattr(self, 'socket'):
             self.socket = _unix_listener(self.address,
-                                        backlog=self.backlog,
-                                        reuse_addr=self.reuse_addr)
+                                        backlog=self.backlog)
             self.address = self.socket.getsockname()
+            print "UNIXSTREAM>>>> ", self.address
         self._stopped_event.clear()
 
     def start(self):
@@ -77,8 +77,54 @@ class UnixStream(BaseServer):
             self.kill()
             raise
 
+    def kill(self):
+        """
+        Close the listener socket and stop accepting.
+        """
+        self.started = False
+        try:
+            self.stop_accepting()
+        finally:
+            try:
+                self.socket.close()
+            except Exception:
+                pass
+            self.__dict__.pop('socket', None)
+            self.__dict__.pop('handle', None)
 
-def _unix_listener(address, backlog=50, reuse_addr=None):
+    def stop(self, timeout=None):
+        """
+        Stop accepting the connections and close the listening socket.
+
+        If the server uses a pool to spawn the requests, then `stop` also waits
+        for all the handlers to exit. If there are still handlers executing
+        after *timeout*  has expired (default 1 second), then the currently
+        running handlers in the pool are killed.
+        """
+        self.kill()
+        if timeout is None:
+            timeout = self.stop_timeout
+        if self.pool:
+            self.pool.join(timeout=timeout)
+            self.pool.kill(block=True, timeout=1)
+        self.post_stop()
+
+    def post_stop(self):
+        self._stopped_event.set()
+
+    def serve_forever(self, stop_timeout=None):
+        """Start the server if it hasn't been already started and wait until it's stopped."""
+        # add test that serve_forever exists on stop()
+        if not self.started:
+            self.start()
+        try:
+            self._stopped_event.wait()
+        except:
+            self.stop(timeout=stop_timeout)
+            raise
+
+
+def _unix_listener(address, backlog=10):
     """
     A shortcut to create a unix socket, bind it and put it into listening
     state.
