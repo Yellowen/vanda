@@ -61,6 +61,72 @@ class UnixStream(BaseServer):
             print "UNIXSTREAM>>>> ", self.address
         self._stopped_event.clear()
 
+    def start_accepting(self):
+        if self._accept_event is None:
+            self._accept_event = self.loop.io(self.socket.fileno(), 1)
+            self._accept_event.start(self._do_accept)
+
+    def _start_accepting_if_started(self, _event=None):
+        if self.started:
+            self.start_accepting()
+
+    def stop_accepting(self):
+        if self._accept_event is not None:
+            self._accept_event.stop()
+            self._accept_event = None
+        if self._start_accepting_timer is not None:
+            self._start_accepting_timer.stop()
+            self._start_accepting_timer = None
+
+    def _do_accept(self, event, _evtype):
+        assert event is self._accept_event
+        address = None
+        try:
+            if self.full():
+                self.stop_accepting()
+                return
+            try:
+                client_socket, address = self.socket.accept()
+            except socket.error, err:
+                if err[0] == errno.EAGAIN:
+                    return
+                raise
+            self.delay = self.min_delay
+            client_socket = socket.socket(_sock=client_socket)
+            spawn = self._spawn
+            if spawn is None:
+                self._handle(client_socket, address)
+            else:
+                spawn(self._handle, client_socket, address)
+            return
+        except:
+            traceback.print_exc()
+            ex = sys.exc_info()[1]
+            if self.is_fatal_error(ex):
+                self.kill()
+                sys.stderr.write('ERROR: %s failed with %s\n' % (self, str(ex) or repr(ex)))
+                return
+        try:
+            if address is None:
+                sys.stderr.write('%s: Failed.\n' % (self, ))
+            else:
+                sys.stderr.write('%s: Failed to handle request from %s\n' % (self, address, ))
+        except Exception:
+            traceback.print_exc()
+        if self.delay >= 0:
+            self.stop_accepting()
+            self._start_accepting_timer = self.loop.timer(self.delay)
+            self._start_accepting_timer.start(self._start_accepting_if_started)
+            self.delay = min(self.max_delay, self.delay * 2)
+
+    def is_fatal_error(self, ex):
+        return isinstance(ex, socket.error) and ex[0] in (errno.EBADF, errno.EINVAL, errno.ENOTSOCK)
+
+    def wrap_socket_and_handle(self, client_socket, address):
+        # used in case of ssl sockets
+        ssl_socket = self.wrap_socket(client_socket, **self.ssl_args)
+        return self.handle(ssl_socket, address)
+
     def start(self):
         """
         Start accepting the connections.
