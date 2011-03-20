@@ -145,3 +145,22 @@ def _unix_listener(address, backlog=10):
     # TODO: does non-blocking is good for our goal
     sock.setblocking(0)
     return sock
+
+
+def test_app(socket, address):
+    print 'New connection from %s:%s' % address
+    # using a makefile because we want to use readline()
+    fileobj = socket.makefile()
+    fileobj.write('Welcome to the echo server! Type quit to exit.\r\n')
+    fileobj.flush()
+    while True:
+        line = fileobj.readline()
+        if not line:
+            print "client disconnected"
+            break
+        if line.strip().lower() == 'quit':
+            print "client quit"
+            break
+        fileobj.write(line)
+        fileobj.flush()
+        print "echoed", repr(line)
