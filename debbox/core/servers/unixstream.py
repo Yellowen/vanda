@@ -17,9 +17,15 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+import os
+import sys
+import errno
+import traceback
 import _socket
 
+from gevent import socket
 from gevent.baseserver import BaseServer
+from gevent.hub import get_hub
 
 
 class UnixStream(BaseServer):
@@ -27,6 +33,32 @@ class UnixStream(BaseServer):
     A unix socket stream server. this server will be run as the Master
     process in debbox
     """
+
+    # the number of seconds to sleep in case there was an error in
+    # accept() call for consecutive errors the delay will double
+    # until it reaches max_delay when accept() finally succeeds the
+    # delay will be reset to min_delay again
+    min_delay = 0.01
+    max_delay = 1
+
+    def __init__(self, listener, handle=None,
+                 backlog=None, spawn='default'):
+
+        BaseServer.__init__(self, listener,
+                            handle=handle,
+                            backlog=backlog,
+                            spawn=spawn)
+
+        self.delay = self.min_delay
+        self._accept_event = None
+        self._start_accepting_timer = None
+        self.loop = get_hub().loop
+
+        # try to remove the sock file if already exists
+        try:
+            os.remove(listener)
+        except OSError:
+            pass
 
     def set_listener(self, listener, backlog=None):
         if not isinstance(listener, str):
@@ -62,6 +94,9 @@ class UnixStream(BaseServer):
         self._stopped_event.clear()
 
     def start_accepting(self):
+        """
+        start main loop for accepting connection.
+        """
         if self._accept_event is None:
             self._accept_event = self.loop.io(self.socket.fileno(), 1)
             self._accept_event.start(self._do_accept)
@@ -71,6 +106,9 @@ class UnixStream(BaseServer):
             self.start_accepting()
 
     def stop_accepting(self):
+        """
+        stop accepting connections.
+        """
         if self._accept_event is not None:
             self._accept_event.stop()
             self._accept_event = None
@@ -87,7 +125,7 @@ class UnixStream(BaseServer):
                 return
             try:
                 client_socket, address = self.socket.accept()
-            except socket.error, err:
+            except _socket.error, err:
                 if err[0] == errno.EAGAIN:
                     return
                 raise
@@ -104,13 +142,15 @@ class UnixStream(BaseServer):
             ex = sys.exc_info()[1]
             if self.is_fatal_error(ex):
                 self.kill()
-                sys.stderr.write('ERROR: %s failed with %s\n' % (self, str(ex) or repr(ex)))
+                sys.stderr.write('ERROR: %s failed with %s\n' % \
+                                 (self, str(ex) or repr(ex)))
                 return
         try:
             if address is None:
                 sys.stderr.write('%s: Failed.\n' % (self, ))
             else:
-                sys.stderr.write('%s: Failed to handle request from %s\n' % (self, address, ))
+                sys.stderr.write('%s: Failed to handle request from %s\n' % \
+                                 (self, address, ))
         except Exception:
             traceback.print_exc()
         if self.delay >= 0:
@@ -120,12 +160,9 @@ class UnixStream(BaseServer):
             self.delay = min(self.max_delay, self.delay * 2)
 
     def is_fatal_error(self, ex):
-        return isinstance(ex, socket.error) and ex[0] in (errno.EBADF, errno.EINVAL, errno.ENOTSOCK)
-
-    def wrap_socket_and_handle(self, client_socket, address):
-        # used in case of ssl sockets
-        ssl_socket = self.wrap_socket(client_socket, **self.ssl_args)
-        return self.handle(ssl_socket, address)
+        return isinstance(ex, socket.error) and ex[0] in (errno.EBADF,
+                                                          errno.EINVAL,
+                                                          errno.ENOTSOCK)
 
     def start(self):
         """
