@@ -213,9 +213,11 @@ class Debbox (object):
 
         if slavepid > 0:
             # Master Process
-            file(self.mpid, "w+").write(str(self._masterpid))
-            # TODO: find a way to build slave pid file in better time
-            file(self.spid, "w+").write(str(slavepid))
+
+            if not self.options.foreground:
+                file(self.mpid, "w+").write(str(self._masterpid))
+                # TODO: find a way to build slave pid file in better time
+                file(self.spid, "w+").write(str(slavepid))
             # TODO: this wait should be override by MasterServer main loop
             os.waitpid(slavepid, 0)
         else:
