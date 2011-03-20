@@ -84,10 +84,15 @@ def _unix_listener(address, backlog=50, reuse_addr=None):
     state.
     """
     sock = _socket.socket(_socket.AF_UNIX)
-    if reuse_addr is not None:
-        sock.setsockopt(_socket.SOL_SOCKET, _socket.SO_REUSEADDR, reuse_addr)
     sock.bind(address)
     sock.listen(backlog)
+    # 0 means non-blocking and 1 means blocking
+    # blocking:
+    # any recv or send call wait until finishing their process
+    # non-blocking:
+    # if recv or send or any communication function can't reach their resource
+    # or can't do their job an exception will raise
+
+    # TODO: does non-blocking is good for our goal
     sock.setblocking(0)
     return sock
-
