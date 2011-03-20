@@ -68,23 +68,27 @@ class Debbox (object):
         """
 
         self.options = options
+
+        # PID configurations ===================================
         self.piddir = options.piddir.rstrip("/")
 
         # debbox pid files
         self.mpid = "/".join((self.piddir, "debbox_master.pid"))
         self.spid = "/".join((self.piddir, "debbox_slave.pid"))
 
-        # creating configuration object
+        # creating configuration object ========================
         self.config = ConfigParser()
         if os.path.exists(self.options.conf):
             self.config.read(self.options.conf)
         else:
             raise self.CantFindConfigFile()
 
+        # reading SSL from config file
         self.ssl = {"key": self.config.get("SSL", "key"),
                     "cert": self.config.get("SSL", "cert"),
                     }
 
+        # setting standard IO
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
@@ -126,6 +130,7 @@ class Debbox (object):
         """
         Debbox destructor.
         """
+        # removing servers pid files on exit
         if os.path.exists(self.mpid):
             try:
                 os.remove(self.mpid)
@@ -169,28 +174,32 @@ class Debbox (object):
             return
 
         # Daemonizing Process ==============================
-        # First Fork
-        pid = None
-        try:
-            pid = os.fork()
-            self.logger.debug("First fork pid: %s" % pid)
-        except OSError:
-            raise self.CantFork("Can't create the master process.")
+        # Please read about how a daemon work before asking
+        # questions
 
-        if pid > 0:
-            # Exist from parent
-            self.logger.debug("First fork exit")
-            sys.exit(0)
+        if not self.options.foreground:
+            # First Fork
+            pid = None
+            try:
+                pid = os.fork()
+                self.logger.debug("First fork pid: %s" % pid)
+            except OSError:
+                raise self.CantFork("Can't create the master process.")
 
-        os.umask(027)
-        try:
-            self._sid = os.setsid()
-        except OSError:
-            # TODO: check the exception
-            raise
+            if pid > 0:
+                # Exist from parent
+                self.logger.debug("First fork exit")
+                sys.exit(0)
 
-        # TODO: Where should we chdir? where is the safe place?
-        self.io_redirect()
+            os.umask(027)
+            try:
+                self._sid = os.setsid()
+            except OSError:
+                # TODO: check the exception
+                raise
+
+            # TODO: Where should we chdir? where is the safe place?
+            self.io_redirect()
         self._masterpid = os.getpid()
         self.logger.debug("Master process at %s" % self._masterpid)
 
@@ -260,7 +269,7 @@ class Debbox (object):
             print "Debbox Slave is not running."
 
     def io_redirect(self):
-        if not self.options.debug:
+        if not self.options.debug or not self.options.foreground:
             # Redirecting standard I/O to nowhere
             sys.stdout.flush()
             sys.stderr.flush()

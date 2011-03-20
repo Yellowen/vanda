@@ -38,10 +38,13 @@ parser.set_defaults(
 
 parser.add_option('-k', dest='action',
                   help="Do ACTION on debbox. ACTION like {start|stop|status}")
-parser.add_option('--port', dest='port',
-                  help="Run web server on PORT.")
+parser.add_option('-f', dest='foreground',
+                  action="store_true",
+                  help="Run Debbox on foreground.")
 parser.add_option('-c', dest='conf',
                   help="Use CONF config file. default is /etc/debbox/debbox.conf")
+parser.add_option('--port', dest='port',
+                  help="Run web server on PORT.")
 parser.add_option('--host', dest='host',
                   help="Run web server on HOST.")
 parser.add_option('--debug', dest='debug', action="store_true",
