@@ -113,7 +113,10 @@ class UnixStream(BaseServer):
         self._stopped_event.set()
 
     def serve_forever(self, stop_timeout=None):
-        """Start the server if it hasn't been already started and wait until it's stopped."""
+        """
+        Start the server if it hasn't been already started and wait until
+        it's stopped.
+        """
         # add test that serve_forever exists on stop()
         if not self.started:
             self.start()
