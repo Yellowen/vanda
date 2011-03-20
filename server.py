@@ -18,8 +18,10 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import sys
+# patching python standard threading
+from gevent import monkey; monkey.patch_all()
 
+import sys
 from optparse import OptionParser
 
 from debbox.core.daemon import Debbox
