@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -----------------------------------------------------------------------------
 #    Debbox - Modern administration panel for Debian GNU/Linux
 #    Copyright (C) 2011 Some Hackers In Town
