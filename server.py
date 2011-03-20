@@ -40,11 +40,15 @@ parser.set_defaults(
 
 parser.add_option('-k', dest='action',
                   help="Do ACTION on debbox. ACTION like {start|stop|status}")
+parser.add_option('--shell', dest='shell',
+                  action="store_true",
+                  help="Execute a python shell (ipython), in the patched env.")
 parser.add_option('-f', dest='foreground',
                   action="store_true",
                   help="Run Debbox on foreground.")
 parser.add_option('-c', dest='conf',
-                  help="Use CONF config file. default is /etc/debbox/debbox.conf")
+                  help="Use CONF config file. default is" + \
+                  "/etc/debbox/debbox.conf")
 parser.add_option('--port', dest='port',
                   help="Run web server on PORT.")
 parser.add_option('--host', dest='host',
@@ -62,8 +66,14 @@ options, args = parser.parse_args()
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
-
 sys.path.insert(1, "debbox/")
+
+if options.shell:
+    from IPython.Shell import IPShellEmbed
+    sys.argv = []
+    ipshell = IPShellEmbed()
+    ipshell()
+    sys.exit(0)
 
 try:
     daemon = Debbox(options)
