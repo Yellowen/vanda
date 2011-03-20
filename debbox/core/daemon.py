@@ -98,13 +98,13 @@ class Debbox (object):
             self.slave_user = self.config.get("User", "user", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable username in config file."
-            sys.exist(1)
+            sys.exit(1)
 
         try:
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable group name in config file."
-            sys.exist(1)
+            sys.exit(1)
 
         # Setting up log directory
         self.logfolder = self.config.get("Log", "folder")
