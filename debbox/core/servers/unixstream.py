@@ -26,7 +26,7 @@ import _socket
 
 from gevent import socket
 from gevent.baseserver import BaseServer
-from gevent.hub import get_hub
+from gevent import core
 
 
 class UnixStream(BaseServer):
@@ -53,7 +53,6 @@ class UnixStream(BaseServer):
         self.delay = self.min_delay
         self._accept_event = None
         self._start_accepting_timer = None
-        self.loop = get_hub().loop
 
         # try to remove the sock file if already exists
         try:
@@ -91,16 +90,16 @@ class UnixStream(BaseServer):
             self.socket = _unix_listener(self.address,
                                         backlog=self.backlog)
             self.address = self.socket.getsockname()
-            print "UNIXSTREAM>>>> ", self.address
         self._stopped_event.clear()
+        self._handle = self.handle
 
     def start_accepting(self):
         """
         start main loop for accepting connection.
         """
         if self._accept_event is None:
-            self._accept_event = self.loop.io(self.socket.fileno(), 1)
-            self._accept_event.start(self._do_accept)
+            self._accept_event = core.read_event(self.socket.fileno(),
+                                                 self._do_accept, persist=True)
 
     def _start_accepting_if_started(self, _event=None):
         if self.started:
@@ -111,10 +110,10 @@ class UnixStream(BaseServer):
         stop accepting connections.
         """
         if self._accept_event is not None:
-            self._accept_event.stop()
+            self._accept_event.cancel()
             self._accept_event = None
         if self._start_accepting_timer is not None:
-            self._start_accepting_timer.stop()
+            self._start_accepting_timer.cancel()
             self._start_accepting_timer = None
 
     def _do_accept(self, event, _evtype):
@@ -195,6 +194,7 @@ class UnixStream(BaseServer):
                 pass
             self.__dict__.pop('socket', None)
             self.__dict__.pop('handle', None)
+            self.__dict__.pop('_handle', None)
 
     def stop(self, timeout=None):
         """
@@ -252,7 +252,7 @@ def _unix_listener(address, backlog=10):
 
 
 def test_app(socket, address):
-    print 'New connection from %s:%s' % address
+    print 'New connection from %s' % address
     # using a makefile because we want to use readline()
     fileobj = socket.makefile()
     fileobj.write('Welcome to the echo server! Type quit to exit.\r\n')
