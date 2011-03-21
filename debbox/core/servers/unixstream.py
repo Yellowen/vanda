@@ -19,10 +19,10 @@
 
 import os
 import sys
-
 import errno
 import traceback
 import _socket
+from pwd import getpwnam
 
 from gevent import socket
 from gevent.baseserver import BaseServer
@@ -42,8 +42,9 @@ class UnixStream(BaseServer):
     min_delay = 0.01
     max_delay = 1
 
-    def __init__(self, listener, handle=None,
-                 backlog=None, spawn='default'):
+    def __init__(self, listener, user=None,
+                 handle=None, backlog=None,
+                 spawn='default'):
 
         BaseServer.__init__(self, listener,
                             handle=handle,
@@ -54,6 +55,7 @@ class UnixStream(BaseServer):
         self._accept_event = None
         self._start_accepting_timer = None
 
+        self.user = user
         # try to remove the sock file if already exists
         try:
             os.remove(listener)
@@ -88,7 +90,8 @@ class UnixStream(BaseServer):
 
         if not hasattr(self, 'socket'):
             self.socket = _unix_listener(self.address,
-                                        backlog=self.backlog)
+                                         self.backlog,
+                                         self.user)
             self.address = self.socket.getsockname()
         self._stopped_event.clear()
         self._handle = self.handle
@@ -231,7 +234,7 @@ class UnixStream(BaseServer):
             raise
 
 
-def _unix_listener(address, backlog=10):
+def _unix_listener(address, backlog=10, user=None):
     """
     A shortcut to create a unix socket, bind it and put it into listening
     state.
@@ -248,6 +251,14 @@ def _unix_listener(address, backlog=10):
 
     # TODO: does non-blocking is good for our goal
     sock.setblocking(0)
+    if user:
+        try:
+            uid = getpwnam(user)[2]
+            gid = getpwnam(user)[3]
+            os.chown(address, uid, gid)
+        except:
+            raise
+
     return sock
 
 
