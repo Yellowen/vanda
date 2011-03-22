@@ -56,4 +56,4 @@ class Master (object):
                 # data format is invalid
                 fileobj.write(self._dumpmsg(-1, "invalid format"))
                 continue
-            
+
