@@ -22,6 +22,8 @@ import os
 import sys
 
 from GEvent import GEventServer
+from unixstream import UnixStream
+from master import Master
 
 
 class WebServer (object):
@@ -53,4 +55,7 @@ class WebServer (object):
             logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
                         (self._cert, self._key))
             print 'Start SSL connection on ', (self.host, self.port)
-        server.start()
+        if self._debug:
+            server.serve_forever()
+        else:
+            server.start()

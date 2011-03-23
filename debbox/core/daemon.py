@@ -26,7 +26,8 @@ from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser, NoSectionError
 
-from debbox.core.servers import WebServer
+from debbox.core.servers import WebServer, UnixStream
+from debbox.core.servers import Master
 
 
 class Logger (object):
@@ -217,8 +218,16 @@ class Debbox (object):
                 file(self.mpid, "w+").write(str(self._masterpid))
                 # TODO: find a way to build slave pid file in better time
                 file(self.spid, "w+").write(str(slavepid))
-            # TODO: this wait should be override by MasterServer main loop
-            os.waitpid(slavepid, 0)
+            socket = self.config.get("Socket", "master", "/tmp/debbox.sock")
+            masterapp = Master(self.logger, self.options.debug)
+            masterserver = UnixStream(socket, self.slave_user,
+                                      masterapp.handler)
+            print "Running Master Server . . ."
+            if self.options.debug:
+                masterserver.serve_forever()
+            else:
+                masterserver.start()
+
         else:
             # Slave process
             server = WebServer(self.options.host, int(self.options.port),

@@ -84,7 +84,7 @@ except Debbox.CantFindConfigFile:
 if options.foreground:
     daemon.start()
 
-if options.action == "start":
+elif options.action == "start":
     daemon.start()
 
 elif options.action == "stop":

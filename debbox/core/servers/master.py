@@ -57,14 +57,13 @@ class Master (object):
     Master process application class.
     """
 
-    # TODO: make command dictionary loadable form a file
-    commands = {
-        "echo": self.echo,
-        }
-
     def __init__(self, logger_instance, debug=False):
         self.logger = logger_instance
         self.debug = debug
+        # TODO: make command dictionary loadable form a file
+        self.commands = {
+            "echo": self.echo,
+            }
 
     def _dumpmsg(self, status, msg, extra=None):
         """
