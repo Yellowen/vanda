@@ -27,11 +27,11 @@ import json
 # String format: JSON
 # JSON data structure:
 # {"command":  COMMAND,
-#  "args" : [arg1, arg2, ....],
+#  "args" : {"arg1": value1, "arg2": value2, ....],
 # }
 #
 # COMMAND: is the name of a function of method on the Master process
-# args: will be a list of arguments that should be passed to COMMAND function
+# args: will be a dict of arguments that should be passed to COMMAND function
 #
 # example:
 # {"command": "echo",
@@ -132,3 +132,9 @@ class Master (object):
             else:
                 fileobj.write(self._dumpmsg(-1, "malform command"))
                 continue
+
+    def echo(self, **kwargs):
+        """
+        this is a echo command. just for testing.
+        """
+        return kwargs
