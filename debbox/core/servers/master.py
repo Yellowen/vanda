@@ -71,7 +71,7 @@ class Master (object):
         return a json form data message to transport via socket
         """
         return json.dumps({"status": status,
-                           "message": msg,
+                           "message": pickle.dumps(msg),
                            "extra": extra})
 
     def handler(self, socket, address):
@@ -112,15 +112,20 @@ class Master (object):
                 if command in self.commands:
                     try:
                         result = self.commands[command](**args)
+                        fileobj.write(self._dumpmsg(0, result))
+                        continue
+
                     except:
                         if self.debug:
-                            fileobj.write(self._dumpmsg(-1, pickle.dumps(-1,
-                                                                sys.exc_info(),
-                                                                extra="debug")
-                                                        ))
+                            fileobj.write(self._dumpmsg(-1,
+                                                sys.exc_info(),
+                                                extra="debug"))
                             continue
                         else:
-                            pass
+                            fileobj.write(self._dumpmsg(-1,
+                                                        "An error occured"))
+                            continue
+
                 else:
                     fileobj.write(self._dumpmsg(-1, "command not found"))
                     continue
