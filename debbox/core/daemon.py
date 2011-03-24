@@ -27,7 +27,7 @@ from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser, NoSectionError
 
 from debbox.core.servers import WebServer, UnixStream
-from debbox.core.servers import Master
+from debbox.core.servers import MasterServer
 
 
 class Logger (object):
@@ -213,13 +213,13 @@ class Debbox (object):
 
         if slavepid > 0:
             # Master Process
-
+            file("/tmp/debbox_%s" % os.getpid(), "w+").write(self.options.conf)
             if not self.options.foreground:
                 file(self.mpid, "w+").write(str(self._masterpid))
                 # TODO: find a way to build slave pid file in better time
                 file(self.spid, "w+").write(str(slavepid))
             socket = self.config.get("Socket", "master", "/tmp/debbox.sock")
-            masterapp = Master(self.logger, self.options.debug)
+            masterapp = MasterServer(self.logger, self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)
             print "Running Master Server . . ."
@@ -250,6 +250,7 @@ class Debbox (object):
         """
         Stop the debbox server.
         """
+        # TODO: remove all the temp file in /tmp/
         if not self._status():
             print "Debbox is not running."
             return
