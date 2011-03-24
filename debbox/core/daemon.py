@@ -212,12 +212,23 @@ class Debbox (object):
             raise self.CantFork("Can't create the slave process")
 
         if slavepid > 0:
+
             # Master Process
-            file("/tmp/debbox_%s" % os.getpid(), "w+").write(self.options.conf)
+            # writing the config file address for other codes
+            conf = os.path.abspath(self.options.conf)
+            file("/tmp/debbox_%s" % os.getpid(), "w+").write(conf)
+
+            # Register the cleanup process.
+            if self.options.foreground:
+                atexit.register(self.stop)
+
+            # writing pid files
             if not self.options.foreground:
                 file(self.mpid, "w+").write(str(self._masterpid))
                 # TODO: find a way to build slave pid file in better time
                 file(self.spid, "w+").write(str(slavepid))
+
+            # running the master server
             socket = self.config.get("Socket", "master", "/tmp/debbox.sock")
             masterapp = MasterServer(self.logger, self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
@@ -250,7 +261,16 @@ class Debbox (object):
         """
         Stop the debbox server.
         """
-        # TODO: remove all the temp file in /tmp/
+        import re
+        files_name_regex = re.compile("^debbox_\d+")
+        print "Removing tmp files . . ."
+        for file_ in os.listdir("/tmp"):
+            if files_name_regex.match(file_):
+                try:
+                    os.remove("/tmp/%s" % file_)
+                except OSError:
+                    print "Warning: can not delete /tmp/%s" % file_
+
         if not self._status():
             print "Debbox is not running."
             return
