@@ -17,11 +17,6 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import sys
-import pickle
-import json
-
-
 # Transport protocol specification ============================================
 # Request:
 # String format: JSON
@@ -51,8 +46,12 @@ import json
 # EXTRA: is a extra flag, each command will use it for its own
 # =============================================================================
 
+import sys
+import pickle
+import json
 
-class Master (object):
+
+class MasterServer (object):
     """
     Master process application class.
     """
@@ -137,3 +136,15 @@ class Master (object):
         this is a echo command. just for testing.
         """
         return kwargs
+
+
+class MasterClient (object):
+    """
+    Client class for communicating with MasterServer.
+    """
+
+    def __init__(self):
+        import _socket as socket
+        from ConfigParser import ConfigParser, NoSectionError
+        self.socket = socket.socket(socket.AF_UNIX)
+        
