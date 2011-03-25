@@ -46,9 +46,12 @@
 # EXTRA: is a extra flag, each command will use it for its own
 # =============================================================================
 
+import os
 import sys
 import pickle
 import json
+
+#from debbox.core.log import logger
 
 
 class MasterServer (object):
@@ -146,5 +149,48 @@ class MasterClient (object):
     def __init__(self):
         import _socket as socket
         from ConfigParser import ConfigParser, NoSectionError
+
+        # getting the config file address by reading the tmp file
+        # in /tmp/debbox_<parent pid>
+        parentpid = os.getppid()
+        filename = "/tmp/debbox_%s" % parentpid
+        try:
+            config_address = file(filename).readline()
+        except IOError:
+            # TODO: handle this IOError
+            #logger.error("Can't find the temporary file.")
+            print "IOERROR"
+            raise
+
+        # Reading config file
+        self.config = ConfigParser()
+        if os.path.exists(config_address):
+            self.config.read(config_address)
+        else:
+            raise self.CantFindConfigFile()
+
+        # creating the socket object and connecting that to master
+        # socket
         self.socket = socket.socket(socket.AF_UNIX)
-        
+        sockaddr = "/tmp/debbox.sock"
+        try:
+            sockaddr = self.config.get("Socket", "master",
+                                                "/tmp/debbox.sock")
+        except NoSectionError:
+            pass
+
+        try:
+            self.socket.connect(sockaddr)
+            #logger.debug("Socket connection established.")
+            print "Connection established"
+        except socket.error:
+            #logger.error("Can't connect to '%s' socket" % sockaddr)
+            print "Can't connect"
+            raise self.CantConnectToSocket()
+        self.socket.close()
+
+    class CantFindConfigFile (Exception):
+        pass
+
+    class CantConnectToSocket (Exception):
+        pass
