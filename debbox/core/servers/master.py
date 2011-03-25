@@ -116,7 +116,6 @@ class MasterServer (object):
                     try:
                         result = self.commands[command](**args)
                         fileobj.write(self._dumpmsg(0, result))
-                        print "Send : %s" % self._dumpmsg(0, result)
                         fileobj.flush()
                         continue
 
@@ -142,12 +141,29 @@ class MasterServer (object):
         """
         this is a echo command. just for testing.
         """
+        raise Exception("sameer")
         return kwargs
 
 
 class MasterClient (object):
     """
     Client class for communicating with MasterServer.
+
+    command method will send a command to MasterServer, use it like
+
+       masterclient_instance.command(command='command_name',
+                                     arg1='value', arg2=...)
+
+    each argument that you provide for command method will pass to
+    remote command, (Note: you should use arguments in keyword type
+    not list type)
+
+    command method will return an object that have three attribute
+    status = return code of remote command, 0 means ok
+    message = return result of remote command
+    extra = extra flag of transport protocol
+
+    also command exception will raise remote exception in MasterClient.
     """
 
     def __init__(self):
@@ -210,6 +226,11 @@ class MasterClient (object):
         print "Data sent: %s" % jpacket
         buf = self.fd.readline()
         buf = json.loads(buf)
+
+        # raising remote exception
+        if buf["extra"] == "debug":
+            exception = pickle.loads(str(buf["message"]))[1]
+            raise exception
 
         # creating a result object
         result = type("Result", (object, ),
