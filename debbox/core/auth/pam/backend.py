@@ -17,12 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from core.auth.pam import pam
-
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from core.log import logger
+from debbox.core.log import logger
+from debbox.core.auth.pam import pam
+from debbox.core.servers import MasterClient
 
 
 class PAMAuthentication (object):
@@ -32,21 +32,45 @@ class PAMAuthentication (object):
 
     def authenticate(self, username=None, password=None):
         service = settings.PAM_SERVICE
-        if pam.authenticate(username, password, service):
-            try:
-                user = User.objects.get(username=username)
-            except:
-                user = User(username=username, password='None')
 
-                # Setting up root user
-                root_user = getattr(settings, 'PAM_SUPERUSER', "root")
-                if user.username == root_user:
-                    user.is_superuser = True
-                    user.is_staff = True
+        # establish connection to master server through MasterClient
+        # to send a authentication command.
+        try:
+            mclient = MasterClient()
+        except (MasterClient.CantFindConfigFile, IOError):
+            # TODO: show a good error page to user and alert him
+            # about the error
+            raise
 
-                user.save()
-            logger.debug("Loging '%s' user in." % username)
-            return user
+        try:
+            mclient.connect()
+        except MasterClient.CantConnectToSocket:
+            # TODO: show a good error page to user and alert him
+            # about the error
+            raise
+
+        result = mclient.command("authenticate",
+                                 username=username,
+                                 password=password,
+                                 service=service)
+        if result.status == 0:
+            print ">>>>>> ", result.result
+            if result.result:
+                try:
+                    user = User.objects.get(username=username)
+                except:
+                    user = User(username=username, password='None')
+
+                    # Setting up root user
+                    root_user = getattr(settings, 'PAM_SUPERUSER', "root")
+                    if user.username == root_user:
+                        user.is_superuser = True
+                        user.is_staff = True
+
+                    user.save()
+                logger.debug("Loging '%s' user in." % username)
+                return user
+
         logger.warn("Login failed with username: %s password: %s" % \
                     (username, password))
         return None

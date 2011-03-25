@@ -54,6 +54,8 @@ import _socket as socket
 from ConfigParser import ConfigParser, NoSectionError
 #from debbox.core.log import logger
 
+from debbox.core.auth.pam import pam
+
 
 class MasterServer (object):
     """
@@ -66,6 +68,7 @@ class MasterServer (object):
         # TODO: make command dictionary loadable form a file
         self.commands = {
             "echo": self.echo,
+            "authenticate": pam.authenticate,
             }
 
     def _dumpmsg(self, status, msg, extra=None):
@@ -145,7 +148,6 @@ class MasterServer (object):
         """
         this is a echo command. just for testing.
         """
-        raise Exception("sameer")
         return kwargs
 
 
