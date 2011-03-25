@@ -24,13 +24,14 @@ CALLOC.argtypes = [c_uint, c_uint]
 
 STRDUP = LIBC.strdup
 STRDUP.argstypes = [c_char_p]
-STRDUP.restype = POINTER(c_char) # NOT c_char_p !!!!
+STRDUP.restype = POINTER(c_char)  # NOT c_char_p !!!!
 
 # Various constants
 PAM_PROMPT_ECHO_OFF = 1
 PAM_PROMPT_ECHO_ON = 2
 PAM_ERROR_MSG = 3
 PAM_TEXT_INFO = 4
+
 
 class PamHandle(Structure):
     """wrapper class for pam_handle_t"""
@@ -42,6 +43,7 @@ class PamHandle(Structure):
         Structure.__init__(self)
         self.handle = 0
 
+
 class PamMessage(Structure):
     """wrapper class for pam_message structure"""
     _fields_ = [
@@ -51,6 +53,7 @@ class PamMessage(Structure):
 
     def __repr__(self):
         return "<PamMessage %i '%s'>" % (self.msg_style, self.msg)
+
 
 class PamResponse(Structure):
     """wrapper class for pam_response structure"""
@@ -65,6 +68,7 @@ class PamResponse(Structure):
 CONV_FUNC = CFUNCTYPE(c_int,
         c_int, POINTER(POINTER(PamMessage)),
                POINTER(POINTER(PamResponse)), c_void_p)
+
 
 class PamConv(Structure):
     """wrapper class for pam_conv structure"""
@@ -117,10 +121,6 @@ def authenticate(username, password, service='login'):
         return False
 
     retval = PAM_AUTHENTICATE(handle, 0)
-    import os
-    print "UID >> ", os.getuid()
-    print "u >> %s -- p >> %s -- s >> %s" % (username, password, service)
-    print "retval >> ", retval
     return retval == 0
 
 if __name__ == "__main__":

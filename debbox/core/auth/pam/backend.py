@@ -54,7 +54,6 @@ class PAMAuthentication (object):
                                  password=password,
                                  service=service)
         if result.status == 0:
-            print ">>>>>> ", result.result
             if result.result:
                 try:
                     user = User.objects.get(username=username)
