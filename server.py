@@ -18,8 +18,10 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import sys
+# patching python standard threading
+from gevent import monkey; monkey.patch_all()
 
+import sys
 from optparse import OptionParser
 
 from debbox.core.daemon import Debbox
@@ -38,11 +40,15 @@ parser.set_defaults(
 
 parser.add_option('-k', dest='action',
                   help="Do ACTION on debbox. ACTION like {start|stop|status}")
+parser.add_option('--shell', dest='shell',
+                  action="store_true",
+                  help="Execute a python shell (ipython), in the patched env.")
 parser.add_option('-f', dest='foreground',
                   action="store_true",
                   help="Run Debbox on foreground.")
 parser.add_option('-c', dest='conf',
-                  help="Use CONF config file. default is /etc/debbox/debbox.conf")
+                  help="Use CONF config file. default is" + \
+                  "/etc/debbox/debbox.conf")
 parser.add_option('--port', dest='port',
                   help="Run web server on PORT.")
 parser.add_option('--host', dest='host',
@@ -60,8 +66,14 @@ options, args = parser.parse_args()
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
-
 sys.path.insert(1, "debbox/")
+
+if options.shell:
+    from IPython.Shell import IPShellEmbed
+    sys.argv = []
+    ipshell = IPShellEmbed()
+    ipshell()
+    sys.exit(0)
 
 try:
     daemon = Debbox(options)
@@ -69,10 +81,11 @@ except Debbox.CantFindConfigFile:
     print "Error: Can't find '%s' configuration file." % options.conf
     sys.exit(1)
 
+
 if options.foreground:
     daemon.start()
 
-if options.action == "start":
+elif options.action == "start":
     daemon.start()
 
 elif options.action == "stop":

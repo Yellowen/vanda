@@ -1,6 +1,12 @@
+------------ Researchs  -------------
+[ ] Read http://people.debian.org/~seanius/policy/dbapp-policy.html/
+    and decide for sqlite database location
+[ ] Read about dbconfig-common
+
+
 ------------ Development ------------
 [ ] Add django-command-extension to project only for debugging
-[ ] Remove runserver.sh from each Release
+[-] Remove runserver.sh from each Release
 [ ] Build some processes/threads for serving static files (need a
    decision between processes and threads)
 [-] Allow to choose between web server backends (GEvent, Fapws3)
@@ -11,17 +17,20 @@
 [X] deamonize the master process
 [X] provide a debug switch 
 [X] allow to redirect the stdout and strerr if debug mode is off
-[ ] provide a foreground option
+[X] provide a foreground option
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
+[ ] debug the logger,
 
 -- Deb package --
 [ ] build a user and group called debbox
 [ ] add debbox user to ssl-cert
+[ ] create some folder in /var/lib/debboxv to store sqlite database
+    /var/lib/debbox should owned by debbox user
 
 
 -- issues --
 [ ] loggin into files
-[ ] gevent warning (threading is already imported)
+[X] gevent warning (threading is already imported)

@@ -9,10 +9,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# TODO: replace the database address in the deb installation
+# time.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite').replace('\\', '/'),
+        'NAME': "/var/lib/debbox/debbox.db",
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -20,7 +22,7 @@ DATABASES = {
     }
 }
 # TODO: admin should select the pam service via an UI
-PAM_SERVICE = "debbox"
+PAM_SERVICE = "passwd"
 
 ROOT_PATH = os.path.dirname(__file__)
 

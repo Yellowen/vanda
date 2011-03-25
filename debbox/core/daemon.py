@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -----------------------------------------------------------------------------
 #    Debbox - Modern administration panel for Debian GNU/Linux
 #    Copyright (C) 2011 Some Hackers In Town
@@ -27,7 +26,8 @@ from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser, NoSectionError
 
-from debbox.core.servers import WebServer
+from debbox.core.servers import WebServer, UnixStream
+from debbox.core.servers import MasterServer
 
 
 class Logger (object):
@@ -98,13 +98,13 @@ class Debbox (object):
             self.slave_user = self.config.get("User", "user", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable username in config file."
-            sys.exist(1)
+            sys.exit(1)
 
         try:
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable group name in config file."
-            sys.exist(1)
+            sys.exit(1)
 
         # Setting up log directory
         self.logfolder = self.config.get("Log", "folder")
@@ -212,14 +212,33 @@ class Debbox (object):
             raise self.CantFork("Can't create the slave process")
 
         if slavepid > 0:
-            # Master Process
 
+            # Master Process
+            # writing the config file address for other codes
+            conf = os.path.abspath(self.options.conf)
+            file("/tmp/debbox_%s" % os.getpid(), "w+").write(conf)
+
+            # Register the cleanup process.
+            if self.options.foreground:
+                atexit.register(self.stop)
+
+            # writing pid files
             if not self.options.foreground:
                 file(self.mpid, "w+").write(str(self._masterpid))
                 # TODO: find a way to build slave pid file in better time
                 file(self.spid, "w+").write(str(slavepid))
-            # TODO: this wait should be override by MasterServer main loop
-            os.waitpid(slavepid, 0)
+
+            # running the master server
+            socket = self.config.get("Socket", "master", "/tmp/debbox.sock")
+            masterapp = MasterServer(self.logger, self.options.debug)
+            masterserver = UnixStream(socket, self.slave_user,
+                                      masterapp.handler)
+            print "Running Master Server . . ."
+            if self.options.debug:
+                masterserver.serve_forever()
+            else:
+                masterserver.start()
+
         else:
             # Slave process
             server = WebServer(self.options.host, int(self.options.port),
@@ -242,6 +261,16 @@ class Debbox (object):
         """
         Stop the debbox server.
         """
+        import re
+        files_name_regex = re.compile("^debbox_\d+")
+        print "Removing tmp files . . ."
+        for file_ in os.listdir("/tmp"):
+            if files_name_regex.match(file_):
+                try:
+                    os.remove("/tmp/%s" % file_)
+                except OSError:
+                    print "Warning: can not delete /tmp/%s" % file_
+
         if not self._status():
             print "Debbox is not running."
             return
