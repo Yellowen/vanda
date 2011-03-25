@@ -16,6 +16,10 @@ def Login(request):
     from debbox.core.servers import MasterClient
 
     a = MasterClient()
+    a.connect()
+    a.command(command="echo", some="some1")
+    print "asdasdas"
+    a.disconnect()
     if request.user.is_authenticated():
         logger.debug("User is authenticated, redirecting to /")
         return HttpResponseRedirect("/")

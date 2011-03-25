@@ -50,7 +50,8 @@ import os
 import sys
 import pickle
 import json
-
+import _socket as socket
+from ConfigParser import ConfigParser, NoSectionError
 #from debbox.core.log import logger
 
 
@@ -71,7 +72,7 @@ class MasterServer (object):
         """
         return a json form data message to transport via socket
         """
-        return json.dumps({"status": status,
+        return "%s\n" % json.dumps({"status": status,
                            "message": pickle.dumps(msg),
                            "extra": extra})
 
@@ -110,10 +111,12 @@ class MasterServer (object):
                 args = {}
                 if "args" in data:
                     args = data["args"]
+                print "Receive Command: %s, args: %s" % (command, str(args))
                 if command in self.commands:
                     try:
                         result = self.commands[command](**args)
                         fileobj.write(self._dumpmsg(0, result))
+                        fileobj.flush()
                         continue
 
                     except:
@@ -147,9 +150,6 @@ class MasterClient (object):
     """
 
     def __init__(self):
-        import _socket as socket
-        from ConfigParser import ConfigParser, NoSectionError
-
         # getting the config file address by reading the tmp file
         # in /tmp/debbox_<parent pid>
         parentpid = os.getppid()
@@ -172,6 +172,11 @@ class MasterClient (object):
         # creating the socket object and connecting that to master
         # socket
         self.socket = socket.socket(socket.AF_UNIX)
+
+    def connect(self):
+        """
+        establish the connection to master socket.
+        """
         sockaddr = "/tmp/debbox.sock"
         try:
             sockaddr = self.config.get("Socket", "master",
@@ -183,14 +188,42 @@ class MasterClient (object):
             self.socket.connect(sockaddr)
             #logger.debug("Socket connection established.")
             print "Connection established"
+            self.fd = self.socket.makefile("w+")
         except socket.error:
             #logger.error("Can't connect to '%s' socket" % sockaddr)
             print "Can't connect"
             raise self.CantConnectToSocket()
+
+    def command(self, command=None, **kwargs):
+        """
+        send a command to master process.
+        """
+        if not command:
+            raise self.EmptyCommand()
+        packet = {"command": command,
+                  "args": kwargs}
+
+        jpacket = "%s\n" % json.dumps(packet)
+        self.fd.write(jpacket)
+        self.fd.flush()
+        print "Data sent: %s" % jpacket
+        buf = self.fd.readline()
+        print "Data Received: %s" % buf
+        return buf
+
+    def disconnect(self):
+        """
+        disconnect the master socket.
+        """
+        self.fd.close()
+        print "Disconnecting"
         self.socket.close()
 
     class CantFindConfigFile (Exception):
         pass
 
     class CantConnectToSocket (Exception):
+        pass
+
+    class EmptyCommand (Exception):
         pass
