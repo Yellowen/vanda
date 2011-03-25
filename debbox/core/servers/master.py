@@ -122,19 +122,23 @@ class MasterServer (object):
                     except:
                         if self.debug:
                             fileobj.write(self._dumpmsg(-1,
-                                                sys.exc_info(),
+                                                sys.exc_info()[1],
                                                 extra="debug"))
+                            fileobj.flush()
                             continue
                         else:
                             fileobj.write(self._dumpmsg(-1,
                                                         "An error occured"))
+                            fileobj.flush()
                             continue
 
                 else:
                     fileobj.write(self._dumpmsg(-1, "command not found"))
+                    fileobj.flush()
                     continue
             else:
                 fileobj.write(self._dumpmsg(-1, "malform command"))
+                fileobj.flush()
                 continue
 
     def echo(self, **kwargs):
@@ -228,8 +232,10 @@ class MasterClient (object):
         buf = json.loads(buf)
 
         # raising remote exception
+        # TODO: transport remote traceback somehow
         if buf["extra"] == "debug":
-            exception = pickle.loads(str(buf["message"]))[1]
+            exception = pickle.loads(str(buf["message"]))
+            print exception
             raise exception
 
         # creating a result object
