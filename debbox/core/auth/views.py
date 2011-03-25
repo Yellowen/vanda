@@ -17,8 +17,12 @@ def Login(request):
 
     a = MasterClient()
     a.connect()
-    a.command(command="echo", some="some1")
-    print "asdasdas"
+    res = a.command(command="echo", some="some1")
+    print ">>>>>>> ", type(res)
+    print "<<<<<<< ", str(dir(res))
+    print "!!!!!!! ", res.status
+    print "@@@@@@@ ", res.result["some"]
+    print "####### ", res.extra
     a.disconnect()
     if request.user.is_authenticated():
         logger.debug("User is authenticated, redirecting to /")

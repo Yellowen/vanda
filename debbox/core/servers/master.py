@@ -116,6 +116,7 @@ class MasterServer (object):
                     try:
                         result = self.commands[command](**args)
                         fileobj.write(self._dumpmsg(0, result))
+                        print "Send : %s" % self._dumpmsg(0, result)
                         fileobj.flush()
                         continue
 
@@ -208,8 +209,16 @@ class MasterClient (object):
         self.fd.flush()
         print "Data sent: %s" % jpacket
         buf = self.fd.readline()
+        buf = json.loads(buf)
+
+        # creating a result object
+        result = type("Result", (object, ),
+                      {"status": buf["status"],
+                       "result": pickle.loads(str(buf["message"])),
+                       "extra": buf["extra"]})
+
         print "Data Received: %s" % buf
-        return buf
+        return result()
 
     def disconnect(self):
         """
