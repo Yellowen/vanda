@@ -117,6 +117,10 @@ def authenticate(username, password, service='login'):
         return False
 
     retval = PAM_AUTHENTICATE(handle, 0)
+    import os
+    print "UID >> ", os.getuid()
+    print "u >> %s -- p >> %s -- s >> %s" % (username, password, service)
+    print "retval >> ", retval
     return retval == 0
 
 if __name__ == "__main__":

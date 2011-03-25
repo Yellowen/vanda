@@ -16,11 +16,12 @@
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
+[ ] debug the logger,
 
 -- Deb package --
 [ ] build a user and group called debbox
 [ ] add debbox user to ssl-cert
-
+[ ] create some folder in /var/ or /srv to store sqlite database
 
 -- issues --
 [ ] loggin into files

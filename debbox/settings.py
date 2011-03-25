@@ -12,7 +12,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite').replace('\\', '/'),
+        'NAME': os.path.join(os.path.dirname(__file__),
+                             'db.sqlite').replace('\\', '/'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -20,7 +21,7 @@ DATABASES = {
     }
 }
 # TODO: admin should select the pam service via an UI
-PAM_SERVICE = "debbox"
+PAM_SERVICE = "passwd"
 
 ROOT_PATH = os.path.dirname(__file__)
 
