@@ -13,12 +13,7 @@ def Login(request):
     """
     login view.
     """
-    from debbox.core.servers import MasterClient
 
-    a = MasterClient()
-    a.connect()
-    res = a.command(command="echo", some="some1")
-    a.disconnect()
     if request.user.is_authenticated():
         logger.debug("User is authenticated, redirecting to /")
         return HttpResponseRedirect("/")
