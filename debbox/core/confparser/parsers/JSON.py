@@ -44,7 +44,7 @@ class JSONConfParser (BaseParser):
     def is_suitable(cls, buf):
         if buf:
             try:
-                tmp = json.loads(buf)
+                json.loads(buf)
                 return cls
 
             except Exception, e:
