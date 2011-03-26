@@ -20,7 +20,7 @@
 
 from fapws import base
 import fapws._evwsgi as evwsgi
-from fapws.contrib import django_handler, views
+from fapws.contrib import django_handler
 
 
 class FAPWSServer (object):
