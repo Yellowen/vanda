@@ -15,6 +15,16 @@ Host OS. Here is a list of required packages with their details for building a D
 
 .. note:: If you use .deb package for installing **Debbox**, then above package already installed on your Debian box.
 
+Debbox user
+===========
+Debbox run its webserver under a system user called ``debbox``, so you should build the system user before using debbox. for creating linux user you can do like::
+
+       # adduser debbox --system --no-create-home
+
+You can change the defualt user in ``debbox.conf`` under the *User* section.
+
+.. note:: If you use .deb package for installing **Debbox**, then the default user and group already created in your Debian box.
+
 Building virtual environment
 ============================
 After installing required packages, you can easily build a environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
@@ -31,28 +41,18 @@ and for exit the virtual environment use **deactivate** command.
 
 .. warning:: Do not commit you comments (see above note) in ``envcreator.sh`` on the main Repository.
 
-Running Debbox server
-=====================
-By installing requirement and building a virtual environment, now its time to run Server of Debbox. There is a python script called **server.py** in the
-root of Debbox source tree. you should use **server.py** to run Debbox, you can do that like this::
-     
-     $ python server.py -k start
+Debbox database
+===============
+According to Debian database policy the universal place for storing database is in ``/var/lib/``, so you should create a folder called *debbox* under the ``/var/lib/``.
+so the final path will be ``/var/lib/debbox/``. then you should change the ownership of that folder to Debbox default user and group (defined in config file).
 
-But above command will run Debbox in daemon mode. Debbox daemon mode is for deployment not for development. So **server.py** provide some arguments that 
-allow developers to overrid the default action on **server.py**.
+After creating the directory you should sync your Django database. Since Debbox web server runs under default user, you should sync your database using default
+user, so you can do that like::
 
-For example, you run the Debbox server in foreground by executing **server.py** like this::
+      # cd debbox
+      # sudo -u debbox python manage.py syncdb
 
-    $ python server.py -f
 
-But if you want to run Debbox server for developing Debbox, the best choice whould be::
-
-    $ python server.py -f --debug -c <path_to_develoment_conf_file>
-
-as you can see in the above example you should pass a config file address to **server.py**, thats because Debbox expect default config file in ``/etc/debbox/debbox.conf``
-and since you want to run a development environment you should copy ``debbox.conf`` file exists in root directory of Debbox source tree some where you like and change that
-for you box (specially SSL configuration) then pass the conf file address tp *-c* option of **server.py**.
-
-.. seealso:: For more information take a loot at --help option of **server.py**
+.. note:: If you use .deb package for installing **Debbox**, then above action take effect automatically.
 
 

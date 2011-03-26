@@ -6,3 +6,4 @@ Debbox Developer Guide
 
     Development Policies   <devpolicy.rst>
     Requirements           <requirements.rst>
+    Running Debbox         <running.rst>
