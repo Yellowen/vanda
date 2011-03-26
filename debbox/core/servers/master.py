@@ -52,7 +52,8 @@ import sys
 import pickle
 import json
 import _socket as socket
-from ConfigParser import ConfigParser, NoSectionError
+from ConfigParser import ConfigParser
+from ConfigParser import NoSectionError
 #from debbox.core.log import logger
 
 from debbox.core.auth.pam import pam

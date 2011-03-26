@@ -17,12 +17,14 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 import os
 import sys
 
 from GEvent import GEventServer
 from unixstream import UnixStream
-from master import MasterServer, MasterClient
+from master import MasterServer
+from master import MasterClient
 
 
 class WebServer (object):
