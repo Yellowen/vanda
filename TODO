@@ -1,3 +1,5 @@
+[-] means wont fix
+[x] means done
 ------------ Development ------------
 [ ] Add django-command-extension to project only for debugging
 [-] Remove runserver.sh from each Release
