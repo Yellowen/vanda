@@ -5,11 +5,14 @@
 
 Welcome to Debbox's documentation!
 ==================================
+Debbox Development documents.
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
+
+   Developer Guide <devel/Debbox_Developer_Guide.rst>
 
 Indices and tables
 ==================
