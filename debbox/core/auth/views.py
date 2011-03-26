@@ -1,5 +1,7 @@
 from django.shortcuts import render_to_response as rr
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.conf import settings

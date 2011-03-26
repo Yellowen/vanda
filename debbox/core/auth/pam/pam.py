@@ -11,9 +11,21 @@ Implemented using ctypes, so no compilation is necessary.
 """
 __all__ = ['authenticate']
 
-from ctypes import CDLL, POINTER, Structure, CFUNCTYPE, cast, pointer, sizeof
-from ctypes import c_void_p, c_uint, c_char_p, c_char, c_int
+
+from ctypes import CDLL
+from ctypes import POINTER
+from ctypes import Structure
+from ctypes import CFUNCTYPE
+from ctypes import cast
+from ctypes import pointer
+from ctypes import sizeof
+from ctypes import c_void_p
+from ctypes import c_uint
+from ctypes import c_char_p
+from ctypes import c_char
+from ctypes import c_int
 from ctypes.util import find_library
+
 
 LIBPAM = CDLL(find_library("pam"))
 LIBC = CDLL(find_library("c"))
