@@ -150,10 +150,10 @@ class UnixStream(BaseServer):
                 return
         try:
             if address is None:
-                sys.stderr.write('%s: Failed.\n' % (self, ))
+                sys.stderr.write('%s: Failed.\n' % (self,))
             else:
                 sys.stderr.write('%s: Failed to handle request from %s\n' % \
-                                 (self, address, ))
+                                 (self, address,))
         except Exception:
             traceback.print_exc()
         if self.delay >= 0:

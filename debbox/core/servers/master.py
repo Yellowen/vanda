@@ -241,7 +241,7 @@ class MasterClient (object):
             raise exception
 
         # creating a result object
-        result = type("Result", (object, ),
+        result = type("Result", (object,),
                       {"status": buf["status"],
                        "result": pickle.loads(str(buf["message"])),
                        "extra": buf["extra"]})

@@ -75,7 +75,7 @@ class BaseParser (object):
                 fd = open(self._file, "w")
                 fd.write(self.__unicode__)
             except Exception, e:
-                logger.warn("%s failed to commit configurations. Error: %s" %\
+                logger.warn("%s failed to commit configurations. Error: %s" % \
                             (self.__name__, e))
                 raise
 
@@ -167,8 +167,8 @@ class Parser (object):
             name = driver.split(".")[-1]
             cls = __import__(path, globals(),
                              locals(),
-                             [name,],
-                             -1)
+                             [name, ],
+                             - 1)
 
             logger.debug("cls type: %s", str(type(cls)))
             drv = cls.__dict__[name].is_suitable(self._buf)
