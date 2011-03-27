@@ -34,3 +34,6 @@
 -- issues --
 [ ] loggin into files
 [X] gevent warning (threading is already imported)
+
+-- Documents --
+[ ] write about /var/log/debbox in requirements section
