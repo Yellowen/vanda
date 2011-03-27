@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 
-from os
+import os
 import sys
 
 from GEvent import GEventServer
