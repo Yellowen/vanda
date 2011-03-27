@@ -8,5 +8,6 @@ Contents:
 
    Logging    <logging.rst>
    Master/Slave Processes	<processes.rst>
+   Master/Slave Communication	<communication.rst>
    PAM authentication
    Unix Stream Server

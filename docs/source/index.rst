@@ -14,6 +14,7 @@ Contents:
 
    Developer Guide <devel/devguide.rst>
    Development Reference <devel/devref.rst>
+   FAQ
 
 Indices and tables
 ==================
