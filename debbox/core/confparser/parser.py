@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 
-import os
+from os import path
 
 from django.conf import settings
 
@@ -35,7 +35,7 @@ class BaseParser (object):
         self.cached = cached
         self._dict = {}
         # TODO: does caching is required?
-        if os.path.exists(self._file) and cached:
+        if path.exists(self._file) and cached:
             self._buf = self._read()
             # parse the string to config
             self.__config__()
@@ -122,7 +122,7 @@ class Parser (object):
         configuration file.
         """
         self.driver = None
-        if os.path.exists(conf_file):
+        if path.exists(conf_file):
             self._file = conf_file
             from core.confparser.parsers import drivers
 
