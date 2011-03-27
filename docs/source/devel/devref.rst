@@ -7,6 +7,6 @@ Contents:
    :maxdepth: 2
 
    Logging    <logging.rst>
-   Master/Slave Processes
+   Master/Slave Processes	<processes.rst>
    PAM authentication
    Unix Stream Server
