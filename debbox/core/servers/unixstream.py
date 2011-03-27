@@ -18,10 +18,10 @@
 # -----------------------------------------------------------------------------
 
 
-import os
-import sys
+from os import remove, chown
+from sys import exc_info, stderr
 import errno
-import traceback
+from traceback import print_exc
 import _socket
 from pwd import getpwnam
 
@@ -59,7 +59,7 @@ class UnixStream(BaseServer):
         self.user = user
         # try to remove the sock file if already exists
         try:
-            os.remove(listener)
+            remove(listener)
         except OSError:
             pass
 
@@ -142,21 +142,21 @@ class UnixStream(BaseServer):
                 spawn(self._handle, client_socket, address)
             return
         except:
-            traceback.print_exc()
-            ex = sys.exc_info()[1]
+            print_exc()
+            ex = exc_info()[1]
             if self.is_fatal_error(ex):
                 self.kill()
-                sys.stderr.write('ERROR: %s failed with %s\n' % \
+                stderr.write('ERROR: %s failed with %s\n' % \
                                  (self, str(ex) or repr(ex)))
                 return
         try:
             if address is None:
-                sys.stderr.write('%s: Failed.\n' % (self,))
+                stderr.write('%s: Failed.\n' % (self,))
             else:
-                sys.stderr.write('%s: Failed to handle request from %s\n' % \
+                stderr.write('%s: Failed to handle request from %s\n' % \
                                  (self, address,))
         except Exception:
-            traceback.print_exc()
+            print_exc()
         if self.delay >= 0:
             self.stop_accepting()
             self._start_accepting_timer = self.loop.timer(self.delay)
@@ -256,7 +256,7 @@ def _unix_listener(address, backlog=10, user=None):
         try:
             uid = getpwnam(user)[2]
             gid = getpwnam(user)[3]
-            os.chown(address, uid, gid)
+            chown(address, uid, gid)
         except:
             raise
 

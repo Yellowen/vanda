@@ -47,9 +47,9 @@
 # =============================================================================
 
 
-import os
-import sys
-import pickle
+from os import path, getppid 
+from sys import exc_info
+from pickle import dumps, loads
 import json
 import _socket as socket
 from ConfigParser import ConfigParser
@@ -78,7 +78,7 @@ class MasterServer (object):
         return a json form data message to transport via socket
         """
         return "%s\n" % json.dumps({"status": status,
-                           "message": pickle.dumps(msg),
+                           "message": dumps(msg),
                            "extra": extra})
 
     def handler(self, socket, address):
@@ -127,7 +127,7 @@ class MasterServer (object):
                     except:
                         if self.debug:
                             fileobj.write(self._dumpmsg(-1,
-                                                sys.exc_info()[1],
+                                                exc_info()[1],
                                                 extra="debug"))
                             fileobj.flush()
                             continue
@@ -177,7 +177,7 @@ class MasterClient (object):
     def __init__(self):
         # getting the config file address by reading the tmp file
         # in /tmp/debbox_<parent pid>
-        parentpid = os.getppid()
+        parentpid = getppid()
         filename = "/tmp/debbox_%s" % parentpid
         try:
             config_address = file(filename).readline()
@@ -189,7 +189,7 @@ class MasterClient (object):
 
         # Reading config file
         self.config = ConfigParser()
-        if os.path.exists(config_address):
+        if path.exists(config_address):
             self.config.read(config_address)
         else:
             raise self.CantFindConfigFile()
@@ -238,14 +238,14 @@ class MasterClient (object):
         # raising remote exception
         # TODO: transport remote traceback somehow
         if buf["extra"] == "debug":
-            exception = pickle.loads(str(buf["message"]))
+            exception = loads(str(buf["message"]))
             print exception
             raise exception
 
         # creating a result object
         result = type("Result", (object,),
                       {"status": buf["status"],
-                       "result": pickle.loads(str(buf["message"])),
+                       "result": loads(str(buf["message"])),
                        "extra": buf["extra"]})
 
         print "Data Received: %s" % buf
