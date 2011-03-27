@@ -12,6 +12,9 @@ Host OS. Here is a list of required packages with their details for building a D
 * **python-virtualenv**: Debbox use this script to create e virtual environments.
 * **libevent-1.4.2**: This packages is required if you want to use GEvent as the web server backed for Debbox.
 * **libevent-dev**: This packages is required if you want to use GEvent as the web server backed for Debbox.
+* **sphinx** (>=1.0): if you want to build Debbox document you will need this package. 
+
+.. note:: *envcreator.sh* script will install **sphinx** package too.
 
 .. note:: If you use .deb package for installing **Debbox**, then above package already installed on your Debian box.
 
@@ -29,9 +32,9 @@ Building virtual environment
 ============================
 After installing required packages, you can easily build a environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
 
-so if you don't want tu install one of them, just comment the corresponding code in ``envcreator.sh`` .
+so if you don't want tu install one of them, just comment the corresponding code in ``envcreator.sh``.
 
-Virtual environment will simulate a naked *nix environment with minimal dependencies installed. To activating provided virtualenv you can do like thise::
+Virtual environment will simulate a naked linux environment with minimal dependencies installed. To activating provided virtualenv you can do like thise::
 
 	$ . env/bin/activate
 
