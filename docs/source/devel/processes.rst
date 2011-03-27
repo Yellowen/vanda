@@ -12,9 +12,25 @@ return the request result as a response to Slave Process. but beside this object
 
 Master Process will be runs with **server.py** script on the Starting time of Debbox, then it will fork a process from itself and change the ownership of the child process
 to ``debbox`` user (the default user of Debbox is ``debbox`` but user may change that from Debbox configuration file in ``/etc/debbox/debbox.conf``), so new process will
-continue its work under non-root user, 
+continue its work under non-root user, Master Process will run the :py:mod:`MasterServer` and wait for Slave process requests. 
 
-.. TODO: check the references in this page ..
+Master process will create two pid file in the ``piddir`` with name of ``debbox_master.pid`` and ``debbox_slave.pid`` before running its main loop. Also it will remove those
+files when the Debbox server stop actio called. Master process remove all the temporary files in ``/tmp/`` too.
 
-Master Process will run the :ref:`Master Server` and wait for Slave process requests.
+Slave Process
+=============
+Slave process task is very simple, run a gevent web server and passing user requests too Debbox web application, and giving back the response to user. Since Slave process is running
+under a non-root user, it should communicate to **Master Server** via :py:mod:`MasterClient`.
 
+Slave process that is the child of Master process will run a GEvent pywsgi webserver with a two way SSL socket so all the request to web server should use a SSL socket, all the non-SSL
+request will dropped.
+
+After receiving requests by Slave process and passing them to Debbox web application every thing else will be like a normal Django web application.
+
+Schema
+^^^^^^
+.. image:: ./master_slave_schema.png
+   :align: center
+
+
+In the above schema you can see a schema of how Debbox Master/Slave process works
