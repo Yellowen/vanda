@@ -19,10 +19,10 @@
 
 
 import os
-import sys
+from sys import exit, stdin, stderr, stdout
 import stat
-import atexit
-import logging
+from atexit import register
+from logging import basicConfig, getLogger
 from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser
@@ -50,8 +50,8 @@ class Logger (object):
         handlerparam['maxBytes'] = config.get("Log", "max_size")
         handlerparam['backupCount'] = config.get("Log", "backups")
         LOG_FILENAME = logfile
-        logging.basicConfig(**logparam)
-        logger = logging.getLogger("Master")
+        basicConfig(**logparam)
+        logger = getLogger("Master")
         handler = RotatingFileHandler(
             LOG_FILENAME, **handlerparam)
         logger.addHandler(handler)
@@ -101,13 +101,13 @@ class Debbox (object):
             self.slave_user = self.config.get("User", "user", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable username in config file."
-            sys.exit(1)
+            exit(1)
 
         try:
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable group name in config file."
-            sys.exit(1)
+            exit(1)
 
         # Setting up log directory
         self.logfolder = self.config.get("Log", "folder")
@@ -116,7 +116,7 @@ class Debbox (object):
                 os.makedirs(self.logfolder)
             except OSError, e:
                 print e
-                sys.exit(1)
+                exit(1)
         uid = getpwnam(self.slave_user)[2]
         gid = getpwnam(self.slave_user)[3]
         os.chown(self.logfolder, uid, gid)
@@ -192,7 +192,7 @@ class Debbox (object):
             if pid > 0:
                 # Exist from parent
                 self.logger.debug("First fork exit")
-                sys.exit(0)
+                exit(0)
 
             os.umask(027)
             try:
@@ -223,7 +223,7 @@ class Debbox (object):
 
             # Register the cleanup process.
             if self.options.foreground:
-                atexit.register(self.stop)
+                register(self.stop)
 
             # writing pid files
             if not self.options.foreground:
@@ -284,7 +284,7 @@ class Debbox (object):
         print "Stopping slave process."
         os.kill(int(spid), 15)
         self.__cleanup__()
-        sys.exit(0)
+        exit(0)
 
     def status(self):
         """
@@ -305,14 +305,14 @@ class Debbox (object):
     def io_redirect(self):
         if not self.options.debug or not self.options.foreground:
             # Redirecting standard I/O to nowhere
-            sys.stdout.flush()
-            sys.stderr.flush()
+            stdout.flush()
+            stderr.flush()
             si = file(self.stdin, 'r')
             so = file(self.stdout, 'a+')
             se = file(self.stderr, 'a+', 0)
-            os.dup2(si.fileno(), sys.stdin.fileno())
-            os.dup2(so.fileno(), sys.stdout.fileno())
-            os.dup2(se.fileno(), sys.stderr.fileno())
+            os.dup2(si.fileno(), stdin.fileno())
+            os.dup2(so.fileno(), stdout.fileno())
+            os.dup2(se.fileno(), stderr.fileno())
 
     class CantFork (Exception):
         pass
