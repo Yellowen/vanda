@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 
-from os import environ
+from os
 import sys
 
 from GEvent import GEventServer
@@ -45,7 +45,7 @@ class WebServer (object):
         sys.setcheckinterval = interval
 
     def start(self):
-        environ['DJANGO_SETTINGS_MODULE'] = self.settings
+        os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
 
         server = GEventServer(self.host, self.port,
                               keyfile=self._key,

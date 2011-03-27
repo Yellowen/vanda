@@ -19,18 +19,17 @@
 
 
 import os
-from sys import exit, stdin, stderr, stdout
+import sys
 import stat
-from atexit import register
+import atexit
 from logging import basicConfig, getLogger
 from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser
 from ConfigParser import NoSectionError
 
-from debbox.core.servers import WebServer 
+from debbox.core.servers import WebServer, MasterServer
 from debbox.core.servers import UnixStream
-from debbox.core.servers import MasterServer
 
 
 class Logger (object):
@@ -101,13 +100,13 @@ class Debbox (object):
             self.slave_user = self.config.get("User", "user", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable username in config file."
-            exit(1)
+            sys.exit(1)
 
         try:
             self.slave_group = self.config.get("User", "group", "debbox")
         except NoSectionError:
             print "Error: Can't find a suitable group name in config file."
-            exit(1)
+            sys.exit(1)
 
         # Setting up log directory
         self.logfolder = self.config.get("Log", "folder")
@@ -116,7 +115,7 @@ class Debbox (object):
                 os.makedirs(self.logfolder)
             except OSError, e:
                 print e
-                exit(1)
+                sys.exit(1)
         uid = getpwnam(self.slave_user)[2]
         gid = getpwnam(self.slave_user)[3]
         os.chown(self.logfolder, uid, gid)
@@ -192,7 +191,7 @@ class Debbox (object):
             if pid > 0:
                 # Exist from parent
                 self.logger.debug("First fork exit")
-                exit(0)
+                sys.exit(0)
 
             os.umask(027)
             try:
@@ -223,7 +222,7 @@ class Debbox (object):
 
             # Register the cleanup process.
             if self.options.foreground:
-                register(self.stop)
+                atexit.register(self.stop)
 
             # writing pid files
             if not self.options.foreground:
@@ -284,7 +283,7 @@ class Debbox (object):
         print "Stopping slave process."
         os.kill(int(spid), 15)
         self.__cleanup__()
-        exit(0)
+        sys.exit(0)
 
     def status(self):
         """
@@ -305,14 +304,14 @@ class Debbox (object):
     def io_redirect(self):
         if not self.options.debug or not self.options.foreground:
             # Redirecting standard I/O to nowhere
-            stdout.flush()
-            stderr.flush()
+            sys.stdout.flush()
+            sys.stderr.flush()
             si = file(self.stdin, 'r')
             so = file(self.stdout, 'a+')
             se = file(self.stderr, 'a+', 0)
-            os.dup2(si.fileno(), stdin.fileno())
-            os.dup2(so.fileno(), stdout.fileno())
-            os.dup2(se.fileno(), stderr.fileno())
+            os.dup2(si.fileno(), sys.stdin.fileno())
+            os.dup2(so.fileno(), sys.stdout.fileno())
+            os.dup2(se.fileno(), sys.stderr.fileno())
 
     class CantFork (Exception):
         pass

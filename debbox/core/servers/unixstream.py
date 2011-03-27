@@ -18,8 +18,8 @@
 # -----------------------------------------------------------------------------
 
 
-from os import remove, chown
-from sys import exc_info, stderr
+import os
+import sys
 import errno
 from traceback import print_exc
 import _socket
@@ -59,7 +59,7 @@ class UnixStream(BaseServer):
         self.user = user
         # try to remove the sock file if already exists
         try:
-            remove(listener)
+            os.remove(listener)
         except OSError:
             pass
 
@@ -143,17 +143,17 @@ class UnixStream(BaseServer):
             return
         except:
             print_exc()
-            ex = exc_info()[1]
+            ex = sys.exc_info()[1]
             if self.is_fatal_error(ex):
                 self.kill()
-                stderr.write('ERROR: %s failed with %s\n' % \
+                sys.stderr.write('ERROR: %s failed with %s\n' % \
                                  (self, str(ex) or repr(ex)))
                 return
         try:
             if address is None:
-                stderr.write('%s: Failed.\n' % (self,))
+                sys.stderr.write('%s: Failed.\n' % (self,))
             else:
-                stderr.write('%s: Failed to handle request from %s\n' % \
+                sys.stderr.write('%s: Failed to handle request from %s\n' % \
                                  (self, address,))
         except Exception:
             print_exc()
@@ -256,7 +256,7 @@ def _unix_listener(address, backlog=10, user=None):
         try:
             uid = getpwnam(user)[2]
             gid = getpwnam(user)[3]
-            chown(address, uid, gid)
+            os.chown(address, uid, gid)
         except:
             raise
 
