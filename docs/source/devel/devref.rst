@@ -9,6 +9,7 @@ Contents:
    Debbox Daemon		<daemon.rst>
    Master/Slave Processes	<processes.rst>
    Master/Slave Communication	<communication.rst>
+   Web Server			<webserver.rst>
    Unix Stream Server		<unixstream.rst>
    PAM authentication		<pamauth.rst>
    Logging			<logging.rst>
