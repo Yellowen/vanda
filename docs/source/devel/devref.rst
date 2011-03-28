@@ -6,7 +6,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   Logging    <logging.rst>
+   Logging			<logging.rst>
    Master/Slave Processes	<processes.rst>
    Master/Slave Communication	<communication.rst>
    Unix Stream Server		<unixstream.rst>
