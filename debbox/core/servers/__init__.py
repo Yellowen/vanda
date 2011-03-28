@@ -23,8 +23,7 @@ import sys
 
 from GEvent import GEventServer
 from unixstream import UnixStream
-from master import MasterServer
-from master import MasterClient
+from master import MasterServer, MasterClient
 
 
 class WebServer (object):

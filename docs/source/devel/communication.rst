@@ -1,5 +1,7 @@
 Master/Slave Communication
 **************************
+.. py:currentmodule:: debbox.core.servers
+
 As you read before in this document Master and Slave process can not communicate with each other directly, so they have to use other ways to communicate.
 We found unix socket as the best way to connect Master and Slave process together. Master process will create a unix domain socket or unxi socket for short
 and change the ownership of socket to Debbox Slave process owner (default is ``debbox`` user), so no one else except of Salve process user can not access to

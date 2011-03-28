@@ -1,5 +1,6 @@
 Master/Slave Processes
 **********************
+
 Debbox use a Master/Slave process schema to provide a safe and easy to use communication layer between normal users environment and root user environment.
 Since wide range of administration jobs only allowed under root user, Debbox needs to run some of its code under root user, but running a web server and 
 application under root user is bad security risk. So the best choice is to have two different process, one of them will handle the administration issues that
