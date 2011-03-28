@@ -59,6 +59,8 @@ Now here is a complete list of **server.py** options explanation.
 
    Run Debbox on given HOST. Default is ``localhost``
 
+.. piddir:
+
 .. option:: --piddir=<pid_folder>
 
    Store the pid files in ``pid_folder``, Default value for this option is ``/var/run/`` according to LBS standard.

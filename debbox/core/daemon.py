@@ -59,15 +59,19 @@ class Logger (object):
 
 class Debbox (object):
     """
-    Daemon class of debbox, this class runs the debbox
-    as a deamon.
+    Daemon class of debbox, this class runs the Debbox in a daemon
+    state (by default). You can think about this class as the main
+    class of Debbox. This class use the *option* parameter for its
+    configuration. *option* parameter is an object that created with
+    optparser class and contains the command line parameters.
+
+    if user decide to run the Debbox in background, then all of the
+    IO transactions will redirect to given *stdin*, *stdout* and
+    *stderr*.
     """
 
     def __init__(self, options, stdin='/dev/null', stdout='/dev/null',
                  stderr='/dev/null'):
-        """
-        Debbox constructor.
-        """
 
         self.options = options
 
@@ -79,6 +83,7 @@ class Debbox (object):
         self.spid = "/".join((self.piddir, "debbox_slave.pid"))
 
         # creating configuration object ========================
+        #: confifgurewr
         self.config = ConfigParser()
         if os.path.exists(self.options.conf):
             self.config.read(self.options.conf)
