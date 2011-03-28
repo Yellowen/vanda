@@ -81,7 +81,7 @@ MasterClient
 
 .. py:exception:: MasterClient.EmptyCommand
 
-   This exception will raise in case of your provide an empty command to :py:method:`connect`.
+   This exception will raise in case of your provide an empty command to :py:meth:`connect`.
 
 Communication Protocol version 1.0
 ==================================
@@ -104,7 +104,7 @@ to incoming or outgoing line as a request or response data. **DMSCP** requests a
 
     Each pair of key/value in this dictionary will send to remote COMMAND as keyword arguments
 
-Also you can think about **DMSCP* responses as dictionary too. like::
+Also you can think about **DMSCP** responses as dictionary too. like::
 
      {"status": STATUS,
      "message": MSG,
