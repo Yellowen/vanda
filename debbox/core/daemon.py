@@ -22,7 +22,7 @@ import os
 import sys
 import stat
 import atexit
-from logging import basicConfig, getLogger
+import logging
 from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser
@@ -42,18 +42,23 @@ class Logger (object):
         handlerparam = {}
 
         logparam['level'] = config.get("Log", "level")
+        print "<<<<<<<<< ", logparam['level']
         format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
                  ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
         logparam['format'] = format_
         logparam['datefmt'] = config.get("Log", "date_format")
         handlerparam['maxBytes'] = config.get("Log", "max_size")
         handlerparam['backupCount'] = config.get("Log", "backups")
-        LOG_FILENAME = logfile
-        basicConfig(**logparam)
-        logger = getLogger("Master")
-        handler = RotatingFileHandler(
-            LOG_FILENAME, **handlerparam)
-        logger.addHandler(handler)
+        #LOG_FILENAME = None #logfile
+        logging.basicConfig(**logparam)
+        logger = logging.getLogger("Master")
+        #handler = RotatingFileHandler(
+        #    LOG_FILENAME, **handlerparam)
+        #logger.addHandler(handler)
+        logger.setLevel(logparam['level'])
+        logger.debug("asdasdasdasdasdsadasdasd")
+        logger.warn("sadasdasdasdas")
+        logging.warn("SSSSSSSSSSSSSSSSSSSSSS")
         self.logger = logger
 
 
@@ -129,7 +134,9 @@ class Debbox (object):
 
         log = Logger(self.config, "/".join((self.logfolder, "master.log")))
         self.logger = log.logger
-
+        self.logger.warn("hgkjgkjhgkjhgkg")
+        self.logger.info("asdasdasdasdasd")
+        print ">>>> ", self.logger.level
         # Registering a cleanup method
         #atexit.register(self.__cleanup__)
 
