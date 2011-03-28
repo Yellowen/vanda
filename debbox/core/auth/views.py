@@ -13,6 +13,7 @@ def Login(request):
     """
     login view.
     """
+
     if request.user.is_authenticated():
         logger.debug("User is authenticated, redirecting to /")
         return HttpResponseRedirect("/")
@@ -28,7 +29,6 @@ def Login(request):
                 if user.is_active:
                     logger.debug("Try to loging in the user")
                     result = login(request, user)
-                    print ">>> ", user.is_authenticated()
                     logger.debug("login return with %s", result)
                     return HttpResponseRedirect("/")
 

@@ -24,13 +24,14 @@ CALLOC.argtypes = [c_uint, c_uint]
 
 STRDUP = LIBC.strdup
 STRDUP.argstypes = [c_char_p]
-STRDUP.restype = POINTER(c_char) # NOT c_char_p !!!!
+STRDUP.restype = POINTER(c_char)  # NOT c_char_p !!!!
 
 # Various constants
 PAM_PROMPT_ECHO_OFF = 1
 PAM_PROMPT_ECHO_ON = 2
 PAM_ERROR_MSG = 3
 PAM_TEXT_INFO = 4
+
 
 class PamHandle(Structure):
     """wrapper class for pam_handle_t"""
@@ -42,6 +43,7 @@ class PamHandle(Structure):
         Structure.__init__(self)
         self.handle = 0
 
+
 class PamMessage(Structure):
     """wrapper class for pam_message structure"""
     _fields_ = [
@@ -51,6 +53,7 @@ class PamMessage(Structure):
 
     def __repr__(self):
         return "<PamMessage %i '%s'>" % (self.msg_style, self.msg)
+
 
 class PamResponse(Structure):
     """wrapper class for pam_response structure"""
@@ -65,6 +68,7 @@ class PamResponse(Structure):
 CONV_FUNC = CFUNCTYPE(c_int,
         c_int, POINTER(POINTER(PamMessage)),
                POINTER(POINTER(PamResponse)), c_void_p)
+
 
 class PamConv(Structure):
     """wrapper class for pam_conv structure"""
@@ -82,14 +86,15 @@ PAM_AUTHENTICATE = LIBPAM.pam_authenticate
 PAM_AUTHENTICATE.restype = c_int
 PAM_AUTHENTICATE.argtypes = [PamHandle, c_int]
 
+
 def authenticate(username, password, service='login'):
     """Returns True if the given username and password authenticate for the
     given service.  Returns False otherwise
-    
+
     ``username``: the username to authenticate
-    
+
     ``password``: the password in plain text
-    
+
     ``service``: the PAM service to authenticate against.
                  Defaults to 'login'"""
     @CONV_FUNC

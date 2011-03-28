@@ -81,10 +81,11 @@ except Debbox.CantFindConfigFile:
     print "Error: Can't find '%s' configuration file." % options.conf
     sys.exit(1)
 
+
 if options.foreground:
     daemon.start()
 
-if options.action == "start":
+elif options.action == "start":
     daemon.start()
 
 elif options.action == "stop":

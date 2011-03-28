@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 [-] means wont fix
 [x] means done
+=======
+------------ Researchs  -------------
+[ ] Read http://people.debian.org/~seanius/policy/dbapp-policy.html/
+    and decide for sqlite database location
+[ ] Read about dbconfig-common
+
+
+>>>>>>> 8d1d5603594347da6c607330992cacfece0f8ec6
 ------------ Development ------------
 [ ] Add django-command-extension to project only for debugging
 [-] Remove runserver.sh from each Release
@@ -18,10 +27,13 @@
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
+[ ] debug the logger,
 
 -- Deb package --
 [ ] build a user and group called debbox
 [ ] add debbox user to ssl-cert
+[ ] create some folder in /var/lib/debboxv to store sqlite database
+    /var/lib/debbox should owned by debbox user
 
 
 -- issues --
