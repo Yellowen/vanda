@@ -51,6 +51,10 @@ Now here is a complete list of **server.py** options explanation.
 
    Run Debbox server on PORT instead of default port that is 8000. Debbox will use a different port number on deployment state.
 
+.. option:: --shell
+
+   Run an Ipython interactive shell on the Debbox environment
+
 .. option:: --host=<HOST>
 
    Run Debbox on given HOST. Default is ``localhost``

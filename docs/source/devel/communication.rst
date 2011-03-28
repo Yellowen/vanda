@@ -17,7 +17,7 @@ MasterServer
 
 .. py:method:: MasterServer._dumpmsg(status, msg, [extra=None]):
 
-   return a json form data message to transport via the unix socket.
+   return a json form data message to communicate via the unix socket.
 
 .. py:method:: MasterServer.handler(socket, address):
 
@@ -61,7 +61,7 @@ MasterClient
  
    .. py:attribute:: extra
 
-      extra flag of transport protocol
+      extra flag of Communication Protocol
 
 
     also command method will raise remote exception in :py:class:`MasterClient`.
@@ -83,7 +83,46 @@ MasterClient
 
    This exception will raise in case of your provide an empty command to :py:method:`connect`.
 
-Transport protocol
-==================
+Communication Protocol version 1.0
+==================================
+Debbox Master/Slave Communication Protocol or **DMSCP** for short is a very simple protocol that allow Master and Slave process
+communicate with each other over a unix socket. **DMSCP** send and receive data based on line indicator('\n'), so **DMSCP** treats
+to incoming or outgoing line as a request or response data. **DMSCP** requests and responses transport in a JSON string format. 
+
+**DMSCP** you can think about request as a python dictionary like::
+
+	  {"command":  COMMAND,
+	  "args" : {"arg1": value1, "arg2": value2, ....],
+	  }
+
+
+.. option:: COMMAND
+
+   This is the name of a remote (Master) command that may be a function or method
+
+.. option:: {"arg1": value1, "arg2": value2, ....}
+
+    Each pair of key/value in this dictionary will send to remote COMMAND as keyword arguments
+
+Also you can think about **DMSCP* responses as dictionary too. like::
+
+     {"status": STATUS,
+     "message": MSG,
+     "extra": EXTRA,
+     }
+
+.. option:: STATUS
+
+   Hold the status code of response, any none zero value means failed and zero means success.
+
+.. option:: MSG
+
+   This key contain the remote COMMAND result. result will be a python pickled string   
+
+.. option:: EXTRA
+
+   This variable is an extra flag, each command will use it for its own goals.
+
+
 
    

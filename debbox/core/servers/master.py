@@ -17,12 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-# Transport protocol specification ============================================
+# Communication Protocol specification ========================================
 # Request:
 # String format: JSON
 # JSON data structure:
 # {"command":  COMMAND,
-#  "args" : {"arg1": value1, "arg2": value2, ....],
+#  "args" : {"arg1": value1, "arg2": value2, ....},
 # }
 #
 # COMMAND: is the name of a function of method on the Master process
