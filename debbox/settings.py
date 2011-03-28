@@ -1,4 +1,4 @@
-import os
+from os import path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -24,7 +24,7 @@ DATABASES = {
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
 
-ROOT_PATH = os.path.dirname(__file__)
+ROOT_PATH = path.dirname(__file__)
 
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
@@ -69,7 +69,7 @@ line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 LOG_MAX_BYTES = 2 * 1024 * 1024  # 2Mb
 LOG_BACKUP_COUNT = 5
-LOG_FILENAME = os.path.join(ROOT_PATH, "../log/debbox")
+LOG_FILENAME = path.join(ROOT_PATH, "../log/debbox")
 LOG_FILENAME = "/var/log/debbox/webserver.log"
 
 
@@ -98,7 +98,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, "statics").replace('\\', '/')
+MEDIA_ROOT = path.join(ROOT_PATH, "statics").replace('\\', '/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -135,7 +135,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(ROOT_PATH, "templates").replace('\\', '/'),
+    path.join(ROOT_PATH, "templates").replace('\\', '/'),
 )
 
 INSTALLED_APPS = (
@@ -144,7 +144,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-
 )
 
 

@@ -17,12 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-# Transport protocol specification ============================================
+# Communication Protocol specification ========================================
 # Request:
 # String format: JSON
 # JSON data structure:
 # {"command":  COMMAND,
-#  "args" : {"arg1": value1, "arg2": value2, ....],
+#  "args" : {"arg1": value1, "arg2": value2, ....},
 # }
 #
 # COMMAND: is the name of a function of method on the Master process
@@ -51,7 +51,8 @@ import sys
 import pickle
 import json
 import _socket as socket
-from ConfigParser import ConfigParser, NoSectionError
+from ConfigParser import ConfigParser
+from ConfigParser import NoSectionError
 #from debbox.core.log import logger
 
 from debbox.core.auth.pam import pam
@@ -241,7 +242,7 @@ class MasterClient (object):
             raise exception
 
         # creating a result object
-        result = type("Result", (object, ),
+        result = type("Result", (object,),
                       {"status": buf["status"],
                        "result": pickle.loads(str(buf["message"])),
                        "extra": buf["extra"]})

@@ -17,10 +17,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 import os
 import sys
 import errno
-import traceback
+from traceback import print_exc
 import _socket
 from pwd import getpwnam
 
@@ -31,15 +32,47 @@ from gevent import core
 
 class UnixStream(BaseServer):
     """
-    A unix socket stream server. this server will be run as the Master
-    process in debbox
+    A unix socket stream server. this server will be run in the Master
+    process. This class does not process the requests by itserlf.
+    :py:class:`UnixStream` get an application for processing requests and
+    pass all the request to that.
+
+       .. py:attribute:: listner
+
+       Unix socket address to be create and listen to.
+
+       .. py:attribute:: user
+
+       The user who should owned the socket. (default is ``debbox`` user)
+
+       .. py:attribute:: handle
+
+       Application that will gets the requests and send back the response
+
+       .. py:attribute:: backlog
+
+       The backlog argument specifies the maximum number of queued
+       connections and should be at least 1; the maximum value is
+       system-dependent (usually 5).
+
+       .. py:attribute:: spawn
+
+       It is possible to limit the maximum number of concurrent connections,
+       by passing a gevent.pool.Pool instance, for example::
+
+           >>> p = Pool(1000)  # limit cuncurrent connection to 1000
+           >>> server = UnixStream('/tmp/socket.sock', handle, spawn=p)
+           >>> server.serve_forever()
+
     """
 
-    # the number of seconds to sleep in case there was an error in
-    # accept() call for consecutive errors the delay will double
-    # until it reaches max_delay when accept() finally succeeds the
-    # delay will be reset to min_delay again
+    #: The number of seconds to sleep in case there was an error in
+    #: accept() call for consecutive errors the delay will double
+    #: until it reaches max_delay when accept() finally succeeds the
+    #: delay will be reset to min_delay again
     min_delay = 0.01
+
+    #: Maximum delay one the accept() failure.
     max_delay = 1
 
     def __init__(self, listener, user=None,
@@ -74,7 +107,7 @@ class UnixStream(BaseServer):
     @property
     def server_host(self):
         """
-        Address that the server is bound to (string).
+        The address that the server is bound to (string).
         """
         return self.address
 
@@ -85,7 +118,7 @@ class UnixStream(BaseServer):
         into listening mode.
 
         It is not supposed to be called by the user, it is called by
-        `start` before starting the accept loop.
+        :py:meth:`start` before starting the accept loop.
         """
 
         if not hasattr(self, 'socket'):
@@ -141,7 +174,7 @@ class UnixStream(BaseServer):
                 spawn(self._handle, client_socket, address)
             return
         except:
-            traceback.print_exc()
+            print_exc()
             ex = sys.exc_info()[1]
             if self.is_fatal_error(ex):
                 self.kill()
@@ -150,12 +183,12 @@ class UnixStream(BaseServer):
                 return
         try:
             if address is None:
-                sys.stderr.write('%s: Failed.\n' % (self, ))
+                sys.stderr.write('%s: Failed.\n' % (self,))
             else:
                 sys.stderr.write('%s: Failed to handle request from %s\n' % \
-                                 (self, address, ))
+                                 (self, address,))
         except Exception:
-            traceback.print_exc()
+            print_exc()
         if self.delay >= 0:
             self.stop_accepting()
             self._start_accepting_timer = self.loop.timer(self.delay)
@@ -203,10 +236,10 @@ class UnixStream(BaseServer):
         """
         Stop accepting the connections and close the listening socket.
 
-        If the server uses a pool to spawn the requests, then `stop` also waits
-        for all the handlers to exit. If there are still handlers executing
-        after *timeout*  has expired (default 1 second), then the currently
-        running handlers in the pool are killed.
+        If the server uses a pool to spawn the requests, then :py:meth:`stop`
+        also waits for all the handlers to exit. If there are still handlers
+        executing after *timeout*  has expired (default 1 second), then the
+        currently running handlers in the pool are killed.
         """
         self.kill()
         if timeout is None:

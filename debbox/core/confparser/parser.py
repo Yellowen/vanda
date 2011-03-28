@@ -17,7 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import os
+
+from os import path
 
 from django.conf import settings
 
@@ -34,7 +35,7 @@ class BaseParser (object):
         self.cached = cached
         self._dict = {}
         # TODO: does caching is required?
-        if os.path.exists(self._file) and cached:
+        if path.exists(self._file) and cached:
             self._buf = self._read()
             # parse the string to config
             self.__config__()
@@ -75,7 +76,7 @@ class BaseParser (object):
                 fd = open(self._file, "w")
                 fd.write(self.__unicode__)
             except Exception, e:
-                logger.warn("%s failed to commit configurations. Error: %s" %\
+                logger.warn("%s failed to commit configurations. Error: %s" % \
                             (self.__name__, e))
                 raise
 
@@ -121,7 +122,7 @@ class Parser (object):
         configuration file.
         """
         self.driver = None
-        if os.path.exists(conf_file):
+        if path.exists(conf_file):
             self._file = conf_file
             from core.confparser.parsers import drivers
 
@@ -167,8 +168,8 @@ class Parser (object):
             name = driver.split(".")[-1]
             cls = __import__(path, globals(),
                              locals(),
-                             [name,],
-                             -1)
+                             [name, ],
+                             - 1)
 
             logger.debug("cls type: %s", str(type(cls)))
             drv = cls.__dict__[name].is_suitable(self._buf)

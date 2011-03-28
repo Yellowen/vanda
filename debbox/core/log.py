@@ -17,7 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import logging
+
+from logging import basicConfig, getLogger
 from logging.handlers import RotatingFileHandler
 
 from django.conf import settings
@@ -46,8 +47,8 @@ try: LOG_FILENAME = settings.LOG_FILENAME
 except AttributeError: pass
 
 
-logging.basicConfig(**logparam)
-logger = logging.getLogger("TODO")
+basicConfig(**logparam)
+logger = getLogger("TODO")
 handler = RotatingFileHandler(
       LOG_FILENAME, **handlerparam)
 logger.addHandler(handler)

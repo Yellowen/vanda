@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 import os
 import sys
 import stat
@@ -24,10 +25,11 @@ import atexit
 import logging
 from pwd import getpwnam
 from logging.handlers import RotatingFileHandler
-from ConfigParser import ConfigParser, NoSectionError
+from ConfigParser import ConfigParser
+from ConfigParser import NoSectionError
 
-from debbox.core.servers import WebServer, UnixStream
-from debbox.core.servers import MasterServer
+from debbox.core.servers import WebServer, MasterServer
+from debbox.core.servers import UnixStream
 
 
 class Logger (object):
@@ -40,32 +42,41 @@ class Logger (object):
         handlerparam = {}
 
         logparam['level'] = config.get("Log", "level")
+        print "<<<<<<<<< ", logparam['level']
         format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
                  ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
         logparam['format'] = format_
         logparam['datefmt'] = config.get("Log", "date_format")
         handlerparam['maxBytes'] = config.get("Log", "max_size")
         handlerparam['backupCount'] = config.get("Log", "backups")
-        LOG_FILENAME = logfile
+        #LOG_FILENAME = None #logfile
         logging.basicConfig(**logparam)
         logger = logging.getLogger("Master")
-        handler = RotatingFileHandler(
-            LOG_FILENAME, **handlerparam)
-        logger.addHandler(handler)
+        #handler = RotatingFileHandler(
+        #    LOG_FILENAME, **handlerparam)
+        #logger.addHandler(handler)
+        logger.setLevel(logparam['level'])
+        logger.debug("asdasdasdasdasdsadasdasd")
+        logger.warn("sadasdasdasdas")
+        logging.warn("SSSSSSSSSSSSSSSSSSSSSS")
         self.logger = logger
 
 
 class Debbox (object):
     """
-    Daemon class of debbox, this class runs the debbox
-    as a deamon.
+    Daemon class of debbox, this class runs the Debbox in a daemon
+    state (by default). You can think about this class as the main
+    class of Debbox. This class use the *option* parameter for its
+    configuration. *option* parameter is an object that created with
+    optparser class and contains the command line parameters.
+
+    if user decide to run the Debbox in background, then all of the
+    IO transactions will redirect to given *stdin*, *stdout* and
+    *stderr*.
     """
 
     def __init__(self, options, stdin='/dev/null', stdout='/dev/null',
                  stderr='/dev/null'):
-        """
-        Debbox constructor.
-        """
 
         self.options = options
 
@@ -77,6 +88,7 @@ class Debbox (object):
         self.spid = "/".join((self.piddir, "debbox_slave.pid"))
 
         # creating configuration object ========================
+        #: confifgurewr
         self.config = ConfigParser()
         if os.path.exists(self.options.conf):
             self.config.read(self.options.conf)
@@ -122,7 +134,9 @@ class Debbox (object):
 
         log = Logger(self.config, "/".join((self.logfolder, "master.log")))
         self.logger = log.logger
-
+        self.logger.warn("hgkjgkjhgkjhgkg")
+        self.logger.info("asdasdasdasdasd")
+        print ">>>> ", self.logger.level
         # Registering a cleanup method
         #atexit.register(self.__cleanup__)
 
@@ -167,7 +181,7 @@ class Debbox (object):
 
     def start(self):
         """
-        Start the Debbox server.
+        Start the Debbox server. all the daemon forking process runs here.
         """
         if self._status():
             print "Debbox is already running."
@@ -259,7 +273,8 @@ class Debbox (object):
 
     def stop(self):
         """
-        Stop the debbox server.
+        Stop the debbox server, and clean the environment with
+        removing any temporary files and pid files.
         """
         import re
         files_name_regex = re.compile("^debbox_\d+")
@@ -300,6 +315,10 @@ class Debbox (object):
             print "Debbox Slave is not running."
 
     def io_redirect(self):
+        """
+        Redirect all the IO to given IOs in the constructor. and skip the
+        redirecting process if daemon run in foreground ar debbug mode.
+        """
         if not self.options.debug or not self.options.foreground:
             # Redirecting standard I/O to nowhere
             sys.stdout.flush()
@@ -312,7 +331,14 @@ class Debbox (object):
             os.dup2(se.fileno(), sys.stderr.fileno())
 
     class CantFork (Exception):
+        """
+        This exception will raise if daemon can't for a new process.
+        """
         pass
 
     class CantFindConfigFile (Exception):
+        """
+        This exception will raise if daemon can't find the Debbox
+        main configuration file.
+        """
         pass

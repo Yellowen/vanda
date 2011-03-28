@@ -17,11 +17,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from debbox.core.log import logger
-from debbox.core.auth.pam import pam
 from debbox.core.servers import MasterClient
 
 

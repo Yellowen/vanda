@@ -17,7 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import traceback
+
+from traceback import print_exc
 
 from gevent import monkey; monkey.patch_all()
 from gevent.pywsgi import WSGIServer
@@ -47,4 +48,4 @@ class GEventServer (object):
         self.server.serve_forever()
 
     def exception_printer(self, sender, **kwargs):
-        traceback.print_exc()
+        print_exc()

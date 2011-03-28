@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 import os
 import sys
 
@@ -27,7 +28,36 @@ from master import MasterServer, MasterClient
 
 class WebServer (object):
     """
-    Debbox internal web server main class.
+    Debbox internal web server main class. based on gevent pywsgi server.
+
+        .. py:attribute:: host
+
+        Runs webserver on *host*.
+
+        .. py:attribute:: port
+
+        Bind webserver to given TCP *port*.
+
+        .. py:attribute:: sskkey
+
+        Path to the SSL key file.
+
+        .. py:attribute:: sslcert 
+
+        Path to the SSL cert file.
+
+        .. py:attribute:: settings
+
+        Pythonic path to Django application settigns file.
+
+        .. py:attribute:: debug
+
+        Turn on the debugging mode.
+
+        .. py:attribute:: interval
+
+        Since we don't use threads, internal checks are no more required
+
     """
 
     def __init__(self, host, port, sslkey, sslcert,
@@ -43,6 +73,11 @@ class WebServer (object):
         sys.setcheckinterval = interval
 
     def start(self):
+        """
+        Start up webserver in blocking mode if debug mode is on and
+        non-blocking mode if debug is off
+        """
+
         os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
 
         server = GEventServer(self.host, self.port,

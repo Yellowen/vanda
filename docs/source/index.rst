@@ -12,7 +12,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   Developer Guide <devel/Debbox_Developer_Guide.rst>
+   Developer Guide <devel/devguide.rst>
+   Development Reference <devel/devref.rst>
+   FAQ
 
 Indices and tables
 ==================

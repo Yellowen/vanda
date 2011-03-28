@@ -17,7 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import json
+
+from json import dumps, loads
 
 from core.log import logger
 from core.confparser.parser import BaseParser
@@ -30,20 +31,20 @@ class JSONConfParser (BaseParser):
     def __config__(self):
         if self._buf:
             try:
-                self._dict = json.loads(self._buf)
+                self._dict = loads(self._buf)
             except:
                 raise self.TypeNotSupported
         else:
             return None
 
     def __unicode__(self):
-            return json.dumps(self._dict)
+            return dumps(self._dict)
 
     @classmethod
     def is_suitable(cls, buf):
         if buf:
             try:
-                tmp = json.loads(buf)
+                loads(buf)
                 return cls
 
             except Exception, e:
