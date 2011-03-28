@@ -14,13 +14,21 @@ How deos Debbox daemon works?
 Debbox daemon runs in to state foreground and background. In the background state :py:class:`Debbox` class will fork a child process
 and terminate the parent process (why? to release from current user session) then child process continue its work and establish a new
 session and redirect all the outputs to ``/dev/null`` because it does not want to user see any IO. At last it will fork again and run
-:py:class:`MasterServer` in the master process (itself) and writes the pid files in the :ref:`piddir` and runs :py:class:`WebServer` in
+:py:class:`MasterServer` in the master process (itself) and writes the pid files in the `piddir` and runs :py:class:`WebServer` in
 the slave process (second child). both of the :py:class:`MasterServer` and :py:class:`WebServer` will go to their own blocking loop and
 cause their process to block and wait for an event such as new request from user in case of slave process and new request from slave process
 in case of master process.
+
+In the foreground state every thing is the same as background state except of first fork, since daemon wants to run in foreground so there 
+is no need to escape from user current session. Also in this state there is no IO redirecting and every outputs will go into user session
+directly.
+
+.. note:: You can avoid IO redirection in the background state by specifying ``--debug`` option for *server.py*
 
 Debbox Class
 ============
 
 .. autoclass:: Debbox 
    :members:
+
+.. seealso:: for more information take a look at source code.

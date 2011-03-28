@@ -174,7 +174,7 @@ class Debbox (object):
 
     def start(self):
         """
-        Start the Debbox server.
+        Start the Debbox server. all the daemon forking process runs here.
         """
         if self._status():
             print "Debbox is already running."
@@ -266,7 +266,8 @@ class Debbox (object):
 
     def stop(self):
         """
-        Stop the debbox server.
+        Stop the debbox server, and clean the environment with
+        removing any temporary files and pid files.
         """
         import re
         files_name_regex = re.compile("^debbox_\d+")
@@ -307,6 +308,10 @@ class Debbox (object):
             print "Debbox Slave is not running."
 
     def io_redirect(self):
+        """
+        Redirect all the IO to given IOs in the constructor. and skip the
+        redirecting process if daemon run in foreground ar debbug mode.
+        """
         if not self.options.debug or not self.options.foreground:
             # Redirecting standard I/O to nowhere
             sys.stdout.flush()
@@ -319,7 +324,14 @@ class Debbox (object):
             os.dup2(se.fileno(), sys.stderr.fileno())
 
     class CantFork (Exception):
+        """
+        This exception will raise if daemon can't for a new process.
+        """
         pass
 
     class CantFindConfigFile (Exception):
+        """
+        This exception will raise if daemon can't find the Debbox
+        main configuration file.
+        """
         pass
