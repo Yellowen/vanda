@@ -20,39 +20,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-from debbox.core.import conf
-
-
-class MasterLogger (object):
-    """
-    Debbox Master Process Logger.
-    """
-
-    def __new__(cls, config=None, logfile=None, debug=False):
-
-        logparam = {}
-        handlerparam = {}
-        format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
-            ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
-
-        formatter = logging.Formatter(format_)
-
-        if config:
-            logparam['level'] = int(config.get("Log", "level"))
-            logparam['format'] = format_
-            logparam['datefmt'] = config.get("Log", "date_format")
-            handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
-            handlerparam['backupCount'] = int(config.get("Log", "backups"))
-
-        if logfile:
-            LOG_FILENAME = logfile
-        logging.basicConfig(**logparam)
-        logger = logging.getLogger("Master")
-        handler = RotatingFileHandler(
-            LOG_FILENAME, **handlerparam)
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        return logger
+from debbox.core import conf
 
 
 class SlaveLogger (object):
