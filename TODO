@@ -25,6 +25,7 @@
 [X] make socket address static
 [X] get the config values in slave process through unix socket
 [ ] recheck the MasterClient logger
+[ ] add a tool for automating debbox.conf process
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
@@ -46,3 +47,4 @@
 [ ] write about /var/log/debbox in requirements section
 [ ] review the logging documents
 [ ] review the Master documents
+[ ] add some document about debbox.conf

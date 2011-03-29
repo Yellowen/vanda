@@ -132,7 +132,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'debbox.urls'
 
 TEMPLATE_DIRS = (
     path.join(ROOT_PATH, "templates").replace('\\', '/'),
