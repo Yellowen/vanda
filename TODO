@@ -18,28 +18,28 @@
 [X] provide a debug switch 
 [X] allow to redirect the stdout and strerr if debug mode is off
 [X] provide a foreground option
-[ ] add a method some where in master server to check for
+[-] add a method some where in master server to check for
     /tmp/debbox_PID file and create that if that is missing
-[ ] find a way to loading config files at the runtime and do not 
+[X] find a way to loading config files at the runtime and do not 
     bother the file so much
-[ ] make socket address static
-[ ] get the config values in slave process through unix socket
+[X] make socket address static
+[X] get the config values in slave process through unix socket
 [ ] recheck the MasterClient logger
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
 [ ] stream the log in network
-[ ] debug the logger,
+[X] debug the logger,
 
 -- Deb package --
 [ ] build a user and group called debbox
 [ ] add debbox user to ssl-cert
-[ ] create some folder in /var/lib/debboxv to store sqlite database
+[ ] create some folder in /var/lib/debbox to store sqlite database
     /var/lib/debbox should owned by debbox user
 
 
 -- issues --
-[ ] loggin into files
+[X] loggin into files
 [X] gevent warning (threading is already imported)
 
 -- Documents --
