@@ -117,7 +117,8 @@ class MasterServer (object):
                 args = {}
                 if "args" in data:
                     args = data["args"]
-                print "Receive Command: %s, args: %s" % (command, str(args))
+                self.logger.debug("Receive Command: %s, args: %s" % \
+                                  (command, str(args)))
                 if command in self.commands:
                     try:
                         result = self.commands[command](**args)
@@ -191,7 +192,15 @@ class MasterClient (object):
     """
 
     def __init__(self):
+        import logging
+
+        from debbox.core import conf
         self.socket = socket.socket(socket.AF_UNIX)
+
+        logging.basicConfig(level=conf.LOG_LEVEL,
+                            format=conf.LOG_FORMAT,
+                            datefmt=conf.LOG_DATE_FORMAT)
+        self.logger = logging.getLogger("MasterClient")
 
     def connect(self):
         """
@@ -203,12 +212,12 @@ class MasterClient (object):
 
         try:
             self.socket.connect(sockaddr)
-            #logger.debug("Socket connection established.")
-            print "Connection established"
+            self.logger.debug("Socket connection established.")
+
             self.fd = self.socket.makefile("w+")
         except socket.error:
-            #logger.error("Can't connect to '%s' socket" % sockaddr)
-            print "Can't connect"
+            self.logger.error("Can't connect to '%s' socket" % sockaddr)
+
             raise self.CantConnectToSocket()
 
     def command(self, command=None, **kwargs):
@@ -223,7 +232,7 @@ class MasterClient (object):
         jpacket = "%s\n" % json.dumps(packet)
         self.fd.write(jpacket)
         self.fd.flush()
-        print "Data sent: %s" % jpacket
+        self.logger.debug<("Data sent: %s" % jpacket)
         buf = self.fd.readline()
         buf = json.loads(buf)
 
@@ -231,7 +240,8 @@ class MasterClient (object):
         # TODO: transport remote traceback somehow
         if buf["extra"] == "debug":
             exception = pickle.loads(str(buf["message"]))
-            print exception
+            self.logger.warning("Rmote exception raised exception: %s" % \
+                                exception)
             raise exception
 
         # creating a result object
@@ -240,7 +250,7 @@ class MasterClient (object):
                        "result": pickle.loads(str(buf["message"])),
                        "extra": buf["extra"]})
 
-        print "Data Received: %s" % buf
+        self.logger.debug("Data Received: %s" % buf)
         return result()
 
     def disconnect(self):
@@ -248,7 +258,7 @@ class MasterClient (object):
         disconnect the master socket.
         """
         self.fd.close()
-        print "Disconnecting"
+        self.logger.debug("Disconnecting")
         self.socket.close()
 
     class CantFindConfigFile (Exception):

@@ -24,6 +24,7 @@
     bother the file so much
 [ ] make socket address static
 [ ] get the config values in slave process through unix socket
+[ ] recheck the MasterClient logger
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
