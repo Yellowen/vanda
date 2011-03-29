@@ -17,20 +17,18 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-
 import os
 import sys
 import stat
 import atexit
-import logging
 from pwd import getpwnam
-from logging.handlers import RotatingFileHandler
 from ConfigParser import ConfigParser
 from ConfigParser import NoSectionError
 
 from debbox.core.servers import WebServer, MasterServer
 from debbox.core.servers import UnixStream
 from debbox.core.log import MasterLogger
+from debbox.core.conf import SOCKFILE
 
 
 class Debbox (object):
@@ -213,7 +211,7 @@ class Debbox (object):
                 file(self.spid, "w+").write(str(slavepid))
 
             # running the master server
-            socket = self.config.get("Socket", "master", "/tmp/debbox.sock")
+            socket = SOCKFILE
             masterapp = MasterServer(self.logger, self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)

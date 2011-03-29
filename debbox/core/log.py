@@ -26,20 +26,24 @@ class MasterLogger (object):
     Debbox Master Process Logger.
     """
 
-    def __new__(cls, config, logfile, debug=False):
+    def __new__(cls, config=None, logfile=None, debug=False):
+
         logparam = {}
         handlerparam = {}
-
-        logparam['level'] = int(config.get("Log", "level"))
         format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
-                ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+            ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+
         formatter = logging.Formatter(format_)
-        logparam['format'] = format_
-        logparam['datefmt'] = config.get("Log", "date_format")
-        handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
-        handlerparam['backupCount'] = int(config.get("Log", "backups"))
-        #logparam['filename'] = logfile
-        LOG_FILENAME = logfile
+
+        if config:
+            logparam['level'] = int(config.get("Log", "level"))
+            logparam['format'] = format_
+            logparam['datefmt'] = config.get("Log", "date_format")
+            handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
+            handlerparam['backupCount'] = int(config.get("Log", "backups"))
+
+        if logfile:
+            LOG_FILENAME = logfile
         logging.basicConfig(**logparam)
         logger = logging.getLogger("Master")
         handler = RotatingFileHandler(
@@ -48,13 +52,16 @@ class MasterLogger (object):
         logger.addHandler(handler)
         return logger
 
-"""
-from django.conf import settings
+
+class SlaveLogger (object):
+    pass
+
+#from django.conf import settings
 
 
 logparam = {}
 handlerparam = {}
-
+"""
 try: logparam['level'] = settings.LOG_LEVEL
 except AttributeError: pass
 
@@ -73,11 +80,10 @@ except AttributeError: pass
 LOG_FILENAME = "/var/log/debbox"
 try: LOG_FILENAME = settings.LOG_FILENAME
 except AttributeError: pass
-
-
-basicConfig(**logparam)
-logger = getLogger("TODO")
-handler = RotatingFileHandler(
-      LOG_FILENAME, **handlerparam)
-logger.addHandler(handler)
 """
+
+logging.basicConfig(**logparam)
+logger = logging.getLogger("TODO")
+#handler = RotatingFileHandler(
+#      LOG_FILENAME, **handlerparam)
+#logger.addHandler(handler)

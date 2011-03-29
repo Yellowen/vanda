@@ -89,6 +89,7 @@ class UnixStream(BaseServer):
         self._start_accepting_timer = None
 
         self.user = user
+
         # try to remove the sock file if already exists
         try:
             os.remove(listener)
