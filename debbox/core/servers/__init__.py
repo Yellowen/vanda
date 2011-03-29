@@ -21,75 +21,7 @@
 import os
 import sys
 
+from webserver import WebServer
 from GEvent import GEventServer
 from unixstream import UnixStream
 from master import MasterServer, MasterClient
-
-
-class WebServer (object):
-    """
-    Debbox internal web server main class. based on gevent pywsgi server.
-
-        .. py:attribute:: host
-
-        Runs webserver on *host*.
-
-        .. py:attribute:: port
-
-        Bind webserver to given TCP *port*.
-
-        .. py:attribute:: sskkey
-
-        Path to the SSL key file.
-
-        .. py:attribute:: sslcert 
-
-        Path to the SSL cert file.
-
-        .. py:attribute:: settings
-
-        Pythonic path to Django application settigns file.
-
-        .. py:attribute:: debug
-
-        Turn on the debugging mode.
-
-        .. py:attribute:: interval
-
-        Since we don't use threads, internal checks are no more required
-
-    """
-
-    def __init__(self, host, port, sslkey, sslcert,
-                 settings, debug=False, interval=100000):
-
-        self.host = host
-        self.port = port
-        self._key = sslkey
-        self._cert = sslcert
-        self.settings = settings
-        self._debug = debug
-        # since we don't use threads, internal checks are no more required
-        sys.setcheckinterval = interval
-
-    def start(self):
-        """
-        Start up webserver in blocking mode if debug mode is on and
-        non-blocking mode if debug is off
-        """
-
-        os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
-
-        server = GEventServer(self.host, self.port,
-                              keyfile=self._key,
-                              certfile=self._cert)
-
-        if self._debug:
-            from debbox.core.logging.instance import logger
-            logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
-                        (self._cert, self._key))
-            print 'Start SSL connection on ', (self.host, self.port)
-        if self._debug:
-            server.serve_forever()
-        else:
-            server.start()
