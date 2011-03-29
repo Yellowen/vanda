@@ -79,8 +79,7 @@ class WebServer (object):
         """
 
         os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
-        import debbox.settings
-        print ">>>> ", dir(debbox)
+
         server = GEventServer(self.host, self.port,
                               keyfile=self._key,
                               certfile=self._cert)

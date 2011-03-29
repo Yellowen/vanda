@@ -20,6 +20,8 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
+from debbox.core.import conf
+
 
 class MasterLogger (object):
     """
@@ -54,36 +56,29 @@ class MasterLogger (object):
 
 
 class SlaveLogger (object):
-    pass
+    """
+    Debbox Slave process logger.
+    """
 
-#from django.conf import settings
+    def __new__(cls):
+        from debbox.core.servers import MasterClient
+        client = MasterClient()
+        client.connect()
+        result = client.command("get_config", config=("Log", "folder"))
+        logfolder = result.result
+        client.disconnect()
 
-
-logparam = {}
-handlerparam = {}
-"""
-try: logparam['level'] = settings.LOG_LEVEL
-except AttributeError: pass
-
-try: logparam['format'] = settings.LOG_FORMAT
-except AttributeError: pass
-
-try: logparam['datefmt'] = settings.LOG_DATE_FORMAT
-except AttributeError: pass
-
-try: handlerparam['maxBytes'] = settings.LOG_MAX_BYTES
-except AttributeError: pass
-
-try: handlerparam['backupCount'] = settings.LOG_BACKUP_COUNT
-except AttributeError: pass
-
-LOG_FILENAME = "/var/log/debbox"
-try: LOG_FILENAME = settings.LOG_FILENAME
-except AttributeError: pass
-"""
-
-logging.basicConfig(**logparam)
-logger = logging.getLogger("TODO")
-#handler = RotatingFileHandler(
-#      LOG_FILENAME, **handlerparam)
-#logger.addHandler(handler)
+        logparam = {}
+        handlerparam = {}
+        logparam['level'] = conf.LOG_LEVEL
+        logparam['format'] = conf.LOG_FORMAT
+        logparam['datefmt'] = conf.LOG_DATE_FORMAT
+        handlerparam['maxBytes'] = conf.LOG_MAX_BYTES
+        handlerparam['backupCount'] = conf.LOG_BACKUP_COUNT
+        LOG_FILENAME = "/".join((logfolder.rstrip("/"), "webserver.log"))
+        logging.basicConfig(**logparam)
+        logger = logging.getLogger("TODO")
+        handler = RotatingFileHandler(
+            LOG_FILENAME, **handlerparam)
+        logger.addHandler(handler)
+        return logger
