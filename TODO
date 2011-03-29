@@ -34,6 +34,7 @@
 
 -- Deb package --
 [ ] build a user and group called debbox
+[ ] deps: libpng libjpeg libevent 
 [ ] add debbox user to ssl-cert
 [ ] create some folder in /var/lib/debbox to store sqlite database
     /var/lib/debbox should owned by debbox user
