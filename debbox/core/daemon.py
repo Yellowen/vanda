@@ -30,34 +30,7 @@ from ConfigParser import NoSectionError
 
 from debbox.core.servers import WebServer, MasterServer
 from debbox.core.servers import UnixStream
-
-
-class Logger (object):
-    """
-    Debbox Master Process Logger.
-    """
-
-    def __init__(self, config, logfile):
-        logparam = {}
-        handlerparam = {}
-
-        logparam['level'] = int(config.get("Log", "level"))
-        format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
-                ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
-        formatter = logging.Formatter(format_)
-        logparam['format'] = format_
-        logparam['datefmt'] = config.get("Log", "date_format")
-        handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
-        handlerparam['backupCount'] = int(config.get("Log", "backups"))
-        #logparam['filename'] = logfile
-        LOG_FILENAME = logfile
-        logging.basicConfig(**logparam)
-        logger = logging.getLogger("Master")
-        handler = RotatingFileHandler(
-            LOG_FILENAME, **handlerparam)
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        self.logger = logger
+from debbox.core.log import MasterLogger
 
 
 class Debbox (object):
@@ -130,11 +103,10 @@ class Debbox (object):
         os.chmod(self.logfolder, stat.S_IXUSR | stat.S_IRUSR | stat.S_IWUSR | \
                  stat.S_IXGRP | stat.S_IWGRP | stat.S_IRGRP)
 
-        log = Logger(self.config, "/".join((self.logfolder, "master.log")))
-        self.logger = log.logger
-        self.logger.warn("hgkjgkjhgkjhgkg")
-        self.logger.info("asdasdasdasdasd")
-        print ">>>> ", self.logger.level
+        self.logger = MasterLogger(self.config, "/".join((self.logfolder,
+                                                  "master.log")),
+                           self.options.debug)
+
         # Registering a cleanup method
         #atexit.register(self.__cleanup__)
 

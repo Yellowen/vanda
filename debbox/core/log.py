@@ -17,10 +17,38 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-
-from logging import basicConfig, getLogger
+import logging
 from logging.handlers import RotatingFileHandler
 
+
+class MasterLogger (object):
+    """
+    Debbox Master Process Logger.
+    """
+
+    def __new__(cls, config, logfile, debug=False):
+        logparam = {}
+        handlerparam = {}
+
+        logparam['level'] = int(config.get("Log", "level"))
+        format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
+                ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+        formatter = logging.Formatter(format_)
+        logparam['format'] = format_
+        logparam['datefmt'] = config.get("Log", "date_format")
+        handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
+        handlerparam['backupCount'] = int(config.get("Log", "backups"))
+        #logparam['filename'] = logfile
+        LOG_FILENAME = logfile
+        logging.basicConfig(**logparam)
+        logger = logging.getLogger("Master")
+        handler = RotatingFileHandler(
+            LOG_FILENAME, **handlerparam)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        return logger
+
+"""
 from django.conf import settings
 
 
@@ -52,3 +80,4 @@ logger = getLogger("TODO")
 handler = RotatingFileHandler(
       LOG_FILENAME, **handlerparam)
 logger.addHandler(handler)
+"""
