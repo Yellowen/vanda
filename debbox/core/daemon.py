@@ -27,7 +27,7 @@ from ConfigParser import NoSectionError
 
 from debbox.core.servers import WebServer, MasterServer
 from debbox.core.servers import UnixStream
-from debbox.core.log import MasterLogger
+from debbox.core.logging.master import MasterLogger
 from debbox.core.conf import SOCKFILE
 
 

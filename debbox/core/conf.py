@@ -17,4 +17,23 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+import logging
+
+
+# unique place for creating debbox socket
 SOCKFILE = "/var/run/debbox.sock"
+
+# logger configuration
+
+# level values
+# logger.DEBUG
+# logger.WARNING
+#  . . .
+LOG_LEVEL = 1
+
+LOG_FORMAT = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
+            ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+LOG_MAX_BYTES = 2 * 1024 * 1024  # 2Mb
+LOG_BACKUP_COUNT = 5

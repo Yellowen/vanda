@@ -21,7 +21,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from debbox.core.log import logger
+from debbox.core.logging.instance import logger
 from debbox.core.servers import MasterClient
 
 

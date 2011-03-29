@@ -85,7 +85,7 @@ class WebServer (object):
                               certfile=self._cert)
 
         if self._debug:
-            from debbox.core.log import logger
+            from debbox.core.logging.instance import logger
             logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
                         (self._cert, self._key))
             print 'Start SSL connection on ', (self.host, self.port)

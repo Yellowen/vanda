@@ -32,14 +32,12 @@ class MasterLogger (object):
 
         logparam = {}
         handlerparam = {}
-        format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
-            ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
 
-        formatter = logging.Formatter(format_)
+        formatter = logging.Formatter(conf.LOG_FORMAT)
 
         if config:
             logparam['level'] = int(config.get("Log", "level"))
-            logparam['format'] = format_
+            logparam['format'] = conf.LOG_FORMAT
             logparam['datefmt'] = config.get("Log", "date_format")
             handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
             handlerparam['backupCount'] = int(config.get("Log", "backups"))
