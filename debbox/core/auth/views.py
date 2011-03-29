@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from forms import LoginForm
-from core.log import logger
+from debbox.core.logging.instance import logger
 
 
 def Login(request):

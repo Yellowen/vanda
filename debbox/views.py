@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from core.log import logger
+from debbox.core.logging.instance import logger
 
 
 def tmpindex(request):

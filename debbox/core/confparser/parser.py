@@ -22,7 +22,7 @@ from os import path
 
 from django.conf import settings
 
-from core.log import logger
+from debbox.core.logging.instance import logger
 
 
 class BaseParser (object):
