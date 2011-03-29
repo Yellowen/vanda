@@ -41,24 +41,22 @@ class Logger (object):
         logparam = {}
         handlerparam = {}
 
-        logparam['level'] = config.get("Log", "level")
-        print "<<<<<<<<< ", logparam['level']
+        logparam['level'] = int(config.get("Log", "level"))
         format_ = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
-                 ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+                ' line:%(lineno)d-> %(levelname)-8s : "%(message)s"'
+        formatter = logging.Formatter(format_)
         logparam['format'] = format_
         logparam['datefmt'] = config.get("Log", "date_format")
-        handlerparam['maxBytes'] = config.get("Log", "max_size")
-        handlerparam['backupCount'] = config.get("Log", "backups")
-        #LOG_FILENAME = None #logfile
+        handlerparam['maxBytes'] = int(config.get("Log", "max_size"))
+        handlerparam['backupCount'] = int(config.get("Log", "backups"))
+        #logparam['filename'] = logfile
+        LOG_FILENAME = logfile
         logging.basicConfig(**logparam)
         logger = logging.getLogger("Master")
-        #handler = RotatingFileHandler(
-        #    LOG_FILENAME, **handlerparam)
-        #logger.addHandler(handler)
-        logger.setLevel(logparam['level'])
-        logger.debug("asdasdasdasdasdsadasdasd")
-        logger.warn("sadasdasdasdas")
-        logging.warn("SSSSSSSSSSSSSSSSSSSSSS")
+        handler = RotatingFileHandler(
+            LOG_FILENAME, **handlerparam)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
         self.logger = logger
 
 
