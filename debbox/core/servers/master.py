@@ -63,13 +63,15 @@ class MasterServer (object):
     Master process application class.
     """
 
-    def __init__(self, logger_instance, debug=False):
+    def __init__(self, logger_instance, config, debug=False):
         self.logger = logger_instance
         self.debug = debug
+        self.config = config
         # TODO: make command dictionary loadable form a file
         self.commands = {
             "echo": self.echo,
             "authenticate": pam.authenticate,
+            "get_config": self.get_config,
             }
 
     def _dumpmsg(self, status, msg, extra=None):
@@ -150,6 +152,21 @@ class MasterServer (object):
         this is a echo command. just for testing.
         """
         return kwargs
+
+    def get_config(self, config):
+        """
+        return the requested config entry.
+
+           .. py:attribute: config
+
+              A tuple that contains the config section key as the first element
+              and entry name as the second element.
+
+        """
+        default = None
+        if len(config) > 2:
+            default = config[2]
+        return self.config.get(config[0], config[1], default)
 
 
 class MasterClient (object):

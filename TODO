@@ -43,3 +43,5 @@
 
 -- Documents --
 [ ] write about /var/log/debbox in requirements section
+[ ] review the logging documents
+[ ] review the Master documents

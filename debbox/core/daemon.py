@@ -212,7 +212,8 @@ class Debbox (object):
 
             # running the master server
             socket = SOCKFILE
-            masterapp = MasterServer(self.logger, self.options.debug)
+            masterapp = MasterServer(self.logger, self.config,
+                                     self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)
             print "Running Master Server . . ."
