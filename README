@@ -1,1 +1,23 @@
-Developers -> Please read the devel docs about building a development envronment
+Development environment howto
+=============================
+
+first of all you should create you environment, run the bin/envcreator.sh
+in the root of debbox source tree. like this:
+
+$ sh bin/envcreator.sh
+
+after that run setupenv.sh for setuping your debian box(run under root):
+
+# sh bin/setupenv.sh
+
+now you can activate your environment by:
+
+$. env/bin/activate
+
+for creating document you should go into docs folder and do like
+
+$ cd docs
+$ make html
+
+Note: you should make your docs after activating your env.
+noe read the docs please
