@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 
-from traceback import print_exc
+import traceback
 
 from gevent import monkey; monkey.patch_all()
 from gevent.pywsgi import WSGIServer
@@ -48,4 +48,10 @@ class GEventServer (object):
         self.server.serve_forever()
 
     def exception_printer(self, sender, **kwargs):
-        print_exc()
+        import sys
+        from debbox.core.logging.instance import logger
+
+        tblist = traceback.extract_tb(sys.exc_info()[2])
+        strlist = traceback.format_list(tblist)
+        log = "Uncaught Exception occur:\n" + "".join(strlist)
+        logger.critical(log)
