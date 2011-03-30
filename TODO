@@ -26,8 +26,8 @@
 [X] get the config values in slave process through unix socket
 [ ] recheck the MasterClient logger
 [ ] add a tool for automating debbox.conf process
-[ ] replace the django WSGI handler with our wsgi handler to
-[ ] log all the uncaught exceptions
+[-] replace the django WSGI handler with our wsgi handler to
+[X] log all the uncaught exceptions
 [ ] embed the console.py modules for colorizing the outputs
 
 -- Logsystem --
