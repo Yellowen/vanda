@@ -28,6 +28,7 @@
 [ ] add a tool for automating debbox.conf process
 [ ] replace the django WSGI handler with our wsgi handler to
 [ ] log all the uncaught exceptions
+[ ] embed the console.py modules for colorizing the outputs
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
