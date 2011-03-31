@@ -339,7 +339,7 @@ class Debbox (object):
             except OperationalError, e:
                 print "Error: Unexpected error occured with '%s'"
                 print "=================================================="
-                print "Didn't you forget to create /var/run/debbox/ and"
+                print "Didn't you forget to create /var/lib/debbox/ and"
                 print "change its ownership to Debbox defualt user ?"
                 print "=================================================="
             return
