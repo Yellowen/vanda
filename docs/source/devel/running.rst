@@ -55,6 +55,14 @@ Now here is a complete list of **server.py** options explanation.
 
    Run an Ipython interactive shell on the Debbox environment
 
+.. option:: --syncdb
+
+   Sync the Debbox web application (Django project).
+
+.. option:: --syncdb-new
+
+   Remove the old database and resync it again.
+
 .. option:: --host=<HOST>
 
    Run Debbox on given HOST. Default is ``localhost``

@@ -59,14 +59,27 @@ parser.add_option('--piddir', dest='piddir',
                   help="Stotr pid files in PIDDIR folder")
 parser.add_option('--settings', dest='settings',
                   help="Django settings.py file")
-parser.add_option('--pythonpath', dest='pythonpath')
+parser.add_option('--syncdb', dest='sync', action="store_true",
+                  help="Sync Debbox web application database.")
+parser.add_option('--syncdb-new', dest='syncnew',
+                  action="store_true",
+                  help="Rmove old database and sync it again.")
+parser.add_option('--pythonpath', dest='pythonpath',
+                  help="Add given path to python path.\n")
 
 options, args = parser.parse_args()
+valid_action = False
 
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
 sys.path.insert(1, "debbox/")
+
+try:
+    daemon = Debbox(options)
+except Debbox.CantFindConfigFile:
+    print "Error: Can't find '%s' configuration file." % options.conf
+    sys.exit(1)
 
 if options.shell:
     from IPython.Shell import IPShellEmbed
@@ -75,12 +88,16 @@ if options.shell:
     ipshell()
     sys.exit(0)
 
-try:
-    daemon = Debbox(options)
-except Debbox.CantFindConfigFile:
-    print "Error: Can't find '%s' configuration file." % options.conf
-    sys.exit(1)
+# Try to syncdb
+if options.sync or options.syncnew:
+    synced = None
+    if options.syncnew:
+        daemon.syncdb(fresh=True)
+        synced = 1
 
+    if options.sync and not synced:
+        daemon.syncdb()
+    valid_action = True
 
 if options.foreground:
     daemon.start()
@@ -93,6 +110,9 @@ elif options.action == "stop":
 
 elif options.action == "status":
     daemon.status()
+
+elif valid_action:
+    sys.exit(0)
 
 else:
     print "Error: what is '%s'" % options.action
