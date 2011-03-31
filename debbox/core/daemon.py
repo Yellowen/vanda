@@ -315,7 +315,6 @@ class Debbox (object):
 
         try:
             worker = os.fork()
-            self.logger.debug("Worker fork pid: %s" % worker)
         except OSError:
             raise self.CantFork("Can't create the slave process")
 
@@ -323,7 +322,7 @@ class Debbox (object):
 
             # Waiting for worker to finish its job
             print "Syncing database . . ."
-            os.waitpid(worker)
+            os.waitpid(worker, 0)
 
         else:
             uid = getpwnam(self.slave_user)[2]
@@ -331,9 +330,19 @@ class Debbox (object):
             os.setuid(int(uid))
             #os.setgid(int(gid))
             os.umask(027)
-            os.environ['DJANGO_SETTINGS_MODULE'] = self.config.settings
+            os.environ['DJANGO_SETTINGS_MODULE'] = self.options.settings
             from django.core.management import call_command
-            call_command('syncdb')
+            from pysqlite2.dbapi2 import OperationalError
+
+            try:
+                call_command('syncdb')
+            except OperationalError, e:
+                print "Error: Unexpected error occured with '%s'"
+                print "=================================================="
+                print "Didn't you forget to create /var/run/debbox/ and"
+                print "change its ownership to Debbox defualt user ?"
+                print "=================================================="
+            return
 
     class CantFork (Exception):
         """

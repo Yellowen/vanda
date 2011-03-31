@@ -59,15 +59,17 @@ parser.add_option('--piddir', dest='piddir',
                   help="Stotr pid files in PIDDIR folder")
 parser.add_option('--settings', dest='settings',
                   help="Django settings.py file")
-parser.add_option('--syncdb', dest='sync',
+parser.add_option('--syncdb', dest='sync', action="store_true",
                   help="Sync Debbox web application database.")
-parser.add_option('--pythonpath', dest='pythonpath')
+parser.add_option('--pythonpath', dest='pythonpath',
+                  help="Add given path to python path.\n")
 
 options, args = parser.parse_args()
+valid_action = False
 
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
-
+    
 sys.path.insert(1, "debbox/")
 
 try:
@@ -86,6 +88,7 @@ if options.shell:
 # Try to syncdb
 if options.sync:
     daemon.syncdb()
+    valid_action = True
 
 if options.foreground:
     daemon.start()
@@ -98,6 +101,9 @@ elif options.action == "stop":
 
 elif options.action == "status":
     daemon.status()
+
+elif valid_action:
+    sys.exit(0)
 
 else:
     print "Error: what is '%s'" % options.action
