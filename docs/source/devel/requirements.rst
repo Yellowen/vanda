@@ -3,7 +3,8 @@ Requirements
 Before jumping in the Debbox development process make sure that you have enough knowledge to use
 Python programming language and Django framework. These two are the most important requirements
 for Debbox development.
-
+.. cn: jumping into the ...
+ 
 Required packages
 =================
 Debbox will use an isolated environment in the deployed state, to prevent unwanted changes in the
@@ -31,6 +32,9 @@ You can change the defualt user in ``debbox.conf`` under the *User* section.
 Building virtual environment
 ============================
 After installing required packages, you can easily build a environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
+
+.. note:: should we add sphinx here ? ^
+
 
 so if you don't want tu install one of them, just comment the corresponding code in ``envcreator.sh``.
 
