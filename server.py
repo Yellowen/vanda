@@ -61,6 +61,9 @@ parser.add_option('--settings', dest='settings',
                   help="Django settings.py file")
 parser.add_option('--syncdb', dest='sync', action="store_true",
                   help="Sync Debbox web application database.")
+parser.add_option('--syncdb-new', dest='syncnew',
+                  action="store_true",
+                  help="Rmove old database and sync it again.")
 parser.add_option('--pythonpath', dest='pythonpath',
                   help="Add given path to python path.\n")
 
@@ -69,7 +72,7 @@ valid_action = False
 
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
-    
+
 sys.path.insert(1, "debbox/")
 
 try:
@@ -86,8 +89,14 @@ if options.shell:
     sys.exit(0)
 
 # Try to syncdb
-if options.sync:
-    daemon.syncdb()
+if options.sync or options.syncnew:
+    synced = None
+    if options.syncnew:
+        daemon.syncdb(fresh=True)
+        synced = 1
+
+    if options.sync and not synced:
+        daemon.syncdb()
     valid_action = True
 
 if options.foreground:
