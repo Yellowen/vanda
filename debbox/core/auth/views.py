@@ -13,7 +13,6 @@ def Login(request):
     """
     login view.
     """
-
     if request.user.is_authenticated():
         logger.debug("User is authenticated, redirecting to /")
         return HttpResponseRedirect("/")

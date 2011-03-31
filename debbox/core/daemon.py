@@ -69,6 +69,15 @@ class Debbox (object):
                     "cert": self.config.get("SSL", "cert"),
                     }
 
+        # Setup ssl configuration for development environments
+        root_tree = os.path.join(os.path.dirname(__file__),
+                                 "../../")
+        if self.ssl["key"] == "dev":
+            self.ssl["key"] = os.path.join(root_tree, "ssl/server.key")
+
+        if self.ssl["cert"] == "dev":
+            self.ssl["cert"] = os.path.join(root_tree, "ssl/server.crt")
+
         # setting standard IO
         self.stdin = stdin
         self.stdout = stdout
