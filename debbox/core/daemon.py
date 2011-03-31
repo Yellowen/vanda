@@ -299,6 +299,42 @@ class Debbox (object):
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
 
+    def syncdb(self, fresh=False):
+        """
+        Try to sync the Django database by Debbox user. if ``fresh``
+        argument was True, this method will recreate the database.
+        """
+        if fresh:
+            from debbox.settings import DATABASES
+            print "Removing exist database . . ."
+            try:
+                os.unlink(DATABASES["default"]["NAME"])
+            except OSError, e:
+                print "Warning: %s", e
+                print "Skipping . . ."
+
+        try:
+            worker = os.fork()
+            self.logger.debug("Worker fork pid: %s" % worker)
+        except OSError:
+            raise self.CantFork("Can't create the slave process")
+
+        if worker > 0:
+
+            # Waiting for worker to finish its job
+            print "Syncing database . . ."
+            os.waitpid(worker)
+
+        else:
+            uid = getpwnam(self.slave_user)[2]
+            #gid = getpwnam(self.slave_user)[3]
+            os.setuid(int(uid))
+            #os.setgid(int(gid))
+            os.umask(027)
+            os.environ['DJANGO_SETTINGS_MODULE'] = self.config.settings
+            from django.core.management import call_command
+            call_command('syncdb')
+
     class CantFork (Exception):
         """
         This exception will raise if daemon can't for a new process.
