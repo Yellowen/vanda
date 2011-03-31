@@ -68,6 +68,8 @@ if options.pythonpath:
 
 sys.path.insert(1, "debbox/")
 
+# ISSUE : Words defined path (sys.path.insert) at the top must be provided within the structure or defined on set_default 
+
 if options.shell:
     from IPython.Shell import IPShellEmbed
     sys.argv = []
@@ -93,7 +95,7 @@ elif options.action == "stop":
 
 elif options.action == "status":
     daemon.status()
-
+# ISSUE : Restart better be added
 else:
     print "Error: what is '%s'" % options.action
     sys.exit(1)
