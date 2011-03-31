@@ -42,7 +42,7 @@ except AttributeError: pass
 try: handlerparam['backupCount'] = settings.LOG_BACKUP_COUNT
 except AttributeError: pass
 
-LOG_FILENAME = "/var/log/debbox"
+LOG_FILENAME = "/var/log/debbox" # ISSUE : This line is better placed in the exception.
 try: LOG_FILENAME = settings.LOG_FILENAME
 except AttributeError: pass
 
