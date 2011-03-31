@@ -3,7 +3,6 @@
 build/
 env/
 log/
-debbox/db.sqlite
 debbox/.project
 debbox/.pydevproject
 docs/build/

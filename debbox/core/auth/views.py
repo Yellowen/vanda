@@ -58,3 +58,4 @@ def Login(request):
 def Logout(request):
     logout(request)
     return HttpResponseRedirect(settings.LOGIN_URL)
+
