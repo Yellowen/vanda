@@ -20,8 +20,10 @@
 
 import os
 import sys
+import time
 
 from GEvent import GEventServer
+from master import MasterClient
 
 
 class WebServer (object):
@@ -40,7 +42,7 @@ class WebServer (object):
 
         Path to the SSL key file.
 
-        .. py:attribute:: sslcert 
+        .. py:attribute:: sslcert
 
         Path to the SSL cert file.
 
@@ -56,10 +58,14 @@ class WebServer (object):
 
         Since we don't use threads, internal checks are no more required
 
+        .. py:attribute:: statics_workers
+
+        Number of workers for serving statics files.
+
     """
 
     def __init__(self, host, port, sslkey, sslcert,
-                 settings, debug=False, interval=100000):
+                 settings, debug=False, interval=100000, statics_workers=1):
 
         self.host = host
         self.port = port
@@ -67,6 +73,16 @@ class WebServer (object):
         self._cert = sslcert
         self.settings = settings
         self._debug = debug
+        self._workers = statics_workers
+        self.client = MasterClient()
+
+        while True:
+            try:
+                self.client.connect()
+                break
+            except self.client.CantConnectToSocket:
+                time.sleep(1)
+
         # since we don't use threads, internal checks are no more required
         sys.setcheckinterval = interval
 
