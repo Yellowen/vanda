@@ -45,13 +45,15 @@
 # MSG: is a pickled data that return by Master COMMAND.
 # EXTRA: is a extra flag, each command will use it for its own
 # =============================================================================
-
+# ISSUE: os is an unused import
 import os
 import sys
 import pickle
 import json
 import _socket as socket
+# ISSUE: ConfigParser is an unused import
 from ConfigParser import ConfigParser
+# ISSUE: NoSectionError is an unused import
 from ConfigParser import NoSectionError
 #from debbox.core.log import logger
 
@@ -232,6 +234,7 @@ class MasterClient (object):
         jpacket = "%s\n" % json.dumps(packet)
         self.fd.write(jpacket)
         self.fd.flush()
+        # ISSUE: is syntax of below line correct?
         self.logger.debug<("Data sent: %s" % jpacket)
         buf = self.fd.readline()
         buf = json.loads(buf)
