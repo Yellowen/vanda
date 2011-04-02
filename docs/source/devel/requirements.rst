@@ -58,7 +58,7 @@ user, so you can do that like::
 
       # cd debbox
       # sudo -u debbox python manage.py syncdb
-
+.. cn: notice that user should be sudoer ...
 
 .. note:: If you use .deb package for installing **Debbox**, then above action take effect automatically.
 
