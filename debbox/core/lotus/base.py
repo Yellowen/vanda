@@ -50,7 +50,7 @@ class LotusServer(object):
     Debbox Web Server. This class is based one twisted web.
     """
 
-    def __init__(self, WSGI_app):
+    def __init__(self, WSGI_app, host, port):
 
         # Setting up thread pool
         self.pool = ThreadPool()
@@ -60,6 +60,8 @@ class LotusServer(object):
                                       self.pool.stop)
 
         self.app = WSGI_app
+        self.port = port
+        self.host = host
 
         try:
             self.resource = Root()
@@ -77,7 +79,7 @@ class LotusServer(object):
 
     def start(self):
         try:
-            reactor.listenTCP(8001, server.Site(self.resource))
+            reactor.listenTCP(self.port, server.Site(self.resource))
             reactor.run()
         except:
             self.pool.stop()
