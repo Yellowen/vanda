@@ -16,6 +16,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+import os
 
 from twisted.internet import reactor
 from twisted.web import static, server
@@ -51,18 +52,29 @@ class LotusServer(object):
     def __init__(self, WSGI_app):
         self.pool = ThreadPool()
         self.pool.start()
-        self.app = WSGI_app
+        self.app = WSGI_app()
 
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'debbox.settings'
         reactor.addSystemEventTrigger('after',
                                       'shutdown',
                                       self.pool.stop)
 
-        self.wsgi_resource = WSGIResource(reactor,
-                                          self.pool,
-                                          self.app)
-        self.wsgi_resource.putChild("statics",
-                                      static.File("/home/lxsameer/src/www"))
+        try:
+            self.resource = Root()
+            self.resource.putChild("statics",
+                                   static.File("/var/www"))
+
+            self.resource.WSGI = WSGIResource(reactor,
+                                              self.pool,
+                                              self.app)
+        except:
+            self.pool.stop()
+            raise
 
     def start(self):
-        reactor.listenTCP(80, server.Site(self.wsgi_resource))
-        reactor.run()
+        try:
+            reactor.listenTCP(8001, server.Site(self.resource))
+            reactor.run()
+        except:
+            self.pool.stop()
+            raise
