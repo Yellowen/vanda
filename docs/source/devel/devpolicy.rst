@@ -2,7 +2,7 @@ Development Policies
 ********************
 In this chapter you will read the most important policies for developing Debbox. If you have any idea please contact me at lxsameer@gnu.org .
 
-.. cn:Its not a good idea to se "chapter" world in documents!
+.. cn:Its not a good idea to se "chapter" word in documents!
 .. cn:Using development mailing list for contact is better that personal.
 
 General Policies

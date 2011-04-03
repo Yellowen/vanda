@@ -76,3 +76,4 @@ Now here is a complete list of **server.py** options explanation.
 
 .. note:: Sometimes, when you run the **server.py** script you may experience an ``Address in already in use``. if this situation happened to you just find the server.py
    process that is running (by ``ps aux| grep server.py``) and kill it, and report the issue to lxsameer@gnu.org.
+.. cn:Using development mailing list for contact is better that personal.
