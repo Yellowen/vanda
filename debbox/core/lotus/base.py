@@ -50,7 +50,8 @@ class LotusServer(object):
     Debbox Web Server. This class is based one twisted web.
     """
 
-    def __init__(self, WSGI_app, host, port):
+    def __init__(self, WSGI_app, host, port,
+                 sslkey, sslcert, debug=True):
 
         # Setting up thread pool
         self.pool = ThreadPool()

@@ -22,8 +22,10 @@ import os
 import sys
 import time
 
-from GEvent import GEventServer
+#from GEvent import GEventServer
+from django.core.handlers.wsgi import WSGIHandler
 from master import MasterClient
+from debbox.core.lotus import LotusDjango
 
 
 class WebServer (object):
@@ -94,16 +96,24 @@ class WebServer (object):
 
         os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
 
-        server = GEventServer(self.host, self.port,
-                              keyfile=self._key,
-                              certfile=self._cert)
+        #server = GEventServer(self.host, self.port,
+        #keyfile=self._key,
+        #                      certfile=self._cert)
+        server = LotusDjango(WSGIHandler(), self.host, self.port,
+                            sslkey=self._key,
+                            sslcert=self._cert,
+                            debug=self._debug)
 
         if self._debug:
             from debbox.core.logging.instance import logger
             logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
                         (self._cert, self._key))
             print 'Start SSL connection on ', (self.host, self.port)
-        if self._debug:
-            server.serve_forever()
-        else:
-            server.start()
+        try:
+            if self._debug:
+                server.start()
+            else:
+                server.start()
+        except:
+            server.pool.stop()
+            raise
