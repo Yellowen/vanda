@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': "/var/lib/debbox/db.sqlite",
+        'NAME': "/var/lib/debbox/debbox.db",
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
