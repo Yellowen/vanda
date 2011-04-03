@@ -24,6 +24,7 @@ from django.conf import settings
 
 from core.log import logger
 
+# CN : All parts are need to explain more
 
 class BaseParser (object):
     """
@@ -75,7 +76,7 @@ class BaseParser (object):
             try:
                 fd = open(self._file, "w")
                 fd.write(self.__unicode__)
-            except Exception, e:
+            except Exception, e: # ISSUE : Use error (or exp) instead of e
                 logger.warn("%s failed to commit configurations. Error: %s" % \
                             (self.__name__, e))
                 raise

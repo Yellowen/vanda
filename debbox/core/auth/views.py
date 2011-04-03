@@ -46,6 +46,7 @@ def Login(request):
                           context_instance=RequestContext(request))
 
         # Form is not valid
+        # ISSUE : Show messages for logging to user
         return rr("auth/login.html",
                   {"form": form},
                   context_instance=RequestContext(request))
