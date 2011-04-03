@@ -19,8 +19,10 @@
 
 from twisted.web import static
 
-from debbox.settings import MEDIA_URL
+from debbox.settings import MEDIA_URL, STATIC_ROOT
 
 
-#resources = {
-#    MEDIA_URL.strip("/"): static.File
+resources = {
+    MEDIA_URL.strip("/"): static.File(STATIC_ROOT),
+#    ADMIN_MEDIA_PREFIX.strip("/"): static.File(),
+    }

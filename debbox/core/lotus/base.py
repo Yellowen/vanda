@@ -16,13 +16,14 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import os
 
 from twisted.internet import reactor
 from twisted.web import static, server
 from twisted.web.resource import Resource
 from twisted.web.wsgi import WSGIResource
 from twisted.python.threadpool import ThreadPool
+
+from conf import resources
 
 
 class Root(Resource):
@@ -50,19 +51,22 @@ class LotusServer(object):
     """
 
     def __init__(self, WSGI_app):
+
+        # Setting up thread pool
         self.pool = ThreadPool()
         self.pool.start()
-        self.app = WSGI_app()
-
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'debbox.settings'
         reactor.addSystemEventTrigger('after',
                                       'shutdown',
                                       self.pool.stop)
 
+        self.app = WSGI_app
+
         try:
             self.resource = Root()
-            self.resource.putChild("statics",
-                                   static.File("/var/www"))
+
+            # adding extra resources
+            for res in resources:
+                self.resource.putChild(res, resources[res])
 
             self.resource.WSGI = WSGIResource(reactor,
                                               self.pool,
