@@ -7,7 +7,7 @@ from debbox.core.logging.instance import logger
 def tmpindex(request):
     logger.info("adasdasdasd")
     return HttpResponse("It Works huuuuuuuuuuuuray")
-
+# ISSUE : It is better to use phrases with meaning in logger.info and HttpResponse
 
 @login_required
 def dashboard(request):
@@ -16,3 +16,4 @@ def dashboard(request):
     """
     logger.info("here")
     return HttpResponse("It Works huuuuuuuuuuuuray")
+# ISSUE : It is better to use phrases with meaning in logger.info and HttpResponse
