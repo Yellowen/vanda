@@ -1,14 +1,12 @@
-<<<<<<< HEAD
 [-] means wont fix
 [x] means done
-=======
+[ ] means TODO
+
 ------------ Researchs  -------------
 [ ] Read http://people.debian.org/~seanius/policy/dbapp-policy.html/
     and decide for sqlite database location
 [ ] Read about dbconfig-common
 
-
->>>>>>> 8d1d5603594347da6c607330992cacfece0f8ec6
 ------------ Development ------------
 [ ] Add django-command-extension to project only for debugging
 [-] Remove runserver.sh from each Release
