@@ -99,8 +99,8 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = path.join(ROOT_PATH, "statics").replace('\\', '/')
-
+MEDIA_ROOT = path.join(ROOT_PATH, "statics/").replace('\\', '/')
+STATIC_ROOT = MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"

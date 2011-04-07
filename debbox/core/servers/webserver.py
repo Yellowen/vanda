@@ -20,8 +20,12 @@
 
 import os
 import sys
+import time
 
-from GEvent import GEventServer
+#from GEvent import GEventServer
+from django.core.handlers.wsgi import WSGIHandler
+from master import MasterClient
+from debbox.core.lotus import LotusDjango
 
 
 class WebServer (object):
@@ -40,7 +44,7 @@ class WebServer (object):
 
         Path to the SSL key file.
 
-        .. py:attribute:: sslcert 
+        .. py:attribute:: sslcert
 
         Path to the SSL cert file.
 
@@ -56,10 +60,14 @@ class WebServer (object):
 
         Since we don't use threads, internal checks are no more required
 
+        .. py:attribute:: statics_workers
+
+        Number of workers for serving statics files.
+
     """
 
     def __init__(self, host, port, sslkey, sslcert,
-                 settings, debug=False, interval=100000):
+                 settings, debug=False, interval=100000, statics_workers=1):
 
         self.host = host
         self.port = port
@@ -67,6 +75,16 @@ class WebServer (object):
         self._cert = sslcert
         self.settings = settings
         self._debug = debug
+        self._workers = statics_workers
+        self.client = MasterClient()
+
+        while True:
+            try:
+                self.client.connect()
+                break
+            except self.client.CantConnectToSocket:
+                time.sleep(1)
+
         # since we don't use threads, internal checks are no more required
         sys.setcheckinterval = interval
 
@@ -78,16 +96,24 @@ class WebServer (object):
 
         os.environ['DJANGO_SETTINGS_MODULE'] = self.settings
 
-        server = GEventServer(self.host, self.port,
-                              keyfile=self._key,
-                              certfile=self._cert)
+        #server = GEventServer(self.host, self.port,
+        #keyfile=self._key,
+        #                      certfile=self._cert)
+        server = LotusDjango(WSGIHandler(), self.host, self.port,
+                            sslkey=self._key,
+                            sslcert=self._cert,
+                            debug=self._debug)
 
         if self._debug:
             from debbox.core.logging.instance import logger
             logger.info("Starting SSL connection with CERT:%s KEY: %s" % \
                         (self._cert, self._key))
             print 'Start SSL connection on ', (self.host, self.port)
-        if self._debug:
-            server.serve_forever()
-        else:
-            server.start()
+        try:
+            if self._debug:
+                server.start()
+            else:
+                server.start()
+        except:
+            server.pool.stop()
+            raise

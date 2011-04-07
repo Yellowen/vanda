@@ -29,6 +29,7 @@
 [-] replace the django WSGI handler with our wsgi handler to
 [X] log all the uncaught exceptions
 [ ] embed the console.py modules for colorizing the outputs
+[ ] add syncdb to server.py
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
