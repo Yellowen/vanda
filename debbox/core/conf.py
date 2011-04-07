@@ -16,9 +16,6 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-# ISSUE: logging is an unused import
-import logging
-
 
 # unique place for creating debbox socket
 SOCKFILE = "/var/run/debbox.sock"
