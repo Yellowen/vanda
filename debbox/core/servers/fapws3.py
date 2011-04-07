@@ -29,14 +29,14 @@ class FAPWSServer (object):
     """
 
     def __init__(self, host, port):
-        print "asdasdasD"
+        print "asdasdasD" # ISSUE : Replaced with Logger command
         self.host = host
         self.port = port
 
     def start(self):
         evwsgi.start(self.host, self.port)
         evwsgi.set_base_module(base)
-        evwsgi.wsgi_cb(('', self.generic))
+        evwsgi.wsgi_cb(('', self.generic)) # ISSUE : What is the first parameter
         evwsgi.set_debug(0)
         evwsgi.run()
 

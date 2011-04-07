@@ -23,7 +23,7 @@ from json import dumps, loads
 from core.log import logger
 from core.confparser.parser import BaseParser
 
-
+# CN : Please be described Method class
 class JSONConfParser (BaseParser):
     """
     Generic json type configuration parser.
