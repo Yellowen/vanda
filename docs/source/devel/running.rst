@@ -1,5 +1,6 @@
 Running Debbox
 **************
+.. CN: built-in
 In this section you will learn about running Debbox using its build-in server and more about it.
 
 Running Debbox server

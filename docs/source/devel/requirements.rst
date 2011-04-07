@@ -30,6 +30,7 @@ You can change the defualt user in ``debbox.conf`` under the *User* section.
 
 Building virtual environment
 ============================
+.. CN: an environment
 After installing required packages, you can easily build a environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
 
 so if you don't want tu install one of them, just comment the corresponding code in ``envcreator.sh``.
@@ -39,9 +40,9 @@ Virtual environment will simulate a naked linux environment with minimal depende
 	$ . env/bin/activate
 
 and for exit the virtual environment use **deactivate** command.
-
+.. CN: an env
 .. note:: if you already have a *env* directory ``envcreator.sh`` will not clean that environment just installs new packages. But if you want to clean the exists environment up, just use *--clean* parameter with ``envcreator.sh`` .
-
+.. CN: your comments
 .. warning:: Do not commit you comments (see above note) in ``envcreator.sh`` on the main Repository.
 
 Debbox database
