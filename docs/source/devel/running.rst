@@ -1,6 +1,7 @@
 Running Debbox
 **************
 In this section you will learn about running Debbox using its build-in server and more about it.
+.. cn : built-in ?
 
 Running Debbox server
 =====================
@@ -11,7 +12,7 @@ root of Debbox source tree. you should use **server.py** to run Debbox, you can 
 
 But above command will run Debbox in daemon mode. Debbox daemon mode is for deployment not for development. So **server.py** provide some arguments that 
 allow developers to overrid the default action on **server.py**.
-
+.. cn : override	
 For example, you run the Debbox server in foreground by executing **server.py** like this::
 
     $ python server.py -f
@@ -83,3 +84,4 @@ Now here is a complete list of **server.py** options explanation.
 
 .. note:: Sometimes, when you run the **server.py** script you may experience an ``Address in already in use``. if this situation happened to you just find the server.py
    process that is running (by ``ps aux| grep server.py``) and kill it, and report the issue to lxsameer@gnu.org.
+.. cn:Using development mailing list for contact is better that personal.
