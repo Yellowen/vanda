@@ -111,14 +111,11 @@ elif options.action == "stop":
 
 elif options.action == "status":
     daemon.status()
-<<<<<<< HEAD
 
 elif valid_action:
     sys.exit(0)
 
-=======
 # ISSUE : Restart better be added
->>>>>>> 09a53cc4e85cfdd2f0131e3dc760cabf4b827b8c
 else:
     print "Error: what is '%s'" % options.action
     sys.exit(1)
