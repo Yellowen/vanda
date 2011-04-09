@@ -20,11 +20,9 @@
 
 import os
 import sys
-import time
 
-#from GEvent import GEventServer
 from django.core.handlers.wsgi import WSGIHandler
-from master import MasterClient
+from debbox.core.communication import MasterClient
 from debbox.core.lotus import LotusDjango
 
 
@@ -78,12 +76,7 @@ class WebServer (object):
         self._workers = statics_workers
         self.client = MasterClient()
 
-        while True:
-            try:
-                self.client.connect()
-                break
-            except self.client.CantConnectToSocket:
-                time.sleep(1)
+        self.client.connect(wait_until_connect=True)
 
         # since we don't use threads, internal checks are no more required
         sys.setcheckinterval = interval

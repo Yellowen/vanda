@@ -29,7 +29,7 @@ class SlaveLogger (object):
     """
 
     def __new__(cls):
-        from debbox.core.servers import MasterClient
+        from debbox.core.communication import MasterClient
         client = MasterClient()
         client.connect()
         result = client.command("get_config", config=("Log", "folder"))

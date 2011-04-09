@@ -22,7 +22,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from debbox.core.logging.instance import logger
-from debbox.core.servers import MasterClient
+from debbox.core.communication import MasterClient
 
 
 class PAMAuthentication (object):

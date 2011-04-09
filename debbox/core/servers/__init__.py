@@ -24,4 +24,3 @@ import sys
 from webserver import WebServer
 from GEvent import GEventServer
 from unixstream import UnixStream
-from master import MasterServer, MasterClient

@@ -46,6 +46,7 @@
 # EXTRA: is a extra flag, each command will use it for its own
 # =============================================================================
 
+import time
 import pickle
 import json
 import _socket as socket
@@ -83,7 +84,7 @@ class MasterClient (object):
                             datefmt=conf.LOG_DATE_FORMAT)
         self.logger = logging.getLogger("MasterClient")
 
-    def connect(self):
+    def connect(self, wait_until_connect=False):
         """
         establish the connection to master socket.
         """
@@ -91,15 +92,27 @@ class MasterClient (object):
 
         sockaddr = SOCKFILE
 
-        try:
-            self.socket.connect(sockaddr)
-            self.logger.debug("Socket connection established.")
+        if wait_until_connect:
+            while True:
+                try:
+                    self.socket.connect(sockaddr)
+                    self.logger.debug("Socket connection established.")
+                    self.fd = self.socket.makefile("w+")
+                    break
 
-            self.fd = self.socket.makefile("w+")
-        except socket.error:
-            self.logger.error("Can't connect to '%s' socket" % sockaddr)
+                except socket.error:
+                    self.logger.debug("Can't connect to '%s'" % sockaddr + \
+                                      " socket. Retry in 0.1 second.")
+                    time.sleep(0.1)
+        else:
+            try:
+                self.socket.connect(sockaddr)
+                self.logger.debug("Socket connection established.")
 
-            raise self.CantConnectToSocket()
+                self.fd = self.socket.makefile("w+")
+            except socket.error:
+                self.logger.error("Can't connect to '%s' socket" % sockaddr)
+                raise self.CantConnectToSocket()
 
     def command(self, command=None, **kwargs):
         """
