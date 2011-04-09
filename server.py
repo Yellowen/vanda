@@ -80,7 +80,6 @@ try:
 except Debbox.CantFindConfigFile:
     print "Error: Can't find '%s' configuration file." % options.conf
     sys.exit(1)
-# ISSUE : Words defined path (sys.path.insert) at the top must be provided within the structure or defined on set_default 
 
 if options.shell:
     from IPython.Shell import IPShellEmbed

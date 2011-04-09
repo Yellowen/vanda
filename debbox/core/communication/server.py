@@ -45,17 +45,10 @@
 # MSG: is a pickled data that return by Master COMMAND.
 # EXTRA: is a extra flag, each command will use it for its own
 # =============================================================================
-# ISSUE: os is an unused import
-import os
+
 import sys
 import pickle
 import json
-import _socket as socket
-# ISSUE: ConfigParser is an unused import
-from ConfigParser import ConfigParser
-# ISSUE: NoSectionError is an unused import
-from ConfigParser import NoSectionError
-#from debbox.core.log import logger
 
 from debbox.core.auth.pam import pam
 
@@ -170,105 +163,3 @@ class MasterServer (object):
         if len(config) > 2:
             default = config[2]
         return self.config.get(config[0], config[1], default)
-
-
-class MasterClient (object):
-    """
-    Client class for communicating with MasterServer.
-
-    command method will send a command to MasterServer, use it like
-
-       masterclient_instance.command(command='command_name',
-                                     arg1='value', arg2=...)
-
-    each argument that you provide for command method will pass to
-    remote command, (Note: you should use arguments in keyword type
-    not list type)
-
-    command method will return an object that have three attribute
-    status = return code of remote command, 0 means ok
-    message = return result of remote command
-    extra = extra flag of transport protocol
-
-    also command exception will raise remote exception in MasterClient.
-    """
-
-    def __init__(self):
-        import logging
-
-        from debbox.core import conf
-        self.socket = socket.socket(socket.AF_UNIX)
-
-        logging.basicConfig(level=conf.LOG_LEVEL,
-                            format=conf.LOG_FORMAT,
-                            datefmt=conf.LOG_DATE_FORMAT)
-        self.logger = logging.getLogger("MasterClient")
-
-    def connect(self):
-        """
-        establish the connection to master socket.
-        """
-        from debbox.core.conf import SOCKFILE
-
-        sockaddr = SOCKFILE
-
-        try:
-            self.socket.connect(sockaddr)
-            self.logger.debug("Socket connection established.")
-
-            self.fd = self.socket.makefile("w+")
-        except socket.error:
-            self.logger.error("Can't connect to '%s' socket" % sockaddr)
-
-            raise self.CantConnectToSocket()
-
-    def command(self, command=None, **kwargs):
-        """
-        send a command to master process.
-        """
-        if not command:
-            raise self.EmptyCommand()
-        packet = {"command": command,
-                  "args": kwargs}
-
-        jpacket = "%s\n" % json.dumps(packet)
-        self.fd.write(jpacket)
-        self.fd.flush()
-        # ISSUE: is syntax of below line correct?
-        self.logger.debug<("Data sent: %s" % jpacket)
-        buf = self.fd.readline()
-        buf = json.loads(buf)
-
-        # raising remote exception
-        # TODO: transport remote traceback somehow
-        if buf["extra"] == "debug":
-            exception = pickle.loads(str(buf["message"]))
-            self.logger.warning("Rmote exception raised exception: %s" % \
-                                exception)
-            raise exception
-
-        # creating a result object
-        result = type("Result", (object,),
-                      {"status": buf["status"],
-                       "result": pickle.loads(str(buf["message"])),
-                       "extra": buf["extra"]})
-
-        self.logger.debug("Data Received: %s" % buf)
-        return result()
-
-    def disconnect(self):
-        """
-        disconnect the master socket.
-        """
-        self.fd.close()
-        self.logger.debug("Disconnecting")
-        self.socket.close()
-
-    class CantFindConfigFile (Exception):
-        pass
-
-    class CantConnectToSocket (Exception):
-        pass
-
-    class EmptyCommand (Exception):
-        pass
