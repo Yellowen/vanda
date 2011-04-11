@@ -50,7 +50,7 @@ import sys
 import pickle
 import json
 
-from debbox.core.auth.pam import pam
+from debbox.core.commands import MASTER_COMMANDS
 
 
 class MasterServer (object):
@@ -65,9 +65,11 @@ class MasterServer (object):
         # TODO: make command dictionary loadable form a file
         self.commands = {
             "echo": self.echo,
-            "authenticate": pam.authenticate,
             "get_config": self.get_config,
             }
+        [MASTER_COMMANDS.pop(i) for i in \
+         MASTER_COMMANDS if i in self.commands.keys()]
+        self.commands.update(MASTER_COMMANDS)
 
     def _dumpmsg(self, status, msg, extra=None):
         """

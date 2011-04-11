@@ -17,22 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-import libuser
+from debbox.core.auth.pam import pam
+from debbox.core.auth.management import manager
 
 
-class UserManagement(object):
-    """
-    Main class for managing unix users and groups.
-    """
+MASTER_COMMANDS = {
+    "authenticate": pam.authenticate,
+    }
 
-    def __init__(self):
-        self.admin = libuser.admin()
-        self.commands = {
-            "all_users": self.all_users,
-            }
-
-    def all_users(self):
-        return self.admin.enumerateUsers()
-
-
-manager = UserManagement()
+MASTER_COMMANDS.update(manager.commands)
