@@ -39,13 +39,14 @@ body {
 .web2form input[type="submit"], .web2form input[type="button"]{
     font-size: 12px;
     font-weight: bold;
-    border: 0.5px solid #babdb6;
+    border: 0.5px solid #3465a4;
     padding: 5px;
+    color:#2e3436; 
     margin-left: auto;
     margin-right:auto;
     margin-bottom: 10px;
     margin-top: 10px;
-    background: #babdb6;
+    background: #729fcf;
     //font-family: "Segoe UI", Tahoma, sans-serif;
     -moz-border-radius:5px;
 
