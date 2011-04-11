@@ -3,7 +3,7 @@ Debbox Web Server
 
 .. py:currentmodule:: debbox.core.servers
 
-Debbox use the gevent pywsgi webserver as its own embedded web server with enforce of SSL connection. Since
+Debbox use the :py:mod:Lotus webserver as its own embedded web server with enforce of SSL connection. Since
 Debbox Web Server is one of the important components of Debbox and it is the main user interface of the whole
 project web server security is in the high priority. Debbox provide a two way SSL connection to avoid any unwanted
 data sniffing between the Debbox user and Debbox UI. Sysadmin can configure the Debbox SSL in the main configuration file

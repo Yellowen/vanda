@@ -1,9 +1,8 @@
 Requirements
 ************
-Before jumping in the Debbox development process make sure that you have enough knowledge to use
+Before jumping into the Debbox development process make sure that you have enough knowledge to use
 Python programming language and Django framework. These two are the most important requirements
 for Debbox development.
-.. cn: jumping into the ...
  
 Required packages
 =================
@@ -13,6 +12,7 @@ Host OS. Here is a list of required packages with their details for building a D
 * **python-virtualenv**: Debbox use this script to create e virtual environments.
 * **libevent-1.4.2**: This packages is required if you want to use GEvent as the web server backed for Debbox.
 * **libevent-dev**: This packages is required if you want to use GEvent as the web server backed for Debbox.
+* **libuser**: This package is required for user management system
 * **sphinx** (>=1.0): if you want to build Debbox document you will need this package. 
 
 .. note:: *envcreator.sh* script will install **sphinx** package too.
@@ -29,10 +29,14 @@ You can change the defualt user in ``debbox.conf`` under the *User* section.
 
 .. note:: If you use .deb package for installing **Debbox**, then the default user and group already created in your Debian box.
 
+Config files
+^^^^^^^^^^^^
+you should copy the content of ``etc`` folder in the source tree to ``/etc`` folder.
+
+
 Building virtual environment
 ============================
-.. CN: an environment
-After installing required packages, you can easily build a environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
+After installing required packages, you can easily build an environment using ``debbox/bin/envcreator.sh`` script. ``envcreator.sh`` will build a environment in the current working directory with the name of *env*, and install Django, GEvent and PIL in created virtualenv directory.
 
 .. note:: should we add sphinx here ? ^
 
