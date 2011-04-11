@@ -1,0 +1,43 @@
+/* main.css
+Copyright (C) 2011 Some Hackers In Town street computing group
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+*/
+
+.web2form {
+    font-size: 15px;
+}
+
+.web2form input[type="text"],.web2form input[type="password"]{
+    font-size: 20px;
+    font-weight: bold;
+    border: 0.5px solid grey;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    width: 250px;
+    -moz-border-radius:5px;
+}
+
+.web2form input[type="submit"], .web2form input[type="button"]{
+    font-size: 20px;
+    font-weight: bold;
+    border: 0.5px solid grey;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    -moz-border-radius:5px;
+
+}

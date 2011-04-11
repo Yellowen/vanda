@@ -2,8 +2,13 @@
 
 {% load i18n %}
 
+
+{% block extra_head %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/login.css">
+{% endblock %}
 {% block content %}
 
+<div class="box">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -13,9 +18,10 @@
 {% endif %}
 
 <form method="post" action="">{% csrf_token %}
+  <div class="web2form">
     <table>
         <tr>
-            <td>{{ form.username.label_tag }}</td>
+            <td><lable>{{ form.username.label_tag }}</lable></td>
             <td>{{ form.username }}</td>
         </tr>
         <tr>
@@ -23,9 +29,10 @@
             <td>{{ form.password }}</td>
         </tr>
     </table>
-
-    <input type="submit" value="login" />
+    
+    <p align="center"><input type="submit" value="login" /></p>
     <input type="hidden" name="next" value="{{ next }}" />
+    </div>
 </form>
-
+</div>
 {% endblock %}
