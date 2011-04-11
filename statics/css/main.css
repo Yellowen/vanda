@@ -14,30 +14,50 @@ The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 */
 
+body {
+    background: #eeeeec;
+}
 .web2form {
-    font-size: 15px;
+    font-size: 12px;
+    padding: 40px;
+
 }
 
 .web2form input[type="text"],.web2form input[type="password"]{
-    font-size: 20px;
+    font-size: 16px;
+    background: #fff;
     font-weight: bold;
-    border: 0.5px solid grey;
+    border: 0.5px solid #babdb6;
     padding: 5px;
     margin-bottom: 10px;
     margin-top: 10px;
     font-family: "Segoe UI", Tahoma, sans-serif;
-    width: 250px;
+    width: 200px;
     -moz-border-radius:5px;
 }
 
 .web2form input[type="submit"], .web2form input[type="button"]{
-    font-size: 20px;
+    font-size: 12px;
     font-weight: bold;
-    border: 0.5px solid grey;
+    border: 0.5px solid #babdb6;
     padding: 5px;
+    margin-left: auto;
+    margin-right:auto;
     margin-bottom: 10px;
     margin-top: 10px;
-    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #babdb6;
+    //font-family: "Segoe UI", Tahoma, sans-serif;
     -moz-border-radius:5px;
+
+}
+
+.err {
+    -moz-border-radius:5px;
+    
+    font-size: 12px;
+    color: #ef2929;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
 
 }
