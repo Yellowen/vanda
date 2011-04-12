@@ -24,6 +24,8 @@ from gevent import monkey; monkey.patch_all()
 import sys
 from optparse import OptionParser
 
+from django.utils import autoreload
+
 from debbox.core.daemon import Debbox
 
 
@@ -100,6 +102,8 @@ if options.sync or options.syncnew:
     valid_action = True
 
 if options.foreground:
+    #autoreload.main(daemon.start)
+    # TODO: add autoreloader and be awar of zombie process
     daemon.start()
 
 elif options.action == "start":
