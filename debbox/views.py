@@ -1,19 +1,14 @@
-from django.http import HttpResponse
+from django.shortcuts import render_to_response as rr
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 
 from debbox.core.logging.instance import logger
 
-
-def tmpindex(request):
-    logger.info("adasdasdasd")
-    return HttpResponse("It Works huuuuuuuuuuuuray")
-# ISSUE : It is better to use phrases with meaning in logger.info and HttpResponse
 
 @login_required
 def dashboard(request):
     """
     User Dashboard. index page for Debbox.
     """
-    logger.info("here")
-    return HttpResponse("It Works huuuuuuuuuuuuray")
-# ISSUE : It is better to use phrases with meaning in logger.info and HttpResponse
+    return rr("dashboard.html", {},
+              context_instance=RequestContext(request))
