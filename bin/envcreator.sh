@@ -24,8 +24,9 @@ virtualenv "$PWD/env"
 . $PWD/env/bin/activate
 easy_install pil
 easy_install django
-easy_install fapws3
+easy_install ipython
 easy_install gevent
 easy_install sphinx
 easy_install pam
+easy_install twisted
 deactivate
