@@ -33,5 +33,5 @@ function init_drawer(div, handler, max_size, min_size, property){
 };
 $(function(){
     var ldrawer = init_drawer($("#ldrawer"), $("#lhandler"), "30%", "3px", "width")
-    var ldrawer = init_drawer($("#tdrawer"), $("#thandler"), "5%", "3px", "height");
+
 });

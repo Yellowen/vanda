@@ -28,15 +28,15 @@ included in all copies or substantial portions of the Software.
     float: left;
     left: 0px;
     width: 100%;
-    height: 5%;
-    background: #ea3fc8;
-    z-index: 600;
+    height: 4%;
+    background: #000;
 }
 .window {
     position: absolute;
-    margin: 1%;
-    width: 98%;
-    height: 98%;
+//    margin: 1%;
+    width: 100%;
+    height: 96%;
+    top: 4%;
     background: #a1ba99;
     z-index: 1;
 }
