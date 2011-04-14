@@ -14,30 +14,63 @@ The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 */
 
+.accordian {
+    width: 100%;
+    height: 100%;
+}
+
+.accordian li {
+	list-style-type: none;
+	padding: 0 5px;
+}
+
+.dimension {
+	height: 400px;
+}
+	
+.even, .odd {
+    font-weight: bold;
+    height: 20px;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-left: 10px;
+}
+	
+.even {
+    border: 1px solid #d8d8d8;
+    background-color: #ececec;
+}
+	
+.odd {
+    border: 1px solid black;
+    background: #333;
+    color: white;
+}
 .leftdrawer {
-              position: absolute;
-              float: left;
-              left: 0px;
-              width: 200px;
-              height: 100%;
-              background: #ccc;
-              z-index: 500;
-              display: block;
+
+    position: absolute;
+    float: left;
+    left: -200px;
+    width: 200px;
+    height: 100%;
+    background: #e1c829;
+    z-index: 500;
+
 }
 .topdrawer {
     position: absolute;
     float: left;
     left: 0px;
     width: 100%;
-    height: 5%;
-    background: #ea3fc8;
-    z-index: 600;
+    height: 4%;
+    background: #000;
 }
 .window {
     position: absolute;
-    margin: 1%;
-    width: 98%;
-    height: 98%;
+//    margin: 1%;
+    width: 100%;
+    height: 96%;
+    top: 4%;
     background: #a1ba99;
     z-index: 1;
 }
