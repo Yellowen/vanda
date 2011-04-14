@@ -20,18 +20,18 @@ function init_drawer(div, handler, max_size, min_size, property){
 	if (size == min_size){
 	    var obj = {};
 	    obj[property] = max_size;
-	    div.animate(obj, 'slow');
+	    div.animate(obj, 'normal', 'swing');
 	}
 	else
 	{
 	    var obj = {};
 	    obj[property] = min_size;
-	    div.animate(obj, 'slow');
+	    div.animate(obj, 'normal', 'swing');
 	}
     });
     return div;
 };
 $(function(){
-    var ldrawer = init_drawer($("#ldrawer"), $("#lhandler"), "30%", "3px", "width")
+    var ldrawer = init_drawer($("#ldrawer"), $("#lhandler"), "0px", "-200px", "left")
 
 });
