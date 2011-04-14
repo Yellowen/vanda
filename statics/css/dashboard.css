@@ -23,13 +23,22 @@ included in all copies or substantial portions of the Software.
 	list-style-type: none;
 
 }
-.accordian .entry {
+.dimension li {
 	list-style-type: none;
-        border-button: 1px solid #204a87;
+        border-bottom: 1px solid #204a87;
+        padding-top: 5px;
+        font-size: 11px;
+        padding-left: 10px;
+        height: 25px;
+
+}
+.subentry {
+            
 
 }
 .dimension {
 	height: 400px;
+                overflow: auto;
 }
 	
 .even, .odd {

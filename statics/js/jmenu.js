@@ -1,22 +1,21 @@
 $(function() {
-    $('.accordian entry')
-    $('.accordian li:odd:gt(0)').hide();
-    $('.accordian li:first').animate( {
+    $('.accordian .entry:odd:gt(0)').hide();
+    $('.accordian .entry:first').animate( {
 	paddingLeft:"30px"
     });
     var gheight = parseInt($("#ldrawer").css("height"));
-    $('.accordian li:even').each(function(){
+    $('.accordian .entry:even').each(function(){
 	gheight = gheight - parseInt($(this).css("height"));
     });
     gheight = gheight - 10;
-    $('.accordian li:odd').css("height", gheight.toString() + "px");
-    $('.accordian li:odd').addClass('dimension');
-    $('.accordian li:even:even').addClass('even');
-    $('.accordian li:even:odd').addClass('odd');
-    $('.accordian li:even').css('cursor', 'pointer');
-    $('.accordian li:even').click( function() {
+    $('.accordian .entry:odd').css("height", gheight.toString() + "px");
+    $('.accordian .entry:odd').addClass('dimension');
+    $('.accordian .entry:even:even').addClass('even');
+    $('.accordian .entry:even:odd').addClass('odd');
+    $('.accordian .entry:even').css('cursor', 'pointer');
+    $('.accordian .entry:even').click( function() {
 	var cur = $(this).next();
-	var old = $('.accordian li:odd:visible');
+	var old = $('.accordian .entry:odd:visible');
 	if ( cur.is(':visible') )
 	    return false;
 	old.slideToggle(500);
