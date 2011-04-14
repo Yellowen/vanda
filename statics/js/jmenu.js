@@ -1,4 +1,5 @@
 $(function() {
+    $('.accordian entry')
     $('.accordian li:odd:gt(0)').hide();
     $('.accordian li:first').animate( {
 	paddingLeft:"30px"
