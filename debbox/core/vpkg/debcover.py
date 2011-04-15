@@ -17,32 +17,35 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-PRIORITY = {
-    "low": 0,
-    "normal": 50,
-    "high": 100,
-    }
+from debbox.core.communication import MasterClient
+from debbox.core.logging.instance import logger
+
+from discover import ApplicationDiscovery
 
 
-class BaseApplication(object):
+class DebboxApplicationDiscovery (ApplicationDiscovery):
     """
-    VPKG interface to Django applications.  Each Django app should implement
-    this interface in its ``__init__.py`` with name of ``application``.
+    Discover the installed applications and the stuff about them like
+    url patterns and settings attributes.
     """
 
-    def __init__(self, priority):
-        self.priority = priority
-
-    def url_patterns(self):
+    class InvalidBackend (Exception):
         """
-        This method should return a list of url pattern that vpkg should use
-        one of then as the main url entry for the application.
-
-        but why this method should return a list?
-        because if the first url already exists vpkg will use the next one
-        application with higher priority will replace the exists url entry.
-
-        vpkg will include the urls.py inside the application package for
-        selected url so urls entries should not end with `$`
+        Unsupported backend passed to vpkg.
         """
         pass
+
+    def installed_applications(self):
+        """
+        Discover the current installed app and return the list of them.
+        """
+        if self.backend != "config":
+            raise self.InvalidBackend()
+
+        # Request the applications value from master process
+        client = MasterClient()
+        client.connect(True)
+        result = client.command(command="get_config",
+                                config=("APP", "applications", []))
+        client.disconnect()
+        logger.info(">>>> ", str(result))

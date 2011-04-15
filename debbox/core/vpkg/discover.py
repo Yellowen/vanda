@@ -25,4 +25,13 @@ class ApplicationDiscovery (object):
     """
 
     def __init__(self, backend):
-        self.backend = backend
+
+        tmplist = backend.split("://")
+        self.backend = tmplist[0]
+        self.address = None
+        if len(tmplist) > 1:
+            self.address = tmplist[1]
+
+    def installed_application(self):
+        pass
+
