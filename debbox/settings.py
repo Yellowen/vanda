@@ -139,15 +139,21 @@ TEMPLATE_DIRS = (
     path.join(ROOT_PATH, "templates").replace('\\', '/'),
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-)
+]
 
 
 LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
+
+
+DISCOVERY_BACKEND = "asd"
+
+from debbox.core.vpkg.discover import ApplicationDiscovery
+discovery = ApplicationDiscovery()
