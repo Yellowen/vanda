@@ -55,6 +55,8 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
             client.command(command="kill")
 
         except client.UnpicklableException:
-            logger.warning("There is applications attribute in configuration file.")
+            logger.warning("There is applications attribute" + \
+                           "in configuration file.")
 
         client.disconnect()
+
