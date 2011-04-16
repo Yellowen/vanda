@@ -49,6 +49,8 @@
 
 -- VPKG --
 [ ] rewrite the url_patterns doc string in interface.py
+[ ] managing application via priority
+[ ] create an easier to use BaseApplication interface
 
 -- issues --
 [X] loggin into files
