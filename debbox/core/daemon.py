@@ -199,7 +199,7 @@ class Debbox (object):
                 raise
 
             # TODO: Where should we chdir? where is the safe place?
-            self.io_redirect()
+
         self._masterpid = os.getpid()
         self.logger.debug("Master process at %s" % self._masterpid)
 
@@ -233,6 +233,8 @@ class Debbox (object):
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)
             print "Running Master Server . . ."
+            if not self.options.debug or not self.options.foreground:
+                self.io_redirect()
             if self.options.debug:
                 masterserver.serve_forever()
             else:
@@ -253,7 +255,8 @@ class Debbox (object):
             os.umask(027)
             print "Running webserver on SSL connection at https://%s:%s/" % \
                   (self.options.host, self.options.port)
-            self.io_redirect()
+            if not self.options.debug or not self.options.foreground:
+                self.io_redirect()
             self._slavepid = os.getpid()
             server.start()
 
