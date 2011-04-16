@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+import ast
 from ConfigParser import NoSectionError
 
 from debbox.core.communication import MasterClient
@@ -41,6 +42,7 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
         """
         Discover the current installed app and return the list of them.
         """
+        result = None
         if self.backend != "config":
             raise self.InvalidBackend()
 
@@ -55,8 +57,23 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
             client.command(command="kill")
 
         except client.UnpicklableException:
-            logger.warning("There is applications attribute" + \
+            logger.warning("There is applications attribute " + \
                            "in configuration file.")
 
         client.disconnect()
 
+        if result:
+            if result.result:
+                try:
+                    self.apps = ast.literal_eval(result.result)
+                except ValueError:
+                    logger.critical("Malform applications value in config " + \
+                                    "file didn't you forget to use " + \
+                                    " \" or ' for applications name?")
+                    return []
+                return self.apps
+
+        return []
+
+
+discovery = DebboxApplicationDiscovery("config://")

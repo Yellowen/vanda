@@ -153,7 +153,7 @@ LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
-from debbox.core.vpkg.debcover import DebboxApplicationDiscovery
+from debbox.core.vpkg.debcover import discovery
 
-discovery = DebboxApplicationDiscovery("config://")
-discovery.installed_applications()
+INSTALLED_APPS.extend(discovery.installed_applications())
+print ">>>>>>>>>>>>>> ", INSTALLED_APPS

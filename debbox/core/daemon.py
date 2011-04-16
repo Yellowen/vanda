@@ -235,7 +235,7 @@ class Debbox (object):
             print "Running Master Server . . ."
             if not self.options.debug or not self.options.foreground:
                 self.io_redirect()
-            if self.options.debug:
+            if self.options.debug or self.options.foreground:
                 masterserver.serve_forever()
             else:
                 masterserver.start()
