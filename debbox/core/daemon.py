@@ -207,10 +207,6 @@ class Debbox (object):
         if slavepid > 0:
 
             # Master Process
-            # writing the config file address for other codes
-            conf = os.path.abspath(self.options.conf)
-            file("/tmp/debbox_%s" % os.getpid(), "w+").write(conf)
-
             # Register the cleanup process.
             if self.options.foreground:
                 atexit.register(self.stop)
@@ -235,6 +231,7 @@ class Debbox (object):
 
         else:
             # Slave process
+
             server = WebServer(self.options.host, int(self.options.port),
                                self.ssl["key"], self.ssl["cert"],
                                self.options.settings,

@@ -43,9 +43,9 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
             raise self.InvalidBackend()
 
         # Request the applications value from master process
-        client = MasterClient()
-        client.connect(True)
-        result = client.command(command="get_config",
-                                config=("APP", "applications", []))
-        client.disconnect()
-        logger.info(">>>> ", str(result))
+        ## client = MasterClient()
+        ## client.connect(True)
+        ## result = client.command(command="get_config",
+        ##                         config=("APP", "applications", []))
+        ## client.disconnect()
+        ## logger.info(">>>> ", str(result))
