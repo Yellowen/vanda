@@ -264,15 +264,17 @@ class Debbox (object):
         """
         if not self.options.foreground:
             if not self._status():
+                self.logger.info("Debbox is not running. . .")
+                print "Debbox is not running. . ."
                 return
 
             mpid = file(self.mpid).readlines()[0]
             spid = file(self.spid).readlines()[0]
             print "Stopping slave process."
+            self.__cleanup__()
             os.kill(int(spid), 15)
             print "Stopping master process."
             os.kill(int(mpid), 15)
-            self.__cleanup__()
 
         sys.exit(0)
 
@@ -357,6 +359,7 @@ class Debbox (object):
         """
         SIGUSR1 handler. debbox will treat SIGUSR1 just like SIGTERM.
         """
+
         #os.waitpid(self._slavepid, 0)
         if self.options.foreground:
             os.kill(self._slavepid, 15)
