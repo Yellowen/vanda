@@ -54,5 +54,7 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
             logger.critical("There is no [APP] section in configuration file.")
             client.command(command="kill")
 
+        except client.UnpicklableException:
+            logger.warning("There is applications attribute in configuration file.")
+
         client.disconnect()
-        logger.info(">>>> ", str(result))

@@ -144,7 +144,7 @@ class MasterClient (object):
 
             except TypeError:
                 self.logger.warning("Can't unpickle the remote exception.")
-                raise Exception(buf['string'])
+                raise self.UnpicklableException(buf['string'])
         # creating a result object
         result = type("Result", (object,),
                       {"status": buf["status"],
@@ -168,4 +168,7 @@ class MasterClient (object):
         pass
 
     class EmptyCommand (Exception):
+        pass
+
+    class UnpicklableException (Exception):
         pass
