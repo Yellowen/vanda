@@ -155,8 +155,14 @@ class Debbox (object):
             return True
 
         else:
-            os.remove(self.mpid)
-            os.remove(self.mpid)
+            try:
+                os.remove(self.mpid)
+            except OSError:
+                pass
+            try:
+                os.remove(self.spid)
+            except OSError:
+                pass
             return False
 
     def start(self):
@@ -267,7 +273,7 @@ class Debbox (object):
             print "Stopping master process."
             os.kill(int(mpid), 15)
             self.__cleanup__()
-        print "asdasdasdasdasdasd"
+
         sys.exit(0)
 
     def status(self):

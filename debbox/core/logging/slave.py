@@ -48,5 +48,8 @@ class SlaveLogger (object):
         logger = logging.getLogger("TODO")
         handler = RotatingFileHandler(
             LOG_FILENAME, **handlerparam)
+
+        formatter = logging.Formatter(logparam['format'])
+        handler.setFormatter(formatter)
         logger.addHandler(handler)
         return logger
