@@ -42,7 +42,22 @@ class BaseApplication(object):
         because if the first url already exists vpkg will use the next one
         application with higher priority will replace the exists url entry.
 
-        vpkg will include the urls.py inside the application package for
-        selected url so urls entries should not end with `$`
+        each element of the returning list should be a dict that its keys
+        will be the url pattern and its value will be the corresponding
+        action it a value left None vpkg will automatically replace the
+        action of that url pattern with `include('package.urls')`.
+
+        if a urlpattern from an element already registered in vpkg, then
+        vpkg replace the already registered pattern by the new one if current
+        application have a higher priority otherwise vpkg will look for the
+        same pattern in the next element dict and try to register that.
+
+        so returning list should be like::
+
+        [{'^some url pattern': None,  # will replace by include('package.urls')
+        '^some other url': VIEW_FUNCTION},
+        {'^alternative url pattern': None,
+        '^some alter url': VIEW_FUNCTION}
+        ]
         """
         pass

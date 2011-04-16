@@ -156,4 +156,3 @@ LOGIN_REDIRECT_URL = "/"
 from debbox.core.vpkg.debcover import discovery
 
 INSTALLED_APPS.extend(discovery.installed_applications())
-print ">>>>>>>>>>>>>> ", INSTALLED_APPS

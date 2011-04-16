@@ -16,15 +16,16 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.shortcuts import render_to_response as rr
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
+
+from debbox.core.vpkg.interface import IApplication
 
 
-@login_required
-def dashboard(request):
+class Application (IApplication):
     """
-    User Dashboard. index page for Debbox.
+    Implementation of IApplication interface for dashboard application.
+    this class allow vpkg to discover it.
     """
-    return rr("dashboard.html", {},
-              context_instance=RequestContext(request))
+    def url_patterns(self):
+        from views import dashboard
+
+        return [{'^$': dashboard}, {'^dashboard/$': dashboard}]
