@@ -66,6 +66,7 @@ class MasterServer (object):
         self.commands = {
             "echo": self.echo,
             "get_config": self.get_config,
+            "kill": self.kill,
             }
         [MASTER_COMMANDS.pop(i) for i in \
          MASTER_COMMANDS if i in self.commands.keys()]
@@ -138,6 +139,7 @@ class MasterServer (object):
 
                 else:
                     fileobj.write(self._dumpmsg(-1, "command not found"))
+                    self.logger.error("Command not found.")
                     fileobj.flush()
                     continue
             else:
@@ -165,3 +167,11 @@ class MasterServer (object):
         if len(config) > 2:
             default = config[2]
         return self.config.get(config[0], config[1], default)
+
+    def kill(self):
+        """
+        kill the master process by sending a SIGUSR1 to debbox daemon.
+        """
+        import os
+        import signal
+        os.kill(os.getpid(), signal.SIGUSR1)

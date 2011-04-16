@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+from ConfigParser import NoSectionError
+
 from debbox.core.communication import MasterClient
 from debbox.core.logging.instance import logger
 
@@ -43,9 +45,14 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
             raise self.InvalidBackend()
 
         # Request the applications value from master process
-        ## client = MasterClient()
-        ## client.connect(True)
-        ## result = client.command(command="get_config",
-        ##                         config=("APP", "applications", []))
-        ## client.disconnect()
-        ## logger.info(">>>> ", str(result))
+        client = MasterClient()
+        client.connect(True)
+        try:
+            result = client.command(command="get_config",
+                                    config=("APP", "applications", []))
+        except NoSectionError:
+            logger.critical("There is no [APP] section in configuration file.")
+            client.command(command="kill")
+
+        client.disconnect()
+        logger.info(">>>> ", str(result))

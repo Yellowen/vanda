@@ -21,6 +21,7 @@
 import os
 import sys
 import stat
+import signal
 import atexit
 from pwd import getpwnam
 from ConfigParser import ConfigParser
@@ -208,6 +209,8 @@ class Debbox (object):
 
             # Master Process
             # Register the cleanup process.
+            self._slavepid = slavepid
+            signal.signal(signal.SIGUSR1, self._usr1_handler)
             if self.options.foreground:
                 atexit.register(self.stop)
 
@@ -253,26 +256,18 @@ class Debbox (object):
         Stop the debbox server, and clean the environment with
         removing any temporary files and pid files.
         """
-        import re
-        files_name_regex = re.compile("^debbox_\d+")
-        print "Removing tmp files . . ."
-        for file_ in os.listdir("/tmp"):
-            if files_name_regex.match(file_):
-                try:
-                    os.remove("/tmp/%s" % file_)
-                except OSError:
-                    print "Warning: can not delete /tmp/%s" % file_
+        if not self.options.foreground:
+            if not self._status():
+                return
 
-        if not self._status():
-            print "Debbox is not running."
-            return
-        mpid = file(self.mpid).readlines()[0]
-        spid = file(self.spid).readlines()[0]
-        print "Stopping master process."
-        os.kill(int(mpid), 15)
-        print "Stopping slave process."
-        os.kill(int(spid), 15)
-        self.__cleanup__()
+            mpid = file(self.mpid).readlines()[0]
+            spid = file(self.spid).readlines()[0]
+            print "Stopping slave process."
+            os.kill(int(spid), 15)
+            print "Stopping master process."
+            os.kill(int(mpid), 15)
+            self.__cleanup__()
+        print "asdasdasdasdasdasd"
         sys.exit(0)
 
     def status(self):
@@ -351,6 +346,17 @@ class Debbox (object):
                 print "change its ownership to Debbox defualt user ?"
                 print "=================================================="
             return
+
+    def _usr1_handler(self, signum, frame):
+        """
+        SIGUSR1 handler. debbox will treat SIGUSR1 just like SIGTERM.
+        """
+        #os.waitpid(self._slavepid, 0)
+        if self.options.foreground:
+            os.kill(self._slavepid, 15)
+            mpid = os.getpid()
+            os.kill(int(mpid), 15)
+        self.stop()
 
     class CantFork (Exception):
         """

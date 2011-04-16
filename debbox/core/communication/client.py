@@ -135,7 +135,7 @@ class MasterClient (object):
         # TODO: transport remote traceback somehow
         if buf["extra"] == "debug":
             exception = pickle.loads(str(buf["message"]))
-            self.logger.warning("Rmote exception raised exception: %s" % \
+            self.logger.warning("Remote exception raised exception: %s" % \
                                 exception)
             raise exception
 
