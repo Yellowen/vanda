@@ -49,7 +49,7 @@ class DebboxApplicationDiscovery (ApplicationDiscovery):
         client.connect(True)
         try:
             result = client.command(command="get_config",
-                                    config=("APP", "applications", []))
+                                    config=["APP", "applications", [], ])
         except NoSectionError:
             logger.critical("There is no [APP] section in configuration file.")
             client.command(command="kill")

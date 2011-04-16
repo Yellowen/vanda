@@ -76,9 +76,14 @@ class MasterServer (object):
         """
         return a json form data message to transport via socket
         """
-        return "%s\n" % json.dumps({"status": status,
-                           "message": pickle.dumps(msg),
-                           "extra": extra})
+        packet = {"status": status,
+                  "message": pickle.dumps(msg),
+                  "extra": extra}
+
+        if extra:
+            packet["string"] = str(msg)
+
+        return "%s\n" % json.dumps(packet)
 
     def handler(self, socket, address):
         """
