@@ -47,6 +47,8 @@
 [ ] create some folder in /var/lib/debbox to store sqlite database
     /var/lib/debbox should owned by debbox user
 
+-- VPKG --
+[ ] rewrite the url_patterns doc string in interface.py
 
 -- issues --
 [X] loggin into files
@@ -61,6 +63,7 @@
 -- STATICS --
 [ ] replace current jquery with minimalist possible
 [ ] replace the development statics root with the deplopyment one
+
 
 >>> RELEASE PLAN ========================================
 1. compressing the css, js and html files.

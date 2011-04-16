@@ -31,7 +31,20 @@ class BaseApplication(object):
     """
 
     def __init__(self, priority):
-        self.priority = priority
+        if isinstance(priority, int):
+            self.priority = priority
+        else:
+            if priority in PRIORITY.keys():
+                self.priority = PRIORITY[priority]
+            else:
+                raise self.InvalidPriority()
+
+    def generator(self, lst):
+        list_ = lst
+        if isinstance(lst, str):
+            list_ = [lst, ]
+        for element in list_:
+            yield element
 
     def url_patterns(self):
         """
@@ -59,5 +72,11 @@ class BaseApplication(object):
         {'^alternative url pattern': None,
         '^some alter url': VIEW_FUNCTION}
         ]
+        """
+        pass
+
+    class InvalidPriority (Exception):
+        """
+        the string that passed as priority is not valid.
         """
         pass

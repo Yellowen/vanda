@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns
 
+from debbox.core.vpkg.debcover import discovery
+
 
 urlpatterns = patterns('',
     # Login url
@@ -11,3 +13,7 @@ urlpatterns = patterns('',
 
     (r'^$', 'views.dashboard'),
 )
+
+discovery.url_patterns()
+print "<>><<<<>>>>> ", discovery.urls
+

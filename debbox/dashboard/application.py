@@ -17,15 +17,19 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from debbox.core.vpkg.interface import IApplication
+from debbox.core.vpkg.interface import BaseApplication
 
 
-class Application (IApplication):
+class Dashboard (BaseApplication):
     """
-    Implementation of IApplication interface for dashboard application.
+    Implementation of BaseApplication interface for dashboard application.
     this class allow vpkg to discover it.
     """
     def url_patterns(self):
         from views import dashboard
 
-        return [{'^$': dashboard}, {'^dashboard/$': dashboard}]
+        return [
+            (self.generator(['^$', '^dashboard/$']), dashboard),
+            ]
+
+app = Dashboard(priority="high")
