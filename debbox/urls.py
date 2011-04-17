@@ -10,10 +10,6 @@ urlpatterns = patterns('',
 
     # Logout url
     (r'^logout/$', 'debbox.core.auth.views.Logout'),
-
-    (r'^$', 'views.dashboard'),
 )
 
-discovery.url_patterns()
-print "<>><<<<>>>>> ", discovery.urls
-
+urlpatterns += discovery.url_patterns()

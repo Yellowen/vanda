@@ -60,7 +60,8 @@ class ApplicationDiscovery (object):
 
                 # application interface
                 iapplication = bapp.app
-                result.append([iapplication.priority, iapplication])
+                result.append([iapplication.priority, iapplication,
+                               application])
             except ImportError:
                 logger.debug("Can't import %s" % application)
 
@@ -93,6 +94,23 @@ class ApplicationDiscovery (object):
         self.urls[current_url] = [url[1], priority, elementnum]
         return True
 
+    def _create_pattern(self):
+        """
+        create a pattern from self.urls.
+        """
+        from django.conf.urls.defaults import patterns
+
+        tmplist = ['', ]
+        for url in self.urls:
+            action = self.urls[url][0]
+            if not action:
+                priority = self.urls[url][1]
+                pypath = self.urls_cache[str(priority)]["path"]
+                action = "%s.urls" % pypath
+            tmplist.append((url, action))
+
+        return patterns(*tmplist)
+
     def url_patterns(self):
         """
         produce a pattern object from discovered application IApplication
@@ -106,10 +124,13 @@ class ApplicationDiscovery (object):
             priority = application[0]
             self.urls_cache[str(priority)] = {
                 "cache": urls_list,
-                "name": application[1].__class__.__name__
+                "name": application[1].__class__.__name__,
+                "path": application[2],
                 }
 
             element = 0
             for url in urls_list:
                 self.register_url(url, priority, element)
                 element += 1
+
+        return self._create_pattern()
