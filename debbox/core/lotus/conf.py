@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+
 from twisted.web import static
 
 from debbox.settings import MEDIA_URL, STATIC_ROOT
@@ -25,4 +26,4 @@ from debbox.settings import MEDIA_URL, STATIC_ROOT
 resources = {
     MEDIA_URL.strip("/"): static.File(STATIC_ROOT),
 #    ADMIN_MEDIA_PREFIX.strip("/"): static.File(),
-    }
+}

@@ -2,8 +2,6 @@ from django.shortcuts import render_to_response as rr
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
-from debbox.core.logging.instance import logger
-
 
 @login_required
 def dashboard(request):

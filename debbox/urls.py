@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns
 
+from debbox.core.vpkg.debcover import discovery
+
 
 urlpatterns = patterns('',
     # Login url
@@ -8,6 +10,6 @@ urlpatterns = patterns('',
 
     # Logout url
     (r'^logout/$', 'debbox.core.auth.views.Logout'),
-
-    (r'^$', 'views.dashboard'),
 )
+
+urlpatterns += discovery.url_patterns()

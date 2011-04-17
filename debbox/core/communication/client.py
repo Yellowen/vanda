@@ -126,26 +126,31 @@ class MasterClient (object):
         jpacket = "%s\n" % json.dumps(packet)
         self.fd.write(jpacket)
         self.fd.flush()
-        # ISSUE: is syntax of below line correct?
+
         self.logger.debug("Data sent: %s" % jpacket)
         buf = self.fd.readline()
         buf = json.loads(buf)
+        self.logger.debug("Data Received: %s" % buf)
 
         # raising remote exception
         # TODO: transport remote traceback somehow
         if buf["extra"] == "debug":
-            exception = pickle.loads(str(buf["message"]))
-            self.logger.warning("Rmote exception raised exception: %s" % \
-                                exception)
-            raise exception
+            try:
+                exception = pickle.loads(str(buf["message"]))
+                self.logger.warning("Remote exception raised exception: %s" % \
+                                    exception)
 
+                raise exception
+
+            except TypeError:
+                self.logger.warning("Can't unpickle the remote exception.")
+                raise self.UnpicklableException(buf['string'])
         # creating a result object
         result = type("Result", (object,),
                       {"status": buf["status"],
                        "result": pickle.loads(str(buf["message"])),
                        "extra": buf["extra"]})
 
-        self.logger.debug("Data Received: %s" % buf)
         return result()
 
     def disconnect(self):
@@ -163,4 +168,7 @@ class MasterClient (object):
         pass
 
     class EmptyCommand (Exception):
+        pass
+
+    class UnpicklableException (Exception):
         pass

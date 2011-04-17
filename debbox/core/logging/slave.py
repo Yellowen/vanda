@@ -31,7 +31,7 @@ class SlaveLogger (object):
     def __new__(cls):
         from debbox.core.communication import MasterClient
         client = MasterClient()
-        client.connect()
+        client.connect(True)
         result = client.command("get_config", config=("Log", "folder"))
         logfolder = result.result
         client.disconnect()
@@ -48,5 +48,8 @@ class SlaveLogger (object):
         logger = logging.getLogger("TODO")
         handler = RotatingFileHandler(
             LOG_FILENAME, **handlerparam)
+
+        formatter = logging.Formatter(logparam['format'])
+        handler.setFormatter(formatter)
         logger.addHandler(handler)
         return logger

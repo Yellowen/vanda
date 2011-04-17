@@ -2,26 +2,47 @@
 {% load i18n %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/ui/jquery.ui.accordion.css">
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/dashboard.css">
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css">
-<script src="{{ MEDIA_URL }}js/jquery-1.5.1.min.js"></script>
-<script src="{{ MEDIA_URL }}js/dashboard.js"></script>
-<script src="{{ MEDIA_URL }}js/ui/jquery.ui.core.min.js"></script>
-<script src="{{ MEDIA_URL }}js/ui/jquery.ui.widget.min.js"></script>
-<script src="{{ MEDIA_URL }}js/ui/jquery.ui.accordion.min.js"></script>
-<script src="{{ MEDIA_URL }}js/dashboard.js"></script>
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/dashboard.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css" />
+    <script src="{{ MEDIA_URL }}js/jquery-1.5.1.min.js"></script>
+    <script src="{{ MEDIA_URL }}js/dashboard.js"></script>
+    <script src="{{ MEDIA_URL }}js/jmenu.js"></script>
 {% endblock %}
 
 {% block content %}
 <div id="ldrawer" class="leftdrawer">
+
+<div class="accordian">
+<ul>
+  <li class="entry">jvjvjhvkjhv</li>
+<li class="entry">
+  <div class="subentry">
+    <ul>
+      <li>
+	gggggggggg
+      </li>
+      <li>
+	gggggggggg
+      </li>
+      <li>
+	gggggggggg
+      </li>
+    </ul>
+</div>
+</li>
+<li class="entry">asfsdfsdf</li>
+<li class="entry">sdfsdfsdfsdfsdf</li>
+<li class="entry">asfsdfsdf</li>
+<li class="entry">sdfsdfsdfsdfsdf</li>
+
+</div>
 </div>
 <div id="tdrawer" class="topdrawer">
+  <p align="right"><a href="/logout/">{% trans 'logout' %}</a></a>
 </div>
 <div class="window">
 </div>
 <input type="button" value="open"  id="lhandler">
-<input type="button" value="topopen"  id="thandler">
+
 
 {% endblock %}
-

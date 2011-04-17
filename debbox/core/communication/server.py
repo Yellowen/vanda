@@ -49,6 +49,7 @@
 import sys
 import pickle
 import json
+from ConfigParser import NoOptionError
 
 from debbox.core.commands import MASTER_COMMANDS
 
@@ -66,6 +67,7 @@ class MasterServer (object):
         self.commands = {
             "echo": self.echo,
             "get_config": self.get_config,
+            "kill": self.kill,
             }
         [MASTER_COMMANDS.pop(i) for i in \
          MASTER_COMMANDS if i in self.commands.keys()]
@@ -75,9 +77,14 @@ class MasterServer (object):
         """
         return a json form data message to transport via socket
         """
-        return "%s\n" % json.dumps({"status": status,
-                           "message": pickle.dumps(msg),
-                           "extra": extra})
+        packet = {"status": status,
+                  "message": pickle.dumps(msg),
+                  "extra": extra}
+
+        if extra:
+            packet["string"] = str(msg)
+
+        return "%s\n" % json.dumps(packet)
 
     def handler(self, socket, address):
         """
@@ -138,6 +145,7 @@ class MasterServer (object):
 
                 else:
                     fileobj.write(self._dumpmsg(-1, "command not found"))
+                    self.logger.error("Command not found.")
                     fileobj.flush()
                     continue
             else:
@@ -162,6 +170,19 @@ class MasterServer (object):
 
         """
         default = None
+        result = None
         if len(config) > 2:
             default = config[2]
-        return self.config.get(config[0], config[1], default)
+        try:
+            result = self.config.get(config[0], config[1], default)
+        except NoOptionError, e:
+            raise Exception(e)
+        return result
+
+    def kill(self):
+        """
+        kill the master process by sending a SIGUSR1 to debbox daemon.
+        """
+        import os
+        import signal
+        os.kill(os.getpid(), signal.SIGUSR1)

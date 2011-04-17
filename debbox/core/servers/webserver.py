@@ -23,7 +23,6 @@ import sys
 
 from django.core.handlers.wsgi import WSGIHandler
 from debbox.core.communication import MasterClient
-from debbox.core.lotus import LotusDjango
 
 
 class WebServer (object):
@@ -92,6 +91,8 @@ class WebServer (object):
         #server = GEventServer(self.host, self.port,
         #keyfile=self._key,
         #                      certfile=self._cert)
+        from debbox.core.lotus import LotusDjango
+
         server = LotusDjango(WSGIHandler(), self.host, self.port,
                             sslkey=self._key,
                             sslcert=self._cert,
