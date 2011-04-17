@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    VPKG - Vanda Package manager
+#    Debbox - Modern administration panel for Debian GNU/Linux
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+# Debbox implementation of ApplicationDiscovery
 import ast
 from ConfigParser import NoSectionError
 

@@ -51,6 +51,7 @@
 [ ] rewrite the url_patterns doc string in interface.py
 [ ] managing application via priority
 [ ] create an easier to use BaseApplication interface
+[ ] create a cache for fast recovering discovery object
 
 -- issues --
 [X] loggin into files
