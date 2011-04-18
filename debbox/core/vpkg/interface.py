@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    Debbox - Modern administration panel for Debian GNU/Linux
+#    VPKG - Vanda Package manager
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -17,29 +17,32 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+PRIORITY = {
+    "low": 0,
+    "normal": 50,
+    "high": 100,
+    }
 
-from fapws import base
-import fapws._evwsgi as evwsgi
-from fapws.contrib import django_handler
 
-
-class FAPWSServer (object):
+class BaseApplication(object):
     """
-    FAPWS server class.
+    VPKG interface to Django applications.  Each Django app should implement
+    this interface in its ``__init__.py`` with name of ``application``.
     """
 
-    def __init__(self, host, port):
-        print "asdasdasD" # ISSUE : Replaced with Logger command
-        self.host = host
-        self.port = port
+    def __init__(self, priority):
+        self.priority = priority
 
-    def start(self):
-        evwsgi.start(self.host, self.port)
-        evwsgi.set_base_module(base)
-        evwsgi.wsgi_cb(('', self.generic)) # ISSUE : What is the first parameter
-        evwsgi.set_debug(0)
-        evwsgi.run()
+    def url_patterns(self):
+        """
+        This method should return a list of url pattern that vpkg should use
+        one of then as the main url entry for the application.
 
-    def generic(self, environ, start_response):
-        res = django_handler.handler(environ, start_response)
-        return [res]
+        but why this method should return a list?
+        because if the first url already exists vpkg will use the next one
+        application with higher priority will replace the exists url entry.
+
+        vpkg will include the urls.py inside the application package for
+        selected url so urls entries should not end with `$`
+        """
+        pass

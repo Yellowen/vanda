@@ -124,7 +124,3 @@ Also you can think about **DMSCP** responses as dictionary too. like::
 .. option:: EXTRA
 
    This variable is an extra flag, each command will use it for its own goals.
-
-
-
-   

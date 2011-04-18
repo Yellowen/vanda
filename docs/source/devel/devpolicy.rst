@@ -1,16 +1,11 @@
 Development Policies
 ********************
-In this chapter you will read the most important policies for developing Debbox. If you have any idea please contact me at lxsameer@gnu.org .
-
-.. cn:Its not a good idea to se "chapter" word in documents!
-.. cn:Using development mailing list for contact is better that personal.
+In this section you will read the most important policies for developing Debbox. If you have any idea please contact me at lxsameer@gnu.org .
 
 General Policies
 ================
 At Debbox Developers Community we warmly welcome those people who wants to join us. so
 as a Debbox developer there is some notes that you should bear in mind:
-
-.. cn: should say that this document will update and developers should check it after any opdate
 
 * Respect to others not matter who you are.
 * If some one make a mistake in the code call him at private and tell him kindly.
@@ -18,15 +13,12 @@ as a Debbox developer there is some notes that you should bear in mind:
 
 For gaining better and better team work ability, we need to follow these rulse:
 
-* Debbox Project release under the term of LGPL, so we have to put out license header at the beginning of our source files. take a look at a python file to find out how to use license header.
-
-.. cn: python file in this project
+* Debbox Project release under the term of LGPL, so we have to put out license header at the beginning of our source files. take a look at a python file in the source tree to find out how to use license header.
 
 .. note:: please do not add your name in the license header as the author. if you want to other developers know that your are the author of this piece of code or this section please comment your name and contact in a line or two after the license header. 
 
-* If you use an external module that make Debbox depend on that please ask in the Dina Developers mailing list before using that. So Debbox Policy Committee can decide about the external code. We should not use external module or tools that are ncompatible with  LGPL licenses.
+* If you use an external module that make Debbox depend on that please ask in the Debbox Developers mailing list before using that. So Debbox Policy Committee can decide about the external code. We should not use external module or tools that are ncompatible with  LGPL licenses.
 
-.. cn : Dina ??
 
 * If you use a piece of borrowed code in your code, you should specify the source and license of borrowed code, otherwise your code will be removed. 
 

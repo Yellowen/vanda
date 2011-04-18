@@ -16,6 +16,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+import os
 
 # unique place for creating debbox socket
 SOCKFILE = "/var/run/debbox.sock"
@@ -34,3 +35,8 @@ LOG_FORMAT = '[%(asctime)s] [%(filename)s-%(funcName)s],' + \
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 LOG_MAX_BYTES = 2 * 1024 * 1024  # 2Mb
 LOG_BACKUP_COUNT = 5
+
+# IMPORTANT: this static path is only for development
+# deployment path should be /usr/share/debbox/statics/
+MEDIA = os.path.join(os.path.dirname(__file__),
+                     "../../statics/").replace('\\', '/')

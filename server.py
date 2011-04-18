@@ -24,6 +24,8 @@ from gevent import monkey; monkey.patch_all()
 import sys
 from optparse import OptionParser
 
+from django.utils import autoreload
+
 from debbox.core.daemon import Debbox
 
 
@@ -80,7 +82,6 @@ try:
 except Debbox.CantFindConfigFile:
     print "Error: Can't find '%s' configuration file." % options.conf
     sys.exit(1)
-# ISSUE : Words defined path (sys.path.insert) at the top must be provided within the structure or defined on set_default 
 
 if options.shell:
     from IPython.Shell import IPShellEmbed
@@ -101,6 +102,8 @@ if options.sync or options.syncnew:
     valid_action = True
 
 if options.foreground:
+    #autoreload.main(daemon.start)
+    # TODO: add autoreloader and be awar of zombie process
     daemon.start()
 
 elif options.action == "start":

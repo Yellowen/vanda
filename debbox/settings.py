@@ -99,7 +99,8 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = path.join(ROOT_PATH, "statics/").replace('\\', '/')
+# IMPORTANT: current MEDIA_ROOT value is only for development
+MEDIA_ROOT = path.join(ROOT_PATH, "../statics").replace("\\", "/")
 STATIC_ROOT = MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -139,15 +140,20 @@ TEMPLATE_DIRS = (
     path.join(ROOT_PATH, "templates").replace('\\', '/'),
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-)
+]
 
 
 LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
+
+from debbox.core.vpkg.debcover import DebboxApplicationDiscovery
+
+discovery = DebboxApplicationDiscovery("config://")
+discovery.installed_applications()
