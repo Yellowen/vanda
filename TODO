@@ -2,6 +2,7 @@
 [x] means done
 [ ] means TODO
 
+
 ------------ Researchs  -------------
 [ ] Read http://people.debian.org/~seanius/policy/dbapp-policy.html/
     and decide for sqlite database location
@@ -72,3 +73,4 @@
 1. compressing the css, js and html files.
 2. removing css and js license header
 3. removing all comments in css js and htmlfiles
+
