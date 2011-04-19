@@ -24,4 +24,5 @@ class Application (models.Model):
     """
     VPKG model for application discovery (database backend)
     """
-    pass
+    app = models.CharField(max_lenght=250)
+    
