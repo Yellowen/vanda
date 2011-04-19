@@ -2,6 +2,7 @@
 [x] means done
 [ ] means TODO
 
+
 ------------ Researchs  -------------
 [ ] Read http://people.debian.org/~seanius/policy/dbapp-policy.html/
     and decide for sqlite database location
@@ -47,6 +48,11 @@
 [ ] create some folder in /var/lib/debbox to store sqlite database
     /var/lib/debbox should owned by debbox user
 
+-- VPKG --
+[ ] rewrite the url_patterns doc string in interface.py
+[ ] managing application via priority
+[ ] create an easier to use BaseApplication interface
+[ ] create a cache for fast recovering discovery object
 
 -- issues --
 [X] loggin into files
@@ -62,7 +68,9 @@
 [ ] replace current jquery with minimalist possible
 [ ] replace the development statics root with the deplopyment one
 
+
 >>> RELEASE PLAN ========================================
 1. compressing the css, js and html files.
 2. removing css and js license header
 3. removing all comments in css js and htmlfiles
+

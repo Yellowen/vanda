@@ -49,6 +49,7 @@
 import sys
 import pickle
 import json
+from ConfigParser import NoOptionError
 
 from debbox.core.commands import MASTER_COMMANDS
 
@@ -169,9 +170,14 @@ class MasterServer (object):
 
         """
         default = None
+        result = None
         if len(config) > 2:
             default = config[2]
-        return self.config.get(config[0], config[1], default)
+        try:
+            result = self.config.get(config[0], config[1], default)
+        except NoOptionError, e:
+            raise Exception(e)
+        return result
 
     def kill(self):
         """

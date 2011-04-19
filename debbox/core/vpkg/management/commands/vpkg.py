@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    Debbox - Modern administration panel for Debian GNU/Linux
+#    VPKG - Vanda Package manager
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -16,15 +16,26 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.shortcuts import render_to_response as rr
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
+
+from optparse import make_option
+
+from django.core.management.base import BaseCommand, CommandError
 
 
-@login_required
-def dashboard(request):
-    """
-    User Dashboard. index page for Debbox.
-    """
-    return rr("dashboard.html", {},
-              context_instance=RequestContext(request))
+class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--cache',
+                    action='store_true',
+                    dest='delete',
+                    default=False,
+                    help='Delete poll instead of closing it'),
+        )
+    help = "Command line interface to Vanda package manager (VPKG)."
+
+    # Validation is called explicitly each time the server is reloaded.
+    requires_model_validation = False
+    can_import_settings = False
+
+    def handle(self, *args, **options):
+        print ">>> ", args
+        print "<<< ", options
