@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    VPKG - Vanda Package manager
+#    Debbox - Modern administration panel for Debian GNU/Linux
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -17,20 +17,24 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+from django import template
+#from django.template import Context
+#from django.template.loader import get_template
+from django.conf import settings
 
-class ApplicationDiscovery (object):
-    """
-    Discover the installed applications and the stuff about them like
-    url patterns and settings attributes.
-    """
+register = template.Library()
 
-    def __init__(self, backend):
 
-        tmplist = backend.split("://")
-        self.backend = tmplist[0]
-        self.address = None
-        if len(tmplist) > 1:
-            self.address = tmplist[1]
+def render_drawer(parser, token):
 
-    def installed_application(self):
-        pass
+    return drawer_node()
+
+
+class drawer_node(template.Node):
+
+    def render(self, context):
+        installed_apps = settings.INSTALLED_APPS
+        return "||".join(installed_apps)
+
+
+register.tag('drawer_items', render_drawer)
