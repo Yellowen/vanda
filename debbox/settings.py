@@ -146,7 +146,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'debbox.core.vpkg',
 ]
 
 
@@ -154,6 +153,8 @@ LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
-from debbox.core.vpkg.debcover import discovery
 
-INSTALLED_APPS.extend(discovery.installed_applications())
+from debbox.core.vpkg.debcover import DebboxApplicationDiscovery
+
+discovery = DebboxApplicationDiscovery("config://")
+discovery.installed_applications()
