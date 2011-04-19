@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    VPKG - Vanda Package manager
+#    Debbox - Modern administration panel for Debian GNU/Linux
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -17,11 +17,24 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django.db import models
+from django import template
+#from django.template import Context
+#from django.template.loader import get_template
+from django.conf import settings
+
+register = template.Library()
 
 
-class Application (models.Model):
-    """
-    VPKG model for application discovery (database backend)
-    """
-    pass
+def render_drawer(parser, token):
+
+    return drawer_node()
+
+
+class drawer_node(template.Node):
+
+    def render(self, context):
+        installed_apps = settings.INSTALLED_APPS
+        return "||".join(installed_apps)
+
+
+register.tag('drawer_items', render_drawer)

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load drawer %}
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/dashboard.css" />
@@ -41,6 +42,7 @@
   <p align="right"><a href="/logout/">{% trans 'logout' %}</a></a>
 </div>
 <div class="window">
+{% drawer_items %}
 </div>
 <input type="button" value="open"  id="lhandler">
 
