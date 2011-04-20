@@ -20,8 +20,13 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-    }
+    },
+    'vpkg': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': "/var/lib/debbox/vpkg.db",
+    },
 }
+
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
 

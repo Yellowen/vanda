@@ -31,7 +31,7 @@ class SlaveLogger (object):
     def __new__(cls):
         from debbox.core.communication import MasterClient
         client = MasterClient()
-        client.connect(True)
+        client.connect()
         result = client.command("get_config", config=("Log", "folder"))
         logfolder = result.result
         client.disconnect()

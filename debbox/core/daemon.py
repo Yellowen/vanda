@@ -313,20 +313,11 @@ class Debbox (object):
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
 
-    def syncdb(self, fresh=False):
+    def syncdb(self, dbname="", fresh=False, recreate=False):
         """
         Try to sync the Django database by Debbox user. if ``fresh``
         argument was True, this method will recreate the database.
         """
-        if fresh:
-            from debbox.settings import DATABASES
-            print "Removing exist database . . ."
-            try:
-                os.unlink(DATABASES["default"]["NAME"])
-            except OSError, e:
-                print "Warning: %s", e
-                print "Skipping . . ."
-
         try:
             worker = os.fork()
         except OSError:
@@ -334,11 +325,43 @@ class Debbox (object):
 
         if worker > 0:
 
-            # Waiting for worker to finish its job
-            print "Syncing database . . ."
-            os.waitpid(worker, 0)
+            self._slavepid = worker
+            signal.signal(signal.SIGUSR1, self._usr1_handler)
+            if self.options.foreground:
+                atexit.register(self.stop)
+
+            # writing pid files
+            if not self.options.foreground:
+                file(self.mpid, "w+").write(str(os.getpid()))
+                # TODO: find a way to build slave pid file in better time
+                file(self.spid, "w+").write(str(worker))
+
+            # running the master server
+            socket = SOCKFILE
+            masterapp = MasterServer(self.logger, self.config,
+                                     self.options.debug)
+            masterserver = UnixStream(socket, self.slave_user,
+                                      masterapp.handler)
+
+            print "Running Master Server . . ."
+            masterserver.serve_forever()
 
         else:
+
+            if fresh or recreate:
+                from debbox.settings import DATABASES
+                print "Removing exist database . . ."
+                try:
+                    os.unlink(DATABASES["default"]["NAME"])
+
+                except OSError, e:
+                    print "Warning: %s", e
+                    print "Skipping . . ."
+
+
+            # Waiting for worker to finish its job
+            print "Syncing database . . ."
+
             uid = getpwnam(self.slave_user)[2]
             #gid = getpwnam(self.slave_user)[3]
             os.setuid(int(uid))
@@ -348,6 +371,8 @@ class Debbox (object):
             from django.core.management import call_command
             from pysqlite2.dbapi2 import OperationalError
 
+            from debbox.core.communication import MasterClient
+
             try:
                 call_command('syncdb')
             except OperationalError, e:
@@ -356,6 +381,11 @@ class Debbox (object):
                 print "Didn't you forget to create /var/lib/debbox/ and"
                 print "change its ownership to Debbox defualt user ?"
                 print "=================================================="
+
+            client = MasterClient()
+            client.connect()
+            client.command(command="kill")
+            client.disconnect()
             return
 
     def _usr1_handler(self, signum, frame):
