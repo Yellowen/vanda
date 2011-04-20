@@ -318,22 +318,27 @@ class Debbox (object):
         Try to sync the Django database by Debbox user. if ``fresh``
         argument was True, this method will recreate the database.
         """
+
+        # First fork
         try:
             worker = os.fork()
         except OSError:
             raise self.CantFork("Can't create the slave process")
 
         if worker > 0:
-
+            # Parent process
             self._slavepid = worker
+
+            # Set SIGUSR1 handler
             signal.signal(signal.SIGUSR1, self._usr1_handler)
+
+            # Set on exit handler
             if self.options.foreground:
                 atexit.register(self.stop)
 
             # writing pid files
             if not self.options.foreground:
                 file(self.mpid, "w+").write(str(os.getpid()))
-                # TODO: find a way to build slave pid file in better time
                 file(self.spid, "w+").write(str(worker))
 
             # running the master server
@@ -348,6 +353,7 @@ class Debbox (object):
 
         else:
 
+            # Remove old database if we have to sync a fresh database
             if fresh:
                 from debbox.settings import DATABASES
                 print "Removing exist database . . ."
@@ -357,16 +363,18 @@ class Debbox (object):
                     print "Warning: %s" % e
                     print "Skipping . . ."
 
-
-            # Waiting for worker to finish its job
             print "Syncing database . . ."
-
             uid = getpwnam(self.slave_user)[2]
             #gid = getpwnam(self.slave_user)[3]
             os.setuid(int(uid))
             #os.setgid(int(gid))
             os.umask(027)
+
+            # Setting environment variables needed for django
             os.environ['DJANGO_SETTINGS_MODULE'] = self.options.settings
+
+            # importing modules we need for our work after
+            # preparing django
             from pysqlite2.dbapi2 import OperationalError
 
             from django.core.management import call_command
@@ -374,14 +382,17 @@ class Debbox (object):
 
             from debbox.core.communication import MasterClient
 
+            # Syncing give database
             try:
                 call_command('syncdb', database=dbname)
+
             except OperationalError, e:
                 print "Error: Unexpected error occured with '%s'"
                 print "=================================================="
                 print "Didn't you forget to create /var/lib/debbox/ and"
                 print "change its ownership to Debbox defualt user ?"
                 print "=================================================="
+
             except DatabaseError, e:
                 print "Error: %s" % e
                 print "Removing corrupted databases. . . "
@@ -394,13 +405,17 @@ class Debbox (object):
                     except OSError, e:
                         print "Warning: %s" % e
                         print "Skipping . . ."
+
                 print "==================================================="
                 print "You must sync the `default` database first."
                 print "==================================================="
+
+            # Send kill command to master server that cause terminating
             client = MasterClient()
             client.connect()
             client.command(command="kill")
             client.disconnect()
+
             return
 
     def _usr1_handler(self, signum, frame):
