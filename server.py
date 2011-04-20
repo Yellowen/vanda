@@ -61,11 +61,10 @@ parser.add_option('--piddir', dest='piddir',
                   help="Stotr pid files in PIDDIR folder")
 parser.add_option('--settings', dest='settings',
                   help="Django settings.py file")
-parser.add_option('--syncdb', dest='sync', action="store_true",
-                  help="Sync Debbox web application database.")
-parser.add_option('--syncdb-new', dest='syncnew',
-                  action="store_true",
-                  help="Rmove old database and sync it again.")
+parser.add_option('--syncdb', dest='database',
+                  help="Sync DATABASE database.")
+parser.add_option('--syncdb-new', dest='dbnew',
+                  help="Rmove old DATABASE and sync it again.")
 parser.add_option('--pythonpath', dest='pythonpath',
                   help="Add given path to python path.\n")
 
@@ -91,14 +90,14 @@ if options.shell:
     sys.exit(0)
 
 # Try to syncdb
-if options.sync or options.syncnew:
+if options.database or options.dbnew:
     synced = None
-    if options.syncnew:
-        daemon.syncdb(fresh=True)
+    if options.dbnew:
+        daemon.syncdb(options.dbnew, fresh=True)
         synced = 1
 
-    if options.sync and not synced:
-        daemon.syncdb()
+    if options.database and not synced:
+        daemon.syncdb(options.database)
     valid_action = True
 
 if options.foreground:

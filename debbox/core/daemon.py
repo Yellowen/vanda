@@ -313,7 +313,7 @@ class Debbox (object):
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
 
-    def syncdb(self, dbname="", fresh=False, recreate=False):
+    def syncdb(self, dbname="default", fresh=False):
         """
         Try to sync the Django database by Debbox user. if ``fresh``
         argument was True, this method will recreate the database.
@@ -348,14 +348,13 @@ class Debbox (object):
 
         else:
 
-            if fresh or recreate:
+            if fresh:
                 from debbox.settings import DATABASES
                 print "Removing exist database . . ."
                 try:
-                    os.unlink(DATABASES["default"]["NAME"])
-
+                    os.unlink(DATABASES[dbname]["NAME"])
                 except OSError, e:
-                    print "Warning: %s", e
+                    print "Warning: %s" % e
                     print "Skipping . . ."
 
 
@@ -368,20 +367,36 @@ class Debbox (object):
             #os.setgid(int(gid))
             os.umask(027)
             os.environ['DJANGO_SETTINGS_MODULE'] = self.options.settings
-            from django.core.management import call_command
             from pysqlite2.dbapi2 import OperationalError
+
+            from django.core.management import call_command
+            from django.db.utils import DatabaseError
 
             from debbox.core.communication import MasterClient
 
             try:
-                call_command('syncdb')
+                call_command('syncdb', database=dbname)
             except OperationalError, e:
                 print "Error: Unexpected error occured with '%s'"
                 print "=================================================="
                 print "Didn't you forget to create /var/lib/debbox/ and"
                 print "change its ownership to Debbox defualt user ?"
                 print "=================================================="
+            except DatabaseError, e:
+                print "Error: %s" % e
+                print "Removing corrupted databases. . . "
 
+                # Removing corrupted databases.
+                from debbox.settings import DATABASES
+                for db in DATABASES:
+                    try:
+                        os.unlink(DATABASES[db]["NAME"])
+                    except OSError, e:
+                        print "Warning: %s" % e
+                        print "Skipping . . ."
+                print "==================================================="
+                print "You must sync the `default` database first."
+                print "==================================================="
             client = MasterClient()
             client.connect()
             client.command(command="kill")
