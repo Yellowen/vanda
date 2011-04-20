@@ -20,8 +20,16 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-    }
+    },
+    'vpkg': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': "/var/lib/debbox/vpkg.db",
+    },
 }
+
+
+DATABASE_ROUTERS = ['debbox.core.vpkg.routers.VPKGRouter']
+
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
 
@@ -146,6 +154,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'debbox.core.vpkg',
 ]
 
 
