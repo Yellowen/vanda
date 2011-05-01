@@ -24,3 +24,62 @@ from gevent import monkey; monkey.patch_all()
 import sys
 from optparse import OptionParser
 
+from debbox.core.daemon import Debbox
+
+
+parser = OptionParser()
+parser.set_defaults(
+    debug=False,
+    conf="/etc/debbox/debbox.conf",
+    piddir="/var/run/",
+    settings='debbox.settings',
+)
+
+parser.add_option('--shell', dest='shell',
+                  action="store_true",
+                  help="Execute a python shell (ipython), in the patched env.")
+parser.add_option('-c', dest='conf',
+                  help="Use CONF config file. default is" + \
+                  "/etc/debbox/debbox.conf")
+parser.add_option('--debug', dest='debug', action="store_true",
+                  help="Activate debug mode.")
+parser.add_option('--settings', dest='settings',
+                  help="Django settings.py file")
+parser.add_option('--syncdb', dest='database',
+                  help="Sync DATABASE database.")
+parser.add_option('--syncdb-new', dest='dbnew',
+                  help="Rmove old DATABASE and sync it again.")
+parser.add_option('--pythonpath', dest='pythonpath',
+                  help="Add given path to python path.\n")
+
+options, args = parser.parse_args()
+valid_action = False
+
+if options.pythonpath:
+    sys.path.insert(1, options.pythonpath)
+
+sys.path.insert(1, "debbox/")
+
+try:
+    daemon = Debbox(options)
+except Debbox.CantFindConfigFile:
+    print "Error: Can't find '%s' configuration file." % options.conf
+    sys.exit(1)
+
+if options.shell:
+    from IPython.Shell import IPShellEmbed
+    sys.argv = []
+    ipshell = IPShellEmbed()
+    ipshell()
+    sys.exit(0)
+
+# Try to syncdb
+if options.database or options.dbnew:
+    synced = None
+    if options.dbnew:
+        daemon.syncdb(options.dbnew, fresh=True)
+        synced = 1
+
+    if options.database and not synced:
+        daemon.syncdb(options.database)
+    valid_action = True
