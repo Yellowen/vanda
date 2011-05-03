@@ -24,16 +24,20 @@ class ApplicationDiscovery (object):
     url patterns and settings attributes.
     """
 
-    def __init__(self, backend):
+    def __init__(self, **kwargs):
 
-        tmplist = backend.split("://")
-        self.backend = tmplist[0]
+        if "backend" in kwargs:
+            self.backend = kwargs["backend"]
+        else:
+            self.backend = None
         self.urls = dict()
         self.urls_cache = dict()
         self.address = None
         self.apps = None
-        if len(tmplist) > 1:
-            self.address = tmplist[1]
+        if "uri" in kwargs:
+            self.address = kwargs["uri"]
+        else:
+            self.address = None
 
     def installed_application(self):
         pass

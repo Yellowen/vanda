@@ -58,4 +58,3 @@ class SlaveLogger (object):
             handler.setFormatter(formatter)
             logger.addHandler(handler)
         return logger
-
