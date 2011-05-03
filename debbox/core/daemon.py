@@ -27,12 +27,6 @@ from pwd import getpwnam
 from ConfigParser import ConfigParser
 from ConfigParser import NoSectionError
 
-from debbox.core.servers import WebServer
-from debbox.core.communication import MasterServer
-from debbox.core.servers import UnixStream
-from debbox.core.logging.master import MasterLogger
-from debbox.core.conf import SOCKFILE
-
 
 class Debbox (object):
     """
@@ -49,6 +43,8 @@ class Debbox (object):
 
     def __init__(self, options, stdin='/dev/null', stdout='/dev/null',
                  stderr='/dev/null'):
+
+        from debbox.core.logging.master import MasterLogger
 
         self.options = options
 
@@ -169,6 +165,11 @@ class Debbox (object):
         """
         Start the Debbox server. all the daemon forking process runs here.
         """
+        from debbox.core.servers import WebServer
+        from debbox.core.communication import MasterServer
+        from debbox.core.servers import UnixStream
+        from debbox.core.conf import SOCKFILE
+
         if self._status():
             print "Debbox is already running."
             return
@@ -318,6 +319,9 @@ class Debbox (object):
         Try to sync the Django database by Debbox user. if ``fresh``
         argument was True, this method will recreate the database.
         """
+        from debbox.core.communication import MasterServer
+        from debbox.core.servers import UnixStream
+        from debbox.core.conf import SOCKFILE
 
         # First fork
         try:
