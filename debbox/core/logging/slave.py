@@ -30,11 +30,16 @@ class SlaveLogger (object):
 
     def __new__(cls):
         from debbox.core.communication import MasterClient
+        cant_connect = None
         client = MasterClient()
-        client.connect()
-        result = client.command("get_config", config=("Log", "folder"))
-        logfolder = result.result
-        client.disconnect()
+        try:
+            client.connect()
+            result = client.command("get_config", config=("Log", "folder"))
+            logfolder = result.result
+            client.disconnect()
+            LOG_FILENAME = "/".join((logfolder.rstrip("/"), "webserver.log"))
+        except client.CantConnectToSocket:
+            cant_connect = True
 
         logparam = {}
         handlerparam = {}
@@ -43,13 +48,13 @@ class SlaveLogger (object):
         logparam['datefmt'] = conf.LOG_DATE_FORMAT
         handlerparam['maxBytes'] = conf.LOG_MAX_BYTES
         handlerparam['backupCount'] = conf.LOG_BACKUP_COUNT
-        LOG_FILENAME = "/".join((logfolder.rstrip("/"), "webserver.log"))
         logging.basicConfig(**logparam)
         logger = logging.getLogger("TODO")
-        handler = RotatingFileHandler(
-            LOG_FILENAME, **handlerparam)
+        if not cant_connect:
+            handler = RotatingFileHandler(
+                LOG_FILENAME, **handlerparam)
 
-        formatter = logging.Formatter(logparam['format'])
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
+            formatter = logging.Formatter(logparam['format'])
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
         return logger
