@@ -22,4 +22,8 @@ class Backend(object):
     """
     VPKG discovery backend class for database.
     """
-    pass
+
+    def __init__(self, *args, **kwargs):
+        pass
+    def installed_application(self):
+        pass
