@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+from debbox.core.vpkg.models import Application
+
 
 class Backend(object):
     """
@@ -24,6 +26,8 @@ class Backend(object):
     """
 
     def __init__(self, *args, **kwargs):
+
         pass
+
     def installed_application(self):
         pass
