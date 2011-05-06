@@ -26,8 +26,17 @@ class Backend(object):
     """
 
     def __init__(self, *args, **kwargs):
-
-        pass
+        if "model" in kwargs:
+            self.model = kwargs["model"]
+        else:
+            self.model = Application
 
     def installed_application(self):
-        pass
+        """
+        Return a list of installed applications.
+        """
+        apps = self.model.objects.all()
+        if apps:
+            return [i.app for i in apps]
+        else:
+            return []

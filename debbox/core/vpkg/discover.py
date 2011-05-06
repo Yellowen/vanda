@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+import logging
+
 
 class ApplicationDiscovery (object):
     """
@@ -24,23 +26,52 @@ class ApplicationDiscovery (object):
     url patterns and settings attributes.
     """
 
+    class InvalidBackend (Exception):
+        """
+        Unsupported backend passed to vpkg.
+        """
+        pass
+
+    def load_backend(self, backend):
+        """
+        renturn the Backend class of specifyed backend.
+        """
+        pythonic_path = "backends.%s.Backend" % backend
+        try:
+            Backend = __import__(pythonic_path, globals(),
+                                 locals(), [], -1)
+
+            return Backend
+        except ImportError:
+            return None
+
     def __init__(self, **kwargs):
 
+        # loading needed backend for vpkg
         if "backend" in kwargs:
-            self.backend = kwargs["backend"]
+            backend = self.load_backend(kwargs["backend"])
+            if backend:
+                self.backend = backend(**kwargs)
+            else:
+                raise self.InvalidBackend("Invalid backend '%s'" %
+                                          kwargs["backend"])
         else:
-            self.backend = None
+            self.backend = self.load_backend("database")(**kwargs)
+
+        if "logger" in kwargs:
+            self.logging = kwargs["logger"]
+        else:
+            self.logging = logging
+
         self.urls = dict()
         self.urls_cache = dict()
-        self.address = None
         self.apps = None
-        if "uri" in kwargs:
-            self.address = kwargs["uri"]
-        else:
-            self.address = None
 
     def installed_application(self):
-        pass
+        """
+        Return the list of installed applications.
+        """
+        return self.backend.installed_application()
 
     def _apps_list(self):
         """
@@ -56,7 +87,7 @@ class ApplicationDiscovery (object):
 
         for application in apps:
             try:
-                # iapp is implementation of BaseApplication by package
+                # bapp is implementation of BaseApplication by package
                 bpp_pypath = "%s.application" % application
                 bapp = __import__(bpp_pypath,
                                   globals(),
@@ -67,7 +98,7 @@ class ApplicationDiscovery (object):
                 result.append([iapplication.priority, iapplication,
                                application])
             except ImportError:
-                logger.debug("Can't import %s" % application)
+                self.logger.debug("Can't import %s" % application)
 
         result.sort()
         return result
@@ -83,7 +114,7 @@ class ApplicationDiscovery (object):
             # urls_list don't have any url element
             # TODO: generate a new url pattern for prev_url
             # or skip it
-            logger.warning("Can't register url for %s" % \
+            self.logger.warning("Can't register url for %s" % \
                            self.urls_cache[str(priority)]["name"])
             return False
 
