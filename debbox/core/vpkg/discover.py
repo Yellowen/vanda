@@ -36,25 +36,28 @@ class ApplicationDiscovery (object):
         """
         renturn the Backend class of specifyed backend.
         """
-        pythonic_path = "backends.%s.Backend" % backend
+        import sys
+
+        print "<<<<<<<<<<< ", sys.path
+        pythonic_path = "debbox.core.vpkg.backends.database" # % backend
         try:
-            Backend = __import__(pythonic_path, globals(),
-                                 locals(), [], -1)
+            Backend = __import__(pythonic_path)
+            print ">>>> ", Backend
 
             return Backend
-        except ImportError:
-            return None
+        except ImportError, e:
+            print e
+            print ">>> ", pythonic_path
+            raise self.InvalidBackend("Invalid backend '%s'" %
+                                      backend)
 
     def __init__(self, **kwargs):
 
         # loading needed backend for vpkg
         if "backend" in kwargs:
             backend = self.load_backend(kwargs["backend"])
-            if backend:
-                self.backend = backend(**kwargs)
-            else:
-                raise self.InvalidBackend("Invalid backend '%s'" %
-                                          kwargs["backend"])
+            self.backend = backend(**kwargs)
+
         else:
             self.backend = self.load_backend("database")(**kwargs)
 

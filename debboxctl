@@ -58,8 +58,6 @@ valid_action = False
 if options.pythonpath:
     sys.path.insert(1, options.pythonpath)
 
-sys.path.insert(1, "debbox/")
-
 try:
     daemon = Debbox(options)
 except Debbox.CantFindConfigFile:

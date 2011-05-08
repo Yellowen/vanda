@@ -116,7 +116,7 @@ LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
 from debbox.core.logging.instance import logger
-from debbox.core.vpkg.discovery import ApplicationDiscovery
+from debbox.core.vpkg.discover import ApplicationDiscovery
 
 discovery = ApplicationDiscovery(logging=logger)
 INSTALLED_APPS.extend(discovery.installed_applications())
