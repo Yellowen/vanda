@@ -33,6 +33,7 @@ parser.set_defaults(
     conf="/etc/debbox/debbox.conf",
     piddir="/var/run/",
     settings='debbox.settings',
+    foreground=True,
 )
 
 parser.add_option('--shell', dest='shell',
@@ -55,8 +56,10 @@ parser.add_option('--pythonpath', dest='pythonpath',
 options, args = parser.parse_args()
 valid_action = False
 
-if options.pythonpath:
-    sys.path.insert(1, options.pythonpath)
+#if options.pythonpath:
+#    sys.path.insert(1, options.pythonpath)
+import os
+os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
 
 try:
     daemon = Debbox(options)

@@ -28,7 +28,7 @@ DATABASES = {
 }
 
 
-DATABASE_ROUTERS = ['debbox.core.vpkg.routers.VPKGRouter']
+DATABASE_ROUTERS = ['vpkg.routers.VPKGRouter']
 
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
@@ -116,8 +116,8 @@ LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
 from debbox.core.logging.instance import logger
-from debbox.core.vpkg.discover import ApplicationDiscovery
+from vpkg.discover import ApplicationDiscovery
 
-discovery = ApplicationDiscovery(logging=logger)
+discovery = ApplicationDiscovery(logger=logger)
 INSTALLED_APPS.extend(discovery.installed_applications())
 logger.info(INSTALLED_APPS)
