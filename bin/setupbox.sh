@@ -1,4 +1,4 @@
-B1;2403;0c#! /bin/sh
+#! /bin/sh
 
 # this script should run with root user.
 
