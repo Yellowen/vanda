@@ -43,18 +43,20 @@ class SlaveLogger (object):
 
         logparam = {}
         handlerparam = {}
-        logparam['level'] = conf.LOG_LEVEL
+        ## logparam['level'] = conf.LOG_LEVEL
         logparam['format'] = conf.LOG_FORMAT
-        logparam['datefmt'] = conf.LOG_DATE_FORMAT
-        handlerparam['maxBytes'] = conf.LOG_MAX_BYTES
-        handlerparam['backupCount'] = conf.LOG_BACKUP_COUNT
-        logging.basicConfig(**logparam)
+        ## logparam['datefmt'] = conf.LOG_DATE_FORMAT
+        ## handlerparam['maxBytes'] = conf.LOG_MAX_BYTES
+        ## handlerparam['backupCount'] = conf.LOG_BACKUP_COUNT
+        #logging.basicConfig(**logparam)
         logger = logging.getLogger("TODO")
         if not cant_connect:
             handler = RotatingFileHandler(
                 LOG_FILENAME, **handlerparam)
+        else:
 
             formatter = logging.Formatter(logparam['format'])
+            logger.setLevel(conf.LOG_LEVEL)
             handler.setFormatter(formatter)
             logger.addHandler(handler)
         return logger
