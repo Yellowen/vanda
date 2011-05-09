@@ -376,7 +376,7 @@ class Debbox (object):
 
             # Setting environment variables needed for django
             os.environ['DJANGO_SETTINGS_MODULE'] = self.options.settings
-
+            os.environ['DEBBOX_SYNCDB'] = dbname
             # importing modules we need for our work after
             # preparing django
             from pysqlite2.dbapi2 import OperationalError

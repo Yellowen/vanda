@@ -1,4 +1,4 @@
-from os import path
+import os
 
 
 DEBUG = True
@@ -33,7 +33,7 @@ DATABASE_ROUTERS = ['vpkg.routers.VPKGRouter']
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
 
-ROOT_PATH = path.dirname(__file__)
+ROOT_PATH = os.path.dirname(__file__)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -61,7 +61,7 @@ USE_L10N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 # IMPORTANT: current MEDIA_ROOT value is only for development
-MEDIA_ROOT = path.join(ROOT_PATH, "../statics").replace("\\", "/")
+MEDIA_ROOT = os.path.join(ROOT_PATH, "../statics").replace("\\", "/")
 STATIC_ROOT = MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'debbox.urls'
 
 TEMPLATE_DIRS = (
-    path.join(ROOT_PATH, "templates").replace('\\', '/'),
+    os.path.join(ROOT_PATH, "templates").replace('\\', '/'),
 )
 
 INSTALLED_APPS = [
@@ -107,7 +107,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'debbox.core.vpkg',
+    'vpkg',
 ]
 
 
@@ -115,9 +115,14 @@ LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
-from debbox.core.logging.instance import logger
-from vpkg.discover import ApplicationDiscovery
+if 'DEBBOX_SYNCDB' in os.environ:
+    if os.environ['DEBBOX_SYNCDB'] != "vpkg":
 
-discovery = ApplicationDiscovery(logger=logger)
-INSTALLED_APPS.extend(discovery.installed_applications())
-logger.info(INSTALLED_APPS)
+        # do not involve vpkg if syncing database was vpkg
+        from debbox.core.logging.instance import logger
+        from vpkg.discover import ApplicationDiscovery
+
+        discovery = ApplicationDiscovery(logger=logger)
+        INSTALLED_APPS.extend(discovery.installed_applications())
+        logger.info(INSTALLED_APPS)
+    del os.environ['DEBBOX_SYNCDB']
