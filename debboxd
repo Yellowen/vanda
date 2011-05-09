@@ -88,10 +88,13 @@ if options.shell:
 if options.foreground:
     #autoreload.main(daemon.start)
     # TODO: add autoreloader and be awar of zombie process
-    daemon.start()
+    try:
+        daemon.start()
+    except KeyboardInterrupt:
+        daemon.stop()
 
 elif options.action == "start":
-    daemon.start()
+        daemon.start()
 
 elif options.action == "stop":
     daemon.stop()
