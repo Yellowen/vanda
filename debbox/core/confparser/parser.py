@@ -22,7 +22,7 @@ from os import path
 
 from django.conf import settings
 
-from debbox.core.logging.instance import logger
+from debbox.core.logging import logger
 
 # CN : All parts are need to explain more
 

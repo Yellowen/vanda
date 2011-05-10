@@ -35,7 +35,7 @@ class LotusDjango (LotusServer):
 
         got_request_exception.connect(self.exception_printer)
 
-        from debbox.core.logging.instance import logger
+        from debbox.core.logging import logger
         self.logger = logger
 
         super(LotusDjango, self).__init__(WSGI_app, host, port,

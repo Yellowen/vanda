@@ -36,7 +36,7 @@ class GEventServer (object):
         self.port = port
         self.ssl = ssl
         got_request_exception.connect(self.exception_printer)
-        from debbox.core.logging.instance import logger
+        from debbox.core.logging import logger
         logger.debug(">> SSL: %s" % self.ssl)
         self.server = WSGIServer((self.host, self.port), WSGIHandler(),
                    **self.ssl)
@@ -49,7 +49,7 @@ class GEventServer (object):
 
     def exception_printer(self, sender, **kwargs):
         import sys
-        from debbox.core.logging.instance import logger
+        from debbox.core.logging import logger
 
         tblist = traceback.extract_tb(sys.exc_info()[2])
         strlist = traceback.format_list(tblist)

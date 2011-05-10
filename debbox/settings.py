@@ -119,7 +119,7 @@ if 'DEBBOX_SYNCDB' in os.environ:
     if os.environ['DEBBOX_SYNCDB'] != "vpkg":
 
         # do not involve vpkg if syncing database was vpkg
-        from debbox.core.logging.instance import logger
+        from debbox.core.logging import logger
         from vpkg.discover import ApplicationDiscovery
 
         discovery = ApplicationDiscovery(logger=logger)

@@ -25,7 +25,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from forms import LoginForm
-from debbox.core.logging.instance import logger
+from debbox.core.logging import logger
 
 
 def Login(request):
