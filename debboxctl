@@ -78,9 +78,11 @@ if options.shell:
 if options.database or options.dbnew:
     synced = None
     if options.dbnew:
+        os.environ['DEBBOX_SYNCDB'] = options.dbnew
         daemon.syncdb(options.dbnew, fresh=True)
         synced = 1
 
     if options.database and not synced:
+        os.environ['DEBBOX_SYNCDB'] = options.database
         daemon.syncdb(options.database)
     valid_action = True

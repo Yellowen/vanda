@@ -369,7 +369,6 @@ class Debbox (object):
                 try:
                     os.unlink(DATABASES[dbname]["NAME"])
                 except OSError, e:
-                    print "Warning: %s" % e
                     print "Skipping . . ."
 
             print "Syncing database . . ."
@@ -381,7 +380,6 @@ class Debbox (object):
 
             # Setting environment variables needed for django
             os.environ['DJANGO_SETTINGS_MODULE'] = self.options.settings
-            os.environ['DEBBOX_SYNCDB'] = dbname
             # importing modules we need for our work after
             # preparing django
             from pysqlite2.dbapi2 import OperationalError
@@ -393,6 +391,7 @@ class Debbox (object):
 
             # Syncing give database
             try:
+                print "Sadasdasdasdasd"
                 call_command('syncdb', database=dbname)
 
             except OperationalError, e:
@@ -412,8 +411,7 @@ class Debbox (object):
                     try:
                         os.unlink(DATABASES[db]["NAME"])
                     except OSError, e:
-                        print "Warning: %s" % e
-                        print "Skipping . . ."
+                        pass
 
                 print "==================================================="
                 print "You must sync the `default` database first."

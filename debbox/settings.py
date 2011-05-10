@@ -115,14 +115,9 @@ LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
 
-if 'DEBBOX_SYNCDB' in os.environ:
-    if os.environ['DEBBOX_SYNCDB'] != "vpkg":
+from debbox.core.logging import logger
+from vpkg.discover import ApplicationDiscovery
 
-        # do not involve vpkg if syncing database was vpkg
-        from debbox.core.logging import logger
-        from vpkg.discover import ApplicationDiscovery
+discovery = ApplicationDiscovery(logger=logger)
+INSTALLED_APPS.extend(discovery.installed_applications())
 
-        discovery = ApplicationDiscovery(logger=logger)
-        INSTALLED_APPS.extend(discovery.installed_applications())
-        logger.info(INSTALLED_APPS)
-    del os.environ['DEBBOX_SYNCDB']
