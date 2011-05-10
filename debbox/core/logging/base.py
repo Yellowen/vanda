@@ -47,7 +47,7 @@ def setup_logger(config=None, logfile=None, debug=False):
             print "Skipping."
 
     logging.basicConfig(**logparam)
-    logger = logging.getLogger("Master")
+    logger = logging.getLogger("Debbox")
 
     if logfile:
         LOG_FILENAME = logfile
@@ -55,6 +55,6 @@ def setup_logger(config=None, logfile=None, debug=False):
         LOG_FILENAME, **handlerparam)
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-    else:
-        pass
+
+    logger.propagate = debug
     return logger

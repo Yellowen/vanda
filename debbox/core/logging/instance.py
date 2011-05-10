@@ -1,4 +1,3 @@
-from slave import SlaveLogger
+import logging
 
-
-logger = SlaveLogger()
+logger = logging.getLogger("Debbox")

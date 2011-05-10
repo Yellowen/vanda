@@ -1,1 +1,1 @@
-
+from instance import logger

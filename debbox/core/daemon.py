@@ -44,7 +44,7 @@ class Debbox (object):
     def __init__(self, options, stdin='/dev/null', stdout='/dev/null',
                  stderr='/dev/null'):
 
-        from debbox.core.logging.master import MasterLogger
+        from debbox.core.logging.base import setup_logger
 
         self.options = options
 
@@ -108,10 +108,15 @@ class Debbox (object):
         os.chown(self.logfolder, uid, gid)
         os.chmod(self.logfolder, stat.S_IXUSR | stat.S_IRUSR | stat.S_IWUSR | \
                  stat.S_IXGRP | stat.S_IWGRP | stat.S_IRGRP)
-
-        self.logger = MasterLogger(self.config, "/".join((self.logfolder,
-                                                  "master.log")),
+        setup_logger(self.config, "/".join((self.logfolder,
+                                                  "debbug.log")),
                            self.options.debug)
+
+        # we import logger here because it should import after
+        # setup_logger called
+        from debbox.core.logging import logger
+
+        self.logger = logger
 
         # Registering a cleanup method
         #atexit.register(self.__cleanup__)
