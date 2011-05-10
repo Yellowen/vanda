@@ -51,6 +51,8 @@ import pickle
 import json
 import _socket as socket
 
+from debbox.core.logging import logger
+
 
 class MasterClient (object):
     """
@@ -74,15 +76,8 @@ class MasterClient (object):
     """
 
     def __init__(self):
-        import logging
-
-        from debbox.core import conf
         self.socket = socket.socket(socket.AF_UNIX)
-
-        logging.basicConfig(level=conf.LOG_LEVEL,
-                            format=conf.LOG_FORMAT,
-                            datefmt=conf.LOG_DATE_FORMAT)
-        self.logger = logging.getLogger("MasterClient")
+        self.logger = logger
 
     def connect(self, wait_until_connect=False):
         """

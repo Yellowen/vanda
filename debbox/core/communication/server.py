@@ -52,6 +52,7 @@ import json
 from ConfigParser import NoOptionError
 
 from debbox.core.commands import MASTER_COMMANDS
+from debbox.core.logging import logger
 
 
 class MasterServer (object):
@@ -59,8 +60,8 @@ class MasterServer (object):
     Master process application class.
     """
 
-    def __init__(self, logger_instance, config, debug=False):
-        self.logger = logger_instance
+    def __init__(self, config, debug=False):
+        self.logger = logger
         self.debug = debug
         self.config = config
         # TODO: make command dictionary loadable form a file

@@ -234,7 +234,7 @@ class Debbox (object):
 
             # running the master server
             socket = SOCKFILE
-            masterapp = MasterServer(self.logger, self.config,
+            masterapp = MasterServer(self.config,
                                      self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)
@@ -352,7 +352,7 @@ class Debbox (object):
 
             # running the master server
             socket = SOCKFILE
-            masterapp = MasterServer(self.logger, self.config,
+            masterapp = MasterServer(self.config,
                                      self.options.debug)
             masterserver = UnixStream(socket, self.slave_user,
                                       masterapp.handler)
