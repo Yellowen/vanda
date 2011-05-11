@@ -361,7 +361,7 @@ class Debbox (object):
             masterserver.serve_forever()
 
         else:
-
+            os.environ["VPKG_SYNCDB"] = dbname
             # Remove old database if we have to sync a fresh database
             if fresh:
                 from debbox.settings import DATABASES
