@@ -391,7 +391,6 @@ class Debbox (object):
 
             # Syncing give database
             try:
-                print "Sadasdasdasdasd"
                 call_command('syncdb', database=dbname)
 
             except OperationalError, e:
