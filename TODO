@@ -9,9 +9,9 @@
 [ ] Read about dbconfig-common
 
 ------------ Development ------------
-[ ] Add django-command-extension to project only for debugging
+[-] Add django-command-extension to project only for debugging
 [-] Remove runserver.sh from each Release
-[ ] Build some processes/threads for serving static files (need a
+[X] Build some processes/threads for serving static files (need a
    decision between processes and threads)
 [-] Allow to choose between web server backends (GEvent, Fapws3)
 [X] Modular conf parser
@@ -28,12 +28,12 @@
     bother the file so much
 [X] make socket address static
 [X] get the config values in slave process through unix socket
-[ ] recheck the MasterClient logger
+[X] recheck the MasterClient logger
 [ ] add a tool for automating debbox.conf process
 [-] replace the django WSGI handler with our wsgi handler to
 [X] log all the uncaught exceptions
 [ ] embed the console.py modules for colorizing the outputs
-[ ] add syncdb to server.py
+[X] add syncdb to debboxctl
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox
@@ -53,6 +53,8 @@
 [ ] managing application via priority
 [ ] create an easier to use BaseApplication interface
 [ ] create a cache for fast recovering discovery object
+[ ] load applications list with their priority in filesystem backend
+[ ] allow overriding the priority by user
 
 -- issues --
 [X] loggin into files
