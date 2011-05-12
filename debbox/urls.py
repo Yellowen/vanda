@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns
 
-from debbox.core.vpkg.debcover import discovery
+from django.conf.settings import discovery
 
 
 urlpatterns = patterns('',
