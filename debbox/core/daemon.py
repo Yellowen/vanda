@@ -361,7 +361,6 @@ class Debbox (object):
             masterserver.serve_forever()
 
         else:
-            os.environ["VPKG_SYNCDB"] = dbname
             # Remove old database if we have to sync a fresh database
             if fresh:
                 from debbox.settings import DATABASES
@@ -411,10 +410,6 @@ class Debbox (object):
                         os.unlink(DATABASES[db]["NAME"])
                     except OSError, e:
                         pass
-
-                print "==================================================="
-                print "You must sync the `default` database first."
-                print "==================================================="
 
             # Send kill command to master server that cause terminating
             client = MasterClient()

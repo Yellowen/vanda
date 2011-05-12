@@ -46,9 +46,9 @@ parser.add_option('--debug', dest='debug', action="store_true",
                   help="Activate debug mode.")
 parser.add_option('--settings', dest='settings',
                   help="Django settings.py file")
-parser.add_option('--syncdb', dest='database',
+parser.add_option('--syncdb', dest='database', action="store_true",
                   help="Sync DATABASE database.")
-parser.add_option('--syncdb-new', dest='dbnew',
+parser.add_option('--syncdb-new', dest='dbnew', action="store_true",
                   help="Rmove old DATABASE and sync it again.")
 parser.add_option('--pythonpath', dest='pythonpath',
                   help="Add given path to python path.\n")
@@ -78,11 +78,9 @@ if options.shell:
 if options.database or options.dbnew:
     synced = None
     if options.dbnew:
-        os.environ['DEBBOX_SYNCDB'] = options.dbnew
-        daemon.syncdb(options.dbnew, fresh=True)
+        daemon.syncdb(fresh=True)
         synced = 1
 
     if options.database and not synced:
-        os.environ['DEBBOX_SYNCDB'] = options.database
-        daemon.syncdb(options.database)
+        daemon.syncdb()
     valid_action = True

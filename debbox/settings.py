@@ -21,14 +21,8 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
     },
-    'vpkg': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': "/var/lib/debbox/vpkg.db",
-    },
+
 }
-
-
-DATABASE_ROUTERS = ['vpkg.routers.VPKGRouter']
 
 # TODO: admin should select the pam service via an UI
 PAM_SERVICE = "passwd"
@@ -114,6 +108,8 @@ INSTALLED_APPS = [
 LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
+
+VPKG_FS_CACHE = "/var/lib/debbox/vpkg/"
 
 from debbox.core.logging import logger
 from vpkg.discover import ApplicationDiscovery
