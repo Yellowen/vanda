@@ -16,27 +16,26 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-
-from django import template
-#from django.template import Context
-#from django.template.loader import get_template
-from django.conf import settings
-
-from debbox.dashboard.loder import load_dashboard_instance
-register = template.Library()
+from debbox.core.logging import logger
 
 
-def render_drawer(parser, token):
+def load_dashboard_instance(application):
+    """
+    Load the Dashboard class of the given application and return an instance.
+    application should be a pythonic path to a application.
 
-    return drawer_node()
-
-
-class drawer_node(template.Node):
-
-    def render(self, context):
-        installed_apps = settings.INSTALLED_APPS
-
-        return "||".join(installed_apps)
-
-
-register.tag('drawer_items', render_drawer)
+    This function will look for a dashboard module inside the application and
+    a Dashboard class inside the module.
+    """
+    try:
+        module = __import__(application, globals(), locals(),
+                            ["dashboard", ], -1)
+        instance = module.Dashboard()
+        return instance
+    except ImportError, e:
+        logger.debug("Can not import the dashboard module of '%s'" %
+                     application)
+        logger.debug(str(e))
+        logger.info("'%s' does not provide a Dashboard module/Class." %
+                    application)
+        return None

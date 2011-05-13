@@ -116,3 +116,4 @@ from vpkg.discover import ApplicationDiscovery
 
 discovery = ApplicationDiscovery(logger=logger)
 INSTALLED_APPS.extend(discovery.installed_applications())
+
