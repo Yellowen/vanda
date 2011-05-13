@@ -70,7 +70,6 @@
 [ ] replace current jquery with minimalist possible
 [ ] replace the development statics root with the deplopyment one
 
-
 >>> RELEASE PLAN ========================================
 1. compressing the css, js and html files.
 2. removing css and js license header
