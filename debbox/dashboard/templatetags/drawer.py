@@ -22,7 +22,7 @@ from django.template import Template, Context
 #from django.template.loader import get_template
 from django.conf import settings
 
-from debbox.dashboard.loder import load_dashboard_instance
+from debbox.dashboard.loader import load_dashboard_instance
 
 
 register = template.Library()
