@@ -18,11 +18,13 @@
 # -----------------------------------------------------------------------------
 
 from django import template
-#from django.template import Context
+from django.template import Template, Context
 #from django.template.loader import get_template
 from django.conf import settings
 
 from debbox.dashboard.loder import load_dashboard_instance
+
+
 register = template.Library()
 
 
@@ -35,8 +37,7 @@ class drawer_node(template.Node):
 
     def render(self, context):
         installed_apps = settings.INSTALLED_APPS
-
-        return "||".join(installed_apps)
-
+        t = Template("||".join(installed_apps))
+        return t.render(Context())
 
 register.tag('drawer_items', render_drawer)

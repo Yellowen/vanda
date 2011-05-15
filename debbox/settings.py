@@ -112,8 +112,5 @@ LOGIN_REDIRECT_URL = "/"
 VPKG_FS_CACHE = "/var/lib/debbox/vpkg/"
 
 from debbox.core.logging import logger
-from vpkg.discover import ApplicationDiscovery
-
-discovery = ApplicationDiscovery(logger=logger)
-INSTALLED_APPS.extend(discovery.installed_applications())
-
+from vpkg import setup_vpkg
+setup_vpkg(logger=logger)

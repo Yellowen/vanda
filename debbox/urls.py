@@ -1,10 +1,11 @@
 from django.conf.urls.defaults import patterns
 
-from debbox.core.logging import logger
-from vpkg.discover import ApplicationDiscovery
+from django.conf import settings
+#from debbox.core.logging import logger
+#from vpkg.discover import ApplicationDiscovery
 
 
-discovery = ApplicationDiscovery(logger=logger)
+#discovery = ApplicationDiscovery(logger=logger)
 
 urlpatterns = patterns('',
     # Login url
@@ -15,4 +16,4 @@ urlpatterns = patterns('',
     (r'^logout/$', 'debbox.core.auth.views.Logout'),
 )
 
-urlpatterns += discovery.url_patterns()
+urlpatterns += settings.discovery.url_patterns()
