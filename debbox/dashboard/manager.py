@@ -17,32 +17,20 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django import template
-from django.template import Template, Context
-#from django.template.loader import get_template
-from django.conf import settings
 
-from debbox.dashboard.loader import load_dashboard_instance
+class DashboardManager(object):
+    """
+    Dashboard manager class. this class allow to application to register their
+    own dashboard configuration class and control their dashboard property.
+    """
 
+    def __init__(self):
+        self._registry = {}
 
-register = template.Library()
-
-
-def render_drawer(parser, token):
-
-    return drawer_node()
-
-
-class drawer_node(template.Node):
-
-    def render(self, context):
-        tmp = []
-        for app in settings.INSTALLED_APPS:
-            dashboard = load_dashboard_instance(app)
-            if dashboard:
-                tmp.append(dashboard)
-        from debbox.dashboard.base import registry
-        t = Template(str(registry))
-        return t.render(Context())
-
-register.tag('drawer_items', render_drawer)
+    def register(self, dashboard_class):
+        """
+        Register a DashboardBase subclass into dashboard configuration.
+        each application can add some dashboard configuration class via
+        this method.
+        """
+        pass

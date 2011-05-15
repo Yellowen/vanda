@@ -20,7 +20,7 @@
 from debbox.core.logging import logger
 
 
-def load_dashboard_instance(application, module):
+def load_dashboard_instance(application):
     """
     Load the Dashboard class of the given application and return an instance.
     application should be a pythonic path to a application.
@@ -31,10 +31,17 @@ def load_dashboard_instance(application, module):
     try:
         module = __import__(application, globals(), locals(),
                             ["dashboard", ], -1)
-        instance = module.Dashboard()
+        instance = module.dashboard.Dashboard()
         return instance
     except ImportError, e:
         logger.debug("Can not import the dashboard module of '%s'" %
+                     application)
+        logger.debug(str(e))
+        logger.info("'%s' does not provide a Dashboard module/Class." %
+                    application)
+        return None
+    except AttributeError, e:
+        logger.debug("'%s' does not have Dashboard class." %
                      application)
         logger.debug(str(e))
         logger.info("'%s' does not provide a Dashboard module/Class." %

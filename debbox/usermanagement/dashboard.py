@@ -17,32 +17,12 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django import template
-from django.template import Template, Context
-#from django.template.loader import get_template
-from django.conf import settings
-
-from debbox.dashboard.loader import load_dashboard_instance
+from debbox.dashboard.base import DashboardBase
 
 
-register = template.Library()
-
-
-def render_drawer(parser, token):
-
-    return drawer_node()
-
-
-class drawer_node(template.Node):
-
-    def render(self, context):
-        tmp = []
-        for app in settings.INSTALLED_APPS:
-            dashboard = load_dashboard_instance(app)
-            if dashboard:
-                tmp.append(dashboard)
-        from debbox.dashboard.base import registry
-        t = Template(str(registry))
-        return t.render(Context())
-
-register.tag('drawer_items', render_drawer)
+class Dashboard (DashboardBase):
+    """
+    Dashboard configuration class for usermanagement class.
+    """
+    def __init__(self):
+        self.register_section("samsam")

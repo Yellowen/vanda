@@ -17,32 +17,30 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django import template
-from django.template import Template, Context
-#from django.template.loader import get_template
-from django.conf import settings
-
-from debbox.dashboard.loader import load_dashboard_instance
+registry = []
 
 
-register = template.Library()
+class SectionNode(object):
+    """
+    Dashboard menu section base class
+    """
+    pass
 
 
-def render_drawer(parser, token):
+class ItemNode(object):
+    """
+    Dashboard menu item base class
+    """
+    pass
 
-    return drawer_node()
 
-
-class drawer_node(template.Node):
-
-    def render(self, context):
-        tmp = []
-        for app in settings.INSTALLED_APPS:
-            dashboard = load_dashboard_instance(app)
-            if dashboard:
-                tmp.append(dashboard)
-        from debbox.dashboard.base import registry
-        t = Template(str(registry))
-        return t.render(Context())
-
-register.tag('drawer_items', render_drawer)
+class DashboardBase(object):
+    """
+    applications Dashboard base class
+    """
+    def register_section(self, section):
+        """
+        Register the give SectionNode instance (section) into dashboard menu.
+        """
+        global registry
+        registry.append(section)
