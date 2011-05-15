@@ -17,7 +17,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from debbox.core.vpkg.interface import BaseApplication
+from vpkg.interface import BaseApplication
 
 
 class Dashboard (BaseApplication):
