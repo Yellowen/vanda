@@ -36,7 +36,11 @@ def render_drawer(parser, token):
 class drawer_node(template.Node):
 
     def render(self, context):
-        installed_apps = settings.INSTALLED_APPS
+        tmp = []
+        for app in settings.INSTALLED_APPS:
+            dashboard = load_dashboard_instance(app)
+            if dashboard:
+                tmp.append(dashboard)
         t = Template("||".join(installed_apps))
         return t.render(Context())
 

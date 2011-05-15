@@ -16,10 +16,11 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+
 from debbox.core.logging import logger
 
 
-def load_dashboard_instance(application):
+def load_dashboard_instance(application, module):
     """
     Load the Dashboard class of the given application and return an instance.
     application should be a pythonic path to a application.
