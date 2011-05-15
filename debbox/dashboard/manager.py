@@ -27,10 +27,23 @@ class DashboardManager(object):
     def __init__(self):
         self._registry = {}
 
-    def register(self, dashboard_class):
+    def menu_section(self, section_class):
         """
-        Register a DashboardBase subclass into dashboard configuration.
-        each application can add some dashboard configuration class via
-        this method.
+        Register a SectionNode subclass into dashboard menu.
+        each application can add some section to dashboard menu but if
+        a section exists int registry then old one used and new one will
+        skip.
         """
         pass
+
+    def menu_item(self, item_class):
+        """
+        Register a ItemNode subclass into dashboard menu.
+        each application can add some item to any dashboard menu section
+        but if an item exists int registry then new one will apear with
+        a new name.
+        """
+        pass
+
+
+dashboard = DashboardManager()

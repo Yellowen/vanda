@@ -17,12 +17,30 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from debbox.dashboard.base import DashboardBase
+from django.utils.translation import ugettext as _
+
+from debbox.dashboard.manager import dashboard
+from debbox.dashboard import SectionNode, ItemNode
 
 
-class Dashboard (DashboardBase):
+class SystemSection (SectionNode):
     """
-    Dashboard configuration class for usermanagement class.
+    System section in the dashboard menu.
     """
-    def __init__(self):
-        self.register_section("samsam")
+    title = _("System")
+
+
+class UserManagementItem (ItemNode):
+    """
+    User management menu entry class.
+    """
+    parent = dashboard.get_section("System")
+    title = _("User management")
+    linke = "/usermanagement/"
+    weight = 200
+    permission = [
+        ("can_manage_users", _("Can manage users and groups")),
+         ]
+
+dashboard.menu_section(SystemSection)
+dashboard.menu_item(UserManagementItem)

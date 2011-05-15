@@ -17,30 +17,27 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-registry = []
-
 
 class SectionNode(object):
     """
     Dashboard menu section base class
     """
-    pass
+    permissions = []
+    title = None
 
 
 class ItemNode(object):
     """
     Dashboard menu item base class
     """
-    pass
+    permissions = []
+    title = None
+    linke = None
+    parent = None
+    weight = 500
 
-
-class DashboardBase(object):
-    """
-    applications Dashboard base class
-    """
-    def register_section(self, section):
+    def is_enable(self):
         """
-        Register the give SectionNode instance (section) into dashboard menu.
+        Does link is enable?
         """
-        global registry
-        registry.append(section)
+        pass
