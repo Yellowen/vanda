@@ -24,6 +24,7 @@ class SectionNode(object):
     """
     permissions = []
     title = None
+    name = None
 
 
 class ItemNode(object):
@@ -35,9 +36,10 @@ class ItemNode(object):
     linke = None
     parent = None
     weight = 500
+    name = None
 
     def is_enable(self):
         """
         Does link is enable?
         """
-        pass
+        return True

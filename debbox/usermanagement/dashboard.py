@@ -28,13 +28,14 @@ class SystemSection (SectionNode):
     System section in the dashboard menu.
     """
     title = _("System")
+    name = "system"
 
 
 class UserManagementItem (ItemNode):
     """
     User management menu entry class.
     """
-    parent = dashboard.get_section("System")
+    parent = dashboard.get_section("system")
     title = _("User management")
     linke = "/usermanagement/"
     weight = 200
