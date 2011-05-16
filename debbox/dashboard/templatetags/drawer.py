@@ -38,11 +38,9 @@ class drawer_node(template.Node):
     def render(self, context):
         tmp = []
         for app in settings.INSTALLED_APPS:
-            dashboard = load_dashboard_instance(app)
-            if dashboard:
-                tmp.append(dashboard)
-        from debbox.dashboard.base import registry
-        t = Template(str(registry))
+            load_dashboard_instance(app)
+        from debbox.dashboard.manager import dashboard
+        t = Template(str(dashboard.get_registry()))
         return t.render(Context())
 
 register.tag('drawer_items', render_drawer)

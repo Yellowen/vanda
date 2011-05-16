@@ -35,8 +35,9 @@ class UserManagementItem (ItemNode):
     """
     User management menu entry class.
     """
-    parent = dashboard.get_section("system")
+    parent = "system"
     title = _("User management")
+    name = "usermanagement"
     linke = "/usermanagement/"
     weight = 200
     permission = [

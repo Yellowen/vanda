@@ -34,6 +34,7 @@
 [X] log all the uncaught exceptions
 [ ] embed the console.py modules for colorizing the outputs
 [X] add syncdb to debboxctl
+[ ] redirect the stderr to a log file
 
 -- Logsystem --
 [X] Add timestamp and line number of log in log/debbox

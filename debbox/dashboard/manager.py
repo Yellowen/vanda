@@ -32,6 +32,9 @@ class DashboardManager(object):
         self._menu_registry = {}
         self.logger = logger
 
+    def get_registry(self):
+        return self._menu_registry
+
     def menu_section(self, section_class):
         """
         Register a SectionNode subclass into dashboard menu.
@@ -43,24 +46,30 @@ class DashboardManager(object):
         # class
         if not issubclass(section_class, SectionNode):
             raise TypeError("'%s' shoud be a subclass of SectionNode" %
-                            section_class.__class__)
+                            section_class.__name__)
         # Checking the section name.
         try:
             # each SectionNode subclass should have a name property
-            section_name = section_class.__getattr__("name")
-        except AttributeError:
+            section_name = getattr(section_class, "name")
+        except AttributeError, e:
             raise AttributeError("'%s' Section node does not have a " %
-                                 section_class.__class__ +
+                                 section_class.__name__ +
+                                 "'name' property")
+
+        if not section_name:
+            raise AttributeError("'%s' Section node does not have a " %
+                                 section_class.__name__ +
                                  "'name' property")
 
         # does section_class already registered?
         if section_name in self._menu_registry.keys():
             # TODO: Can new section class override the exists one?
-            self.logger.debug("A section with '%s' name already registered.")
+            self.logger.debug("A section with the '%s' name" % section_name +
+                              "already registered.")
             return
 
         # registring section_class into dashboard
-        self._menu_registry[section_name] = section_class()
+        self._menu_registry[section_name.lower()] = section_class()
 
     def menu_item(self, item_class):
         """
@@ -69,33 +78,22 @@ class DashboardManager(object):
         but if an item exists int registry then new one will apear with
         a new name.
         """
-        # item_class should be direct or indirect instance of ItemNode
-        # class
-        if not issubclass(item_class, ItemNode):
-            raise TypeError("'%s' shoud be a subclass of ItemNode" %
-                            item_class.__class__)
-        # Checking the section name.
-        try:
-            # each itemNode subclass should have a name property
-            item_name = item_class.__getattr__("name")
-        except AttributeError:
-            raise AttributeError("'%s' node does not have a " %
-                                 item_class.__class__ +
-                                 "'name' property")
         # checking for item parent
         try:
-            item_parent = item_class.__getattr__("parent")
+            item_parent = getattr(item_class, "parent")
         except AttributeError:
             raise AttributeError("'%s' node does not have a " %
-                                 item_class.__class__ +
+                                 item_class.__name__ +
                                  "'parent' property")
 
         if not item_parent in self._menu_registry:
             # if parent section does not registered
             raise self.InvalidSection("'%s' section does not registered")
         # registering item into parent section via parent section code
-        parent_section =  self._menu_registry[item_parent]
-        parent_section.register_item(item_class):
+        parent_section = self._menu_registry[item_parent]
+        parent_section.register_item(item_class)
 
+    class InvalidSection (Exception):
+        pass
 
 dashboard = DashboardManager()

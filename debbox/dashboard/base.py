@@ -29,6 +29,9 @@ class SectionNode(object):
     def __init__(self):
         self._item_registry = {}
 
+    def items_name_list(self):
+        return self._item_registry.keys()
+
     def register_item(self, item_node):
         """
         Registering a item_node.
@@ -37,14 +40,18 @@ class SectionNode(object):
         # class
         if not issubclass(item_node, ItemNode):
             raise TypeError("'%s' shoud be a subclass of ItemNode" %
-                            item_node.__class__)
+                            item_node.__name__)
         # Checking the section name.
         try:
             # each itemNode subclass should have a name property
-            item_name = item_node.__getattr__("name")
+            item_name = getattr(item_node, "name")
         except AttributeError:
             raise AttributeError("'%s' node does not have a " %
-                                 item_node.__class__ +
+                                 item_node.__name__ +
+                                 "'name' property")
+        if not item_name:
+            raise AttributeError("'%s' node does not have a " %
+                                 item_node.__name__ +
                                  "'name' property")
         if item_name in self._item_registry.keys():
             # TODO: Can new item class override the exists one?
@@ -52,7 +59,7 @@ class SectionNode(object):
             return False
 
         # registring item_node
-        self._registry[item_name] = item_node()
+        self._item_registry[item_name.lower()] = item_node()
         return True
 
 

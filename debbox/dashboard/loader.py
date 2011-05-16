@@ -28,22 +28,13 @@ def load_dashboard_instance(application):
     This function will look for a dashboard module inside the application and
     a Dashboard class inside the module.
     """
+    dashboard_path = "%s.dashboard" % application
     try:
-        module = __import__(application, globals(), locals(),
-                            ["dashboard", ], -1)
-        instance = module.dashboard.Dashboard()
-        return instance
+        __import__(dashboard_path, globals(), locals(),
+                   ["dashboard", ], -1)
+
     except ImportError, e:
         logger.debug("Can not import the dashboard module of '%s'" %
                      application)
         logger.debug(str(e))
-        logger.info("'%s' does not provide a Dashboard module/Class." %
-                    application)
-        return None
-    except AttributeError, e:
-        logger.debug("'%s' does not have Dashboard class." %
-                     application)
-        logger.debug(str(e))
-        logger.info("'%s' does not provide a Dashboard module/Class." %
-                    application)
         return None
