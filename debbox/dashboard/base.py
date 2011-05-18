@@ -32,6 +32,27 @@ class SectionNode(object):
     def items_name_list(self):
         return self._item_registry.keys()
 
+    def get_items(self, user):
+        """
+        Return a dictionary from section items like:
+            {'title': link}
+        """
+        items_dicts = dict()
+        tmp_list = list()
+        append = tmp_list.append
+
+        # get the list representation of each item object
+        for item in self._item_registry:
+            tmp = self._item_registry[item].get_as_list(user)
+            if tmp:
+                append(tmp)
+
+        tmp_list.sort()
+
+        for i in tmp_list:
+            items_dicts[i[1]] = i[2]
+        return items_dicts
+            
     def register_item(self, item_node):
         """
         Registering a item_node.
@@ -69,10 +90,17 @@ class ItemNode(object):
     """
     permissions = []
     title = None
-    linke = None
+    link = None
     parent = None
     weight = 500
     name = None
+
+    def get_as_list(self, user):
+        """
+        return a list of ItemNode properties.
+        """
+        # TODO: check the user authentication here
+        return [self.weight, self.title, self.link]
 
     def is_enable(self):
         """

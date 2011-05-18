@@ -12,37 +12,13 @@
 
 {% block content %}
 <div id="ldrawer" class="leftdrawer">
+{% drawer_items %}
 
-<div class="accordian">
-<ul>
-  <li class="entry">jvjvjhvkjhv</li>
-<li class="entry">
-  <div class="subentry">
-    <ul>
-      <li>
-	gggggggggg
-      </li>
-      <li>
-	gggggggggg
-      </li>
-      <li>
-	gggggggggg
-      </li>
-    </ul>
-</div>
-</li>
-<li class="entry">asfsdfsdf</li>
-<li class="entry">sdfsdfsdfsdfsdf</li>
-<li class="entry">asfsdfsdf</li>
-<li class="entry">sdfsdfsdfsdfsdf</li>
-
-</div>
 </div>
 <div id="tdrawer" class="topdrawer">
   <p align="right"><a href="/logout/">{% trans 'logout' %}</a></a>
 </div>
 <div class="window">
-{% drawer_items %}
 </div>
 <input type="button" value="open"  id="lhandler">
 

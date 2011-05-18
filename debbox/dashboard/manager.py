@@ -19,7 +19,7 @@
 
 from debbox.core.logging import logger
 
-from base import SectionNode, ItemNode
+from base import SectionNode
 
 
 class DashboardManager(object):
@@ -51,7 +51,7 @@ class DashboardManager(object):
         try:
             # each SectionNode subclass should have a name property
             section_name = getattr(section_class, "name")
-        except AttributeError, e:
+        except AttributeError:
             raise AttributeError("'%s' Section node does not have a " %
                                  section_class.__name__ +
                                  "'name' property")
@@ -95,5 +95,17 @@ class DashboardManager(object):
 
     class InvalidSection (Exception):
         pass
+
+    def menu(self, user):
+        """
+        Return a dictionary from dashboard menu sections and items.
+        """
+        tmp_dict = dict()
+        for section in self._menu_registry:
+            items_dicts = self._menu_registry[section].get_items(user)
+            tmp_dict[section] = items_dicts
+
+        return tmp_dict
+
 
 dashboard = DashboardManager()

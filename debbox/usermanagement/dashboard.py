@@ -38,11 +38,25 @@ class UserManagementItem (ItemNode):
     parent = "system"
     title = _("User management")
     name = "usermanagement"
-    linke = "/usermanagement/"
+    link = "/usermanagement/"
     weight = 200
+    permission = [
+        ("can_manage_users", _("Can manage users and groups")),
+         ]
+
+class TEST (ItemNode):
+    """
+    User management menu entry class.
+    """
+    parent = "system"
+    title = _("User ssss management")
+    name = "usermanagemen1t"
+    link = "/usermanagement/"
+    weight = 20
     permission = [
         ("can_manage_users", _("Can manage users and groups")),
          ]
 
 dashboard.menu_section(SystemSection)
 dashboard.menu_item(UserManagementItem)
+dashboard.menu_item(TEST)

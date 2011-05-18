@@ -19,7 +19,7 @@
 
 from django import template
 from django.template import Template, Context
-#from django.template.loader import get_template
+from django.template.loader import get_template
 from django.conf import settings
 
 from debbox.dashboard.loader import load_dashboard_instance
@@ -40,7 +40,17 @@ class drawer_node(template.Node):
         for app in settings.INSTALLED_APPS:
             load_dashboard_instance(app)
         from debbox.dashboard.manager import dashboard
-        t = Template(str(dashboard.get_registry()))
-        return t.render(Context())
+        menu = dashboard.menu(context["user"])
+        menu_lst = list()
+        append = menu_lst.append
+        for section in menu.keys():
+            tmp = list()
+            items = menu[section]
+            for item in items:
+                j = [item, items[item]]
+                tmp.append(j)
+            append([section, tmp])
+        t = get_template("menu.html")
+        return t.render(Context({"menu": menu_lst}))
 
 register.tag('drawer_items', render_drawer)

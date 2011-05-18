@@ -84,3 +84,4 @@ if options.database or options.dbnew:
     if options.database and not synced:
         daemon.syncdb()
     valid_action = True
+

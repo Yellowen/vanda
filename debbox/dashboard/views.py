@@ -26,5 +26,5 @@ def dashboard(request):
     """
     User Dashboard. index page for Debbox.
     """
-    return rr("dashboard.html", {},
+    return rr("dashboard.html", {"req": request},
               context_instance=RequestContext(request))
