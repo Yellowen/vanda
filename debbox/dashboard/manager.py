@@ -107,5 +107,15 @@ class DashboardManager(object):
 
         return tmp_dict
 
+    def get_sections(self, user):
+        """
+        return the list of sections that currently registered in dashboard.
+        """
+        result_list = list()
+        append = result_list.append
+        for section in self._menu_registry:
+            result = section.get_items(user)
+            if result:
+                append(result)
 
 dashboard = DashboardManager()
