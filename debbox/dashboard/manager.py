@@ -35,7 +35,7 @@ class DashboardManager(object):
     def get_registry(self):
         return self._menu_registry
 
-    def menu_section(self, section_class):
+    def register_menu_section(self, section_class):
         """
         Register a SectionNode subclass into dashboard menu.
         each application can add some section to dashboard menu but if
@@ -71,7 +71,7 @@ class DashboardManager(object):
         # registring section_class into dashboard
         self._menu_registry[section_name.lower()] = section_class()
 
-    def menu_item(self, item_class):
+    def register_menu_item(self, item_class):
         """
         Register a ItemNode subclass into dashboard menu.
         each application can add some item to any dashboard menu section
