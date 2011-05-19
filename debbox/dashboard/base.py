@@ -27,6 +27,7 @@ class SectionNode(object):
     permissions = []
     title = None
     name = None
+    weight = 300
 
     def __init__(self):
         self._item_registry = {}

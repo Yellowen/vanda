@@ -29,6 +29,8 @@ class SystemSection (SectionNode):
     """
     menu_title = _("System")
     name = "system"
+    weight = 200
+
 
 class TestSection (SectionNode):
     """
@@ -36,6 +38,7 @@ class TestSection (SectionNode):
     """
     menu_title = _("Atighe<")
     name = "abab"
+    weight = 300
 
 
 class UserManagementItem (ItemNode):

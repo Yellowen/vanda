@@ -99,14 +99,18 @@ class DashboardManager(object):
 
     def menu(self, user):
         """
-        Return a dictionary from dashboard menu sections and items.
+        Return a list from dashboard menu sections and items.
         """
         tmp_list = list()
         append = tmp_list.append
+
+        # 
         for section in self._menu_registry:
             items_list = self._menu_registry[section].get_items(user)
             if items_list:
-                append([self._menu_registry[section].menu_title, items_list])
+                append([self._menu_registry[section].weight,
+                        self._menu_registry[section].menu_title,
+                        items_list])
 
         tmp_list.sort()
         return tmp_list
