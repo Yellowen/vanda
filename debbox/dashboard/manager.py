@@ -88,7 +88,8 @@ class DashboardManager(object):
 
         if not item_parent in self._menu_registry:
             # if parent section does not registered
-            raise self.InvalidSection("'%s' section does not registered")
+            raise self.InvalidSection("'%s' section does not registered" %
+                                      item_parent)
         # registering item into parent section via parent section code
         parent_section = self._menu_registry[item_parent]
         parent_section.register_item(item_class)
@@ -104,8 +105,10 @@ class DashboardManager(object):
         append = tmp_list.append
         for section in self._menu_registry:
             items_list = self._menu_registry[section].get_items(user)
-            append([section, items_dicts])
+            if items_list:
+                append([self._menu_registry[section].menu_title, items_list])
 
+        tmp_list.sort()
         return tmp_list
 
     def get_sections(self, user):

@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+from debbox.core.logging import logger
+
 
 class SectionNode(object):
     """
@@ -28,6 +30,7 @@ class SectionNode(object):
 
     def __init__(self):
         self._item_registry = {}
+        self.logger = logger
 
     def items_name_list(self):
         return self._item_registry.keys()
@@ -90,6 +93,9 @@ class ItemNode(object):
     parent = None
     weight = 500
     name = None
+
+    def __init__(self):
+        self.logger = logger
 
     def get_as_list(self, user):
         """

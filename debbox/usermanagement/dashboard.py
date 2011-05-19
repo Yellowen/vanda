@@ -27,8 +27,15 @@ class SystemSection (SectionNode):
     """
     System section in the dashboard menu.
     """
-    title = _("System")
+    menu_title = _("System")
     name = "system"
+
+class TestSection (SectionNode):
+    """
+    System section in the dashboard menu.
+    """
+    menu_title = _("Atighe<")
+    name = "abab"
 
 
 class UserManagementItem (ItemNode):
@@ -48,15 +55,16 @@ class TEST (ItemNode):
     """
     User management menu entry class.
     """
-    parent = "system"
+    parent = "abab"
     title = _("User ssss management")
     name = "usermanagemen1t"
     link = "/usermanagement/"
-    weight = 20
+    weight = 300
     permission = [
         ("can_manage_users", _("Can manage users and groups")),
          ]
 
 dashboard.menu_section(SystemSection)
+dashboard.menu_section(TestSection)
 dashboard.menu_item(UserManagementItem)
 dashboard.menu_item(TEST)
