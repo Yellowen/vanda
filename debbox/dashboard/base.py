@@ -34,12 +34,11 @@ class SectionNode(object):
 
     def get_items(self, user):
         """
-        Return a dictionary from section items like:
-            {'title': link}
+        Return a list from section items like:
+            [(weight, title, link), . . .]
         """
-        items_dicts = dict()
-        tmp_list = list()
-        append = tmp_list.append
+        items_list = list()
+        append = items_list.append
 
         # get the list representation of each item object
         for item in self._item_registry:
@@ -47,11 +46,8 @@ class SectionNode(object):
             if tmp:
                 append(tmp)
 
-        tmp_list.sort()
-
-        for i in tmp_list:
-            items_dicts[i[1]] = i[2]
-        return items_dicts
+        items_list.sort()
+        return items_list
             
     def register_item(self, item_node):
         """

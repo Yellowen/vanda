@@ -41,16 +41,7 @@ class drawer_node(template.Node):
             load_dashboard_instance(app)
         from debbox.dashboard.manager import dashboard
         menu = dashboard.menu(context["user"])
-        menu_lst = list()
-        append = menu_lst.append
-        for section in menu.keys():
-            tmp = list()
-            items = menu[section]
-            for item in items:
-                j = [item, items[item]]
-                tmp.append(j)
-            append([section, tmp])
         t = get_template("menu.html")
-        return t.render(Context({"menu": menu_lst}))
+        return t.render(Context({"menu": menu}))
 
 register.tag('drawer_items', render_drawer)

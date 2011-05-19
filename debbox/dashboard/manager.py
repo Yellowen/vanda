@@ -100,12 +100,13 @@ class DashboardManager(object):
         """
         Return a dictionary from dashboard menu sections and items.
         """
-        tmp_dict = dict()
+        tmp_list = list()
+        append = tmp_list.append
         for section in self._menu_registry:
-            items_dicts = self._menu_registry[section].get_items(user)
-            tmp_dict[section] = items_dicts
+            items_list = self._menu_registry[section].get_items(user)
+            append([section, items_dicts])
 
-        return tmp_dict
+        return tmp_list
 
     def get_sections(self, user):
         """
