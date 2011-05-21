@@ -22,26 +22,22 @@ from django.template import Template, Context
 from django.template.loader import get_template
 from django.conf import settings
 
-#from debbox.dashboard.loader import load_dashboard_instance
-
 
 register = template.Library()
 
 
-def render_drawer(parser, token):
+def render_sidebar(parser, token):
 
-    return drawer_node()
+    return SidebarNode()
 
 
-class drawer_node(template.Node):
+class SidebarNode(template.Node):
 
     def render(self, context):
-        ## tmp = []
-        ## for app in settings.INSTALLED_APPS:
-        ##     load_dashboard_instance(app)
         from debbox.dashboard.manager import dashboard
+
         menu = dashboard.menu(context["user"])
         t = get_template("menu.html")
         return t.render(Context({"menu": menu}))
 
-register.tag('drawer_items', render_drawer)
+register.tag('sidebar', render_sidebar)

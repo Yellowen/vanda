@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load drawer %}
+{% load menu %}
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/dashboard.css" />
@@ -11,8 +11,12 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="ldrawer" class="leftdrawer">
-{% drawer_items %}
+<div id ="lhandler">
+&nbsp;
+</div>
+{% sidebar %}
 
 </div>
 <div id="tdrawer" class="topdrawer">
@@ -20,7 +24,6 @@
 </div>
 <div class="window">
 </div>
-<input type="button" value="open"  id="lhandler">
 
 
 {% endblock %}
