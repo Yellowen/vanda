@@ -13,9 +13,10 @@ conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 */
+
 function init_drawer(div, handler, max_size, min_size, property){
     div.css(property, min_size);
-    handler.click(function(){
+    handler.mouseover(function(){
 	var size = div.css(property);
 	if (size == min_size){
 	    var obj = {};
