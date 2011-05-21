@@ -87,10 +87,10 @@ included in all copies or substantial portions of the Software.
 }
 
 #lhandler {
-    position: absolute;
-    top: 40%;
+    position: inline;
     float: right; 
-    right: 0%;
+    height:100%;
+    width:15p;
     z-index: 999;
 }
 #thandler {

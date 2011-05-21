@@ -33,6 +33,6 @@ function init_drawer(div, handler, max_size, min_size, property){
     return div;
 };
 $(function(){
-    var ldrawer = init_drawer($("#ldrawer"), $("#lhandler"), "0px", "-200px", "left")
+    var ldrawer = init_drawer($("#ldrawer"), $("#lhandler"), "0px", "-195px", "left")
 
 });
