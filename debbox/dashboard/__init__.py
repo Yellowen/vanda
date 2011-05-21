@@ -12,6 +12,7 @@ def autodiscover():
     This function will look for a dashboard module inside the application and
     a Dashboard class inside the module.
     """
+    import sys
 
     global LOADING
 
