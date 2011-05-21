@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load drawer %}
+{% load menu %}
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/dashboard.css" />
@@ -16,7 +16,7 @@
 <div id ="lhandler">
 &nbsp;
 </div>
-{% drawer_items %}
+{% sidebar %}
 
 </div>
 <div id="tdrawer" class="topdrawer">
