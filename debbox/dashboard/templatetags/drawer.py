@@ -22,7 +22,7 @@ from django.template import Template, Context
 from django.template.loader import get_template
 from django.conf import settings
 
-from debbox.dashboard.loader import load_dashboard_instance
+#from debbox.dashboard.loader import load_dashboard_instance
 
 
 register = template.Library()
@@ -36,9 +36,9 @@ def render_drawer(parser, token):
 class drawer_node(template.Node):
 
     def render(self, context):
-        tmp = []
-        for app in settings.INSTALLED_APPS:
-            load_dashboard_instance(app)
+        ## tmp = []
+        ## for app in settings.INSTALLED_APPS:
+        ##     load_dashboard_instance(app)
         from debbox.dashboard.manager import dashboard
         menu = dashboard.menu(context["user"])
         t = get_template("menu.html")

@@ -17,24 +17,25 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from debbox.core.logging import logger
+## from debbox.core.logging import logger
 
 
-def load_dashboard_instance(application):
-    """
-    Load the Dashboard class of the given application and return an instance.
-    application should be a pythonic path to a application.
+## def load_dashboard_instance(application):
+##     """
+##     Load the Dashboard class of the given application and return an instance.
+##     application should be a pythonic path to a application.
 
-    This function will look for a dashboard module inside the application and
-    a Dashboard class inside the module.
-    """
-    dashboard_path = "%s.dashboard" % application
-    try:
-        __import__(dashboard_path, globals(), locals(),
-                   ["dashboard", ], -1)
+##     This function will look for a dashboard module inside the application and
+##     a Dashboard class inside the module.
+##     """
+##     dashboard_path = "%s.dashboard" % application
+##     try:
+##         __import__(dashboard_path, globals(), locals(),
+##                    ["dashboard", ], -1)
 
-    except ImportError, e:
-        logger.debug("Can not import the dashboard module of '%s'" %
-                     application)
-        logger.debug(str(e))
-        return None
+##     except ImportError, e:
+##         logger.debug("Can not import the dashboard module of '%s'" %
+##                      application)
+##         logger.debug(str(e))
+##         return None
+
