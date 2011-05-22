@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns
 
-from django.conf import settings
+from vpkg import vpkg
 
 from debbox import dashboard
 
@@ -16,4 +16,4 @@ urlpatterns = patterns('',
     (r'^logout/$', 'debbox.core.auth.views.Logout'),
 )
 
-urlpatterns += settings.discovery.url_patterns()
+urlpatterns += vpkg.url_patterns()
