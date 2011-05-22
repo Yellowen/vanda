@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 from vpkg.base import BaseApplication
-
+from vpkg import vpkg
 
 class Dashboard (BaseApplication):
     """
@@ -33,3 +33,4 @@ class Dashboard (BaseApplication):
             ]
 
 app = Dashboard(priority="high")
+vpkg.register(Dashboard)
