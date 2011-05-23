@@ -25,6 +25,10 @@ class Dashboard (BaseApplication):
     Implementation of BaseApplication interface for dashboard application.
     this class allow vpkg to discover it.
     """
+    
+    application = "Dashboard"
+    priority = 0
+
     def url_patterns(self):
         from views import dashboard
 
@@ -32,5 +36,4 @@ class Dashboard (BaseApplication):
             (self.generator(['^$', '^dashboard/$']), dashboard),
             ]
 
-app = Dashboard(priority="high")
 vpkg.register(Dashboard)
