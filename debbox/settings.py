@@ -89,14 +89,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-("django.contrib.auth.context_processors.auth",
-"django.core.context_processors.debug",
-"django.core.context_processors.i18n",
-"django.core.context_processors.media",
-"django.core.context_processors.static",
-'django.core.context_processors.request',
-"django.contrib.messages.context_processors.messages")
-
 ROOT_URLCONF = 'debbox.urls'
 
 TEMPLATE_DIRS = (
