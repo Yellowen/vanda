@@ -20,8 +20,6 @@
 from vpkg.base import BaseApplication
 from vpkg import vpkg
 
-from views import index
-
 
 class News(BaseApplication):
     """
@@ -32,7 +30,10 @@ class News(BaseApplication):
     application_name = "News"
     priority = 50
     urls = [
-        (['^$', '^news/$'], index),
+        (['^news/', '^news_page/'], None),
         ]
 
+    settings = {
+        "NEWS_LIMIT": 10,
+        }
 vpkg.register(News)
