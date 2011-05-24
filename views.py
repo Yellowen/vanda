@@ -61,5 +61,5 @@ def index(request):
     except (EmptyPage, InvalidPage):
         news_page = p.page(p.num_pages)
 
-    return rr('news_list.djhtml', {"news": news_page},
+    return rr('news_list.html', {"news": news_page},
               context_instance=RequestContext(request))
