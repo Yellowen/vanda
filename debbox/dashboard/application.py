@@ -20,6 +20,9 @@
 from vpkg.base import BaseApplication
 from vpkg import vpkg
 
+from views import dashboard
+
+
 class Dashboard (BaseApplication):
     """
     Implementation of BaseApplication interface for dashboard application.
