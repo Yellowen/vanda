@@ -36,4 +36,5 @@ class News(BaseApplication):
     settings = {
         "NEWS_LIMIT": 10,
         }
+
 vpkg.register(News)
