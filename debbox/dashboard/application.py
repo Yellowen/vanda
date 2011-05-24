@@ -26,14 +26,10 @@ class Dashboard (BaseApplication):
     this class allow vpkg to discover it.
     """
     
-    application = "Dashboard"
+    application_name = "Dashboard"
     priority = 0
-
-    def url_patterns(self):
-        from views import dashboard
-
-        return [
-            (self.generator(['^$', '^dashboard/$']), dashboard),
-            ]
+    urls = [
+        (['^$', '^dashboard/$'], dashboard),
+        ]
 
 vpkg.register(Dashboard)
