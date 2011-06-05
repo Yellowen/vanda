@@ -21,12 +21,12 @@ from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.template import Template, Context
-from dina import conf
+#from dina import conf
 
 
 class Category(models.Model):
     """
-    each post will be tagged for several category.
+    each post will be tagged for just one category.
     """
 
     title = models.CharField(max_length=250,\
@@ -70,7 +70,7 @@ class Post (models.Model):
                             help_text=_("This field will fill automaticly \
                             by title field."))
     body = models.TextField(verbose_name=_("Content"))
-    categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
+    categoriey = models.ForeignKey(Category, verbose_name=_("Categories"))
     author = models.ForeignKey(User, verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,\
                                      verbose_name=_('Date and Time'))
@@ -153,7 +153,7 @@ class Setting (conf.Config):
     """
     Configuration model.
     """
-    allow_anonymous_comment = conf.BooleanField(default=True,\
+    allow_anonymous_comment=conf.BooleanField(default=True,\
                         verbose_name=_("Allow anonymous comments?"),\
                         help_text=_("Allow to un-registered user to\
                         comment your posts."))
