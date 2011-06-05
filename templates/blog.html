@@ -1,0 +1,21 @@
+{% extends "base_html.html" %}
+{% load i18n %}
+{% load comments %}
+{% block content %}
+
+{% for i in post %}
+<div class="post">
+<H1 class="title">{{ i.title }}</h1>
+
+<div class="entry">
+<p>{{ i.text|linebreaks|urlize }}</p>
+</div>
+<div class="meta">
+<p>{% trans 'Posted by ' %} : {{ i.author }}</p>
+<p>{% trans 'Posted on ' %}{{ i.datetime|date:"D d M Y" }} <b>|</b> <a href="/blog/post/{{ i.slug }}/">{% trans 'Comment' %}{% get_comment_count for i as count %} ({{ count }})</a></p>
+</div>
+</div>
+{% endfor %}
+{% endblock %}
+
+		
