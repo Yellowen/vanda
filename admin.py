@@ -1,5 +1,5 @@
-# ------------------------------------------------------------------------------
-#    Dina Project 
+# -----------------------------------------------------------------------------
+#    Vanda Project
 #    Copyright (C) 2010  Dina Project Community
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -16,3 +16,11 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ----------------------------------------------------------------------------
+
+
+from django.contrib import admin
+from models import Category
+from models import Post
+
+admin.site.register(Category)
+admin.site.register(Post)
