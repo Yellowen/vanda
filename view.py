@@ -19,7 +19,7 @@
 from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
-from models import post
+from models import Post
 
 
 def blog(request):
@@ -34,12 +34,13 @@ def blog(request):
     #configs but now this is for development and will remove in future
     NPP = 4
 
-    ent = post.objects.all().order_by("-datetime")[:NPP]
+    ent = Post.objects.all().order_by("-datetime")[:NPP]
     return rr('blog.html', {"post": ent})
 
 
 def comments(request, slug):
-    get_object_or_404(post, slug=slug)
-    render = {"post": post, }
-    render.update(csrf(request))            #for fixing bug#29883
-    return rr ('comments.html' , render)
+    get_object_or_404(Post, slug=slug)
+    render = {"post": Post, }
+    render.update(csrf(request))
+    #for fixing bug#29883
+    return rr('comments.html', render)
