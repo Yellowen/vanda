@@ -16,21 +16,26 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+from django.core.context_processors import csrf
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response as rr
+from models import post
 
 
-def blog (request):
+def blog(request):
     """
     Main view for blog that load in URL request.
     """
     #+++ Blog Config should load here.
-    # Blog Config contains some variable about blog actions like number of entry per page
-    
-    #--- NPP (number per page) should load from configs but now this is for development and will remove in future
+    # Blog Config contains some variable about blog
+    #actions like number of entry per page
+
+    #--- NPP (number per page) should load from
+    #configs but now this is for development and will remove in future
     NPP = 4
 
-    ent = post.objects.all ().order_by ("-datetime")[:NPP]
-    
-    return rr ('blog.html' , {"post" : ent})
+    ent = post.objects.all().order_by("-datetime")[:NPP]
+    return rr('blog.html', {"post": ent})
 
 
 def comments (request, slug):
