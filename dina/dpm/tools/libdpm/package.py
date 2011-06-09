@@ -20,7 +20,7 @@
 
 import os
 import bzip2
-from shutil import copyfile, copytree
+from shutil import copytree
 
 from control import Control
 from utils import safe_join

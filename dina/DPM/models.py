@@ -16,7 +16,6 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
-import os
 import shutil
 
 from django.db import models
@@ -30,25 +29,25 @@ from managers import TemplateManager
 # This model will be rreplaced in the future by DPM
 class application (models.Model):
 
-    Name = models.CharField (max_length = 50,  unique = True , verbose_name = _('Name') )
+    Name = models.CharField (max_length=50, unique=True , verbose_name=_('Name'))
 
     # each application identify it self by SHA1 hash.
     
-    Version = models.CharField (max_length = 15 , verbose_name = _('Version'))
+    Version = models.CharField (max_length=15 , verbose_name=_('Version'))
 
-    SHA1 = models.CharField (max_length = 40 , unique = True ,editable = False
-                             , verbose_name = _('SHA1 hash') , 
-                             help_text = _("Each application identify it self by its SHA1 hash"))
+    SHA1 = models.CharField (max_length=40 , unique=True , editable=False
+                             , verbose_name=_('SHA1 hash') ,
+                             help_text=_("Each application identify it self by its SHA1 hash"))
 
-    Author = models.CharField (max_length = 30 , verbose_name = _('Author'))
-    Email = models.EmailField (verbose_name = _('Email'))
-    Home = models.URLField (blank = True , verbose_name = _('Home Page') )
-    url = models.CharField (max_length = 50 , 
-                            help_text = _("Enter a url that you want to application handle that") ,
-                            verbose_name = _('Url'))
+    Author = models.CharField (max_length=30 , verbose_name=_('Author'))
+    Email = models.EmailField (verbose_name=_('Email'))
+    Home = models.URLField (blank=True , verbose_name=_('Home Page'))
+    url = models.CharField (max_length=50 ,
+                            help_text=_("Enter a url that you want to application handle that") ,
+                            verbose_name=_('Url'))
 
-    Description = models.TextField (blank = True , verbose_name = _('Description')  )
-    Publish = models.BooleanField (default = True , verbose_name = _('Publish'))
+    Description = models.TextField (blank=True , verbose_name=_('Description'))
+    Publish = models.BooleanField (default=True , verbose_name=_('Publish'))
     
 
     def delete (self):
@@ -77,14 +76,14 @@ class Template (models.Model):
     Dina Template class each template will have an entry here
     that make it easy to manage them.
     """
-    Name = models.CharField (max_length = 30,  unique = True , verbose_name = _('Template Name') )
-    SHA1 = models.CharField (max_length = 40, unique = True , verbose_name = _("SHA1"), blank=True , null=True)
-    Author = models.CharField (max_length = 30 , verbose_name = _('Author') , blank=True , null=True)
-    Email = models.EmailField (verbose_name = _('Email')  , blank=True , null=True )
-    Home = models.URLField ( verbose_name = _('Home Page')  , blank=True , null=True)
-    Description = models.TextField ( verbose_name = _('Description') , blank=True , null=True )
+    Name = models.CharField (max_length=30, unique=True , verbose_name=_('Template Name'))
+    SHA1 = models.CharField (max_length=40, unique=True , verbose_name=_("SHA1"), blank=True , null=True)
+    Author = models.CharField (max_length=30 , verbose_name=_('Author') , blank=True , null=True)
+    Email = models.EmailField (verbose_name=_('Email')  , blank=True , null=True)
+    Home = models.URLField (verbose_name=_('Home Page')  , blank=True , null=True)
+    Description = models.TextField (verbose_name=_('Description') , blank=True , null=True)
     # TODO: unique=True should add to Active field
-    Active = models.BooleanField ( verbose_name = _('Active'))
+    Active = models.BooleanField (verbose_name=_('Active'))
 
     
     # Set the default manager . Since TemplateManager class extend the Manager class
@@ -135,8 +134,8 @@ class Template (models.Model):
 
 # This Model will be replace or modified by DPM in the future version
 class Repo (models.Model):
-    url = models.CharField (max_length=100, unique=True , verbose_name=_('url') , help_text = _("Url should be in '[protocol]://[address]/ [codename] [section] [section] ... format"))
-    comment = models.TextField(blank=True , verbose_name = _('comment'))
+    url = models.CharField (max_length=100, unique=True , verbose_name=_('url') , help_text=_("Url should be in '[protocol]://[address]/ [codename] [section] [section] ... format"))
+    comment = models.TextField(blank=True , verbose_name=_('comment'))
 
     def __unicode__ (self):
         return self.url

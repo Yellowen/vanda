@@ -17,14 +17,14 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-from django import http, template
+
+from django import template
 from django.shortcuts import render_to_response as rtr
 from django.contrib.admin import site
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
-
 
 
 def AdminIndex (request , extra_context=None):
@@ -73,12 +73,11 @@ def AdminIndex (request , extra_context=None):
         'app_list': app_list,
         'root_path': site.root_path,
     }
-#    print "======> ", app_list
+    # print "======> ", app_list
     context.update(extra_context or {})
     context_instance = template.RequestContext(request, current_app=site.name)
     return rtr (site.index_template or 'admin/index.html', context,
-                              context_instance=context_instance
-                              )
+                context_instance=context_instance)
 
 
 admin_index = never_cache(AdminIndex)

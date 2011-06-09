@@ -1,4 +1,4 @@
-b#! /usr/bin/env python
+#! /usr/bin/env python
 # -----------------------------------------------------------------------------
 #    Dina Project
 #    Copyright (C) 2010  Dina Project Community

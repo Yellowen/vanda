@@ -18,10 +18,10 @@
 # ---------------------------------------------------------------------------------
 
 
-import os
-
 from django.contrib import admin
-from models import *
+from models import application
+from models import Repo
+from models import Template
 from django.conf import settings
 from django.core.management import call_command
 
@@ -50,10 +50,10 @@ class inst_admin (admin.ModelAdmin):
 
 class app_admin (admin.ModelAdmin):
     list_display = ('Name' , 'Version' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'url' , 'Publish')
-    list_display_links = ('Name' , 'Publish' , )
-    list_filter = ('Publish' , )
+    list_display_links = ('Name' , 'Publish' ,)
+    list_filter = ('Publish' ,)
     list_per_page = 15
-    ordering = ('Name' , )
+    ordering = ('Name' ,)
     search_fields = ('Name' ,)
     
     
@@ -72,10 +72,6 @@ class app_admin (admin.ModelAdmin):
         
     #------------------------------------------------------------------
 
-            
-        
-    
-
 
 class temp_admin (admin.ModelAdmin):
     list_display = ('Name' , 'SHA1' , 'Author' , 'Email' , 'Home' , 'Active')
@@ -83,7 +79,7 @@ class temp_admin (admin.ModelAdmin):
     list_editable = ('Active',)
     #list_filter = ('Publish' , )
     list_per_page = 15
-    ordering = ('Name' , )
+    ordering = ('Name' ,)
     search_fields = ('Name' ,)
     
     

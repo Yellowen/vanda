@@ -72,7 +72,7 @@ class Loader(BaseLoader):
     # TODO: Find a good way to allow user to use section tag in any html file
     def load_template_source(self, template_name, template_dirs=None):
         tried = []
-        for filepath, admin in self.get_template_sources(template_name,\
+        for filepath, admin in self.get_template_sources(template_name, \
                                                          template_dirs):
             try:
                 self.logger.debug("filepath: %s" % filepath)

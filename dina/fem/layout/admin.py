@@ -20,7 +20,6 @@
 
 from django.contrib import admin
 from models import Content, TemplateLayout
-from django.conf import settings
 
 
 class TemplateLayoutsAdmin(admin.ModelAdmin):

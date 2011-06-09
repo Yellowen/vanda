@@ -17,8 +17,6 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------------
 
-
-
 from django.shortcuts import render_to_response as rtr
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import admin
@@ -31,12 +29,12 @@ def conf_view (req, appname):
     """
     Configuration from view.
     """
-    logger = Logger ("conf_view")
+    logger = Logger("conf_view")
 
     # Get the models list for the appname application
     app_models = ContentType.objects.filter(app_label=appname)
-    logger.debug ("APP name : %s" % appname)
-    conf_models = list ()
+    logger.debug("APP name : %s" % appname)
+    conf_models = list()
     form = None
     
     # Build set from models list and site._registry, so we can
@@ -45,9 +43,9 @@ def conf_view (req, appname):
     # interface
     app_models = [i.model_class() for i in app_models]
     app_models_set = set(app_models)
-    registry = set (admin.site._registry)
+    registry = set(admin.site._registry)
     if len ( app_models_set & registry) == 0:
-        return rtr ("admin/dina/info.html", {"app_label": appname,\
+        return rtr("admin/dina/info.html", {"app_label": appname,\
                                              "msg": _("Warning: \"%s\" application does not provide a admin interface. (do not have a \"admin.py\")") % appname })
 
     
@@ -56,30 +54,30 @@ def conf_view (req, appname):
         # Check for _config subclass inside of model, only config classes
         # have one
         if hasattr (i, "ConfigAdmin"):
-            logger.debug ("config model: %s" % i)
+            logger.debug("config model: %s" % i)
 
             # Change the defualt add and change view of generated ModelAdmin
             # to build a form from config model
-            form = admin.ModelAdmin (i, admin.site)
+            form = admin.ModelAdmin(i, admin.site)
 
             # TODO: use ConfigAdmin class as a admin interface for Config
             form.add_form_template = 'admin/dina/change_config.html'
             form.change_form_template = 'admin/dina/change_config.html'
             form.fieldsets = i.ConfigAdmin.fieldsets
-            conf_models.append (i)
+            conf_models.append(i)
 
 
     # Each model must have just one config model
-    if  len (conf_models) != 1 :
-        return rtr ("admin/dina/info.html", {"app_label": appname,\
+    if  len(conf_models) != 1 :
+        return rtr("admin/dina/info.html", {"app_label": appname,\
                                              "msg": _("Warning: \"%s\" application does not provide a config model.") % appname })
     else:
         try:
             # Load the change view with exists data
-            obj = conf_models[0].objects.all ()[0]
-            return form.change_view (req, admin.util.quote(str(obj.pk)), )
+            obj = conf_models[0].objects.all()[0]
+            return form.change_view(req, admin.util.quote(str(obj.pk)), )
         except IndexError:
             # Load the new add view for first data entry
-            return form.add_view (req)#, form_url='/admin/')
+            return form.add_view(req)#, form_url='/admin/')
     
     

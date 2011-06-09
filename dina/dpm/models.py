@@ -34,7 +34,7 @@ class Package (models.Model):
     maintainer = models.CharField(max_length=60, verbose_name=_("Maintainer"))
     uploaders = models.CharField(max_length=100, blank=True, null=True, \
                                  verbose_name=_("Uploaders"))
-    homepage = models.UrlField(blank=True, null=True, \
+    homepage = models.URLField(blank=True, null=True, \
                                verbose_name=_("Home Page"))
 
     sign = models.SignField(verbose_name=_("Sign"))

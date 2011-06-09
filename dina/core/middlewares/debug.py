@@ -14,7 +14,7 @@ class RequestResponseDebug (object):
         return None
     
     def process_view(self, request, view_func, view_args, view_kwargs):
-        self.logger.debug ("URL: %s"% request.path)
+        self.logger.debug ("URL: %s" % request.path)
         try:
             self.logger.debug ("View: %s at %s" % (view_func.__name__, inspect.getmodule(view_func)))
         except AttributeError:

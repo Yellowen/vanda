@@ -26,6 +26,7 @@ import os
 
 #+++ Remember to shut down the debug mode in official release
 
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 # print debug info to the screen (stdout) .
@@ -50,7 +51,7 @@ DATABASES = {
         #Add 'postgresql_psycopg2','postgresql','mysql','sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.sqlite3',
         # name or path to database file if using sqlite3.
-        'NAME': 'db.devdb',
+        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite').replace('\\', '/'),
         # USER Not used with sqlite3.
         'USER': '',
         # PASSWORD Not used with sqlite3.
@@ -64,13 +65,16 @@ DATABASES = {
 
 
 # FS_ROOT represent to the Dina root filesystem
-FS_ROOT = os.path.dirname(__file__)
+FS_ROOT = os.path.dirname(__file__).replace('\\', '/')
 
 # APP_ROOT conatain the logic path to app dir
 APP_ROOT = os.path.join(FS_ROOT, 'apps').replace('\\', '/')
 
 # DINA_CACHE contain the path of a directory that all the cached data will live
 DINA_CACHE = os.path.join(FS_ROOT, '.cache').replace('\\', '/')
+
+# DIR_NAME contains the name of project
+DIR_NAME = FS_ROOT.split('/')[-1]
 
 # LOG options --------------------------------------------------------
 # In this section you can change the logger options
@@ -105,7 +109,7 @@ except KeyError:
 
 
 if DATABASES["default"]["ENGINE"] == 'django.db.backends.sqlite3' and WSGI:
-    DATABASES["default"]["NAME"] = "/".join([FS_ROOT,\
+    DATABASES["default"]["NAME"] = "/".join([FS_ROOT, \
                                              DATABASES["default"]["NAME"]])
     if LOG_FILE is None:
         LOG_FILE = FS_ROOT + "/dina.logs"
@@ -195,22 +199,23 @@ DINA_APPS = [
     'dina.DPM',
     'dina.conf',
     'dina.fem.layout',
-    'dina.utils.mptt',
     'dina.fem.menu',
     'dina.fem.page',
     'dina.auth',
     'dina.fem.layout',
-    'apps.contact',
-    'apps.testapp',
-    'apps.simpleblog',
-    'apps.jqmenu',
     'captcha',
 ]
 
-INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:]
+USER_APPS = [
+    'apps.contact',
+    'apps.simpleblog',
+    'apps.jqmenu',
+]
 
-if DEBUG:
-    INSTALLED_APPS.append('dina.utils.django_extensions')
+INSTALLED_APPS = DJANGO_APPS[:] + DINA_APPS[:] + USER_APPS[:]
+
+#if DEBUG:
+#    INSTALLED_APPS.append('dina.utils.django_extensions')
 
 # For working the contact send mail please complete flowing item
 # add by pollesangi for contact
@@ -223,7 +228,7 @@ EMAIL_PORT = ''
 if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
 
     # we have to export this environment variable to provide a init code .
-    os.environ['DJANGO_SETTINGS_MODULE']  = 'settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
     # this module import is just for initial code don't change it
     # and don't use it in your code
     from dina.log import Logger
@@ -234,9 +239,9 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
     # IMPORTANT: this code piece is just for debuging
     # ----------------------------------------------------------------
 
-    if DEBUG  and SCREEN_MODE:
+    if DEBUG and SCREEN_MODE:
         import sys
-
+        
         logger.debug("__name__ = %s" % __name__)
         logger.debug("__file__ = %s" % __file__)
         logger.debug("os.getpid() = %s" % os.getpid())
@@ -244,57 +249,58 @@ if os.environ.get('DJANGO_SETTINGS_MODULE', None) == None or WSGI:
         logger.debug("os.curdir = %s" % os.curdir)
         logger.debug("sys.path = %s" % repr(sys.path))
         logger.debug("sys.modules.keys() = %s" % repr(sys.modules.keys()))
-        logger.debug("sys.modules.has_key('dina-project') = %s" % \
-                     sys.modules.has_key('dina-project'))
-        if 'dina-project' in sys.modules:
-            logger.debug("sys.modules['dina-project'].__name__ = %s",\
-                         sys.modules['dina-project'].__name__)
-            logger.debug("sys.modules['dina-project'].__file__ = %s" %\
-                         sys.modules['dina-project'].__file__)
-            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" %\
+        logger.debug("sys.modules.has_key('%s') = %s" % \
+                     (DIR_NAME, sys.modules.has_key(DIR_NAME)))
+        if DIR_NAME in sys.modules:
+            logger.debug("sys.modules['%s'].__name__ = %s", \
+                         (DIR_NAME, sys.modules[DIR_NAME].__name__))
+            logger.debug("sys.modules['%s'].__file__ = %s" % \
+                         (DIR_NAME, sys.modules[DIR_NAME].__file__))
+            logger.debug("os.environ['DJANGO_SETTINGS_MODULE'] = %s" % \
                          os.environ.get('DJANGO_SETTINGS_MODULE', None))
     #---------------------------------------------------------------------
 
-    from django.db.utils import DatabaseError
-    try:
-        from dina import cache
-        logger.info("Initial code End point reached.")
-    except DatabaseError:
-        logger.critical("It seems than your database does not exists.")
-        logger.critical("Please build your databse and syncdb it")
-
-    logger.debug("Running environment -----------------------------------")
-    logger.debug("DEBUG = %s" % DEBUG)
-    logger.debug("DATABASES : ---")
-    logger.debug("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
-    logger.debug("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
-    logger.debug("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
-    logger.debug("DATABASES -> PASSWORD = %s" %\
-                 DATABASES["default"]["PASSWORD"])
-    logger.debug("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
-    logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
-    logger.debug("FS_ROOT = %s" % FS_ROOT)
-    logger.debug("APP_ROOT = %s" % APP_ROOT)
-    logger.debug("DINA_CACHE = %s" % DINA_CACHE)
-    logger.debug("MEDIA_URL = %s" % MEDIA_URL)
-    logger.debug("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
-    logger.debug("TEMPLATE_LOADERS: ---")
-
-    for i in TEMPLATE_LOADERS:
-        logger.debug("-- %s" % i)
-    logger.debug("MIDDLEWARE_CLASSES: ---")
-
-    for i in MIDDLEWARE_CLASSES:
-        logger.debug("-- %s" % i)
-    logger.debug("TEMPLATE_DIRS: ---")
-
-    for i in TEMPLATE_DIRS:
-        logger.debug("-- %s" % i)
-
-    logger.debug("EMAIL_HOST = %s" % EMAIL_HOST)
-    logger.debug("EMAIL_HOST_PASSWORD = %s" % EMAIL_HOST_PASSWORD)
-    logger.debug("EMAIL_HOST_USER = %s" % EMAIL_HOST_USER)
-    logger.debug("EMAIL_PORT = %s" % EMAIL_PORT)
-    logger.debug("-------------------------------------------------------")
+#    from django.db.utils import DatabaseError
+#    try:
+#        from dina import cache #@UnusedImport
+#        logger.info("Initial code End point reached.")
+#    except DatabaseError:
+#        logger.critical("It seems than your database does not exists.")
+#        logger.critical("Please build your databse and syncdb it")
+#
+#    logger.debug("Running environment -----------------------------------")
+#    logger.debug("DEBUG = %s" % DEBUG)
+#    logger.debug("DATABASES : ---")
+#    logger.debug("DATABASES -> ENGINE = %s" % DATABASES["default"]["ENGINE"])
+#    logger.debug("DATABASES -> NAME = %s" % DATABASES["default"]["NAME"])
+#    logger.debug("DATABASES -> USER = %s" % DATABASES["default"]["USER"])
+#    logger.debug("DATABASES -> PASSWORD = %s" %\
+#                 DATABASES["default"]["PASSWORD"])
+#    logger.debug("DATABASES -> HOST = %s" % DATABASES["default"]["HOST"])
+#    logger.debug("DATABASES -> PORT = %s" % DATABASES["default"]["PORT"])
+#    logger.debug("FS_ROOT = %s" % FS_ROOT)
+#    logger.debug("APP_ROOT = %s" % APP_ROOT)
+#    logger.debug("DIR_NAME = %s" % DIR_NAME)
+#    logger.debug("DINA_CACHE = %s" % DINA_CACHE)
+#    logger.debug("MEDIA_URL = %s" % MEDIA_URL)
+#    logger.debug("ADMIN_MEDIA_PREFIX = %s" % ADMIN_MEDIA_PREFIX)
+#    logger.debug("TEMPLATE_LOADERS: ---")
+#
+#    for i in TEMPLATE_LOADERS:
+#        logger.debug("-- %s" % i)
+#    logger.debug("MIDDLEWARE_CLASSES: ---")
+#
+#    for i in MIDDLEWARE_CLASSES:
+#        logger.debug("-- %s" % i)
+#    logger.debug("TEMPLATE_DIRS: ---")
+#
+#    for i in TEMPLATE_DIRS:
+#        logger.debug("-- %s" % i)
+#
+#    logger.debug("EMAIL_HOST = %s" % EMAIL_HOST)
+#    logger.debug("EMAIL_HOST_PASSWORD = %s" % EMAIL_HOST_PASSWORD)
+#    logger.debug("EMAIL_HOST_USER = %s" % EMAIL_HOST_USER)
+#    logger.debug("EMAIL_PORT = %s" % EMAIL_PORT)
+#    logger.debug("-------------------------------------------------------")
 
 #--------------------------------------------------------------

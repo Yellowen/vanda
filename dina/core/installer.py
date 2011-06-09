@@ -18,9 +18,6 @@
 # ---------------------------------------------------------------------------------
 
 
-
-
-
 import os
 import tarfile
 import shutil
@@ -51,27 +48,27 @@ class installer (object):
         os.chdir ('/tmp/')
 
         # build a random unique name
-        dirname = 'dina_' + str (random.randrange (1 , 1000))
+        dirname = 'dina_' + str (random.randrange (1, 1000))
         self.dirname = dirname
 
         # build a dir
         os.mkdir(dirname)
 
         # Copy archive and its meta data to /tmp
-        shutil.copy2 (self.path , '/tmp/' + dirname + "/tmp_archive")
+        shutil.copy2(self.path, '/tmp/' + dirname + "/tmp_archive")
 
         # Change the current working directory to /tmp
-        os.chdir ('/tmp/' + dirname)
+        os.chdir('/tmp/' + dirname)
 
         #extract the file name from path
-        archive =  "tmp_archive"#self.path.split('/')[-1]
+        archive = "tmp_archive"#self.path.split('/')[-1]
         
         # open archive file for extraction
-        tar = tarfile.open (archive)
+        tar = tarfile.open(archive)
 
         # extract the archive file
-        tar.extractall ()
-        tar.close ()
+        tar.extractall()
+        tar.close()
 
 
     def _read_index (self):
@@ -83,14 +80,14 @@ class installer (object):
 
         #+++ here i should add an exception handler --------------
         #+++ here i should add an sha1 validator 
-        if dic["type"].lower ()  == "application":
+        if dic["type"].lower () == "application":
 
-            self.obj = application (Name = dic["name"])
+            self.obj = application (Name=dic["name"])
             self.obj.url = dic["url"]
 
         elif dic["type"].lower () == "template":
 
-            self.obj = template (Name = dic["name"])
+            self.obj = template (Name=dic["name"])
 
             self.obj.Default = False
             #+++ here i should add the difference field
@@ -127,26 +124,26 @@ class installer (object):
         else:
             target_dir = settings.TEMPLATE_DIRS
 
-        shutil.copytree (self.obj.Name , target_dir + "/" + self.obj.Name)
-        os.rmdir ('/tmp/' + self.dirname)
-        os.chdir (self.return_path)
+        shutil.copytree (self.obj.Name, target_dir + "/" + self.obj.Name)
+        os.rmdir('/tmp/' + self.dirname)
+        os.chdir(self.return_path)
         
         return self.obj
         
             
             
 
-    def _parser (self , file):
+    def _parser (self, file):
         """Parse the file to a python dictionary"""
         #+++ here i should add a conf validator
         #+++ here i should add a ; for end of line
         try:
-            fd = open (file , "r")
+            fd = open(file, "r")
             lines = fd.readlines ()
             fd.close ()
         except:
             print "Error: The file %s does not exists or permission denid !" % (file)
-            return -1
+            return - 1
         dic = {}
         for i in lines:
             if i[0] != '#':
@@ -171,8 +168,8 @@ def update_apps ():
     iapp = ()
     appurl = ()
     for i in papp:
-        iapp += ('apps.' + str (i.Name) , )
-        appurl += (("r'"+ str(i.url ) + "' , 'apps."  + str(i.Name) + ".urls'" ) , )
+        iapp += ('apps.' + str (i.Name) ,)
+        appurl += (("r'" + str(i.url) + "' , 'apps." + str(i.Name) + ".urls'") ,)
     settings.INSTALLED_APPS += iapp
         
     os.unlink (settings.FS_ROOT + "/confs/__init__.py")
@@ -187,7 +184,7 @@ def update_apps ():
         
         for i in appurl:
             print i 
-            fd.write ("[" + i+  "] , ")
+            fd.write ("[" + i + "] , ")
     #else:
     #    fd.write ("published_url = defaults.patterns ('' , " + str (appurl).replace ('"' , '') )
     fd.write ("\n]")

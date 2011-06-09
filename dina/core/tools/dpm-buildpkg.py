@@ -74,7 +74,7 @@ def read_file (path):
     shutil.rmtree ('/tmp/buildpkg/' + path.split ('/')[-2] + "/dina")
     fd = tf.open ('/tmp/buildpkg/' + filename , "w:bz2")
     os.chdir ('/tmp/buildpkg/')
-    fd.add ( path.split ('/')[-2])
+    fd.add (path.split ('/')[-2])
     fd1 = open ('/tmp/buildpkg/Package.json' , 'w')
     fd1.write (json.JSONEncoder().encode (attr).replace (',' , ',\n').replace ('},' , '},\n').replace ('"}' , '"\n}').replace ('{"' , '{\n"'))
     fd1.close ()
@@ -94,7 +94,7 @@ if __name__ == "__main__" :
             ps = sys.argv[1][:-1]
         else:
             ps = sys.argv[1]
-        if os.path.isdir ( os.path.join (os.path.dirname (ps) , ps).replace ('\\' , '/')):
+        if os.path.isdir (os.path.join (os.path.dirname (ps) , ps).replace ('\\' , '/')):
             target = sys.argv[1]
         else:
             print "Check first argument for a valid directory."

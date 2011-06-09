@@ -34,7 +34,6 @@ class TemplateManager (models.Manager):
         """
         pass
 
-
     
     
     def CurrentDir (self):

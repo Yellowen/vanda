@@ -22,11 +22,11 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 class section(models.Model):
-    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
-    slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique = True)
-    published = models.BooleanField (verbose_name = _("Publish ?") )
-    description = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
-    image = models.ImageField (upload_to = "page/sections/" , verbose_name=_("Section image's"))
+    title = models.CharField (max_length=30 , verbose_name=_("Title") , help_text=_("Title will show as page <title> tag."))
+    slug = models.SlugField (verbose_name=_("Slug") , help_text=_("This field will fill automaticly by title.") , unique=True)
+    published = models.BooleanField (verbose_name=_("Publish ?"))
+    description = models.TextField (verbose_name=_("Body") , help_text=_("HTML allowed."))
+    image = models.ImageField (upload_to="page/sections/" , verbose_name=_("Section image's"))
     
     def __unicode__ (self):
         return self.title
@@ -36,11 +36,11 @@ class section(models.Model):
 
 class category (models.Model):
     section = models.ForeignKey("section" , verbose_name=_("Section name"))
-    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
-    slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique= True)
-    published = models.BooleanField (verbose_name = _("Publish ?") )
-    description = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
-    image = models.ImageField (upload_to = "page/category/" , verbose_name=_("Category image's"))
+    title = models.CharField (max_length=30 , verbose_name=_("Title") , help_text=_("Title will show as page <title> tag."))
+    slug = models.SlugField (verbose_name=_("Slug") , help_text=_("This field will fill automaticly by title.") , unique=True)
+    published = models.BooleanField (verbose_name=_("Publish ?"))
+    description = models.TextField (verbose_name=_("Body") , help_text=_("HTML allowed."))
+    image = models.ImageField (upload_to="page/category/" , verbose_name=_("Category image's"))
 
     def __unicode__ (self):
         return  self.title
@@ -50,13 +50,13 @@ class category (models.Model):
 
 
 class page (models.Model):
-    category = models.ForeignKey ( "category" , verbose_name=_("Category Name"))
-    title = models.CharField (max_length = 30 , verbose_name = _("Title") , help_text = _("Title will show as page <title> tag."))
-    slug = models.SlugField (verbose_name = _("Slug") , help_text = _("This field will fill automaticly by title.") , unique = True)
-    content = models.TextField (verbose_name = _("Body") , help_text = _("HTML allowed."))
+    category = models.ForeignKey ("category" , verbose_name=_("Category Name"))
+    title = models.CharField (max_length=30 , verbose_name=_("Title") , help_text=_("Title will show as page <title> tag."))
+    slug = models.SlugField (verbose_name=_("Slug") , help_text=_("This field will fill automaticly by title.") , unique=True)
+    content = models.TextField (verbose_name=_("Body") , help_text=_("HTML allowed."))
     date = models.DateTimeField(db_index=True, auto_now_add=True)
-    published = models.BooleanField (verbose_name = _("Publish ?") )
-    home = models.BooleanField (verbose_name = _("Shall it be home page ?") , help_text = _("Only one page can be the home page at a time.")  )
+    published = models.BooleanField (verbose_name=_("Publish ?"))
+    home = models.BooleanField (verbose_name=_("Shall it be home page ?") , help_text=_("Only one page can be the home page at a time."))
 
     def __unicode__ (self):
         return self.title

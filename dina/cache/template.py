@@ -22,7 +22,7 @@ import pickle
 from dina.DPM.models import Template
 from base import CacheObject
 from dina.log import Logger
-from dina.core.utils import modification_date , date_cmp
+from dina.core.utils import modification_date, date_cmp
 
 logger = Logger ('Template cache class')
 
@@ -33,20 +33,21 @@ class TemplateQueryCache (CacheObject):
     number of queries in Dina actions.
     """
     def __init__(self):
-        super(TemplateQueryCache, self).__init__ ("templates")
-        self.template = Template.objects.get (Active=True)
+        super(TemplateQueryCache, self).__init__("templates")
+        self.template = Template.objects.get(Active=True)
 
         # load and parse the .modifies file inside of the template cache dir
         # that contains some data about the latest modified time for templates
         # that cached.
         # .modifies file format are as follow:
         # templatename::time
+
         self.pkl = "modifies.pkl"
         self.modifies = dict()
         try:
-            fd = open ("%s/%s" % (self._cache_dir, self.pkl))
-            self.modifies = pickle.load (fd)
-            fd.close ()
+            fd = open("%s/%s" % (self._cache_dir, self.pkl))
+            self.modifies = pickle.load(fd)
+            fd.close()
         except IOError:
             pass
 
@@ -55,8 +56,8 @@ class TemplateQueryCache (CacheObject):
         # templates
         self.memcache = None
         self.cache = {}
-        logger.debug ("TemplateQueryCache class inti.")
-        logger.info ("Current active template is %s" % self.template)
+        logger.debug("TemplateQueryCache class inti.")
+        logger.info("Current active template is %s" % self.template)
 
     def current (self):
         return self.template
@@ -74,31 +75,31 @@ class TemplateQueryCache (CacheObject):
         replaced by '___' and comes with a '.cache' suffix
         otherwise return the normal file data.
         """
-        fdate = modification_date (address)
+        fdate = modification_date(address)
         if self.modifies.has_key(template_name):
             if date_cmp (self.modifies[template_name], fdate) == 0:
                 # no need to reparse the template, there is a up2date cache before
-                logger.info ("Reading %s from cache." % template_name)
-                return (self._read_cache (template_name),  True)
+                logger.info("Reading %s from cache." % template_name)
+                return (self._read_cache(template_name), True)
                 
             else:
                 
-                cache_fd = open (address)
-                cache_data = cache_fd.read ()
-                cache_fd.close ()
-                logger.info ("Reading %s from FS." % template_name)
+                cache_fd = open(address)
+                cache_data = cache_fd.read()
+                cache_fd.close()
+                logger.info("Reading %s from FS." % template_name)
                 return (cache_data, False)
         else:
-            cache_fd = open (address)
-            cache_data = cache_fd.read ()
-            cache_fd.close ()
-            logger.info ("Reading %s from FS." % template_name)
+            cache_fd = open(address)
+            cache_data = cache_fd.read()
+            cache_fd.close()
+            logger.info("Reading %s from FS." % template_name)
 
             return (cache_data, False)
 
 
         
-    def _cache_template (self , templatename):
+    def _cache_template (self, templatename):
         pass
 
     def write_cache (self, absolute_path, filename, data):
@@ -106,11 +107,10 @@ class TemplateQueryCache (CacheObject):
         build a cache file for given filename and write data in it.
         """
 
-        fdate = modification_date (absolute_path)
+        fdate = modification_date(absolute_path)
         self.modifies[filename] = fdate
-        fd = open ("%s/%s" % (self._cache_dir, self.pkl) , 'w+')
-        pickle.dump (self.modifies, fd)
-        fd.close ()
-        self._write_cache (filename, data)
-        logger.info ("%s template cached." % filename)
-    
+        fd = open("%s/%s" % (self._cache_dir, self.pkl), 'w+')
+        pickle.dump(self.modifies, fd)
+        fd.close()
+        self._write_cache(filename, data)
+        logger.info("%s template cached." % filename)

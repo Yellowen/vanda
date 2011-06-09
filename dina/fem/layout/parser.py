@@ -19,11 +19,6 @@
 
 import re
 
-from django.utils._os import safe_join
-from django.conf import settings
-
-from dina.core.utils import modification_date , date_cmp
-from dina.DPM.models import Template
 from dina.cache import Template as template_cache
 from dina.fem.layout.models import TemplateLayout
 
@@ -70,7 +65,7 @@ class Parser (object):
                 section = self.section_name_pattern.search (line[tag.start(): tag.end ()])
                 if section is not None:
                     # sec will contain the name of section
-                    sec = line[tag.start(): tag.end ()][section.start () +1: section.end () -1]
+                    sec = line[tag.start(): tag.end ()][section.start () + 1: section.end () - 1]
                     self.sections.append (sec)
                     try:
                         active_template = template_cache.current ()
@@ -79,7 +74,7 @@ class Parser (object):
 
                         for content in layout.Contents.all ():
                             # section tag will replace by tag inside the tmp list
-                            tmp.append ('%s %s %s %s' % ("{%", content, " ".join(content.Params.split("::")),\
+                            tmp.append ('%s %s %s %s' % ("{%", content, " ".join(content.Params.split("::")), \
                                                    "%}"))
                             deps.append ("%s load %s %s" % ("{%", content.ModuleName , "%}")) 
 
@@ -88,12 +83,12 @@ class Parser (object):
                         # -------------------------------------------------------    
                         pattern = re.compile ("%s section ('|\")%s('|\") %s" % \
                                               ("{%", sec, "%}"), re.I)
-                        self.result = re.sub (pattern,"\n".join (tmp), self.result, 0)
+                        self.result = re.sub (pattern, "\n".join (tmp), self.result, 0)
                         # -------------------------------------------------------
                     except TemplateLayout.DoesNotExist:
                         pattern = re.compile ("%s section ('|\")%s('|\") %s" % \
                                                         ("{%", sec, "%}"), re.I)
-                        self.result = re.sub (pattern," \n", self.result, 0)
+                        self.result = re.sub (pattern, " \n", self.result, 0)
 
                     
                 else:
