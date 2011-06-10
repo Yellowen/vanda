@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Karajlug.org
-#    Copyright (C) 2010  Karajlug community
+#    Vanda news - News application for vanda platform
+#    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -17,26 +17,24 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django.shortcuts import render_to_response as rr
-from django.http import Http404
-from django.template import RequestContext
-from django.utils.translation import ugettext as _
-from django.conf import settings
-
-from models import Page
+from vpkg.base import BaseApplication
+from vpkg import vpkg
 
 
-def show_page(request, slug):
+class Page(BaseApplication):
     """
-    show the page with the given slug
+    Implementation of BaseApplication interface for page application.
+    this class allow vpkg to discover it.
     """
-    try:
-        page = Page.objects.get(slug=slug,
-                                publish=True)
 
-    except Page.DoesNotExist:
-        return Http404()
-    return rr("page.djhtml",
-              {"page": page,
-               "title": "%s | %s" % (_(settings.TITLE), page.title)},
-              context_instance=RequestContext(request))
+    application_name = "Page"
+    priority = 40
+    urls = [
+        (['^page/', ], None),
+        ]
+
+    settings = {
+        "TITLE": "Vanda Project",
+        }
+
+vpkg.register(News)
