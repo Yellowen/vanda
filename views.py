@@ -35,7 +35,7 @@ def show_page(request, slug):
                                 publish=True)
 
     except Page.DoesNotExist:
-        return Http404()
+        raise Http404()
     return rr("page.html",
               {"page": page,
                "title": "%s | %s" % (_(settings.TITLE), page.title)},
