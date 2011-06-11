@@ -37,4 +37,4 @@ class Page(BaseApplication):
         "TITLE": "Vanda Project",
         }
 
-vpkg.register(News)
+vpkg.register(Page)
