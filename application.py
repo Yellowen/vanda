@@ -33,6 +33,10 @@ class Page(BaseApplication):
         (['^page/', ], None),
         ]
 
+    permissions = [
+        ("can_help", "cann hhhhh"),
+        ]
+
     settings = {
         "TITLE": "Vanda Project",
         }
