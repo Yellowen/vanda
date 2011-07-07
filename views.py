@@ -23,7 +23,7 @@ from django.template import RequestContext
 from forms import PreRegistrationForm
 
 
-def registation_form(request):
+def pre_register(request):
     if request.method == "POST":
         pass
     else:
