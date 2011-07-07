@@ -30,4 +30,4 @@ def pre_register(request):
         form = PreRegistrationForm()
         return rr("pre_registeration.html",
                   {"form": form},
-                  context_instnace=RequestContext(request))
+                  context_instance=RequestContext(request))
