@@ -26,10 +26,17 @@ class AjaxWidget(forms.TextInput):
     An abstract ajax widget, using this widget cause that form field
     intract with the server via ajax process.
     """
-    @property
-    def _media(self):
-        return forms.Media(css={'all': ('forms.css', )},
-                           js=('ajaxwidget.js'))
+    class Media:
+        css = {
+            'all': ('fancy.css',)
+            }
+        js = ('whizbang.js',)
+
+    ## def _media(self):
+    ##     return forms.Media(css={'all': ('forms.css', )},
+    ##                        js=('ajaxwidget.js', ))
+
+    ## media = property(_media)
 
 
 class PreRegistrationForm(forms.Form):
@@ -37,4 +44,3 @@ class PreRegistrationForm(forms.Form):
                                widget=AjaxWidget())
 
     email = forms.EmailField(label=_("Email"), widget=AjaxWidget())
-    
