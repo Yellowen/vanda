@@ -16,18 +16,9 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-
-from django.shortcuts import render_to_response as rr
-from django.template import RequestContext
-
-from forms import PreRegistrationForm
+from django.conf.urls.defaults import patterns
 
 
-def registation_form(request):
-    if request.method == "POST":
-        pass
-    else:
-        form = PreRegistrationForm()
-        return rr("pre_registeration.html",
-                  {"form": form},
-                  context_instnace=RequestContext(request))
+urlpatterns = patterns('',
+    (r'^register/', 'auth.views.pre_register'),
+)

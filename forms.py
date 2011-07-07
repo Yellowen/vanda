@@ -17,17 +17,24 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django.shortcuts import render_to_response as rr
-from django.template import RequestContext
-
-from forms import PreRegistrationForm
+from django import forms
+from django.utils.translation import ugettext as _
 
 
-def registation_form(request):
-    if request.method == "POST":
-        pass
-    else:
-        form = PreRegistrationForm()
-        return rr("pre_registeration.html",
-                  {"form": form},
-                  context_instnace=RequestContext(request))
+class AjaxWidget(forms.TextInput):
+    """
+    An abstract ajax widget, using this widget cause that form field
+    intract with the server via ajax process.
+    """
+    @property
+    def _media(self):
+        return forms.Media(css={'all': ('forms.css', )},
+                           js=('ajaxwidget.js'))
+
+
+class PreRegistrationForm(forms.Form):
+    username = forms.CharField(max_length=30, label=_("Username"),
+                               widget=AjaxWidget())
+
+    email = forms.EmailField(label=_("Email"), widget=AjaxWidget())
+    

@@ -17,17 +17,21 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django.shortcuts import render_to_response as rr
-from django.template import RequestContext
-
-from forms import PreRegistrationForm
+from vpkg.base import BaseApplication
+from vpkg import vpkg
 
 
-def registation_form(request):
-    if request.method == "POST":
-        pass
-    else:
-        form = PreRegistrationForm()
-        return rr("pre_registeration.html",
-                  {"form": form},
-                  context_instnace=RequestContext(request))
+class Authentication(BaseApplication):
+    """
+    Implementation of BaseApplication interface for auth application.
+    this class allow vpkg to discover it.
+    """
+
+    application_name = "auth"
+    priority = 10
+    urls = [
+        (['^auth/', '^account/'], None),
+        ]
+
+
+vpkg.register(Authentication)
