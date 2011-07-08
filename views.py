@@ -20,6 +20,7 @@
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.http import Http404
 
 from forms import PreRegistrationForm
 
@@ -41,3 +42,11 @@ def pre_register(request):
         return rr("pre_registeration.html",
                   {"form": form},
                   context_instance=RequestContext(request))
+
+
+def ajax_js(request):
+    url = request.GET.get("validator", None)
+    if url:
+        return rr("validator.js", {"url": url})
+    else:
+        raise Http404()

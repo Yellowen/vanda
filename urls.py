@@ -21,4 +21,5 @@ from django.conf.urls.defaults import patterns
 
 urlpatterns = patterns('',
     (r'^register/', 'auth.views.pre_register'),
+    (r'^static/$', 'auth.views.ajax_js'),
 )
