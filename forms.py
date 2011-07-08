@@ -26,21 +26,23 @@ class AjaxWidget(forms.TextInput):
     An abstract ajax widget, using this widget cause that form field
     intract with the server via ajax process.
     """
-    class Media:
-        css = {
-            'all': ('fancy.css',)
-            }
-        js = ('whizbang.js',)
 
-    ## def _media(self):
-    ##     return forms.Media(css={'all': ('forms.css', )},
-    ##                        js=('ajaxwidget.js', ))
+    def __init__(self, url, *args, **kwargs):
+        self.url = url
+        super(AjaxWidget, self).__init__(*args, **kwargs)
 
-    ## media = property(_media)
+    def js(self):
+        return "/auth/static/?validator=%s" % self.url
+
+    def _media(self):
+        return forms.Media(css={'all': ('forms.css', )},
+                           js=(self.js(), ))
+
+    media = property(_media)
 
 
 class PreRegistrationForm(forms.Form):
     username = forms.CharField(max_length=30, label=_("Username"),
-                               widget=AjaxWidget())
+                               widget=AjaxWidget("asdasD"))
 
-    email = forms.EmailField(label=_("Email"), widget=AjaxWidget())
+    email = forms.EmailField(label=_("Email"), widget=AjaxWidget("ad"))
