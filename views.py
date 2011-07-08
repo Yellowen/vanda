@@ -19,13 +19,23 @@
 
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
+from django.contrib.auth import User
 
 from forms import PreRegistrationForm
 
 
 def pre_register(request):
     if request.method == "POST":
-        pass
+        form = PreRegistrationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            #user = User.objects.filter(email=data["email"])
+            #user, created = User.objects.get_or_create(username=data["username"],
+            #                                           email.
+        else:
+            return rr("pre_registeration.html",
+                      {"form": form},
+                      context_instance=RequestContext(request))
     else:
         form = PreRegistrationForm()
         return rr("pre_registeration.html",
