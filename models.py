@@ -28,3 +28,19 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return "%s profile" % self.user
+
+
+class Verification(models.Model):
+
+    code = models.CharField(max_length=40,
+                            verbose_name=_("Code"),
+                            unique=True)
+    user = models.ForeignKey(User, verbose_name=_("User"),
+                             unique=True)
+    date = models.DateTimeField(auto_now=True,
+                                auto_now_add=True,
+                                verbose_name=_("Sent Date"))
+
+    def __unicode__(self):
+        return self.code
+
