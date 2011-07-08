@@ -19,7 +19,7 @@
 
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
-from django.contrib.auth import User
+from django.contrib.auth.models import User
 
 from forms import PreRegistrationForm
 
