@@ -56,7 +56,10 @@ def pre_register(request):
                 # Create a user and send the verification mail
                 user =  User(username=data["username"], email=datap["email"])
                 user.save()
-                
+
+                # create verification code and save it in DB
+                verification_code = Verification(user=user)
+                code = verification_code.create_verification_code()
                 
         else:
             return rr("pre_registeration.html",

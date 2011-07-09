@@ -14,4 +14,3 @@ class VerificationAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Verification, VerificationAdmin)
-

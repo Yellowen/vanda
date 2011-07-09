@@ -48,6 +48,33 @@ class Verification(models.Model):
     def __unicode__(self):
         return self.code
 
+    def create_verification_code(self):
+        """
+        create a verification code for self.user and return it
+        """
+        import hashlib
+        from datetime import datetime
+
+        m = hashlib.sha1()
+        if self.user:
+            m.update("%s%s" % (self.user.username, datetime.now()))
+            hash_ = m.hexdigest()
+            self.code = hash_
+            self.save()
+            return hash_
+        else:
+            raise self.UserNotSet()
+
+    def is_valid(self):
+        pass
+
+    @staticmethod
+    def delete_invalid_codes():
+        pass
+
+    class UserNotSet(Exception):
+        pass
+
     class Meta:
         verbose_name = _("Verification")
         verbose_name_plural = _("Verifications")
