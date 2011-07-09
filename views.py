@@ -60,6 +60,7 @@ def pre_register(request):
                 # create verification code and save it in DB
                 verification_code = Verification(user=user)
                 code = verification_code.create_verification_code()
+
                 
         else:
             return rr("pre_registeration.html",

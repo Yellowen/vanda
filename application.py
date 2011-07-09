@@ -27,6 +27,12 @@ class Authentication(BaseApplication):
     this class allow vpkg to discover it.
     """
 
+    # You Should add some veriables to settings.py
+    # SMTP settings, look at the sending mail section of django docs.
+    # SMTP_FROM the mail address that you want to mail sent by.
+    # WEBSITE_TITLE the title of current site.
+    # SUPPORT_MAIL the email address of support group
+
     application_name = "auth"
     priority = 10
     urls = [
