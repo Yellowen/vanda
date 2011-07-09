@@ -22,6 +22,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 
+# verification codes will expire after 2 days
+VERIFICATION_TIME_LIMIT = 2
+
+
 class Profile(models.Model):
     user = models.ForeignKey(User, verbose_name=_("User"),
                              unique=True)
@@ -55,12 +59,18 @@ class Verification(models.Model):
         import hashlib
         from datetime import datetime
 
+        from django.db import transaction
+
         m = hashlib.sha1()
         if self.user:
             m.update("%s%s" % (self.user.username, datetime.now()))
             hash_ = m.hexdigest()
             self.code = hash_
-            self.save()
+
+            with transaction.commit_on_success():
+                Verification.delete_expired_codes()
+                self.save()
+
             return hash_
         else:
             raise self.UserNotSet()
@@ -69,8 +79,15 @@ class Verification(models.Model):
         pass
 
     @staticmethod
-    def delete_invalid_codes():
-        pass
+    def delete_expired_codes():
+        """
+        Delete all the records with expired date.
+        """
+        from datetime import datetime, timedelta
+
+        expdate = datetime.now() - timedelta(day=VERIFICATION_TIME_LIMIT)
+        expired_codes = Verification.objects.filter(date__lt=expdate)
+        expired_codes.delete()
 
     class UserNotSet(Exception):
         pass
