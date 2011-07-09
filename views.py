@@ -25,6 +25,8 @@ from django.http import Http404
 from django.utils.translation import ugettext as _
 
 from forms import PreRegistrationForm
+from mail import VerificationMail
+from models import Verification
 
 
 def pre_register(request):
@@ -47,21 +49,22 @@ def pre_register(request):
                 if email:
                     form.errors["email"] = (_("This Email already registered."),)
                 if user:
-                    form.errors["email"] = (_("This Username already registered."),)
+                    form.errors["usernmae"] = (_("This Username already registered."),)
                 return rr("pre_registeration.html",
                       {"form": form},
                       context_instance=RequestContext(request))
 
             else:
                 # Create a user and send the verification mail
-                user =  User(username=data["username"], email=datap["email"])
+                user =  User(username=data["username"], email=data["email"])
                 user.save()
 
                 # create verification code and save it in DB
                 verification_code = Verification(user=user)
                 code = verification_code.create_verification_code()
 
-                
+                vmail = VerificationMail(user, code, request.META["HTTP_HOST"])
+                vmail.send()
         else:
             return rr("pre_registeration.html",
                       {"form": form},
@@ -79,3 +82,10 @@ def ajax_js(request):
         return rr("validator.js", {"url": url})
     else:
         raise Http404()
+
+
+def verificate_email(request, code):
+    """
+    Get the verification code and verify the user mail.
+    """
+    raise Http404()

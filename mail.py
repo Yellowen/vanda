@@ -19,6 +19,7 @@
 
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
 
 
 BODY = """
@@ -27,7 +28,7 @@ Hi $USERNAME$!
 Welcome to $TITLE$. In order to activate your new account,
 please click the URL below.
 
-$LINK$
+http://$LINK$
 
 If the above URL does not work try copying and pasting it into your browser.
 If you continue to have problem please feel free to contact us.
@@ -60,5 +61,6 @@ class VerificationMail(EmailMessage):
         self.body = self.body.replace("$TITLE$", self.domain)
         self.body = self.body.replace("$EMAIL$", settings.SUPPORT_MAIL)
 
-        url = ""
-        link = "%s/%s" % (self.domain, url)
+        url = reverse('auth.views.verificate_email', args=[self.code])
+        link = "%s%s" % (self.domain, url)
+        print ">>> ", link

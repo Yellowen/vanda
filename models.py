@@ -85,7 +85,7 @@ class Verification(models.Model):
         """
         from datetime import datetime, timedelta
 
-        expdate = datetime.now() - timedelta(day=VERIFICATION_TIME_LIMIT)
+        expdate = datetime.now() - timedelta(days=VERIFICATION_TIME_LIMIT)
         expired_codes = Verification.objects.filter(date__lt=expdate)
         expired_codes.delete()
 
