@@ -45,18 +45,20 @@ def pre_register(request):
                 user = User.objects.filter(username=data["username"])
 
             if email or user:
-                # returning suitable error if email or user already registered 
+                # returning suitable error if email or user already registered
                 if email:
-                    form.errors["email"] = (_("This Email already registered."),)
+                    form.errors["email"] = (
+                        _("This Email already registered."), )
                 if user:
-                    form.errors["usernmae"] = (_("This Username already registered."),)
+                    form.errors["usernmae"] = (
+                        _("This Username already registered."), )
                 return rr("pre_registeration.html",
                       {"form": form},
                       context_instance=RequestContext(request))
 
             else:
                 # Create a user and send the verification mail
-                user =  User(username=data["username"], email=data["email"])
+                user = User(username=data["username"], email=data["email"])
                 user.save()
 
                 # create verification code and save it in DB

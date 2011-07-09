@@ -27,22 +27,23 @@ class AjaxWidget(forms.TextInput):
     intract with the server via ajax process.
     """
 
-    def __init__(self, url, *args, **kwargs):
+    def __init__(self, field_name, url, *args, **kwargs):
         self.url = url
+        self.fname = field_name
         super(AjaxWidget, self).__init__(*args, **kwargs)
 
     def js(self):
         return "/auth/static/?validator=%s" % self.url
 
-    def _media(self):
-        return forms.Media(css={'all': ('forms.css', )},
-                           js=(self.js(), ))
+    ## def _media(self):
+    ##     return forms.Media(css={'all': ('forms.css', )},
+    ##                        js=(self.js(), ))
 
-    media = property(_media)
+    ## media = property(_media)
 
 
 class PreRegistrationForm(forms.Form):
     username = forms.CharField(max_length=30, label=_("Username"),
-                               widget=AjaxWidget("asdasD"))
+                               widget=AjaxWidget("asd", "asdasD"))
 
-    email = forms.EmailField(label=_("Email"), widget=AjaxWidget("ad"))
+    email = forms.EmailField(label=_("Email"), widget=AjaxWidget("aaa", "ad"))

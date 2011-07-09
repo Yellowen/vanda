@@ -44,23 +44,20 @@ class VerificationMail(EmailMessage):
     Verification Mail class handling verification mail sending.
     """
 
-    subject = "Email address verification"
-    mail = settings.SMTP_FROM
-    body = BODY
-
     def __init__(self, user, code, domain):
-        self.user = user
-        self.code = code
-        self.domain = domain
 
-    def send(self, fail_silently=False):
-        """
-        Send the verification mail.
-        """
-        self.body = self.body.replace("$USERNAME$", self.user.username)
-        self.body = self.body.replace("$TITLE$", self.domain)
-        self.body = self.body.replace("$EMAIL$", settings.SUPPORT_MAIL)
+        body = BODY
+        body = body.replace("$USERNAME$", user.username)
+        body = body.replace("$TITLE$", domain)
+        body = body.replace("$EMAIL$", settings.SUPPORT_MAIL)
 
-        url = reverse('auth.views.verificate_email', args=[self.code])
-        link = "%s%s" % (self.domain, url)
-        print ">>> ", link
+        url = reverse('auth.views.verificate_email', args=[code])
+        link = "%s%s" % (domain, url)
+
+        body = body.replace("$LINK$", link)
+
+        subject = "Email address verification"
+        from_ = settings.SMTP_FROM
+
+        super(VerificationMail, self).__init__(subject, body, from_,
+                                               [user.email, ])        
