@@ -20,19 +20,44 @@
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.http import Http404
+from django.utils.translation import ugettext as _
 
 from forms import PreRegistrationForm
 
 
 def pre_register(request):
+    """
+    First step of registeration process. In this step we process
+    just username and email address and send a verification mail.
+    """
     if request.method == "POST":
         form = PreRegistrationForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            #user = User.objects.filter(email=data["email"])
-            #user, created = User.objects.get_or_create(username=data["username"],
-            #                                           email.
+
+            # collect queries in a single transaction
+            with transaction.commit_on_success():
+                email = User.objects.filter(email=data["email"])
+                user = User.objects.filter(username=data["username"])
+
+            if email or user:
+                # returning suitable error if email or user already registered 
+                if email:
+                    form.errors["email"] = (_("This Email already registered."),)
+                if user:
+                    form.errors["email"] = (_("This Username already registered."),)
+                return rr("pre_registeration.html",
+                      {"form": form},
+                      context_instance=RequestContext(request))
+
+            else:
+                # Create a user and send the verification mail
+                user =  User(username=data["username"], email=datap["email"])
+                user.save()
+                
+                
         else:
             return rr("pre_registeration.html",
                       {"form": form},

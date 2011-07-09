@@ -29,6 +29,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return "%s profile" % self.user
 
+    class Meta:
+        verbose_name = _("Profile")
+        verbose_name_plural = _("Profiles")
+
 
 class Verification(models.Model):
 
@@ -43,3 +47,7 @@ class Verification(models.Model):
 
     def __unicode__(self):
         return self.code
+
+    class Meta:
+        verbose_name = _("Verification")
+        verbose_name_plural = _("Verifications")
