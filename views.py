@@ -21,10 +21,12 @@ from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import Http404
+from django.http import (Http404, HttpResponseForibidden,
+                         HttpResponseRedirect)
 from django.utils.translation import ugettext as _
+from django.contrib.auth import login
 
-from forms import PreRegistrationForm
+from forms import PreRegistrationForm, PostRegistrationForm
 from mail import VerificationMail
 from models import Verification
 
@@ -59,7 +61,7 @@ def pre_register(request):
             else:
                 # Create a user and send the verification mail
                 user = User(username=data["username"], email=data["email"],
-                            is_active=False))
+                                    is_active=False)
                 user.save()
 
                 # create verification code and save it in DB
@@ -81,7 +83,41 @@ def pre_register(request):
                   context_instance=RequestContext(request))
 
 
+def post_register(request):
+    """
+    Complete the registeration by asking user to fill extra information.
+    """
+    if "user" in request.session:
+        user = request.session["user"]
+    else:
+        return HttpResponseForibidden()
+
+    if request.method == "POST":
+        form = PostRegistrationForm()
+        if form.is_valid():
+            try:
+                form.save(user)
+            except form.PasswordError, e:
+                form.errors["password1"] = unicode(e)
+                form.errors["password2"] = unicode(e)
+                return rr("post_registeration.html",
+                          {"form": form},
+                          context_instance=RequestContext(request))
+
+            login(request, user)
+            return HttpResponseRedirect(reverse("auth.views.profile",
+                                                args=[]))
+    else:
+        form = PostRegistrationForm()
+        return rr("post_registeration.html",
+                  {"form": form},
+                  context_instance=RequestContext(request))
+
+
 def ajax_js(request):
+    """
+    Return a suitable javascript code for given url.
+    """
     url = request.GET.get("validator", None)
     if url:
         return rr("validator.js", {"url": url})
@@ -93,16 +129,28 @@ def verificate_email(request, code):
     """
     Get the verification code and verify the user mail.
     """
+    # Look for given verification code
     try:
         verification = Verification.objects.get(code=code)
     except Verification.DoesNotExists:
+        # always riase a 404 status code for invalid code
         raise Http404()
+
+    # if verification code sent ins last 48 hours
     if verification.is_valid():
-        verification.user.is_active = True
-        verification.user.save()
+        # Activating user
+        user = verification.user
+        user.is_active = True
+        user.save()
+
+        request.session["user"] = user
         verification.delete()
+
+        form = PostRegistrationForm()
         return rr("post_registeration.html",
+                  {"form": form},
                   context_instance=RequestContext(request))
     else:
-        Verification.delete()
+        # If code expired.
+        verification.delete()
         raise Http404()

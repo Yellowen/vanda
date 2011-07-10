@@ -47,3 +47,39 @@ class PreRegistrationForm(forms.Form):
                                widget=AjaxWidget("asd", "asdasD"))
 
     email = forms.EmailField(label=_("Email"), widget=AjaxWidget("aaa", "ad"))
+
+
+class PostRegistrationForm(forms.Form):
+    first_name = forms.CharField(max_length=30, label=_("First Name"))
+    last_name = forms.CharField(max_length=30, label=_("Last Name"))
+    password1 = forms.CharField(max_length=250, label=_("Password"))
+    password2 = forms.CharField(max_length=250, label=_("Enter again"))
+
+    def save(self, user):
+        """
+        Save the cleaned data to User model.
+        """
+        if not user:
+            raise self.NoUser()
+
+        data = self.cleaned_data
+        if not data["password1"] == data["password2"]:
+            raise self.PasswordError(_("You entered to different password"))
+
+        password = data["password1"]
+        if len(password) < 6:
+            raise self.PasswordError(
+                _("Password length should be more that six charachter"))
+
+        user.set_password(password)
+        user.first_name = data["first_name"]
+        user.last_name = data["last_name"]
+        user.save()
+
+        return True
+
+    class NoUser(Exception):
+        pass
+
+    class PasswordError(Exception):
+        pass

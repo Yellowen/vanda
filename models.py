@@ -76,7 +76,16 @@ class Verification(models.Model):
             raise self.UserNotSet()
 
     def is_valid(self):
-        pass
+        """
+        Return false if current activation code expired.
+        """
+        from datetime import datetime, timedelta
+
+        expdate = datetime.now() - timedelta(days=VERIFICATION_TIME_LIMIT)
+        if self.date < expdate:
+            return False
+        else:
+            return True
 
     @staticmethod
     def delete_expired_codes():
