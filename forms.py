@@ -52,8 +52,10 @@ class PreRegistrationForm(forms.Form):
 class PostRegistrationForm(forms.Form):
     first_name = forms.CharField(max_length=30, label=_("First Name"))
     last_name = forms.CharField(max_length=30, label=_("Last Name"))
-    password1 = forms.CharField(max_length=250, label=_("Password"))
-    password2 = forms.CharField(max_length=250, label=_("Enter again"))
+    password1 = forms.CharField(max_length=250, label=_("Password"),
+                                widget=forms.PasswordInput())
+    password2 = forms.CharField(max_length=250, label=_("Enter again"),
+                                widget=forms.PasswordInput())
 
     def save(self, user):
         """

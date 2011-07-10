@@ -21,7 +21,7 @@ from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import (Http404, HttpResponseForibidden,
+from django.http import (Http404, HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.utils.translation import ugettext as _
 from django.contrib.auth import login
@@ -87,15 +87,19 @@ def post_register(request):
     """
     Complete the registeration by asking user to fill extra information.
     """
+    print "HERE"
+    user = None
     if "user" in request.session:
         user = request.session["user"]
     else:
-        return HttpResponseForibidden()
+        return HttpResponseForbidden()
 
+    print ">>> ", user
     if request.method == "POST":
-        form = PostRegistrationForm()
+        form = PostRegistrationForm(request.POST)
         if form.is_valid():
             try:
+                print "<><<< ", user
                 form.save(user)
             except form.PasswordError, e:
                 form.errors["password1"] = unicode(e)
@@ -107,11 +111,24 @@ def post_register(request):
             login(request, user)
             return HttpResponseRedirect(reverse("auth.views.profile",
                                                 args=[]))
+        else:
+            print ">>> FORM: ", form
+            return rr("post_registeration.html",
+                          {"form": form},
+                          context_instance=RequestContext(request))
+
     else:
         form = PostRegistrationForm()
         return rr("post_registeration.html",
                   {"form": form},
                   context_instance=RequestContext(request))
+
+
+def profile(request):
+    """
+    User profile main view.
+    """
+    pass
 
 
 def ajax_js(request):
@@ -132,7 +149,8 @@ def verificate_email(request, code):
     # Look for given verification code
     try:
         verification = Verification.objects.get(code=code)
-    except Verification.DoesNotExists:
+
+    except Verification.DoesNotExist:
         # always riase a 404 status code for invalid code
         raise Http404()
 
