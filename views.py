@@ -58,7 +58,8 @@ def pre_register(request):
 
             else:
                 # Create a user and send the verification mail
-                user = User(username=data["username"], email=data["email"])
+                user = User(username=data["username"], email=data["email"],
+                            is_active=False))
                 user.save()
 
                 # create verification code and save it in DB
@@ -67,6 +68,8 @@ def pre_register(request):
 
                 vmail = VerificationMail(user, code, request.META["HTTP_HOST"])
                 vmail.send()
+                return rr("verification_sent.html")
+
         else:
             return rr("pre_registeration.html",
                       {"form": form},
@@ -90,4 +93,16 @@ def verificate_email(request, code):
     """
     Get the verification code and verify the user mail.
     """
-    raise Http404()
+    try:
+        verification = Verification.objects.get(code=code)
+    except Verification.DoesNotExists:
+        raise Http404()
+    if verification.is_valid():
+        verification.user.is_active = True
+        verification.user.save()
+        verification.delete()
+        return rr("post_registeration.html",
+                  context_instance=RequestContext(request))
+    else:
+        Verification.delete()
+        raise Http404()

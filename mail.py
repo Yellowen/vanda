@@ -60,4 +60,4 @@ class VerificationMail(EmailMessage):
         from_ = settings.SMTP_FROM
 
         super(VerificationMail, self).__init__(subject, body, from_,
-                                               [user.email, ])        
+                                               [user.email, ])
