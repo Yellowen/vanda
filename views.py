@@ -24,7 +24,9 @@ from django.db import transaction
 from django.http import (Http404, HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.utils.translation import ugettext as _
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from forms import PreRegistrationForm, PostRegistrationForm
 from mail import VerificationMail
@@ -87,19 +89,17 @@ def post_register(request):
     """
     Complete the registeration by asking user to fill extra information.
     """
-    print "HERE"
+
     user = None
     if "user" in request.session:
         user = request.session["user"]
     else:
         return HttpResponseForbidden()
 
-    print ">>> ", user
     if request.method == "POST":
         form = PostRegistrationForm(request.POST)
         if form.is_valid():
             try:
-                print "<><<< ", user
                 form.save(user)
             except form.PasswordError, e:
                 form.errors["password1"] = unicode(e)
@@ -108,11 +108,12 @@ def post_register(request):
                           {"form": form},
                           context_instance=RequestContext(request))
 
+            user = authenticate(username=user.username,
+                                password=form.cleaned_data["password1"])
             login(request, user)
             return HttpResponseRedirect(reverse("auth.views.profile",
                                                 args=[]))
         else:
-            print ">>> FORM: ", form
             return rr("post_registeration.html",
                           {"form": form},
                           context_instance=RequestContext(request))

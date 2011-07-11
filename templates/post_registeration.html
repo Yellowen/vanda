@@ -1,6 +1,5 @@
 {% if form %}
 {{ form.media }}
-zxzxc
 <form action="{% url auth.views.post_register %}" method="POST">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit">
