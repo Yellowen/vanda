@@ -27,6 +27,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 from forms import PreRegistrationForm, PostRegistrationForm
 from mail import VerificationMail
@@ -125,6 +126,7 @@ def post_register(request):
                   context_instance=RequestContext(request))
 
 
+@login_required
 def profile(request):
     """
     User profile main view.

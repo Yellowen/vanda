@@ -25,4 +25,17 @@ urlpatterns = patterns('',
     (r'^profile/$', "auth.views.profile"),
     (r'^verification/([A-Fa-f0-9]{40})/$', 'auth.views.verificate_email'),
     (r'^static/$', 'auth.views.ajax_js'),
+    (r'^login/$', 'django.contrib.auth.views.login',
+     {"template_name": 'auth/login.html'}),
+
+    (r'^logout/$', 'django.contrib.auth.views.logout',
+     {"template_name": 'auth/logout.html'}),
+
+    (r'^change/password/$', 'django.contrib.auth.views.password_change',
+     {"template_name": 'auth/change_password.html'}),
+
+    (r'^change/password/done/$',
+     'django.contrib.auth.views.password_change_done',
+     {"template_name": 'auth/change_password_done.html'}),
+
 )
