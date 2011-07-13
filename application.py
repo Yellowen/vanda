@@ -16,6 +16,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+from django.core.urlresolvers import reverse
 
 from vpkg.base import BaseApplication
 from vpkg import vpkg
@@ -39,5 +40,11 @@ class Authentication(BaseApplication):
         (['^auth/', '^account/'], None),
         ]
 
-
+    # replace the absolute and static urls with dynamic ones
+    settings = {
+        "LOGIN_URL": "/auth/login/",
+        "AUTH_PROFILE_MODULE": "auth.profile",
+        "LOGIN_REDIRECT_URL": "/auth/profile/",
+        "LOGOUT_URL": "/auth/logout/",
+        }
 vpkg.register(Authentication)
