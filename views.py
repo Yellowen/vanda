@@ -31,9 +31,11 @@ def state(request, state_id):
     """
     try:
         cities = City.objects.filter(state__id=state_id)
-        res = dict()
+        res = {"status": "0",
+               "cities": list()}
+        append = res["cities"].append
         for city in cities:
-            res[city.id] = city.name
+            append((city.id, city.name))
         return HttpResponse(json.dumps(res))
 
     except City.DoesNotExist:
