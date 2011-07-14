@@ -30,13 +30,13 @@ def state(request, state_id):
     return a json of a state_id.
     """
     try:
-        cities = City.objects.get(state__id=state_id)
+        cities = City.objects.filter(state__id=state_id)
         res = dict()
         for city in cities:
             res[city.id] = city.name
         return HttpResponse(json.dumps(res))
 
-    except City.DoesNotExists:
+    except City.DoesNotExist:
         res = {"status": "-1",
                "msg": _("There is no such state."),
                }
