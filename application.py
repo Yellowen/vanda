@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-#    Vanda news - News application for vanda platform
+#    Ultra Blog - Data type base blog application for Vanda platform
 #    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
