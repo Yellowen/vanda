@@ -1,4 +1,5 @@
 # Django settings for ultra_blog project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
