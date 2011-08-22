@@ -1,6 +1,6 @@
 # Django settings for ultra_blog project.
 import os
-
+ROOT_PATH = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
