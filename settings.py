@@ -1,11 +1,12 @@
-# Django settings for ultra_blog project.
+# Django settings for ultra project.
 import os
 ROOT_PATH = os.path.dirname(__file__)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('b3hnam', 'b3hnam@b3hnam.com'),
+    # ('b3hnam', 'b3hnam@b3hnam.com'),
 )
 
 MANAGERS = ADMINS
@@ -84,7 +85,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '$4+*y63t@$bk(n4%zxjp%(cwq=rmw&k!jx0=(-!39rgj&g5479'
+SECRET_KEY = 'mznnj!_tt4o*n-2%m27^$b^r15pesd()v06qf3w8!q@k1=4-c1'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -101,7 +102,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'ultra_blog.urls'
+ROOT_URLCONF = 'ultra.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -116,6 +117,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'vpkg',
+    'ultra_blog'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
