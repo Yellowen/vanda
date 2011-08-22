@@ -35,18 +35,18 @@ class Category(models.Model):
                             verbose_name=_("Slug"),\
                             help_text=_("This Field will fill\
                             automaticaly by title"))
-    # TODO: should be completed
+    
     #Icon = models.ImageField(upload_to="//",verbose_name=_("Description"))
-    CATS = (
-        ('text', _('Text')),
-        ('link', _('Link')),
-        ('music', _('Music')),
-        ('book', _('Book')),
-        ('film', _('Film')),
-        ('person', _('Person or band')),
-    )
+#    CATS = (
+#        ('text', _('Text')),
+#        ('link', _('Link')),
+#        ('music', _('Music')),
+#        ('book', _('Book')),
+#        ('film', _('Film')),
+#        ('person', _('Person or band')),
+#    )
     category_type = models.CharField(max_length=250, \
-                                      verbose_name=("Type"), choices=CATS)
+                                      verbose_name=("Type"),)
 
     def __unicode__(self):
         return self.title
