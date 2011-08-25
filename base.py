@@ -16,3 +16,40 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+
+class BaseType(object):
+
+    form = None
+    name = None
+
+    def get_form(self):
+        return self.form
+
+
+class PostTypes(object):
+
+    _registery = dict()
+
+    def __init__(self):
+        self.
+    def register(self, type_class):
+        """
+        Register types class of an Vanda applications into Ultra Blog.
+        """
+
+        if not issubclass(type_class, BaseType):
+            raise TypeError("'%s' must be a BaseType subclass." %
+                            type_class)
+
+        # Checking the provided base_class application property.
+        try:
+            type_name = getattr(type_class,
+                                       "name").lower()
+        except AttributeError:
+            raise AttributeError("'%s' did not have 'type_name'." %
+                                 type_class + ' property')
+
+        if type_name in self._registery.keys():
+            self.logger.warning("'%s' already registered." % type_name)
+        else:
+            self._registery[type_name] = type_class()
