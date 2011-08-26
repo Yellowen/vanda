@@ -16,8 +16,11 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from base import BaseType
-
+from base import BaseType, post_types
 
 class VideoType(BaseType):
-    
+    name = "video"
+    form = forms.Video
+
+
+post_types.register(VideoType)

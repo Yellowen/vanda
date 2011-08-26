@@ -16,6 +16,8 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+import logging
+
 
 class BaseType(object):
 
@@ -26,12 +28,14 @@ class BaseType(object):
         return self.form
 
 
-class PostTypes(object):
+class PostType(object):
 
     _registery = dict()
 
     def __init__(self):
-        self.
+        #self.debug
+        self.logger = logging.getLogger()
+
     def register(self, type_class):
         """
         Register types class of an Vanda applications into Ultra Blog.
@@ -53,3 +57,13 @@ class PostTypes(object):
             self.logger.warning("'%s' already registered." % type_name)
         else:
             self._registery[type_name] = type_class()
+
+
+    def admin_view(self, req):
+        """
+        
+        """
+        pass
+
+
+post_types = PostType()
