@@ -19,7 +19,7 @@
 
 from django.contrib import admin
 
-from models import Category
+from models import Category, Setting, Post
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -35,4 +35,29 @@ class CategoryAdmin(admin.ModelAdmin):
         obj.user = request.user
         obj.save()
 
+
+class PostAdmin(admin.ModelAdmin):
+    """
+    Admin interface class for post model
+    """
+    list_display = ("title", "slug", "author", "date")
+    search_fields = ("title", "author")
+    list_filter = ("author", )
+    prepopulated_fields = {"slug": ("title",)}
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
+
+
+class SettingAdmin(admin.ModelAdmin):
+    """
+    Admin interface class for setting model
+    """
+    list_display = ("title", "active", "anonymous_post",
+                    "pre_moderation", "ppp")
+
+
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Post, PostAdmin)
+admin.site.register(Setting, SettingAdmin)
