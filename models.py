@@ -47,3 +47,53 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = _("Categories")
         verbose_name = _('Category')
+
+
+class Post(models.Model):
+    """
+    Post model.
+    """
+    title = models.CharField(max_length=64,
+                             verbose_name=_("Title"))
+    slug = models.SlugField(verbose_name=_("Slug"))
+    author = models.ForeignKey(User, editable=False,
+                             verbose_name=_("Author"))
+    Category = models.ForeignKey(Category, editable=False,
+                             verbose_name=_("Category"))
+    content = models.TextField(verbose_name=("Content"))
+
+    date = models.DateTimeField(auto_now_add=True, auto_now=False,
+                                     verbose_name=_('Date and Time'))
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        # TODO: i should use current registered url used by vpkg
+        # instead of hardcoding post url
+        return "/forum/post/%s" % self.slug
+
+    class Meta:
+        verbose_name_plural = _("Posts")
+        verbose_name = _('Post')
+
+
+class Setting(models.Model):
+    """
+    Forum setting Model.
+    """
+    active = models.BooleanField(default=False,
+                                 verbose_name=_("Active"))
+    anonymous_post = models.BooleanField(default=False,
+                                 verbose_name=_("Anonymous Post"))
+    pre_moderation = models.BooleanField(default=False,
+                                 verbose_name=_("pre-moderation"))
+    ppp = models.IntegerField(default=20,
+                              verbose_name=_("Post Per Page"))
+
+    def __unicode__(self):
+        return self.id
+
+    class Meta:
+        verbose_name_plural = _("Settings")
+        verbose_name = _('Setting')
