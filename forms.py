@@ -16,17 +16,13 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import forms
-from base import BaseType, post_types
+
+from django import forms
 
 
-class VideoType(BaseType):
-    name = "video"
-    form = None
-    form = forms.Video
+class TypeForm(forms.Form):
+    title = forms.CharField(max_length=100)
+    text = forms.CharField()
 
-    ##should call in view that show the form
-    def get_form(self):
-        return self.form
-
-post_types.register(VideoType)
+class Video(TypeForm):
+    url = forms.URLField()

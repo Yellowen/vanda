@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Some Hackers In Town
+#    Copyright (C) 2011 Behnam AhmadKhanBeigi ( b3hnam@gnu.org )
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,10 @@ from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
 from models import Post
+#test view
+def postForm(request):
+    import base import post_types
+    
 
 def home(request):
     

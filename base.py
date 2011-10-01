@@ -65,5 +65,9 @@ class PostType(object):
         """
         pass
 
+    def get_all_forms(self, req):
+        forms = None
+        for type_form in self._registery[type_form].get_form():
+            forms[type] = type_form
 
 post_types = PostType()
