@@ -36,15 +36,22 @@ class Page(models.Model):
     content = models.TextField(verbose_name=_("Page content"))
     publish = models.BooleanField(default=False,
                                   verbose_name=_("Publish"))
+
+    menu = models.BooleanField(default=False,
+                               verbose_name=_("Appear in navigation?"))
+
+    weight = models.IntegerField(default=40, verbose_name=_("Weight"))
     date = models.DateTimeField(auto_now_add=True, auto_now=False,
                                      verbose_name=_('Date and Time'))
 
     def __unicode__(self):
         return self.title
 
+    @models.permalink
     def get_absolute_url(self):
-        return "/page/%s" % self.slug
+        return ("page.views.show_page" % self.slug)
 
     class Meta:
         verbose_name_plural = _("Pages")
         verbose_name = _('Page')
+        ordering = ['-weight']
