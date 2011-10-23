@@ -1,0 +1,11 @@
+*~
+*.pyc
+build/
+env/
+log/
+vpkg/
+page/
+news/
+docs/build/
+db.sqlite3
+

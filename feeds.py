@@ -31,7 +31,7 @@ class LatestPosts (Feed):
     description = _("Recent logs")
 
     def items(self):
-        return Post.objects.order_by('-datetime')[:10]
+        return Post.objects.all().order_by('-datetime')[:10]
 
     def item_title(self, item):
         return item.title
