@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Behnam AhmadKhanBeigi ( b3hnam@gnu.or)
+#    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,14 +15,14 @@
 #    You should have received a copy of the GNU General Public License along
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-
+# -----------------------------------------------------------------------------
 from django import forms
 
 
 class TypeForm(forms.Form):
     title = forms.CharField(max_length=100)
     text = forms.CharField()
+
 
 class Video(TypeForm):
     url = forms.URLField()

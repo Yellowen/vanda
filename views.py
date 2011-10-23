@@ -16,52 +16,8 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
+
 from models import Post
-#test view
-def postForm(request):
-    import base import post_types
-    
 
-def home(request):
-    
-    """
-    Main view of blog.
-    """
-    #+++ Blog Config should load here.
-    # Blog Config contains some variable about blog
-    #actions like number of entry per page
-
-    #--- NPP (number per page) should load from
-    #configs but now this is for development and will remove in future
-    
-    NPP = 4
-
-    ent = Post.objects.all().order_by("-datetime")[:NPP]
-    return rr('blog.html', {"post": ent})
-
-
-def blog(request):
-    """
-    Main view of one type of blog posts.
-    """
-    #+++ Blog Config should load here.
-    # Blog Config contains some variable about blog
-    #actions like number of entry per page
-
-    #--- NPP (number per page) should load from
-    #configs but now this is for development and will remove in future
-    NPP = 4
-
-    ent = Post.objects.all().order_by("-datetime")[:NPP]
-    return rr('blog.html', {"post": ent})
-
-
-def comments(request, slug):
-    get_object_or_404(Post, slug=slug)
-    render = {"post": Post, }
-    render.update(csrf(request))
-    #for fixing bug#29883
-    return rr('comments.html', render)
