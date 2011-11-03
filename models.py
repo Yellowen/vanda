@@ -20,7 +20,6 @@
 from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
-from django.template import Template, Context
 
 
 class Category(models.Model):
@@ -62,6 +61,7 @@ class Post (models.Model):
                             help_text=_("This field will fill automaticly \
                             by title field."))
     content = models.TextField(verbose_name=_("Content"))
+    content_html = models.TextField(_("HTMLized content"))
     categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
     author = models.ForeignKey(User, verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,\
@@ -80,6 +80,7 @@ class Post (models.Model):
         return Comment.objects.filter(post=self)
 
     def related_posts(self):
+        # TODO: return the posts in same category with same tags
         return Post.objects.filter(categories__in=self.categories.all())[5]
 
     def __unicode__(self):
@@ -93,43 +94,6 @@ class Post (models.Model):
         ordering = ["-datetime"]
         verbose_name_plural = _("Posts")
         verbose_name = _('Post')
-
-
-class Comment (models.Model):
-    """
-    Comment model.
-    author of a comment may be empty if user is anonymous.
-    In this case nick will hold the nickname that user provided
-
-    But if author filled with current user->username then nick fill with
-    the same value.
-    """
-
-    post = models.ForeignKey(Post, verbose_name=_("Post"))
-    author = models.ForeignKey(User, verbose_name=_("Author"),
-                               blank=True,
-                                null=True)
-
-    nick = models.CharField(max_length=40,
-                            verbose_name=_("Nickname"),
-                            blank=True,
-                            null=True)
-
-    email = models.EmailField(blank=True, null=True,
-                              verbose_name=_("Email (Optional)"))
-
-    content = models.TextField(verbose_name=_("Your Comment"))
-    datetime = models.DateTimeField(auto_now_add=True, editable=False,
-                                     verbose_name=_('Date and Time'))
-
-    def __unicode__(self):
-        return "Comment on %s - %s" % (self.post.title,
-                                       "%s..." % self.content[:30])
-
-    class Meta:
-        verbose_name_plural = _("Comments")
-        verbose_name = _('Comment')
-        ordering = ["-datetime"]
 
 
 class Setting (models.Model):
@@ -176,5 +140,5 @@ class Setting (models.Model):
         super(Setting, self).save(*argc, **kwargs)
 
     class Meta:
-        verbose_name_plural = _("Blog Settings")
+        verbose_name_plural = _("Settings")
         verbose_name = _('Setting')
