@@ -31,6 +31,8 @@ class PostType(object):
     admin_form = None
     verbose_name = None
 
+    admin_class = None
+
     def __unicode__(self):
         return self.verbose_name
 
@@ -65,6 +67,18 @@ class BlogPostTypes(object):
             self.logger.warning("'%s' already registered." % type_name)
         else:
             self._registery[type_name] = type_class()
+
+    def get_form(self, type_name):
+        """
+        Return the form of type_name
+        """
+        return self._registery[type_name.lower()].admin_form
+
+    def get_type(self, type_name):
+        """
+        Return the type class of type_name
+        """
+        return self._registery[type_name.lower()]
 
     def get_all_admin_forms(self):
         forms = []

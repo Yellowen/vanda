@@ -27,7 +27,6 @@ from base import post_types
 class TextTypeForm(forms.ModelForm):
     class Meta:
         model = TextPost
-        exclude = ["html_content", ]
 
 
 class NewPostForm(forms.ModelForm):
@@ -36,7 +35,6 @@ class NewPostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(NewPostForm, self).__init__(*args, **kwargs)
-
         self.fields["post_type"].choices = post_types.get_all_admin_forms()
 
     class Meta:

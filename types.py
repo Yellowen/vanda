@@ -21,12 +21,14 @@ from django.utils.translation import ugettext as _
 
 from base import PostType, post_types
 from forms import TextTypeForm
+from admin import TextPostAdmin
 
 
-class VideoType(PostType):
-    name = "video"
-    verbose_name = _("Video Post")
+class TextType(PostType):
+    name = "text"
+    verbose_name = _("Text Post")
     admin_form = TextTypeForm
+    admin_class = TextPostAdmin
 
 
-post_types.register(VideoType)
+post_types.register(TextType)
