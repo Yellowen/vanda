@@ -17,9 +17,11 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 from django import forms
-from django.contrib.formtools.wizard import FormWizard
 
-from models import TextPost
+from django.utils.translation import ugettext as _
+
+from models import Post, TextPost
+from base import post_types
 
 
 class TextTypeForm(forms.ModelForm):
@@ -28,9 +30,15 @@ class TextTypeForm(forms.ModelForm):
         exclude = ["html_content", ]
 
 
-class AdminPostWizard (FormWizard):
-    """
-    This Wizard is used to collect informations about new
-    post in admin interface.
-    """
-    pass
+class NewPostForm(forms.ModelForm):
+    post_type = forms.ChoiceField(label=_("Post Type"))
+    #Category = forms
+
+    def __init__(self, *args, **kwargs):
+        super(NewPostForm, self).__init__(*args, **kwargs)
+
+        self.fields["post_type"].choices = post_types.get_all_admin_forms()
+
+    class Meta:
+        model = Post
+        fields = ["title", "slug"]

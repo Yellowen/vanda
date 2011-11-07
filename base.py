@@ -31,6 +31,9 @@ class PostType(object):
     admin_form = None
     verbose_name = None
 
+    def __unicode__(self):
+        return self.verbose_name
+
 
 class BlogPostTypes(object):
     """
@@ -65,7 +68,7 @@ class BlogPostTypes(object):
 
     def get_all_admin_forms(self):
         forms = []
-        return map(lambda x: [x, self._registery[x].admin_form],
+        return map(lambda x: [x, self._registery[x]],
                    self._registery.keys())
 
 

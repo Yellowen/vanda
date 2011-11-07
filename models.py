@@ -31,9 +31,8 @@ class Category(models.Model):
     title = models.CharField(max_length=250,
                              unique=True, verbose_name=_("Title"))
     slug = models.SlugField(max_length=100,
-                            verbose_name=_("Slug"),
-                            help_text=_("This Field will fill\
-                            automaticaly by title"))
+            verbose_name=_("Slug"),
+            help_text=_("This Field will fill automaticaly by title"))
 
     parent = models.ForeignKey('self', verbose_name=_("Parent"),
                                blank=True, null=True)
@@ -56,15 +55,15 @@ class Post (models.Model):
     Post model.
     author and datetime will be filled automaticly.
     """
-    title = models.CharField(max_length=250, verbose_name=_("Title"))
-    slug = models.SlugField(max_length=100, verbose_name=_("Slug"),\
-                            unique=True,\
-                            help_text=_("This field will fill automaticly \
-                            by title field."))
+    title = models.CharField(max_length=64, verbose_name=_("Title"))
+    slug = models.SlugField(max_length=64, verbose_name=_("Slug"),
+            unique=True,
+            help_text=_("This field will fill automaticly by title field."))
+
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
     author = models.ForeignKey(User, verbose_name=_("Author"))
-    datetime = models.DateTimeField(auto_now_add=True, editable=False,\
+    datetime = models.DateTimeField(auto_now_add=True, editable=False,
                                      verbose_name=_('Date and Time'))
 
     def get_content(self):
