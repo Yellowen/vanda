@@ -16,17 +16,17 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import forms
-from base import BaseType, post_types
+
+from django.utils.translation import ugettext as _
+
+from base import PostType, post_types
+from forms import TextTypeForm
 
 
-class VideoType(BaseType):
+class VideoType(PostType):
     name = "video"
-    form = None
-    form = forms.Video
+    verbose_name = _("Video Post")
+    admin_form = TextTypeForm
 
-    ##should call in view that show the form
-    def get_form(self):
-        return self.form
 
 post_types.register(VideoType)

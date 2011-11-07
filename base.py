@@ -17,23 +17,28 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 import logging
-
-
-class BaseType(object):
-
-    form = None
-    name = None
-
-    def get_form(self):
-        return self.form
+from django import forms
 
 
 class PostType(object):
+    """
+    This class act as the basic class of all types that an application provids.
+    """
+    name = None
 
+    # Admin form should be a model form
+    # that collect data in admin interface
+    admin_form = None
+    verbose_name = None
+
+
+class BlogPostTypes(object):
+    """
+    This class handled the post registerd by other applications.
+    """
     _registery = dict()
 
     def __init__(self):
-        #self.debug
         self.logger = logging.getLogger()
 
     def register(self, type_class):
@@ -41,8 +46,8 @@ class PostType(object):
         Register types class of an Vanda applications into Ultra Blog.
         """
 
-        if not issubclass(type_class, BaseType):
-            raise TypeError("'%s' must be a BaseType subclass." %
+        if not issubclass(type_class, PostType):
+            raise TypeError("'%s' must be a PostType subclass." %
                             type_class)
 
         # Checking the provided base_class application property.
@@ -50,7 +55,7 @@ class PostType(object):
             type_name = getattr(type_class,
                                        "name").lower()
         except AttributeError:
-            raise AttributeError("'%s' did not have 'type_name'." %
+            raise AttributeError("'%s' did not have 'name'." %
                                  type_class + ' property')
 
         if type_name in self._registery.keys():
@@ -58,16 +63,10 @@ class PostType(object):
         else:
             self._registery[type_name] = type_class()
 
+    def get_all_admin_forms(self):
+        forms = []
+        return map(lambda x: [x, self._registery[x].admin_form],
+                   self._registery.keys())
 
-    def admin_view(self, req):
-        """
-        
-        """
-        pass
 
-    def get_all_forms(self, req):
-        forms = None
-        for type_form in self._registery[type_form].get_form():
-            forms[type] = type_form
-
-post_types = PostType()
+post_types = BlogPostTypes()

@@ -17,12 +17,20 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 from django import forms
+from django.contrib.formtools.wizard import FormWizard
+
+from models import TextPost
 
 
-class TypeForm(forms.Form):
-    title = forms.CharField(max_length=100)
-    text = forms.CharField()
+class TextTypeForm(forms.ModelForm):
+    class Meta:
+        model = TextPost
+        exclude = ["html_content", ]
 
 
-class Video(TypeForm):
-    url = forms.URLField()
+class AdminPostWizard (FormWizard):
+    """
+    This Wizard is used to collect informations about new
+    post in admin interface.
+    """
+    pass
