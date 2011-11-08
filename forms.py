@@ -40,3 +40,29 @@ class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["title", "slug", "categories"]
+
+
+class EditPostForm(forms.ModelForm):
+    post_type = forms.CharField(label=_("Post Type"))
+
+    def __init__(self, posttype, *args, **kwargs):
+        obj = kwargs["instance"]
+
+        super(EditPostForm, self).__init__(*args, **kwargs)
+        self.fields['post_type'].widget.attrs['readonly'] = True
+
+        form = post_types.get_form(posttype)(*args,
+                                             instance=obj.content_object)
+
+        for field in form.fields:
+            if field in self.fields:
+                # TODO: Control the same field names.
+                pass
+            else:
+                self.fields[field] = form.fields[field]
+                self.initial[field] = form.initial[field]
+        print self.__dict__
+
+    class Meta:
+        model = Post
+

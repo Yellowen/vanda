@@ -18,7 +18,7 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ----------------------------------------------------------------------------
 
-
+from django import forms
 from django.contrib import admin
 from django.conf.urls.defaults import url, patterns
 from django.shortcuts import render_to_response as rr
@@ -33,7 +33,7 @@ from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect, Http404
 
-from forms import NewPostForm
+from forms import NewPostForm, EditPostForm
 from models import Category, Post, TextPost
 from base import post_types
 
@@ -50,7 +50,9 @@ class PostAdmin(admin.ModelAdmin):
     """
     Post admin interface.
     """
-
+    list_display = ("title", "slug", "author", "datetime", "post_type")
+    list_filter = ("categories", )
+    search_fields = ["title", "slug"]
     prepopulated_fields = {"slug": ("title",)}
 
     def get_urls(self):
@@ -67,13 +69,22 @@ class PostAdmin(admin.ModelAdmin):
         Returns a Form class for use in the admin add view. This is used by
         add_view and change_view.
         """
+        class FakeForm(forms.ModelForm):
+
+            def __new__(cls, *args, **kwargs):
+                if obj:
+                    return EditPostForm(obj.post_type_name,
+                                        *args, **kwargs)
+                else:
+                    return NewPostForm(*args, **kwargs)
+
         if self.declared_fieldsets:
             fields = flatten_fieldsets(self.declared_fieldsets)
         else:
             fields = None
         exclude = None
         defaults = {
-            "form": NewPostForm,
+            "form": FakeForm,
             "fields": fields,
             "exclude": exclude,
             "formfield_callback": curry(self.formfield_for_dbfield, request=request),
@@ -111,16 +122,16 @@ class PostAdmin(admin.ModelAdmin):
         if request.method == "POST":
             form = ModelForm(request.POST, request.FILES)
             if form.is_valid():
-
+                new_object = form.save()
                 new_post = Post()
                 new_post.title = request.session["postdata"]["title"]
                 new_post.slug = request.session["postdata"]["slug"]
                 new_post.author = request.user
+                new_post.content_object = new_object
                 new_post.save()
 
+                new_post.post_type_name = post_type
                 new_post.categories = request.session["postdata"]["categories"]
-                new_object = form.save()
-                new_post.content = new_object
                 new_post.save()
 
                 admin_class.save_model(request,
