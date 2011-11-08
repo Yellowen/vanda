@@ -87,8 +87,14 @@ class PostAdmin(admin.ModelAdmin):
         type_class = post_types.get_type(type_name)
         ModelForm = type_class.admin_form
         model = ModelForm.Meta.model
-        admin_class = type_class.admin_class(model, self.admin_site)
-
+        if type_class.admin_class is not None:
+            admin_class = type_class.admin_class(model, self.admin_site)
+        else:
+            tmp = type("AdminClass", (admin.ModelAdmin, ),
+                               {})
+            admin_class = tmp(model, self.admin_site)
+            setattr(admin_class, "form", ModelForm)
+        del request.session["postdata"]
         model = ModelForm.Meta.model
         opts = model._meta
         self.model = model

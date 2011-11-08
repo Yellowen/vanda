@@ -27,6 +27,7 @@ from base import post_types
 class TextTypeForm(forms.ModelForm):
     class Meta:
         model = TextPost
+        exclude = ["html_content", ]
 
 
 class NewPostForm(forms.ModelForm):

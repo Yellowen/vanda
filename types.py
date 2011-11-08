@@ -28,7 +28,6 @@ class TextType(PostType):
     name = "text"
     verbose_name = _("Text Post")
     admin_form = TextTypeForm
-    admin_class = TextPostAdmin
 
 
 post_types.register(TextType)
