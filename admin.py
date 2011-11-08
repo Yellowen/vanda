@@ -34,9 +34,16 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect, Http404
 
 from forms import NewPostForm
-from models import Category
-from models import Post
+from models import Category, Post, TextPost
 from base import post_types
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    """
+    Category model admin.
+    """
+    list_display = ("title", "slug", "parent")
+    prepopulated_fields = {"slug": ("title",)}
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -44,10 +51,13 @@ class PostAdmin(admin.ModelAdmin):
     Post admin interface.
     """
 
+    prepopulated_fields = {"slug": ("title",)}
+
     def get_urls(self):
 
         urlpatterns = patterns('',
             (r'^add/(\w+)/$', self.add_post),
+            (r'^add/\w+/(\d+)/$', self.change_view),
         )
         urlpatterns += super(PostAdmin, self).get_urls()
         return urlpatterns
@@ -94,14 +104,35 @@ class PostAdmin(admin.ModelAdmin):
                                {})
             admin_class = tmp(model, self.admin_site)
             setattr(admin_class, "form", ModelForm)
-        del request.session["postdata"]
         model = ModelForm.Meta.model
         opts = model._meta
-        self.model = model
         formsets = []
         form_url = ''
         if request.method == "POST":
-            pass
+            form = ModelForm(request.POST, request.FILES)
+            if form.is_valid():
+
+                new_post = Post()
+                new_post.title = request.session["postdata"]["title"]
+                new_post.slug = request.session["postdata"]["slug"]
+                new_post.author = request.user
+                new_post.save()
+
+                new_post.categories = request.session["postdata"]["categories"]
+                new_object = form.save()
+                new_post.content = new_object
+                new_post.save()
+
+                admin_class.save_model(request,
+                                       new_object,
+                                       form,
+                                       change=False)
+
+                del request.session["postdata"]
+
+                self.log_addition(request, new_object)
+                #return self.response_add(request, new_object)
+                return self.changelist_view(request)
         else:
             initial = dict(request.GET.items())
             for k in initial:
@@ -113,13 +144,13 @@ class PostAdmin(admin.ModelAdmin):
                     initial[k] = initial[k].split(",")
             form = ModelForm(initial=initial)
             prefixes = {}
-            for FormSet, inline in zip(self.get_formsets(request),
-                                       self.inline_instances):
+            for FormSet, inline in zip(admin_class.get_formsets(request),
+                                       admin_class.inline_instances):
                 prefix = FormSet.get_default_prefix()
                 prefixes[prefix] = prefixes.get(prefix, 0) + 1
                 if prefixes[prefix] != 1:
                     prefix = "%s-%s" % (prefix, prefixes[prefix])
-                formset = FormSet(instance=self.model(), prefix=prefix,
+                formset = FormSet(instance=model(), prefix=prefix,
                                   queryset=inline.queryset(request))
                 formsets.append(formset)
 
@@ -129,7 +160,7 @@ class PostAdmin(admin.ModelAdmin):
         media = admin_class.media + adminForm.media
 
         inline_admin_formsets = []
-        for inline, formset in zip(self.inline_instances, formsets):
+        for inline, formset in zip(admin_class.inline_instances, formsets):
             fieldsets = list(inline.get_fieldsets(request))
             readonly = list(inline.get_readonly_fields(request))
             inline_admin_formset = helpers.InlineAdminFormSet(inline, formset,
@@ -145,11 +176,14 @@ class PostAdmin(admin.ModelAdmin):
             'media': mark_safe(media),
             'inline_admin_formsets': inline_admin_formsets,
             'errors': helpers.AdminErrorList(form, formsets),
-            'root_path': self.admin_site.root_path,
+            'root_path': admin_class.admin_site.root_path,
             'app_label': opts.app_label,
         }
-        return self.render_change_form(request, context, form_url=form_url, add=False)
-        
+        return admin_class.render_change_form(request,
+                                       context,
+                                       form_url=form_url,
+                                       add=True)
+
     @csrf_protect_m
     @transaction.commit_on_success
     def add_view(self, request, form_url='', extra_context=None):
@@ -167,30 +201,11 @@ class PostAdmin(admin.ModelAdmin):
             if form.is_valid():
                 request.session["postdata"] = form.cleaned_data
                 return HttpResponseRedirect("%s/" % form.cleaned_data["post_type"])
-            ## else:
-            ## ##     new_object = self.model()
-            ## prefixes = {}
-            ## for FormSet, inline in zip(self.get_formsets(request), self.inline_instances):
-            ##     prefix = FormSet.get_default_prefix()
-            ##     prefixes[prefix] = prefixes.get(prefix, 0) + 1
-            ##     if prefixes[prefix] != 1:
-            ##         prefix = "%s-%s" % (prefix, prefixes[prefix])
-            ##     formset = FormSet(data=request.POST, files=request.FILES,
-            ##                       instance=new_object,
-            ##                       save_as_new="_saveasnew" in request.POST,
-            ##                       prefix=prefix, queryset=inline.queryset(request))
-            ##     formsets.append(formset)
-            ## if all_valid(formsets) and form_validated:
-            ##     self.save_model(request, new_object, form, change=False)
-            ##     form.save_m2m()
-            ##     for formset in formsets:
-            ##         self.save_formset(request, form, formset, change=False)
-
-            ##     self.log_addition(request, new_object)
-            ##     return self.response_add(request, new_object)
         else:
             # Prepare the dict of initial data from the request.
             # We have to special-case M2Ms as a list of comma-separated PKs.
+            if "postdata" in request.session: del request.session["postdata"]
+
             initial = dict(request.GET.items())
             for k in initial:
                 try:
@@ -237,7 +252,6 @@ class PostAdmin(admin.ModelAdmin):
             'app_label': opts.app_label,
         }
         context.update(extra_context or {})
-        print ">>>>>>>>> ", form_url
         return self.render_change_form(request, context, form_url=form_url, add=True)
 
 
@@ -245,5 +259,6 @@ class TextPostAdmin(admin.ModelAdmin):
     exclude = ["html_content", ]
 
 
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(TextPost, TextPostAdmin)

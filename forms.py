@@ -32,7 +32,6 @@ class TextTypeForm(forms.ModelForm):
 
 class NewPostForm(forms.ModelForm):
     post_type = forms.ChoiceField(label=_("Post Type"))
-    #Category = forms
 
     def __init__(self, *args, **kwargs):
         super(NewPostForm, self).__init__(*args, **kwargs)
@@ -40,4 +39,4 @@ class NewPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ["title", "slug"]
+        fields = ["title", "slug", "categories"]
