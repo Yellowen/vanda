@@ -72,7 +72,10 @@ class BlogPostTypes(object):
         """
         Return the form of type_name
         """
-        return self._registery[type_name.lower()].admin_form
+        if type_name.lower() in self._registery:
+            return self._registery[type_name.lower()].admin_form
+        else:
+            return None
 
     def get_type(self, type_name):
         """

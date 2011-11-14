@@ -60,9 +60,17 @@ class Post (models.Model):
             unique=True,
             help_text=_("This field will fill automaticly by title field."))
 
+    content_type = models.ForeignKey('contenttypes.ContentType', editable=False)
+    object_id = models.PositiveIntegerField(editable=False)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
-    author = models.ForeignKey(User, verbose_name=_("Author"))
+    post_type_name = models.CharField(_("Post type name"),
+                                      max_length=30,
+                                      blank=True)
+
+    author = models.ForeignKey(User,
+                               editable=False,
+                               verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,
                                      verbose_name=_('Date and Time'))
 
@@ -71,6 +79,12 @@ class Post (models.Model):
         Return suitable content by looking up settings.
         """
         return self.content_object.get_htmlized_content()
+
+    def post_type(self):
+        """
+        Return the post type.
+        """
+        return str(self.content_object.__class__._meta.verbose_name)
 
     def comments(self):
         """
@@ -109,6 +123,13 @@ class TextPost(models.Model):
 
     def get_htmlized_content(self):
         return self.html_content or self.encode_content()
+
+    def __unicode__(self):
+        return self.content[:30]
+
+    class Meta:
+        verbose_name = _("Text Post")
+        verbose_name_plural = _("Text Posts")
 
 
 class Setting (models.Model):
