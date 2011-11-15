@@ -32,10 +32,9 @@ class TextTypeForm(forms.ModelForm):
         exclude = ["html_content", ]
 
     class Media:
-        js = ("%sjs/jquery-1.7.min.js" % settings.MEDIA_URL,
-              "%sjs/jquery.tinymce.js" % settings.MEDIA_URL,
-              "%sjs/tinymce_init.js" % settings.MEDIA_URL,
-              )
+        js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
+              "%sjs/js_init.js" % settings.MEDIA_URL,)
+        css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
 
 
 class NewPostForm(forms.ModelForm):
@@ -74,6 +73,9 @@ class EditPostForm(forms.ModelForm):
                 self.external_fieldset = form.fieldset
             else:
                 self.external_fieldset = None
+
+            self.Media = form.Media
+
 
         prefix = "%s_" % FormClass.__name__
 

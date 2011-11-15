@@ -362,6 +362,7 @@ class PostAdmin(admin.ModelAdmin):
             self.fields = None
             form = ModelForm(obj.post_type_name, instance=obj)
             self.fields = form.fields.keys()
+            
             tmp = [
                 (None, {"fields": (("title", "slug", "post_type"),
                                    ("categories", "tags"),
