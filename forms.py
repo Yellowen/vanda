@@ -49,25 +49,7 @@ class EditPostForm(forms.ModelForm):
 
     def __init__(self, posttype, *args, **kwargs):
 
-        ## try:
-        ##     posttype = self.posttype
-        ## except AttributeError:
-        ##     #raise TypeError("'posttype' attribute did not set.")
-        ##     posttype = 'textdddd'
         obj = kwargs["instance"]
-        ## initial_ = kwargs.get("initial", {})
-        ## if "initial" in kwargs: del kwargs["initial"]
-
-        ## form = post_types.get_form(posttype)(*args,
-        ##                                      instance=obj.content_object)
-
-        ## for field in form.fields:
-        ##     if field in self.base_fields:
-        ##         # TODO: Control the same field names.
-        ##         pass
-        ##     else:
-        ##         self.base_fields[field] = form.fields[field]
-        ##         initial_[field] = form.initial[field]
 
         super(EditPostForm, self).__init__(*args, **kwargs)
 
@@ -78,6 +60,9 @@ class EditPostForm(forms.ModelForm):
 
         if FormClass:
             form = FormClass(*args, instance=obj.content_object)
+            self.form = form
+
+        prefix = "%s_" % FormClass.__name__
 
         for field in form.fields:
             if field in self.fields:
@@ -88,7 +73,18 @@ class EditPostForm(forms.ModelForm):
                 self.fields[field] = form.fields[field]
                 self.initial[field] = form.initial[field]
 
+    def save(self, request, *args, **kwargs):
+        prefix = "%s_" % self.form.__class__.__name__
+        self.form.save()
+        return super(EditPostForm, self).save(*args, **kwargs)
+
+    def is_valid(self):
+        if self.form.is_valid():
+            super(EditPostForm, self).is_valid()
+            return True
+
+        return False
+
     class Meta:
         model = Post
         exclude = ["post_type_name", ]
-

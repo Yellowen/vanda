@@ -74,6 +74,9 @@ class Post (models.Model):
     datetime = models.DateTimeField(auto_now_add=True, editable=False,
                                      verbose_name=_('Date and Time'))
 
+    update_datetime = models.DateTimeField(auto_now_add=True, editable=False,
+                                           verbose_name=_('Last Update'))
+
     def get_content(self):
         """
         Return suitable content by looking up settings.

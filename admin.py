@@ -33,6 +33,7 @@ from django.contrib.admin import widgets, helpers
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect, Http404
+from django.core.urlresolvers import reverse
 from django.contrib.admin.util import (unquote, flatten_fieldsets,
                                        get_deleted_objects, model_format_dict)
 
@@ -145,7 +146,12 @@ class PostAdmin(admin.ModelAdmin):
 
                 self.log_addition(request, new_object)
                 #return self.response_add(request, new_object)
-                return self.changelist_view(request)
+                #return self.changelist_view(request)
+
+                return HttpResponseRedirect(
+                    reverse("admin:%s_%s_changelist" % (
+                        self.model._meta.app_label,
+                        self.model.__name__.lower()), args=()))
         else:
             initial = dict(request.GET.items())
             for k in initial:
@@ -207,10 +213,12 @@ class PostAdmin(admin.ModelAdmin):
         if not self.has_add_permission(request):
             raise PermissionDenied
 
+        self.fields = None
         ModelForm = self.get_form(request)
         formsets = []
         if request.method == 'POST':
             form = ModelForm(request.POST, request.FILES)
+
             if form.is_valid():
                 request.session["postdata"] = form.cleaned_data
                 return HttpResponseRedirect("%s/" % form.cleaned_data["post_type"])
@@ -227,7 +235,9 @@ class PostAdmin(admin.ModelAdmin):
                     continue
                 if isinstance(f, models.ManyToManyField):
                     initial[k] = initial[k].split(",")
+            self.fields = None
             form = ModelForm(initial=initial)
+            self.fields = form.fields.keys()
             prefixes = {}
             for FormSet, inline in zip(self.get_formsets(request),
                                        self.inline_instances):
@@ -268,7 +278,6 @@ class PostAdmin(admin.ModelAdmin):
         return self.render_change_form(request, context,
                                        form_url=form_url, add=True)
 
-
     @csrf_protect_m
     @transaction.commit_on_success
     def change_view(self, request, object_id, extra_context=None):
@@ -290,14 +299,21 @@ class PostAdmin(admin.ModelAdmin):
         if request.method == 'POST' and "_saveasnew" in request.POST:
             return self.add_view(request, form_url='../add/')
 
+        self.fields = None
         ModelForm = self.get_form(request, obj)
         formsets = []
         if request.method == 'POST':
+
             form = ModelForm(obj.post_type_name, request.POST,
                              request.FILES, instance=obj)
+            self.fields = form.fields.keys()
+
             if form.is_valid():
                 form_validated = True
-                new_object = self.save_form(request, form, change=True)
+                # new_object = self.save_form(request, form, change=True)
+                new_object = form.save(request)
+                # TODO: Review this algorithm
+                return self.response_change(request, new_object)
             else:
                 form_validated = False
                 new_object = obj
@@ -325,7 +341,7 @@ class PostAdmin(admin.ModelAdmin):
                 return self.response_change(request, new_object)
 
         else:
-
+            self.fields = None
             form = ModelForm(obj.post_type_name, instance=obj)
             self.fields = form.fields.keys()
             prefixes = {}
