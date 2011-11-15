@@ -17,8 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 from django import forms
-
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from models import Post, TextPost
 from base import post_types
@@ -30,6 +30,12 @@ class TextTypeForm(forms.ModelForm):
     class Meta:
         model = TextPost
         exclude = ["html_content", ]
+
+    class Media:
+        js = ("%sjs/jquery-1.7.min.js" % settings.MEDIA_URL,
+              "%sjs/jquery.tinymce.js" % settings.MEDIA_URL,
+              "%sjs/tinymce_init.js" % settings.MEDIA_URL,
+              )
 
 
 class NewPostForm(forms.ModelForm):

@@ -100,6 +100,12 @@ class Post (models.Model):
         self.update_datetime = datetime.datetime.now()
         super(Post, self).save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.comments().delete()
+        tmp = self.content_object
+        tmp.delete()
+        super(Post, self).delete(*args, **kwargs)
+
     def get_content(self):
         """
         Return suitable content by looking up settings.
