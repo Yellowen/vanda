@@ -18,6 +18,31 @@
 # -----------------------------------------------------------------------------
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
+from django.template import RequestContext
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
-from models import Post
+from models import Post, Setting
 
+
+def blog_index(request):
+    """
+    Render the lastest blog entries.
+    """
+    ppp = Setting.get_setting("post_per_page")
+    post_list = Post.objects.all()
+
+    paginator = Paginator(post_list, ppp)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        postss = paginator.page(paginator.num_pages)
+
+    return rr('ultra_blog/index.html',
+              {"posts": posts},
+              context_instance=RequestContext(request))

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load comments %}
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="posts">
+{% for post in posts.object_list %}
+<div class="post">
+<H1 class="title">{{ post.title }}</h1>
+<div class="entry">
+{% autoescape off %}
+{{ post.get_content }}
+{% endautoescape %}
+</div>
+<div class="meta">
+<p>{% trans 'Posted by' %} : {{ post.author }}</p>
+<p>{% trans 'Posted on' %}{{ post.datetime|date:"D d M Y" }} <b>|</b> <a href="/blog/post/{{ i.slug }}/">{% trans 'Comment' %}{% get_comment_count for post as count %} ({{ count }})</a></p>
+<p>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</p>
+<p>{{ post.tags }}</p>
+</div>
+</div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+{% endblock %}

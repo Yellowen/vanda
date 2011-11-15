@@ -38,7 +38,7 @@ from django.contrib.admin.util import (unquote, flatten_fieldsets,
                                        get_deleted_objects, model_format_dict)
 
 from forms import NewPostForm, EditPostForm
-from models import Category, Post, TextPost
+from models import Category, Post, Setting, TextPost
 from base import post_types
 
 
@@ -419,10 +419,11 @@ class PostAdmin(admin.ModelAdmin):
         return self.render_change_form(request, context, change=True, obj=obj)
 
 
-class TextPostAdmin(admin.ModelAdmin):
-    exclude = ["html_content", ]
+class SettingAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(TextPost, TextPostAdmin)
+admin.site.register(Setting, SettingAdmin)
+#admin.site.register(TextPost)

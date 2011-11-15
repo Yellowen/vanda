@@ -158,11 +158,42 @@ class TextPost(models.Model):
                                     blank=True,
                                     null=True)
 
-    def encode_content(self):
-        pass
+    def save(self, *args, **kwargs):
+        self.html_content = self.content
+        super(TextPost, self).save(*args, **kwargs)
 
     def get_htmlized_content(self):
-        return self.html_content or self.encode_content()
+
+        import re
+
+        from django.conf import settings
+        from pygments import highlight
+        from pygments.lexers import get_lexer_by_name
+        from pygments.formatters import HtmlFormatter
+
+
+        # Loading current highlighting style
+        current_style = Setting.get_setting("highlight_style")
+
+        # Find all the code tags
+        code_pattern = re.compile("(\[code ([A-Za-z]+)\ *\](.*)\[/code\])",
+                                  re.I | re.M | re.S)
+        code_sections =  code_pattern.findall(self.content)
+
+        result = '<link href="%scss/%s.css" rel="stylesheet">\n%s' % (settings.MEDIA_URL, current_style, self.content)
+        #result = self.content
+        print ">>>>>>> ", result
+        # Replace the code tags with their rendered HTML
+        for raw_text, language, code in code_sections:
+
+            lexer = get_lexer_by_name(language, stripall=True)
+            formatter = HtmlFormatter(linenos=True, cssclass="codehilite",
+                                      style=current_style)
+            tmpresult = highlight(code, lexer, formatter)
+            result = result.replace(str(raw_text), tmpresult)
+
+        print ">>>> ", result
+        return result
 
     def __unicode__(self):
         return self.content[:30]
@@ -176,9 +207,32 @@ class Setting (models.Model):
     """
     Configuration model.
     """
+    STYLES = [
+        ("", "---"),
+        ('monokai', 'Monokai'),
+        ('manni', 'Manni'),
+        ('perldoc', 'Perldoc'),
+        ('borland', 'Borland'),
+        ('colorful', 'Colorful'),
+        ('default', 'Default'),
+        ('murphy', 'Murphy'),
+        ('vs', 'Vs'),
+        ('trac', 'Trac'),
+        ('tango', 'Tango'),
+        ('fruity', 'Fruity'),
+        ('autumn', 'Autumn'),
+        ('bw', 'Bw'),
+        ('emacs', 'Emacs'),
+        ('vim', 'Vim'),
+        ('pastie', 'Pastie'),
+        ('friendly', 'Friendly'),
+        ('native', 'Native'),
+        ]
+
     _DEFAULT = {
         'post_per_page': 10,
         'comment_per_page': 10,
+        "highlight_style": "emacs"
         }
     active = models.BooleanField(_("Active"),
                                  default=False)
@@ -189,17 +243,22 @@ class Setting (models.Model):
     comment_per_page = models.IntegerField(default=10,
                             verbose_name=_("How many comment per page?"))
 
-    @staticmethod
-    def get_setting(setting_name, default=None):
+    highlight_style = models.CharField(_("Highlight style"),
+                                       max_length=16,
+                                       choices=STYLES,
+                                       blank=True)
+
+    @classmethod
+    def get_setting(cls, setting_name, default=None):
         """
         Return the field data of given setting_name if exists or
         return default value for it.
         """
-        if setting_name in _DEFAULT:
+        if setting_name in cls._DEFAULT:
             try:
                 return getattr(Setting.objects.get(active=True), setting_name)
             except Setting.DoesNotExist:
-                return _DEFAULT[setting_name]
+                return cls._DEFAULT[setting_name]
         else:
             return default
 
@@ -210,9 +269,12 @@ class Setting (models.Model):
         if self.active:
             try:
                 pre = Setting.objects.get(active=True)
+                if pre is not self:
+                    pre.active=False
+                    pre.save()
             except Setting.DoesNotExist:
                 pass
-            pre.save()
+            
         super(Setting, self).save(*argc, **kwargs)
 
     class Meta:
