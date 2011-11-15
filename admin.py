@@ -54,17 +54,13 @@ class PostAdmin(admin.ModelAdmin):
     """
     Post admin interface.
     """
-    list_display = ("title", "slug", "author", "datetime", "post_type")
+    list_display = ("title", "author", "comments_count", "tags", "datetime",
+                    "update_datetime", "publish", "post_type")
 
     list_filter = ("categories", )
+    filter_horizontal   = ("categories", )
     search_fields = ["title", "slug"]
     prepopulated_fields = {"slug": ("title",)}
-
-    ## fieldsets = (
-    ##     (None, {"fields": (("title", "slug", "post_type"), ("categories", "tags"),
-    ##                        "draft")}),
-    ##     (_("SEO"), {"fields": ("page_title", "description")}),
-    ##     )
 
     def get_urls(self):
 
@@ -112,6 +108,7 @@ class PostAdmin(admin.ModelAdmin):
         if not "post_type" in request.session["postdata"]:
             raise Http404()
 
+        self.fieldsets = None
         # Get the type class and its needed properties
         type_name = request.session["postdata"]["post_type"]
         type_class = post_types.get_type(type_name)
@@ -136,6 +133,10 @@ class PostAdmin(admin.ModelAdmin):
                 new_post.title = request.session["postdata"]["title"]
                 new_post.slug = request.session["postdata"]["slug"]
                 new_post.author = request.user
+                new_post.page_title = request.session["postdata"]["page_title"]
+                new_post.description = request.session["postdata"]["description"]
+                new_post.tags = request.session["postdata"]["tags"]
+                new_post.publish = request.session["postdata"]["publish"]
                 new_post.content_object = new_object
                 new_post.save()
 
@@ -220,6 +221,7 @@ class PostAdmin(admin.ModelAdmin):
             raise PermissionDenied
 
         self.fields = None
+        self.fieldsets = None
         ModelForm = self.get_form(request)
         formsets = []
         if request.method == 'POST':
@@ -247,8 +249,9 @@ class PostAdmin(admin.ModelAdmin):
             self.fieldsets = (
                 (None, {"fields": (("title", "slug", "post_type"),
                                    ("categories", "tags"),
-                                   "draft")}),
-                (_("SEO"), {"fields": ("page_title", "description")}),
+                                   "publish")}),
+                (_("SEO"), {"fields": ("page_title", "description"),
+                            "description": _("Search Engine Optimization options.")}),
                 )
 
             prefixes = {}
@@ -313,6 +316,7 @@ class PostAdmin(admin.ModelAdmin):
             return self.add_view(request, form_url='../add/')
 
         self.fields = None
+        self.fieldsets = None
         ModelForm = self.get_form(request, obj)
         formsets = []
         if request.method == 'POST':
@@ -358,16 +362,19 @@ class PostAdmin(admin.ModelAdmin):
             self.fields = None
             form = ModelForm(obj.post_type_name, instance=obj)
             self.fields = form.fields.keys()
-            self.fieldsets = [
+            tmp = [
                 (None, {"fields": (("title", "slug", "post_type"),
                                    ("categories", "tags"),
-                                   "draft")}),
+                                   "publish")}),
                 (_("SEO"), {"fields": ("page_title", "description")}),
-                ]
+            ]
+            external_fieldset = form.get_fieldset()
 
-            external_fieldset = form.get_fieldset
             if external_fieldset:
-                self.fieldsets.append(external_fieldset)
+                tmp.append(external_fieldset)
+
+            self.fieldsets = tuple(tmp)
+
             prefixes = {}
             for FormSet, inline in zip(
                 self.get_formsets(request, obj),

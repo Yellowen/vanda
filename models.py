@@ -21,6 +21,7 @@ from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
+from django.contrib.comments.models import Comment
 
 from tagging.fields import TagField
 
@@ -71,9 +72,11 @@ class Post (models.Model):
                                       max_length=30,
                                       blank=True)
 
-    tags = TagField(_("Tags"))
+    tags = TagField(_("Tags"),
+        help_text=_("Tags should separate with a white space or a comma"))
 
-    draft = models.BooleanField(_("Draft"), default=True)
+    publish = models.BooleanField(_("Publish"), default=True,
+                        help_text=_("Should post appear in the main page?"))
 
     page_title = models.CharField(_("Page title"),
                                   max_length=128,
@@ -113,7 +116,15 @@ class Post (models.Model):
         """
         Return the comments related to current post.
         """
-        return Comment.objects.filter(post=self)
+        return Comment.objects.filter(content_type=self)
+
+    def comments_count(self):
+        """
+        Return the number of comments related to current post.
+        """
+        return "<a href='#'>%s</a>" % Comment.objects.filter(content_type=self).count()
+
+    comments_count.allow_tags = True
 
     def related_posts(self):
         # TODO: return the posts in same category with same tags

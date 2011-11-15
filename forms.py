@@ -25,7 +25,7 @@ from base import post_types
 
 
 class TextTypeForm(forms.ModelForm):
-    fieldset = (_("Text Post"), {"fields": ("content")})
+    fieldset = (_("Text Post"), {"fields": ("content", )})
 
     class Meta:
         model = TextPost
@@ -43,7 +43,7 @@ class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["title", "slug", "categories", "tags", "page_title",
-                  "description", "draft"]
+                  "description", "publish"]
 
 
 class EditPostForm(forms.ModelForm):
