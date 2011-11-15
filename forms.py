@@ -25,6 +25,8 @@ from base import post_types
 
 
 class TextTypeForm(forms.ModelForm):
+    fieldset = (_("Text Post"), {"fields": ("content")})
+
     class Meta:
         model = TextPost
         exclude = ["html_content", ]
@@ -40,7 +42,8 @@ class NewPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ["title", "slug", "categories"]
+        fields = ["title", "slug", "categories", "tags", "page_title",
+                  "description", "draft"]
 
 
 class EditPostForm(forms.ModelForm):
@@ -61,6 +64,10 @@ class EditPostForm(forms.ModelForm):
         if FormClass:
             form = FormClass(*args, instance=obj.content_object)
             self.form = form
+            if hasattr(form, "fieldset"):
+                self.external_fieldset = form.fieldset
+            else:
+                self.external_fieldset = None
 
         prefix = "%s_" % FormClass.__name__
 
@@ -74,9 +81,13 @@ class EditPostForm(forms.ModelForm):
                 self.initial[field] = form.initial[field]
 
     def save(self, request, *args, **kwargs):
+
         prefix = "%s_" % self.form.__class__.__name__
         self.form.save()
         return super(EditPostForm, self).save(*args, **kwargs)
+
+    def get_fieldset(self):
+        return self.external_fieldset
 
     def is_valid(self):
         if self.form.is_valid():

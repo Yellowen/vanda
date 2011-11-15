@@ -60,6 +60,12 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ["title", "slug"]
     prepopulated_fields = {"slug": ("title",)}
 
+    ## fieldsets = (
+    ##     (None, {"fields": (("title", "slug", "post_type"), ("categories", "tags"),
+    ##                        "draft")}),
+    ##     (_("SEO"), {"fields": ("page_title", "description")}),
+    ##     )
+
     def get_urls(self):
 
         urlpatterns = patterns('',
@@ -238,6 +244,13 @@ class PostAdmin(admin.ModelAdmin):
             self.fields = None
             form = ModelForm(initial=initial)
             self.fields = form.fields.keys()
+            self.fieldsets = (
+                (None, {"fields": (("title", "slug", "post_type"),
+                                   ("categories", "tags"),
+                                   "draft")}),
+                (_("SEO"), {"fields": ("page_title", "description")}),
+                )
+
             prefixes = {}
             for FormSet, inline in zip(self.get_formsets(request),
                                        self.inline_instances):
@@ -336,7 +349,8 @@ class PostAdmin(admin.ModelAdmin):
                 for formset in formsets:
                     self.save_formset(request, form, formset, change=True)
 
-                change_message = self.construct_change_message(request, form, formsets)
+                change_message = self.construct_change_message(request,
+                                                               form, formsets)
                 self.log_change(request, new_object, change_message)
                 return self.response_change(request, new_object)
 
@@ -344,8 +358,21 @@ class PostAdmin(admin.ModelAdmin):
             self.fields = None
             form = ModelForm(obj.post_type_name, instance=obj)
             self.fields = form.fields.keys()
+            self.fieldsets = [
+                (None, {"fields": (("title", "slug", "post_type"),
+                                   ("categories", "tags"),
+                                   "draft")}),
+                (_("SEO"), {"fields": ("page_title", "description")}),
+                ]
+
+            external_fieldset = form.get_fieldset
+            if external_fieldset:
+                self.fieldsets.append(external_fieldset)
             prefixes = {}
-            for FormSet, inline in zip(self.get_formsets(request, obj), self.inline_instances):
+            for FormSet, inline in zip(
+                self.get_formsets(request, obj),
+                self.inline_instances):
+
                 prefix = FormSet.get_default_prefix()
                 prefixes[prefix] = prefixes.get(prefix, 0) + 1
                 if prefixes[prefix] != 1:

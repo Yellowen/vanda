@@ -22,6 +22,8 @@ from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
 
+from tagging.fields import TagField
+
 
 class Category(models.Model):
     """
@@ -60,7 +62,8 @@ class Post (models.Model):
             unique=True,
             help_text=_("This field will fill automaticly by title field."))
 
-    content_type = models.ForeignKey('contenttypes.ContentType', editable=False)
+    content_type = models.ForeignKey('contenttypes.ContentType',
+                                     editable=False)
     object_id = models.PositiveIntegerField(editable=False)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
@@ -68,14 +71,31 @@ class Post (models.Model):
                                       max_length=30,
                                       blank=True)
 
+    tags = TagField(_("Tags"))
+
+    draft = models.BooleanField(_("Draft"), default=True)
+
+    page_title = models.CharField(_("Page title"),
+                                  max_length=128,
+                                  blank=True,
+                                  default="")
+    description = models.TextField(_("page description"),
+                                   blank=True, null=True)
+
     author = models.ForeignKey(User,
                                editable=False,
                                verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,
                                      verbose_name=_('Date and Time'))
 
-    update_datetime = models.DateTimeField(auto_now_add=True, editable=False,
+    update_datetime = models.DateTimeField(null=True, blank=True,
+                                           editable=False,
                                            verbose_name=_('Last Update'))
+
+    def save(self, *args, **kwargs):
+        import datetime
+        self.update_datetime = datetime.datetime.now()
+        super(Post, self).save(*args, **kwargs)
 
     def get_content(self):
         """
