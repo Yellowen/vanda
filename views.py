@@ -46,3 +46,14 @@ def blog_index(request):
     return rr('ultra_blog/index.html',
               {"posts": posts},
               context_instance=RequestContext(request))
+
+
+def view_post(request, slug):
+    """
+    View a single post.
+    """
+    post = get_object_or_404(Post, slug=slug)
+
+    return rr("ultra_blog/view_post.html",
+              {"post": post},
+              context_instance=RequestContext(request))

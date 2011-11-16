@@ -1,13 +1,11 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% load comments %}
-{% block head %}
+{% extends 'base.html' %}
 
+
+{% block extrahead %}
+<link href="{{ HIGHLIGHT_STYLE }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
-<div class="posts">
-{% for post in posts.object_list %}
 <div class="post">
 <H1 class="title">{{ post.title }}</h1>
 <div class="entry">
@@ -22,22 +20,10 @@
 <p>{{ post.tags }}</p>
 </div>
 </div>
-{% endfor %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if posts.has_previous %}
-            <a href="?page={{ posts.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
-        </span>
-
-        {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }}">next</a>
-        {% endif %}
-    </span>
+<div class="comments"
 </div>
+
+<div class="commentform">
 </div>
 {% endblock %}
