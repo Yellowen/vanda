@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Behnam AhmadKhanBeigi ( b3hnam@gnu.or)
+#    Copyright (C) 2011 Behnam AhmadKhanBeigi ( b3hnam@gnu.org)
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,5 +28,15 @@ class TextType(PostType):
     verbose_name = _("Text Post")
     admin_form = TextTypeForm
 
+class SoundType(PostType):
+    name = "sound"
+    verbose_name = _("Sound Post")
+    admin_form = SoundTypeForm
+
+
+class ImageType(PostType):
+    name = "image"
+    verbose_name = _("Image Post")
+    admin_form = ImageTypeForm
 
 post_types.register(TextType)
