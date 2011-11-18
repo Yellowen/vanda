@@ -85,8 +85,11 @@ class BlogPostTypes(object):
 
     def get_all_admin_forms(self):
         forms = []
-        return map(lambda x: [x, self._registery[x]],
-                   self._registery.keys())
+
+        admin_forms = map(lambda x: [x, self._registery[x]],
+                          self._registery.keys())
+
+        return admin_forms
 
 
 post_types = BlogPostTypes()

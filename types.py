@@ -41,3 +41,4 @@ class ImageType(PostType):
     admin_form = ImageTypeForm
 
 post_types.register(TextType)
+post_types.register(ImageType)

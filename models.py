@@ -22,6 +22,7 @@ from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
+from django.conf import settings
 
 from tagging.fields import TagField
 
@@ -159,7 +160,6 @@ class TextPost(models.Model):
 
         import re
 
-        from django.conf import settings
         from pygments import highlight
         from pygments.lexers import get_lexer_by_name
         from pygments.formatters import HtmlFormatter
@@ -203,6 +203,10 @@ class ImagePost(models.Model):
                               verbose_name=_("Image"),
                               help_text=_("Image for the post."))
 
+    alt = models.CharField(_("Image alt"), max_length=255,
+                           blank=True,
+                           null=True)
+    
     klass = models.CharField(_("CSS class"),
                 max_length=64,
                 blank=True,
@@ -219,20 +223,32 @@ class ImagePost(models.Model):
                                 blank=True,
                                 null=True)
 
-    description = models.TextField(_("Image description"))
+    description = models.TextField(_("Image description"),
+                                   blank=True,
+                                   null=True)
 
     def get_htmlized_content(self):
-        result = "<img src='%s' alt='%s' class='%s' id='%s' %s %s>"
+        result = """
+        <div class='image_posts'>
+        <img src='%s' alt='%s' class='%s' id='%s' width='%s' height='%s'><br>
+        DESC
+        </div>
+        """
 
-        return result % (self.image,
-                         self.description or "",
+        if self.description:
+            result = result.replace("DESC", self.description)
+        else:
+            result = result.replace("DESC", "")
+
+        return result % ("%s%s" % (settings.MEDIA_URL, self.image),
+                         self.alt or "",
                          self.klass or "image_post",
                          "image_%s" % self.id,
                          self.width or "",
                          self.height or "")
 
     def __unicode__(self):
-        return self.image
+        return "Image - %s" % self.id
 
     class Meta:
         verbose_name = _("Image Post")

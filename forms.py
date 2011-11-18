@@ -37,7 +37,7 @@ class TextTypeForm(forms.ModelForm):
 
 
 class ImageTypeForm(forms.ModelForm):
-    fieldset = (_("Image Post"), {"fields": (("image", "klass"),
+    fieldset = (_("Image Post"), {"fields": (("image", "alt"), "klass",
                                              ("width", "height"),
                                              "description")})
 
@@ -82,8 +82,8 @@ class EditPostForm(forms.ModelForm):
             else:
                 self.external_fieldset = None
 
-            self.Media = form.Media
-
+            if hasattr(form, "Media"):
+                self.Media = form.Media
 
         prefix = "%s_" % FormClass.__name__
 
