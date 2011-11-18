@@ -22,5 +22,6 @@ from django.conf.urls.defaults import patterns
 
 
 urlpatterns = patterns('',
+        (r'^posts/([^/]+)/$', "ultra_blog.views.view_post"),
         (r'^$', "ultra_blog.views.blog_index"),
 )
