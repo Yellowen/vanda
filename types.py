@@ -20,7 +20,7 @@
 from django.utils.translation import ugettext as _
 
 from base import PostType, post_types
-from forms import TextTypeForm, SoundTypeForm, ImageTypeForm
+from forms import TextTypeForm, ImageTypeForm
 
 
 class TextType(PostType):
