@@ -20,7 +20,7 @@
 from django.utils.translation import ugettext as _
 
 from base import PostType, post_types
-from forms import TextTypeForm
+from forms import TextTypeForm, SoundTypeForm, ImageTypeForm
 
 
 class TextType(PostType):
@@ -28,10 +28,11 @@ class TextType(PostType):
     verbose_name = _("Text Post")
     admin_form = TextTypeForm
 
-class SoundType(PostType):
-    name = "sound"
-    verbose_name = _("Sound Post")
-    admin_form = SoundTypeForm
+
+## class SoundType(PostType):
+##     name = "sound"
+##     verbose_name = _("Sound Post")
+##     admin_form = SoundTypeForm
 
 
 class ImageType(PostType):

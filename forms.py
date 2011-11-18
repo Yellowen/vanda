@@ -20,7 +20,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.conf import settings
 
-from models import Post, TextPost
+from models import Post, TextPost, ImagePost
 from base import post_types
 
 
@@ -29,12 +29,20 @@ class TextTypeForm(forms.ModelForm):
 
     class Meta:
         model = TextPost
-        exclude = ["html_content", ]
 
     class Media:
         js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
               "%sjs/js_init.js" % settings.MEDIA_URL,)
         css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
+
+
+class ImageTypeForm(forms.ModelForm):
+    fieldset = (_("Image Post"), {"fields": (("image", "klass"),
+                                             ("width", "height"),
+                                             "description")})
+
+    class Meta:
+        model = ImagePost
 
 
 class NewPostForm(forms.ModelForm):

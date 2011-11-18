@@ -154,13 +154,6 @@ class TextPost(models.Model):
     Text post model.
     """
     content = models.TextField(_("Post Content"))
-    html_content = models.TextField(_("HTMLized Content"),
-                                    blank=True,
-                                    null=True)
-
-    def save(self, *args, **kwargs):
-        self.html_content = self.content
-        super(TextPost, self).save(*args, **kwargs)
 
     def get_htmlized_content(self):
 
@@ -178,11 +171,11 @@ class TextPost(models.Model):
         # Find all the code tags
         code_pattern = re.compile("(\[code ([A-Za-z]+)\ *\](.*)\[/code\])",
                                   re.I | re.M | re.S)
-        code_sections =  code_pattern.findall(self.content)
+        code_sections = code_pattern.findall(self.content)
 
-        result = '<link href="%scss/%s.css" rel="stylesheet">\n%s' % (settings.MEDIA_URL, current_style, self.content)
-        #result = self.content
-        print ">>>>>>> ", result
+        result = '<link href="%scss/%s.css" rel="stylesheet">\n%s' % (
+            settings.MEDIA_URL, current_style, self.content)
+
         # Replace the code tags with their rendered HTML
         for raw_text, language, code in code_sections:
 
@@ -192,7 +185,6 @@ class TextPost(models.Model):
             tmpresult = highlight(code, lexer, formatter)
             result = result.replace(str(raw_text), tmpresult)
 
-        print ">>>> ", result
         return result
 
     def __unicode__(self):
@@ -203,6 +195,50 @@ class TextPost(models.Model):
         verbose_name_plural = _("Text Posts")
 
 
+class ImagePost(models.Model):
+    """
+    Image post type.
+    """
+    image = models.ImageField(upload_to="imagepost/",
+                              verbose_name=_("Image"),
+                              help_text=_("Image for the post."))
+
+    klass = models.CharField(_("CSS class"),
+                max_length=64,
+                blank=True,
+                null=True,
+                help_text=_("If did not specified \"image_post\" will used."))
+
+    width = models.IntegerField(_("Image width"),
+                                default=0,
+                                blank=True,
+                                null=True)
+
+    height = models.IntegerField(_("Image height"),
+                                default=0,
+                                blank=True,
+                                null=True)
+
+    description = models.TextField(_("Image description"))
+
+    def get_htmlized_content(self):
+        result = "<img src='%s' alt='%s' class='%s' id='%s' %s %s>"
+
+        return result % (self.image,
+                         self.description or "",
+                         self.klass or "image_post",
+                         "image_%s" % self.id,
+                         self.width or "",
+                         self.height or "")
+
+    def __unicode__(self):
+        return self.image
+
+    class Meta:
+        verbose_name = _("Image Post")
+        verbose_name_plural = _("Image Posts")
+
+        
 class Setting (models.Model):
     """
     Configuration model.
