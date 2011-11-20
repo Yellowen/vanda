@@ -21,6 +21,7 @@ from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
+from django.contrib.comments.models import Comment
 
 from tagging.fields import TagField
 

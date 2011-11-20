@@ -8,18 +8,18 @@
 
 {% block content %}
 <div class="post">
-<H1 class="title">{{ post.title }}</h1>
-<div class="entry">
-{% autoescape off %}
-{{ post.get_content }}
-{% endautoescape %}
-</div>
-<div class="meta">
-<p>{% trans 'Posted by' %} : {{ post.author }}</p>
-<p>{% trans 'Posted on' %}{{ post.datetime|date:"D d M Y" }} <b>|</b>{% trans 'Comment' %}{% get_comment_count for post as count %} ({{ count }})</p>
-<p>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</p>
-<p>{{ post.tags }}</p>
-</div>
+  <H1 class="title">{{ post.title }}</h1>
+  <div class="entry">
+    {% autoescape off %}
+    {{ post.get_content }}
+    {% endautoescape %}
+  </div>
+  <div class="meta">
+    <p>{% trans 'Posted by' %} : {{ post.author }}</p>
+    <p>{% trans 'Posted on' %}{{ post.datetime|date:"D d M Y" }} <b>|</b>{% trans 'Comment' %}{% get_comment_count for post as count %} ({{ count }})</p>
+    <p>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</p>
+    <p>{{ post.tags }}</p>
+  </div>
 </div>
 
 <div class="comments">

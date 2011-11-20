@@ -91,5 +91,11 @@ class BlogPostTypes(object):
 
         return admin_forms
 
+    def get_types(self):
+        """
+        Get all of the types list.
+        """
+        return map(lambda x: self._registery[x].verbose_name,
+                   self._registery.keys())
 
 post_types = BlogPostTypes()
