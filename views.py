@@ -57,3 +57,11 @@ def view_post(request, slug):
     return rr("ultra_blog/view_post.html",
               {"post": post},
               context_instance=RequestContext(request))
+
+
+def view_by_type(request, type_name):
+    """
+    View categories of a type
+    """
+    posts = Post.objects.filter(post_type_name=type_name)
+        
