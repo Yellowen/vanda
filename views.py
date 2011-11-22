@@ -59,9 +59,13 @@ def view_post(request, slug):
               context_instance=RequestContext(request))
 
 
-def view_by_type(request, type_name):
+def filter(request, type_name):
     """
-    View categories of a type
+    View posts filter by type or category
     """
-    posts = Post.objects.filter(post_type_name=type_name)
-        
+    query = {}
+    cat = request.GET('category', None)
+    type_ = request.GET.get('type', None)
+    if cat: query["categories__in"] = cat.split(",")
+    if type_: query["post_type_name__in"] = type_.split(",")
+    posts = Post.objects.filter(**query)
