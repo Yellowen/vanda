@@ -1,0 +1,12 @@
+*~
+*.pyc
+build/
+env/
+log/
+vpkg/
+page/
+news/
+debbox/.project
+debbox/.pydevproject
+docs/build/
+database.db
