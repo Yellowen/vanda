@@ -73,7 +73,6 @@ class WebSocketHandler(ThreadedHandler):
         self._messages.put(StreamClosed(code, reason))
 
     def received_message(self, m):
-        print ">>> ", m
         self._messages.put(copy.deepcopy(m))
 
     def receive(self, msg_obj=False):

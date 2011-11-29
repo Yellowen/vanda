@@ -1,4 +1,5 @@
 import pika
+import json
 
 # Create our connection parameters and connect to RabbitMQ
 parameters = pika.ConnectionParameters('localhost')
@@ -14,7 +15,7 @@ channel.queue_declare(queue="test", durable=True,
 # Construct a message and send it
 channel.basic_publish(exchange='',
                   routing_key="test",
-                  body="Hello World!",
+                  body=json.dumps({"asdasd": "Asdasd"}),
                   properties=pika.BasicProperties(
                       content_type="text/plain",
                       delivery_mode=1))
