@@ -62,7 +62,7 @@ class RMQBlockingInterface(object):
         if heartbeat:
             self.params["heartbeat"] = heartbeat
 
-    def send(self, queue, message):
+    def send(self, queue, msg):
         parameters = pika.ConnectionParameters(**self.params)
         connection = pika.BlockingConnection(parameters)
 
@@ -76,7 +76,7 @@ class RMQBlockingInterface(object):
         # Construct a message and send it
         channel.basic_publish(exchange='',
                               routing_key=queue,
-                              body=json.dumps(message),
+                              body=json.dumps(msg),
                               properties=pika.BasicProperties(
                                   content_type="text/plain",
                                   delivery_mode=1))
