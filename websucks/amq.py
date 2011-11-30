@@ -53,14 +53,15 @@ class AMQServer(object):
             self.connection.channel(self.on_channel_open)
 
     def on_channel_open(self, channel_):
+
         self.channel = channel_
-        self.channel.queue_declare(queue="test", durable=True,
+        self.channel.queue_declare(queue='websocket', durable=True,
                                    exclusive=False, auto_delete=False,
                                    callback=self.on_queue_declared)
 
     def on_queue_declared(self, frame):
         self.channel.basic_consume(self.handle_delivery,
-                                   queue='test')
+                                   queue='websocket')
 
         # Add a callback so we can stop the ioloop
         self.connection.add_on_close_callback(self.on_closed)
