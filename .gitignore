@@ -1,0 +1,15 @@
+*~
+*.pyc
+ultra_blog
+build/
+env/
+log/
+vpkg/
+page/
+core/*
+news/
+docs/build/
+db.sqlite3
+activity/*
+statics/uploads/*
+
