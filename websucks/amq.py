@@ -22,7 +22,7 @@ import pika
 
 class AMQServer(object):
 
-    def __init__(self, host, socket, port=None, virtual_host=None,
+    def __init__(self, host, port=None, virtual_host=None,
                  user=None, password=None, frame_max=None,
                  channel_max=None, heartbeat=None):
         self.connection = None
@@ -43,7 +43,10 @@ class AMQServer(object):
             self.params["channel_max"] = channel_max
         if heartbeat:
             self.params["heartbeat"] = heartbeat
-        self.socket = socket
+
+        parameters = pika.ConnectionParameters(**self.params)
+        self.connection = pika.SelectConnection(parameters,
+                                                self.on_connected)
 
     def on_closed(self, frame):
         # connection.ioloop is blocking, this will stop and exit the app
@@ -71,13 +74,10 @@ class AMQServer(object):
         self.socket.send(body)
         self.channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
-    def run(self):
-
-        parameters = pika.ConnectionParameters(**self.params)
-        self.connection = pika.SelectConnection(parameters,
-                                                self.on_connected)
+    def run(self, socket, env):
         print "AMQServer started . . . "
         try:
+            self.socket = socket
             self.connection.ioloop.start()
         except KeyboardInterrupt:
             self.connection.close()
