@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load comments %}
+
+{% block menu %}
+  {% for result in types %}
+   <li><a href="/blog/filter/?type={{result.0}}">{{result.1}}</a></li>
+  {% endfor %}
+
+{% endblock %}
+
+{% block cats %}
+  {% for cat in cats %}
+   <li><a href="/blog/filter/?category={{cat.title}}">{{cat.title}}</a></li>
+  {% endfor %}
+{% endblock %}
+
+{% block content %}
+<div class="posts">
+{% for post in posts %}
+<article class="post">
+<H1 class="title">{{ post.title }}</h1>
+<div class="entry">
+{% autoescape off %}
+{{ post.get_content }}
+{% endautoescape %}
+</div>
+<div class="meta">
+<p>{% trans 'Posted by' %} : {{ post.author }}</p>
+<p>{% trans 'Posted on' %}
+<time>{{ post.datetime|date:"D d M Y" }}</time> <b>|</b> <a href="{% url ultra_blog.views.view_post post.slug %}">{% trans 'Comment' %}{% get_comment_count for post as count %} ({{ count }})</a></p>
+<p>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</p>
+<p>{{ post.tags }}</p>
+</div>
+</article>
+{% endfor %}
+</div>
+{% endblock %}

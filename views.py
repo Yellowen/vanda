@@ -22,6 +22,7 @@ from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from models import Post, Setting
+from base import post_types
 
 
 def blog_index(request):
@@ -59,13 +60,17 @@ def view_post(request, slug):
               context_instance=RequestContext(request))
 
 
-def filter(request, type_name):
+def filter(request):
     """
     View posts filter by type or category
     """
     query = {}
-    cat = request.GET('category', None)
+    cat = request.GET.get('category', None)
     type_ = request.GET.get('type', None)
-    if cat: query["categories__in"] = cat.split(",")
+    if cat: query["categories__title__in"] = cat.split(",")
     if type_: query["post_type_name__in"] = type_.split(",")
+    types = post_types.get_all_admin_forms()
     posts = Post.objects.filter(**query)
+    return rr("ultra_blog/filter.html",
+              {"posts": posts, "types":types},
+              context_instance=RequestContext(request))
