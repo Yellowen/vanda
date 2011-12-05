@@ -31,8 +31,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 2:
         port = int(sys.argv[2])
 
+    server = AMQServer('localhost')
     print "Websocket server started at %s:%s" % (host, port)
-    server = WebSocketServer((host, port), ws_amq_handler)
+    server = WebSocketServer((host, port), server.run)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
