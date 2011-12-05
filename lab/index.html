@@ -5,10 +5,9 @@
     <script language="javascript">
       var socket = io.connect('http://localhost:9000/');
       socket.on('connect', function () {
-      socket.send("hi");
       console.log("connected");
       socket.on('message', function (msg) {
-      console.log("mmss");
+      console.log(msg);
       });
       });
     </script>

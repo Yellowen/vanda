@@ -1,5 +1,9 @@
 var io = require('socket.io').listen(9000);
 var net = require('net');
+var events = require('events');
+
+var eventEmitter = new events.EventEmitter();
+
 
 var unix = net.createServer(function(c) {
     console.log('Unix server connected');
@@ -9,7 +13,7 @@ var unix = net.createServer(function(c) {
     
     c.on('data', function(data){
 	console.log('[RECV]: ' + data);
-
+	eventEmitter.emit("new_event", data)
     });
 });
 
@@ -19,15 +23,22 @@ unix.listen("/tmp/websucks.sock", function() {
 
 
 io.configure(function () {
-  io.set('transports', ['websocket']);
+    io.set('transports', ['websocket']);
 });
 
 io.sockets.on('connection', function (socket) {
-  socket.on('message', function (data) {
-      console.log("A message received.");
-      console.log(data);
-  });
-  socket.on('disconnect', function () {
-      console.log("disconnected");
-  });
+    socket.send("aaaaaaaaaaaaaaaa");
+    socket.on('message', function (data) {
+	console.log("A message received.");
+	console.log(data);
+    });
+    
+
+    eventEmitter.on("new_event", function(data){
+	console.log("HEEEEREEEE: " + data);
+	socket.send(data);
+    });
+    socket.on('disconnect', function () {
+	console.log("disconnected");
+    });
 });
