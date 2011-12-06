@@ -36,9 +36,14 @@ class UnixClient(object):
         data = msg
         try:
             self.sock.connect(self.address)
+            
             if jsonize:
                 data = json.dumps(msg)
-            self.send(data)
-        except socket.error:
+                data = "%s\r\n" % data
+            else:
+                data = "%s\r\n" % str(msg)
+            self.sock.send(data)
+        except socket.error, e:
             pass
+
         self.sock.close()
