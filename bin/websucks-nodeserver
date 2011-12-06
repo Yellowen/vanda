@@ -47,10 +47,11 @@ var io = socketio.listen((cli.host, cli.port), {'transports': ['websocket'],
 
 io.sockets.on('connection', function (socket) {
     socket.on('message', function (data) {
+	// TODO: implement pull
     });
 
-
     emitter.on("new_event", function(data){
+	socket.send(data);
     });
     socket.on('disconnect', function () {
 	console.log("disconnected");
