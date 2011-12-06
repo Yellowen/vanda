@@ -11,7 +11,7 @@ cli
     .option('-h, --host [ip]', 'Websocket server host IP', 'localhost')
     .parse(process.argv);
 
-var io = require('socket.io').listen((cli.host, cli.port));
+var socketio = require('socket.io');
 var net = require('net');
 var events = require('events');
 
@@ -31,20 +31,25 @@ var unix = net.createServer(function(socket) {
 });
 
 unix.listen(cli.socket, function() {
-    console.log("Unix socket server started. and listen to %s", cli.socket);
+    console.log("Unix socket server started on %s . . .", cli.socket);
 });
 
 
-io.configure(function () {
-    io.set('transports', ['websocket']);
-});
+// Websocket server
+function onlisten(){
+    console.log("Websocket server started on http://%s:%s/ . . .", cli.host, cli.port.toString());
+};
+var io = socketio.listen((cli.host, cli.port), {'transports': ['websocket'],
+						'log': false,
+						'browser client gzip': true
+					       }, onlisten);
 
 io.sockets.on('connection', function (socket) {
     socket.on('message', function (data) {
     });
-    
 
-    eventEmitter.on("new_event", function(data){
+
+    emitter.on("new_event", function(data){
     });
     socket.on('disconnect', function () {
 	console.log("disconnected");
