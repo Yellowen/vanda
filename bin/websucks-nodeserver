@@ -6,6 +6,7 @@ var cli = require('commander');
 cli
     .version('0.17.0')
     .usage('[options]')
+    .option('-d, --debug', 'Debug mode', false)
     .option('-s, --socket [type]', 'Unix socket [address]', '/tmp/websucks.sock')
     .option('-p, --port <n>', 'Websocket server port', parseInt, 9000)
     .option('-h, --host [ip]', 'Websocket server host IP', 'localhost')
@@ -40,7 +41,7 @@ function onlisten(){
     console.log("Websocket server started on http://%s:%s/ . . .", cli.host, cli.port.toString());
 };
 var io = socketio.listen((cli.host, cli.port), {'transports': ['websocket'],
-						'log': false,
+						'log': cli.debug,
 						'browser client gzip': true
 					       }, onlisten);
 
