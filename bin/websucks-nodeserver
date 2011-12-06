@@ -27,7 +27,8 @@ var unix = net.createServer(function(socket) {
     });
     
     socket.on('data', function(data){
-	emitter.emit("new_event", data)
+	console.log('Recv: %s', data);
+	emitter.emit("new_event", data);
     });
 });
 
@@ -52,6 +53,7 @@ io.sockets.on('connection', function (socket) {
 
     emitter.on("new_event", function(data){
 	socket.send(data);
+	console.log('Send: %s', data);
     });
     socket.on('disconnect', function () {
 	console.log("disconnected");
