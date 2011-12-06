@@ -1,25 +1,37 @@
 #! /usr/bin/env node
 
-var io = require('socket.io').listen(9000);
+/* Command line parser */
+var cli = require('commander');
+
+cli
+    .version('0.17.0')
+    .usage('[options]')
+    .option('-s, --socket [type]', 'Unix socket [address]', '/tmp/websucks.sock')
+    .option('-p, --port <n>', 'Websocket server port', parseInt, 9000)
+    .option('-h, --host [ip]', 'Websocket server host IP', 'localhost')
+    .parse(process.argv);
+
+var io = require('socket.io').listen((cli.host, cli.port));
 var net = require('net');
 var events = require('events');
 
-var eventEmitter = new events.EventEmitter();
+// Event emitter
+var emitter = new events.EventEmitter();
 
-
-var unix = net.createServer(function(c) {
+// Unix socket server
+var unix = net.createServer(function(socket) {
     console.log('Unix server connected');
-    c.on('end', function() {
+    socket.on('end', function() {
 	console.log('Unix server disconnected');
     });
     
-    c.on('data', function(data){
-	eventEmitter.emit("new_event", data)
+    socket.on('data', function(data){
+	emitter.emit("new_event", data)
     });
 });
 
-unix.listen("/tmp/websucks.sock", function() {
-    console.log("unix listen");
+unix.listen(cli.socket, function() {
+    console.log("Unix socket server started. and listen to %s", cli.socket);
 });
 
 
