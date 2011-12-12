@@ -22,16 +22,16 @@
 <H1 class="title"><a href="/blog/posts/{{ post.title }}">{{ post.title }}</a></H1>
 <div class="entry">
 {% autoescape off %}
-{{ post.get_content }}
+{{ post.get_content|truncatewords:10}}
 {% endautoescape %}
 </div>
-<div class="meta">
+<meta>
 <author>{% trans 'Posted by' %} : {{ post.author }}</author>
 <time>{% trans 'Posted on' %}
 {{ post.datetime|date:"D d M Y" }} <b>|</b> <a href="{% url ultra_blog.views.view_post post.slug %}">{% trans 'Comment' %}{% get_comment_count for post as count %} ({{ count }})</a></time>
-<date>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</date>
+<time>{% trans 'Last update' %}{{ post.update_datetime|date:"D d M Y" }}</time>
 <tag>{{ post.tags }}</tag>
-</div>
+</meta>
 </article>
 {% endfor %}
 </div>

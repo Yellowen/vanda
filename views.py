@@ -21,6 +21,7 @@ from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from ultra_blog.models.base import Category
 from models import Post, Setting
 from base import post_types
 
@@ -70,7 +71,8 @@ def filter(request):
     if cat: query["categories__title__in"] = cat.split(",")
     if type_: query["post_type_name__in"] = type_.split(",")
     types = post_types.get_all_admin_forms()
+    cats = Category.objects.all()
     posts = Post.objects.filter(**query)
     return rr("ultra_blog/filter.html",
-              {"posts": posts, "types":types},
+              {"posts": posts, "types":types, "cats":cats},
               context_instance=RequestContext(request))

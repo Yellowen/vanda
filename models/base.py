@@ -47,6 +47,10 @@ class Category(models.Model):
     def get_absolute_url(self):
         return ('ultra_blog.views.category_view', self.slug)
 
+    def return_child(self):
+        cats = Category.objects.filter(parrent=self)
+        for cat in cats:
+
     class Meta:
         app_label = "ultra_blog"
         verbose_name_plural = _("Categories")
