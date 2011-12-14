@@ -18,5 +18,6 @@
 # ---------------------------------------------------------------------------------
 
 from django import template
-
+from models.base import Category
 register = template.Library()
+

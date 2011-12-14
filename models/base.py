@@ -49,7 +49,7 @@ class Category(models.Model):
 
     def return_child(self):
         cats = Category.objects.filter(parrent=self)
-        #for cat in cats:
+        return cats
 
     class Meta:
         app_label = "ultra_blog"
