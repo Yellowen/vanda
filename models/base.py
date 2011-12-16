@@ -22,6 +22,7 @@ from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
+from django.core.urlresolvers import reverse
 
 from tagging.fields import TagField
 
@@ -46,7 +47,6 @@ class Category(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('ultra_blog.views.category_view', self.slug)
-
 
     class Meta:
         app_label = "ultra_blog"
@@ -141,9 +141,10 @@ class Post (models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
+    #@models.permalink
     def get_absolute_url(self):
-        return ("ultra_blog.views.post_view", self.slug)
+        #return ("ultra_blog.views.view_post", self.slug)
+        return reverse("ultra_blog.views.view_post", args=[self.slug])
 
     class Meta:
         app_label = "ultra_blog"
