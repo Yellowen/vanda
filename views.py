@@ -45,7 +45,7 @@ def blog_index(request):
     except (EmptyPage, InvalidPage):
         postss = paginator.page(paginator.num_pages)
 
-    return rr('ultra_blog/index.html',
+    return rr('ublog/index.html',
               {"posts": posts},
               context_instance=RequestContext(request))
 
@@ -56,7 +56,7 @@ def view_post(request, slug):
     """
     post = get_object_or_404(Post, slug=slug)
 
-    return rr("ultra_blog/view_post.html",
+    return rr("ublog/view_post.html",
               {"post": post},
               context_instance=RequestContext(request))
 
@@ -73,6 +73,6 @@ def filter(request):
     types = post_types.get_all_admin_forms()
     cats = Category.objects.all()
     posts = Post.objects.filter(**query)
-    return rr("ultra_blog/filter.html",
+    return rr("ublog/filter.html",
               {"posts": posts, "types":types, "cats":cats},
               context_instance=RequestContext(request))
