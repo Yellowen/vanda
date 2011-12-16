@@ -38,7 +38,6 @@ class TextPost(models.Model):
         from pygments.lexers import get_lexer_by_name
         from pygments.formatters import HtmlFormatter
 
-
         # Loading current highlighting style
         current_style = Setting.get_setting("highlight_style")
 
@@ -47,8 +46,12 @@ class TextPost(models.Model):
                                   re.I | re.M | re.S)
         code_sections = code_pattern.findall(self.content)
 
-        result = '<link href="%scss/%s.css" rel="stylesheet">\n%s' % (
-            settings.MEDIA_URL, current_style, self.content)
+        if code_sections:
+            result = """<link href="%scss/%s.css" rel="stylesheet">
+            <section>%s</section>""" % (
+                settings.MEDIA_URL, current_style, self.content)
+        else:
+            result = "<section>%s</section>" % self.content
 
         # Replace the code tags with their rendered HTML
         for raw_text, language, code in code_sections:
