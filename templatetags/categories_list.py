@@ -23,7 +23,7 @@ class CategoriesNode(template.Node):
         result = ""
         for cat in cats:
             result += """
-            <ul id="categories">
+            <ul>
             <li><input type="checkbox" name="catsgroup" value="%s" />&nbsp;%s</li>    
             """ % (cat.title,cat.title)
             result += self.get_categories(cat)

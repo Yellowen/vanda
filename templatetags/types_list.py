@@ -1,5 +1,5 @@
 from django import template
-from base import post_types
+from ultra_blog.base import post_types
 
 register = template.Library()
 
@@ -21,12 +21,11 @@ class typesNode(template.Node):
         result = ""
         for type_ in types:
             result += """
-            <ul id="types">
+            <ul>
             <li>
             <input type="checkbox" name="typesgroup" value="%s" />&nbsp;%s
             </li>    
-            """ % (type_.title, type_.title)
-            result += self.get_types(type_)
+            """ % (type_[0], type_[0])
             result += """
             </ul>
             """
