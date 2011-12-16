@@ -141,9 +141,7 @@ class Post (models.Model):
     def __unicode__(self):
         return self.title
 
-    #@models.permalink
     def get_absolute_url(self):
-        #return ("ultra_blog.views.view_post", self.slug)
         return reverse("ultra_blog.views.view_post", args=[self.slug])
 
     class Meta:

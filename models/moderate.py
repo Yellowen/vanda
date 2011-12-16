@@ -25,4 +25,4 @@ class PostModerator(CommentModerator):
     email_notification = True
 
 
-#moderator.register(Post, PostModerator)
+moderator.register(Post, PostModerator)
