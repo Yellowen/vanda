@@ -24,8 +24,8 @@ class CategoriesNode(template.Node):
         for cat in cats:
             result += """
             <ul>
-            <li><a href="/blog/filter/?category=%s">%s</a></li>    
-            """ % (cat.title, cat.title)
+            <li><input type="checkbox" name="catsgroup" value="%s" />&nbsp;%s</li>    
+            """ % (cat.title,cat.title)
             result += self.get_categories(cat)
             result += """
             </ul>
