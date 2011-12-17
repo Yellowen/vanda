@@ -126,6 +126,12 @@ class Post (models.Model):
         """
         return Comment.objects.filter(content_type=self)
 
+    def get_categories(self):
+        """
+        Return the categories list.
+        """
+        return self.categories.all()
+
     def comments_count(self):
         """
         Return the number of comments related to current post.
