@@ -102,14 +102,28 @@ class Post (models.Model):
         """
         Return True if post has been updated.
         """
-        if self.datetime != self.update_datetime:
-            return True
+        if self.update_datetime:
+            if self.datetime != self.update_datetime:
+                return True
         return False
 
     def save(self, *args, **kwargs):
-        import datetime
-        self.update_datetime = datetime.datetime.now()
+
+        # First save is for initilizing datetime field
         super(Post, self).save(*args, **kwargs)
+
+        # Checking the time difference between save time and the time spend
+        # to calculate time delta
+        import datetime
+
+        # Its impossible that calculating delta time took more that 30 seconds
+        delta = datetime.datetime.now() - datetime.timedelta(seconds=30)
+
+        # If datetime was less that time delta that means that user updated the
+        # post otherwise its just been created
+        if self.datetime < delta:
+            self.update_datetime = datetime.datetime.now()
+            super(Post, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         self.comments().delete()
