@@ -98,6 +98,14 @@ class Post (models.Model):
                                            editable=False,
                                            verbose_name=_('Last Update'))
 
+    def is_updated(self):
+        """
+        Return True if post has been updated.
+        """
+        if self.datetime != self.update_datetime:
+            return True
+        return False
+
     def save(self, *args, **kwargs):
         import datetime
         self.update_datetime = datetime.datetime.now()
