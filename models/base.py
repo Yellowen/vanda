@@ -25,6 +25,7 @@ from django.contrib.comments.models import Comment
 from django.core.urlresolvers import reverse
 
 from tagging.fields import TagField
+from tagging.utils import get_tag_list
 
 
 class Category(models.Model):
@@ -132,11 +133,15 @@ class Post (models.Model):
         """
         return self.categories.all()
 
+    def get_tags(self):
+        return get_tag_list(self.tags)
+
     def comments_count(self):
         """
         Return the number of comments related to current post.
         """
-        return "<a href='#'>%s</a>" % Comment.objects.filter(content_type=self).count()
+        return "<a href='#'>%s</a>" % Comment.objects.filter(
+            content_type=self).count()
 
     comments_count.allow_tags = True
 

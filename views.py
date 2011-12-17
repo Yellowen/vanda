@@ -20,8 +20,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.http import HttpResponse
 
-from ultra_blog.models.base import Category
+from models.base import Category
 from models import Post, Setting
 from base import post_types
 
@@ -76,3 +77,7 @@ def filter(request):
     return rr("ublog/filter.html",
               {"posts": posts, "types":types, "cats":cats},
               context_instance=RequestContext(request))
+
+
+def view_tag(request, tag):
+    return HttpResponse("asd")

@@ -23,6 +23,7 @@ from django.conf.urls.defaults import patterns
 
 urlpatterns = patterns('',
         (r'^posts/([^/]+)/$', "ultra_blog.views.view_post"),
+        (r'^tags/([^/]+)/$', "ultra_blog.views.view_tag"),
         (r'^filter/$', "ultra_blog.views.filter"),
         (r'^$', "ultra_blog.views.blog_index"),
 )
