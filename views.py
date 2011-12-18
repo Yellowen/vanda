@@ -81,3 +81,8 @@ def filter(request):
 
 def view_tag(request, tag):
     return HttpResponse("asd")
+
+
+def view_category(request, category):
+    return HttpResponse("asd")
+

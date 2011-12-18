@@ -42,6 +42,15 @@ class Category(models.Model):
     parent = models.ForeignKey('self', verbose_name=_("Parent"),
                                blank=True, null=True)
 
+    def get_childs(self):
+        return Category.objects.filter(parent=self)
+
+    def count_posts(self):
+        """
+        Return the number of posts in this category.
+        """
+        return self.ultra_blog_posts.all().count()
+
     def __unicode__(self):
         return self.title
 
@@ -70,7 +79,8 @@ class Post (models.Model):
                                      editable=False)
     object_id = models.PositiveIntegerField(editable=False)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    categories = models.ManyToManyField(Category, verbose_name=_("Categories"))
+    categories = models.ManyToManyField(Category, verbose_name=_("Categories"),
+                                        related_name="%(app_label)s_posts")
     post_type_name = models.CharField(_("Post type name"),
                                       max_length=30,
                                       blank=True)
