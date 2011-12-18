@@ -47,7 +47,7 @@ class TextPost(models.Model):
         code_sections = code_pattern.findall(self.content)
 
         if code_sections:
-            result = """<link href="%scss/%s.css" rel="stylesheet">
+            result = """<link href="%scss/source/%s.css" rel="stylesheet">
             <section>%s</section>""" % (
                 settings.MEDIA_URL, current_style, self.content)
         else:
