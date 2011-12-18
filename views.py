@@ -47,7 +47,8 @@ def blog_index(request):
         postss = paginator.page(paginator.num_pages)
 
     return rr('ublog/index.html',
-              {"posts": posts},
+              {"posts": posts,
+               "types": post_types.get_types_complex()},
               context_instance=RequestContext(request))
 
 
@@ -86,3 +87,6 @@ def view_tag(request, tag):
 def view_category(request, category):
     return HttpResponse("asd")
 
+
+def view_type(request, type_):
+    return HttpResponse("asd")

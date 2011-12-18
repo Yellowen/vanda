@@ -98,4 +98,12 @@ class BlogPostTypes(object):
         return map(lambda x: self._registery[x].verbose_name,
                    self._registery.keys())
 
+    def get_types_complex(self):
+        """
+        Get all of the types list.
+        """
+        return map(lambda x: [self._registery[x].name,
+                              self._registery[x].verbose_name],
+                   self._registery.keys())
+
 post_types = BlogPostTypes()
