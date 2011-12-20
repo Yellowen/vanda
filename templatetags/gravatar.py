@@ -45,11 +45,13 @@ class GravatarUrlNode(template.Node):
         except template.VariableDoesNotExist:
             return ''
 
-        default = "%simages/defaultavatar.jpg" % settings.MEDIA_URL
         size = 40
         if self.size:
             size = self.size
 
+        host = context["request"].META["HTTP_HOST"]
+        default = "http://%s%simages/defaultavatar.png" % (host, settings.MEDIA_URL)
+        print ">>> ", default
         gravatar_url = "http://www.gravatar.com/avatar/%s?" % \
                        hashlib.md5(email.lower()).hexdigest()
         gravatar_url += urllib.urlencode({'d': default, 's': str(size)})
