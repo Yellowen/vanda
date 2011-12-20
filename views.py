@@ -67,6 +67,7 @@ def filter(request):
     """
     View posts filter by type or category
     """
+    # BUG : agar az , estefade she too bazi entekhab ha tekrari miare
     query = {}
     cat = request.GET.get('category', None)
     type_ = request.GET.get('type', None)
