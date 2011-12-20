@@ -51,7 +51,6 @@ class GravatarUrlNode(template.Node):
 
         host = context["request"].META["HTTP_HOST"]
         default = "http://%s%simages/defaultavatar.png" % (host, settings.MEDIA_URL)
-        print ">>> ", default
         gravatar_url = "http://www.gravatar.com/avatar/%s?" % \
                        hashlib.md5(email.lower()).hexdigest()
         gravatar_url += urllib.urlencode({'d': default, 's': str(size)})
