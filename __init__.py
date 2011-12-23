@@ -17,7 +17,14 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
+from models import ExtendedComment
+
+
 LOADING = False
+
+
+def get_model():
+    return ExtendedComment
 
 
 def typediscover():

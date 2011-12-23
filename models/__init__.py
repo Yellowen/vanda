@@ -6,4 +6,4 @@ from config import *
 
 
 __all__ = ["Category", "Post", "ImagePost",
-           "TextPost", "Setting"]
+           "TextPost", "Setting", "ExtendedComment"]

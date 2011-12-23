@@ -34,7 +34,7 @@ class UltraBlog(BaseApplication):
         ]
 
     settings = {
-        #"NEWS_LIMIT": 10,
+        'COMMENTS_APP': 'ultra_blog',
         }
 
 vpkg.register(UltraBlog)
