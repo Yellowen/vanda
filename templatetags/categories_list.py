@@ -81,13 +81,15 @@ class CategoriesNode(template.Node):
             return result % tmp
 
         else:
-            return result % (
-                "<li><a href='%s'>%s (%s)</a></li>\n" % (
-                    reverse("ultra_blog.views.view_category",
-                            args=[cat.slug]),
-                    cat.title,
-                    cat.count_posts()))
-
+            if cat:
+                return result % (
+                    "<li><a href='%s'>%s (%s)</a></li>\n" % (
+                        reverse("ultra_blog.views.view_category",
+                                args=[cat.slug]),
+                        cat.title,
+                        cat.count_posts()))
+            else:
+                return ""
 
 register.tag('categorieslist', categories_list)
 register.tag('categories', categories)

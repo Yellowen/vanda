@@ -420,7 +420,8 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class SettingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['active', 'post_per_page', 'comment_per_page',
+                    "highlight_style", "antispam", "spam_apikey"]
 
 
 admin.site.register(Category, CategoryAdmin)

@@ -31,10 +31,10 @@ class TextTypeForm(forms.ModelForm):
     class Meta:
         model = TextPost
 
-    class Media:
-        js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
-              "%sjs/js_init.js" % settings.MEDIA_URL,)
-        css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
+    ## class Media:
+    ##     js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
+    ##           "%sjs/js_init.js" % settings.MEDIA_URL,)
+    ##     css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
 
 
 class ImageTypeForm(forms.ModelForm):

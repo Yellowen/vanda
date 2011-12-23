@@ -42,15 +42,13 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
         if Setting.get_setting("antispam") == "0":
             ak = Akismet(
                 key=apikey,
-                blog_url='http://%s/' % Site.objects.get(
-                    pk=settings.SITE_ID).domain
+                blog_url='http://%s/' % request.META["HTTP_HOST"]
                 )
             ak.baseurl = 'api.antispam.typepad.com/1.1/'
         else:
             ak = Akismet(
                 key=apikey,
-                blog_url='http://%s/' % Site.objects.get(
-                    pk=settings.SITE_ID).domain
+                blog_url='http://%s/' % request.META["HTTP_HOST"]
                 )
             
         if ak.verify_key():

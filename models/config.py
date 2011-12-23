@@ -73,7 +73,7 @@ class Setting (models.Model):
                                        choices=STYLES,
                                        blank=True)
 
-    anitspam = models.CharField(_("Anti-Spam"),
+    antispam = models.CharField(_("Anti-Spam"),
                                 max_length=1,
                                 choices=ANTISPAM,
                                 null=True,
