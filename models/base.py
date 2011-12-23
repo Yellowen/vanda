@@ -197,8 +197,8 @@ class ExtendedComment (Comment):
     """
     This model extend the built-in comment class of django.
     """
-    approved = models.BooleanField(_("Approved"), default=False)
-    spam = models.BooleanField(_("Spam"), default=False)
+    spam = models.BooleanField(_("Spam"), default=False,
+                               help_text=_("This comment is SPMA"))
 
     class Meta:
         app_label = "ultra_blog"

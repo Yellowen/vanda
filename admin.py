@@ -36,9 +36,10 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.admin.util import (unquote, flatten_fieldsets,
                                        get_deleted_objects, model_format_dict)
+from django.contrib.comments.admin import CommentsAdmin
 
 from forms import NewPostForm, EditPostForm
-from models import Category, Post, Setting, TextPost
+from models import Category, Post, Setting, TextPost, ExtendedComment
 from base import post_types
 
 
@@ -48,6 +49,32 @@ class CategoryAdmin(admin.ModelAdmin):
     """
     list_display = ("title", "slug", "parent")
     prepopulated_fields = {"slug": ("title",)}
+
+
+class CommentAdmin(CommentsAdmin):
+    fieldsets = (
+        (None,
+           {'fields': ('content_type', 'object_pk', 'site')}
+        ),
+        (_('Content'),
+           {'fields': ('user', 'user_name', 'user_email',
+                       'user_url', 'comment')}
+        ),
+        (_('Metadata'),
+           {'fields': ('submit_date', 'ip_address', 'is_public', 'is_removed',
+                       'spam')}
+        ),
+     )
+
+    list_display = ('name', 'content_type', 'ip_address', 'submit_date',
+                    'is_public', 'is_removed', 'spam')
+    list_filter = ('submit_date', 'site', 'is_public',
+                   'is_removed', 'spam')
+    date_hierarchy = 'submit_date'
+    ordering = ('-submit_date',)
+    raw_id_fields = ('user',)
+    search_fields = ('comment', 'user__username', 'user_name', 'user_email',
+                     'user_url', 'ip_address')
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -426,4 +453,5 @@ class SettingAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Setting, SettingAdmin)
+admin.site.register(ExtendedComment, CommentAdmin)
 #admin.site.register(TextPost)

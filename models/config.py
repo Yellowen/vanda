@@ -50,7 +50,8 @@ class Setting (models.Model):
     _DEFAULT = {
         'post_per_page': 10,
         'comment_per_page': 10,
-        "highlight_style": "emacs"
+        "highlight_style": "emacs",
+        "spam_apikey": None,
         }
     active = models.BooleanField(_("Active"),
                                  default=False)
@@ -65,6 +66,10 @@ class Setting (models.Model):
                                        max_length=16,
                                        choices=STYLES,
                                        blank=True)
+
+    spam_apikey = models.CharField(_("Anti-Spam API key"),
+                                   max_length=100,
+                                   help_text=_("Akismet or Typepad API key"))
 
     @classmethod
     def get_setting(cls, setting_name, default=None):

@@ -18,13 +18,17 @@
 # -----------------------------------------------------------------------------
 
 from models import ExtendedComment
-
+from forms import ExtendedCommentForm
 
 LOADING = False
 
 
 def get_model():
     return ExtendedComment
+
+
+def get_form():
+    return ExtendedCommentForm
 
 
 def typediscover():
