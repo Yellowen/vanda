@@ -34,7 +34,7 @@ class UltraBlog(BaseApplication):
         ]
 
     settings = {
-        'COMMENTS_APP': 'ultra_blog',
+        #'COMMENTS_APP': 'ultra_blog',
         }
 
 vpkg.register(UltraBlog)

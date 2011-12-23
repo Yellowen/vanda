@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.comments.forms import CommentForm
 
-from models import Post, TextPost, ImagePost, ExtendedComment
+from models import Post, TextPost, ImagePost
 from base import post_types
 
 
@@ -116,16 +116,3 @@ class EditPostForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ["post_type_name", ]
-
-
-class ExtendedCommentForm(CommentForm):
-
-    def get_comment_model(self):
-        return ExtendedComment
-
-    def get_comment_create_data(self):
-
-        data = super(ExtendedCommentForm, self).get_comment_create_data()
-        data['spam'] = False
-
-        return data

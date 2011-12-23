@@ -191,16 +191,3 @@ class Post (models.Model):
         ordering = ["-datetime"]
         verbose_name_plural = _("Posts")
         verbose_name = _('Post')
-
-
-class ExtendedComment (Comment):
-    """
-    This model extend the built-in comment class of django.
-    """
-    spam = models.BooleanField(_("Spam"), default=False,
-                               help_text=_("This comment is SPMA"))
-
-    class Meta:
-        app_label = "ultra_blog"
-        verbose_name_plural = _("Comment")
-        verbose_name = _('Comments')
