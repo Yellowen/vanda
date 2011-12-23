@@ -20,6 +20,8 @@
 
 from django.conf.urls.defaults import patterns
 
+from feeds import LatestPosts, CategoryFeed
+
 
 urlpatterns = patterns('',
         (r'^posts/([^/]+)/$', "ultra_blog.views.view_post"),
@@ -27,5 +29,7 @@ urlpatterns = patterns('',
         (r'^categories/([^/]+)/$', "ultra_blog.views.view_category"),
         (r'^types/(\w+)/$', "ultra_blog.views.view_type"),
         (r'^filter/$', "ultra_blog.views.filter"),
+        (r'^feed/category/(?P<slug>\w+)/$', CategoryFeed()),
+        (r'^feed/$', LatestPosts()),
         (r'^$', "ultra_blog.views.blog_index"),
 )

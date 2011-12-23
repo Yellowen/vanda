@@ -20,8 +20,9 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.translation import ugettext as _
+from django.shortcuts import get_object_or_404
 
-from models import Post
+from models import Post, Category
 
 
 class LatestPosts (Feed):
@@ -37,4 +38,23 @@ class LatestPosts (Feed):
         return item.title
 
     def item_description(self, item):
-        return item.content
+        return item.get_content()
+
+
+class CategoryFeed (Feed):
+    feed_type = Rss201rev2Feed
+    title = _("What's new?")
+    link = "/blog/"
+    description = _("Recent logs")
+
+    def get_object(self, request, slug):
+        return get_object_or_404(Category, slug=slug)
+
+    def items(self, category):
+        return category.ultra_blog_posts.all().order_by('-datetime')[:10]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.get_content()
