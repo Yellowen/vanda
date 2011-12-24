@@ -144,4 +144,26 @@ def view_category(request, category):
 
 
 def view_type(request, type_):
-    return HttpResponse("asd")
+    """
+    Render all the posts with type_.
+    """
+    ppp = Setting.get_setting("post_per_page")
+
+    post_list = Post.objects.filter(post_type_name=type_)
+    paginator = Paginator(post_list, ppp)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        postss = paginator.page(paginator.num_pages)
+
+    return rr('ublog/index.html',
+              {"posts": posts,
+               "types": post_types.get_types_complex(),
+               "rssfeed": "/blog/feed/"},
+              context_instance=RequestContext(request))

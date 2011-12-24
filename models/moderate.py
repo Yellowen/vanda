@@ -50,7 +50,7 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
                 key=apikey,
                 blog_url='http://%s/' % request.META["HTTP_HOST"]
                 )
-            
+
         if ak.verify_key():
             data = {
                 'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
@@ -72,4 +72,3 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
 
 moderator.register(Post, PostModerator)
 comment_was_posted.connect(on_comment_was_posted)
-
