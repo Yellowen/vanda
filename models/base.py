@@ -23,6 +23,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 from tagging.fields import TagField
 from tagging.utils import get_tag_list
@@ -42,6 +43,9 @@ class Category(models.Model):
     parent = models.ForeignKey('self', verbose_name=_("Parent"),
                                blank=True, null=True)
 
+    site = models.ForeignKey(Site, verbose_name=_("Site"),
+                             null=True, blank=True)
+
     def get_childs(self):
         return Category.objects.filter(parent=self)
 
@@ -58,6 +62,7 @@ class Category(models.Model):
         return reverse('ultra_blog.views.view_category', args=[self.slug])
 
     class Meta:
+        #unique_together = (('site', 'slug'))
         app_label = "ultra_blog"
         verbose_name_plural = _("Categories")
         verbose_name = _('Category')
@@ -106,6 +111,9 @@ class Post (models.Model):
     update_datetime = models.DateTimeField(null=True, blank=True,
                                            editable=False,
                                            verbose_name=_('Last Update'))
+
+    site = models.ForeignKey(Site, verbose_name=_("Site"),
+                             null=True, blank=True)
 
     def is_updated(self):
         """
