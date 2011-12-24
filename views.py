@@ -20,7 +20,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from models.base import Category
 from models import Post, Setting
@@ -85,7 +85,32 @@ def view_tag(request, tag):
 
 
 def view_category(request, category):
-    return HttpResponse("asd")
+    """
+    Render the lastest blog entries.
+    """
+    ppp = Setting.get_setting("post_per_page")
+    try:
+        cat = Category.objects.get(slug=category)
+    except Category.DoesNotExist:
+        raise Http404()
+
+    post_list = cat.ultra_blog_posts.all()
+    paginator = Paginator(post_list, ppp)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        postss = paginator.page(paginator.num_pages)
+
+    return rr('ublog/index.html',
+              {"posts": posts,
+               "types": post_types.get_types_complex()},
+              context_instance=RequestContext(request))
 
 
 def view_type(request, type_):
