@@ -82,12 +82,40 @@ def filter(request):
 
 
 def view_tag(request, tag):
-    return HttpResponse("asd")
+    """
+    Render the lastest blog entries with specifc tag.
+    """
+    from tagging.models import Tag, TaggedItem
+
+    ppp = Setting.get_setting("post_per_page")
+    try:
+        tagobj = Tag.objects.get(name=tag)
+    except Tag.DoesNotExist:
+        raise Http404()
+
+    post_list = TaggedItem.objects.get_by_model(Post, tagobj)
+    paginator = Paginator(post_list, ppp)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        postss = paginator.page(paginator.num_pages)
+
+    return rr('ublog/index.html',
+              {"posts": posts,
+               "types": post_types.get_types_complex(),
+               "rssfeed": "/blog/feed/"},
+              context_instance=RequestContext(request))
 
 
 def view_category(request, category):
     """
-    Render the lastest blog entries.
+    Render the lastest blog entries in specific category.
     """
     ppp = Setting.get_setting("post_per_page")
     try:
