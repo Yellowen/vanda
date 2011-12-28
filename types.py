@@ -20,7 +20,7 @@
 from django.utils.translation import ugettext as _
 
 from base import PostType, post_types
-from forms import TextTypeForm, ImageTypeForm
+from forms import TextTypeForm, ImageTypeForm, VideoTypeForm
 
 
 class TextType(PostType):
@@ -40,5 +40,13 @@ class ImageType(PostType):
     verbose_name = _("Image Post")
     admin_form = ImageTypeForm
 
+
+class VideoType(PostType):
+    name = "video"
+    verbose_name = _("Video Post")
+    admin_form = VideoTypeForm
+
+
 post_types.register(TextType)
 post_types.register(ImageType)
+post_types.register(VideoType)

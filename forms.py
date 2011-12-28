@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.comments.forms import CommentForm
 
-from models import Post, TextPost, ImagePost
+from models import Post, TextPost, ImagePost, VideoPost
 from base import post_types
 
 
@@ -44,6 +44,16 @@ class ImageTypeForm(forms.ModelForm):
 
     class Meta:
         model = ImagePost
+
+
+class VideoTypeForm(forms.ModelForm):
+    fieldset = (_("Video Post"), {"fields": (("url", "videofile"),
+                                             "mimetype",
+                                             ("width", "height"),
+                                             "desc")})
+
+    class Meta:
+        model = VideoPost
 
 
 class NewPostForm(forms.ModelForm):
