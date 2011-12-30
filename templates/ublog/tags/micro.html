@@ -1,0 +1,9 @@
+<micro>
+<entry>
+{% for post in posts %}
+<section>
+<p>{{ post.author }} in {{ post.datetime }}: {{ post.content|linebreaks|urlize }}</p>
+</section>
+{% endfor %}
+</entry>
+</micro>

@@ -1,6 +1,6 @@
-# ---------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Some Hackers In Town
+#    Copyright (C) 2011-2012 Sameer Rahmani <lxsameer@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,9 +15,41 @@
 #    You should have received a copy of the GNU General Public License along
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-# ---------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 from django import template
-from models.base import Category
+from django.core.urlresolvers import reverse
+
+from ultra_blog.models import MicroPost
+
+
 register = template.Library()
 
+
+def latest_micropost(parser, token):
+    try:
+        tag_name, number = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            "%r tag requires a single argument" % token.contents.split()[0])
+
+    return MicroPostsNode(int(number))
+
+
+class MicroPostsNode(template.Node):
+    """
+    This node represent the latest mirco posts.
+    """
+
+    def __init__(self, number):
+        self.number = number
+
+    def render(self, context):
+        microposts = MicroPost.objects.all()[:self.number]
+
+        t = template.loader.get_template("ublog/tags/micro.html")
+
+        return t.render(template.Context({"posts": microposts}))
+
+
+register.tag('microposts', latest_micropost)

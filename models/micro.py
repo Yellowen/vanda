@@ -43,5 +43,5 @@ class MicroPost(models.Model):
     class Meta:
         app_label = "ultra_blog"
         ordering = ["-datetime"]
-        verbose_name_plural = _("Posts")
-        verbose_name = _('Post')
+        verbose_name_plural = _("Micro Posts")
+        verbose_name = _('Mirco Post')
