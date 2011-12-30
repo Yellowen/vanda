@@ -1,9 +1,6 @@
-<micro>
-<entry>
+
 {% for post in posts %}
-<section>
-<p>{{ post.author }} in {{ post.datetime }}: {{ post.content|linebreaks|urlize }}</p>
-</section>
-{% endfor %}
-</entry>
+<micro>
+[<logtime>{{ post.datetime|date:"H:m d M Y" }}</logtime>]  <status class="{{ post.status }}">{{ post.status|upper }}</status> <b>{{ post.author }}</b>: <log>{{ post.content|urlize }}</log>
 </micro>
+{% endfor %}

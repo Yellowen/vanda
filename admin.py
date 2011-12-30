@@ -428,9 +428,9 @@ class MicroAdmin(admin.ModelAdmin):
     """
     MicroPost admin interface.
     """
-    list_display = ("content", "author", "datetime", "site")
+    list_display = ("content", "author", "status", "datetime", "site")
 
-    list_filter = ("author", )
+    list_filter = ("author", "status")
     search_fields = ["content", ]
 
     def save_model(self, request, obj, form, change):

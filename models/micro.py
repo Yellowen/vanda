@@ -30,6 +30,9 @@ class MicroPost(models.Model):
 
     content = models.TextField(_("What's in your mind?"))
 
+    status = models.CharField(_("Status"), blank=True, null=True,
+                              max_length=32)
+
     author = models.ForeignKey(User,
                                editable=False,
                                verbose_name=_("Author"))
