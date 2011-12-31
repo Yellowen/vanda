@@ -30,6 +30,14 @@ class Status(models.Model):
     """
     name = models.CharField(_("Status"), max_length=32)
 
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        app_label = "ultra_blog"
+        verbose_name_plural = _("Micro Statuses")
+        verbose_name = _('Micro Stauts')
+
 
 class MicroPost(models.Model):
     """
@@ -38,7 +46,8 @@ class MicroPost(models.Model):
 
     content = models.TextField(_("What's in your mind?"))
 
-    status = models.ForeignKey(Status, verbose_name=_("Status"))
+    status = models.ForeignKey(Status, verbose_name=_("Status"),
+                               blank=True, null=True)
 
     author = models.ForeignKey(User,
                                editable=False,

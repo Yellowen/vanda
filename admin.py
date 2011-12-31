@@ -38,7 +38,7 @@ from django.contrib.admin.util import (unquote, flatten_fieldsets,
                                        get_deleted_objects, model_format_dict)
 
 from forms import NewPostForm, EditPostForm
-from models import Category, Post, Setting, TextPost, MicroPost
+from models import Category, Post, Setting, TextPost, MicroPost, Status
 from base import post_types
 
 
@@ -443,4 +443,4 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Setting, SettingAdmin)
 admin.site.register(MicroPost, MicroAdmin)
 
-#admin.site.register(TextPost)
+admin.site.register(Status)
