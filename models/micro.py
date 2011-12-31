@@ -23,6 +23,14 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 
 
+# Status model added just because of lxsameercom
+class Status(models.Model):
+    """
+    Status model.
+    """
+    name = models.CharField(_("Status"), max_length=32)
+
+
 class MicroPost(models.Model):
     """
     Micro post model.
@@ -30,8 +38,7 @@ class MicroPost(models.Model):
 
     content = models.TextField(_("What's in your mind?"))
 
-    status = models.CharField(_("Status"), blank=True, null=True,
-                              max_length=32)
+    status = models.ForeignKey(Status, verbose_name=_("Status"))
 
     author = models.ForeignKey(User,
                                editable=False,
