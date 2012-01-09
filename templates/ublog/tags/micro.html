@@ -5,7 +5,7 @@
 
 <micro>
 
-[<logtime>{{ post.datetime|date:"H:m d M Y" }}</logtime>] <commentcount class="hiddeninfo">{% get_comment_count for post as count %}[{{ count }} Comment{% if count != 0 %}s{% endif %}]</commentcount> <status class="{{ post.status|lower }}">{{ post.status|upper }}</status> <b>{{ post.author }}</b>: <log>{{ post.content|urlize }}</log>
+<p>[<logtime>{{ post.datetime|date:"H:m d M Y" }}</logtime>] <commentcount>{% get_comment_count for post as count %}[{{ count }} Comment{% if count != 0 %}s{% endif %}]</commentcount> <status class="{{ post.status|lower }}">{{ post.status|upper }}</status> <b>{{ post.author }}</b>: <log>{{ post.content|urlize }}</log></p>
 
 
 <comments>
