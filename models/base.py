@@ -103,6 +103,7 @@ class Post (models.Model):
                                    blank=True, null=True)
 
     author = models.ForeignKey(User,
+                               related_name="ultra_blog_post",
                                editable=False,
                                verbose_name=_("Author"))
     datetime = models.DateTimeField(auto_now_add=True, editable=False,
