@@ -47,10 +47,17 @@ class Setting (models.Model):
         ('native', 'Native'),
         ]
 
+    ANTISPAM = [
+        ["0", "TypePad"],
+        ["1", "Akismet"],
+        ]
+
     _DEFAULT = {
         'post_per_page': 10,
         'comment_per_page': 10,
-        "highlight_style": "emacs"
+        "highlight_style": "emacs",
+        "antispam": "0",
+        "spam_apikey": None,
         }
     active = models.BooleanField(_("Active"),
                                  default=False)
@@ -65,6 +72,18 @@ class Setting (models.Model):
                                        max_length=16,
                                        choices=STYLES,
                                        blank=True)
+
+    antispam = models.CharField(_("Anti-Spam"),
+                                max_length=1,
+                                choices=ANTISPAM,
+                                null=True,
+                                blank=True)
+
+    spam_apikey = models.CharField(_("Anti-Spam API key"),
+                                   max_length=100,
+                                   help_text=_("Akismet or Typepad API key"),
+                                   null=True,
+                                   blank=True)
 
     @classmethod
     def get_setting(cls, setting_name, default=None):

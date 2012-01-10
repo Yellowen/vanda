@@ -19,8 +19,9 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.contrib.comments.forms import CommentForm
 
-from models import Post, TextPost, ImagePost
+from models import Post, TextPost, ImagePost, VideoPost
 from base import post_types
 
 
@@ -30,10 +31,10 @@ class TextTypeForm(forms.ModelForm):
     class Meta:
         model = TextPost
 
-    class Media:
-        js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
-              "%sjs/js_init.js" % settings.MEDIA_URL,)
-        css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
+    ## class Media:
+    ##     js = ("%sjs/nicEdit.js" % settings.MEDIA_URL,
+    ##           "%sjs/js_init.js" % settings.MEDIA_URL,)
+    ##     css = {'all': ("%scss/nicss.css" % settings.MEDIA_URL, )}
 
 
 class ImageTypeForm(forms.ModelForm):
@@ -43,6 +44,16 @@ class ImageTypeForm(forms.ModelForm):
 
     class Meta:
         model = ImagePost
+
+
+class VideoTypeForm(forms.ModelForm):
+    fieldset = (_("Video Post"), {"fields": (("url", "videofile"),
+                                             "mimetype",
+                                             ("width", "height"),
+                                             "desc")})
+
+    class Meta:
+        model = VideoPost
 
 
 class NewPostForm(forms.ModelForm):

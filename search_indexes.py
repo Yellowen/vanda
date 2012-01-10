@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011-2012 Sameer Rahmani <lxsameer@gnu.org>
+#    Copyright (C) 2011 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -17,39 +17,24 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from django import template
-from django.core.urlresolvers import reverse
+import datetime
 
-from ultra_blog.models import MicroPost
+from haystack import site
+from haystack import indexes
 
-
-register = template.Library()
-
-
-def latest_micropost(parser, token):
-    try:
-        tag_name, number = token.split_contents()
-    except ValueError:
-        raise template.TemplateSyntaxError(
-            "%r tag requires a single argument" % token.contents.split()[0])
-
-    return MicroPostsNode(int(number))
+from models import Post, TextPost
 
 
-class MicroPostsNode(template.Node):
-    """
-    This node represent the latest mirco posts.
-    """
+class PostIndex(indexes.SearchIndex):
+    post_title = indexes.CharField(document=True)
+    description = indexes.CharField()
+    post_type_name = indexes.CharField()
 
-    def __init__(self, number):
-        self.number = number
+    def get_queryset(self):
+        """
+        This is used when the entire index for model is updated, and should only include
+        public entries
+        """
+        return Post.objects.filter(datetime__lte=datetime.datetime.now())
 
-    def render(self, context):
-        microposts = MicroPost.objects.all()[:self.number]
-
-        t = template.loader.get_template("ublog/tags/micro.html")
-
-        return t.render(template.Context({"posts": microposts}))
-
-
-register.tag('microposts', latest_micropost)
+site.register(Post, PostIndex)

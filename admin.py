@@ -38,7 +38,7 @@ from django.contrib.admin.util import (unquote, flatten_fieldsets,
                                        get_deleted_objects, model_format_dict)
 
 from forms import NewPostForm, EditPostForm
-from models import Category, Post, Setting, TextPost
+from models import Category, Post, Setting, TextPost, MicroPost, Status
 from base import post_types
 
 
@@ -420,10 +420,27 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class SettingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['active', 'post_per_page', 'comment_per_page',
+                    "highlight_style", "antispam", "spam_apikey"]
+
+
+class MicroAdmin(admin.ModelAdmin):
+    """
+    MicroPost admin interface.
+    """
+    list_display = ("content", "author", "status", "datetime", "site")
+
+    list_filter = ("author", "status")
+    search_fields = ["content", ]
+
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        obj.save()
 
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Setting, SettingAdmin)
-#admin.site.register(TextPost)
+admin.site.register(MicroPost, MicroAdmin)
+
+admin.site.register(Status)

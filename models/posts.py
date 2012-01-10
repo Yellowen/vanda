@@ -132,3 +132,71 @@ class ImagePost(models.Model):
         app_label = "ultra_blog"
         verbose_name = _("Image Post")
         verbose_name_plural = _("Image Posts")
+
+
+class VideoPost(models.Model):
+    notic = """
+    Important: Video file have higher priority that video url.
+    So if you provide video file, url field will not be used.
+    """
+    url = models.CharField(_("video url"),
+                           max_length=256,
+                           blank=True,
+                           null=True,
+                           help_text=_("URL of video file"))
+
+    videofile = models.FileField(_("Video file"),
+                                 blank=True,
+                                 null=True,
+                                 upload_to="uploads/videotype",
+                                 help_text=_(notic))
+    mimetype = models.CharField(
+        _("MIME-Type"),
+        max_length=32,
+        blank=True,
+        null=True,
+        help_text=_(
+            "If you don't specify a mime-type ultra blog will guess it."
+            )
+        )
+
+    width = models.IntegerField(_("Width"), default=320,
+                                help_text=_("Default value is 320"))
+
+    height = models.IntegerField(_("Height"), default=240,
+                                help_text=_("Default value is 240"))
+
+    desc = models.TextField(_("Description"),
+                            blank=True,
+                            null=True)
+
+    def get_htmlized_content(self):
+        result = """
+        <entry>
+        <section>
+        %s
+        <video width="%s" height="%s" controls="controls" src="%s" preload="none" poster="/statics/images/videoposter.png">%s
+            Your Browser did not support HTML5 Video
+        </video>
+        </section>
+        </entry>
+        """
+        vid_url = ""
+        if self.videofile:
+            vid_url = "/statics/%s" % self.videofile
+        else:
+            vid_url = self.url
+
+        mime = self.mimetype or "video/%s" % vid_url[-3:]
+
+        return result % (self.desc or "",
+                         self.width, self.height,
+                         vid_url, mime)
+
+    def __unicode__(self):
+        return "Video - %s" % self.id
+
+    class Meta:
+        app_label = "ultra_blog"
+        verbose_name = _("Image Post")
+        verbose_name_plural = _("Image Posts")

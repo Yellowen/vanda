@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load comments %}
+
+{% for post in posts %}
+
+<micro>
+
+<p>[<logtime>{{ post.datetime|date:"H:m d M Y" }}</logtime>] <commentcount>{% get_comment_count for post as count %}[{{ count }} Comment{% if count != 0 %}s{% endif %}]</commentcount> <status class="{{ post.status|lower }}">{{ post.status|upper }}</status> <b>{{ post.author }}</b>: <log>{{ post.content|urlize }}</log></p>
+
+
+<comments>
+
+{% get_comment_list for post as comment_list %}
+{% for comment in comment_list %}
+
+<comment>
+[<logtime>{{ comment.submit_date|date:"H:m d M Y" }}</logtime>] <status class="comment">COMMENT</status> <b>{{ comment.name }}</b>: <log>{{ comment.comment|urlize }}</log>
+</comment>
+{% endfor %}
+
+</micro>
+
+{% get_comment_form for post as form %}
+<commentform>
+
+  <form action="{% comment_form_target %}" method="post">
+    <p>
+    {% for field in form %}
+      {% if field.is_hidden %}
+        <div>{{ field }}</div>
+      {% else %}
+	
+	{% ifequal field.name "honeypot" %}
+	<div style="display:none;">
+	  {{ field }}
+	</div>
+	{% endifequal %}
+
+	{% if field.name == "name" %}
+	<field>{{ field }}{% if field.errors %}{{ field.errors }}{% endif %}</field>
+	{% endif %}
+
+	{% if field.name == "comment" %}
+	<field><input id="id_comment" type="text" name="comment"/>
+	{% endif %}
+	
+	{% endif %}
+    {% endfor %}
+    <submit>{% trans 'Post' %}</submit></field><msg></msg>
+    </p>
+  </form>
+
+</commentform>
+</comments>
+
+
+
+{% endfor %}

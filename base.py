@@ -19,6 +19,8 @@
 import logging
 from django import forms
 
+from models import Post
+
 
 class PostType(object):
     """
@@ -102,8 +104,13 @@ class BlogPostTypes(object):
         """
         Get all of the types list.
         """
-        return map(lambda x: [self._registery[x].name,
-                              self._registery[x].verbose_name],
-                   self._registery.keys())
+        def typemap(x):
+            post = Post.objects.filter(post_type_name=self._registery[x].name)
+            if post:
+                return [self._registery[x].name,
+                        "%s (%s)" % (self._registery[x].verbose_name,
+                                     post.count())]
+            return None
+        return [i for i in map(typemap, self._registery.keys()) if i]
 
 post_types = BlogPostTypes()

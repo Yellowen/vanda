@@ -17,12 +17,58 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 from django.contrib.comments.moderation import CommentModerator, moderator
+from django.contrib.comments.signals import comment_was_posted
 
 from base import Post
+from config import Setting
 
 
 class PostModerator(CommentModerator):
     email_notification = True
 
 
+def on_comment_was_posted(sender, comment, request, *args, **kwargs):
+
+    from django.contrib.sites.models import Site
+    from django.conf import settings
+
+    try:
+        from ultra_blog.akismet import Akismet
+    except:
+        return
+
+    apikey = Setting.get_setting("spam_apikey")
+    if apikey:
+        if Setting.get_setting("antispam") == "0":
+            ak = Akismet(
+                key=apikey,
+                blog_url='http://%s/' % request.META["HTTP_HOST"]
+                )
+            ak.baseurl = 'api.antispam.typepad.com/1.1/'
+        else:
+            ak = Akismet(
+                key=apikey,
+                blog_url='http://%s/' % request.META["HTTP_HOST"]
+                )
+
+        if ak.verify_key():
+            data = {
+                'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+                'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+                'referrer': request.META.get('HTTP_REFERER', ''),
+                'comment_type': 'comment',
+                'comment_author': comment.user_name.encode('utf-8'),
+                }
+
+            if ak.comment_check(comment.comment.encode('utf-8'),
+                            data=data, build_data=True):
+                comment.flags.create(
+                    user=comment.content_object.author,
+                    flag='spam'
+                    )
+                comment.is_public = False
+                comment.save()
+
+
 moderator.register(Post, PostModerator)
+comment_was_posted.connect(on_comment_was_posted)
