@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load comments %}
 
+{% block title %}
+{{block.super}} | {{ post.title }}
+{% endblock %}
+
 {% block extrahead %}
 <link href="{{ HIGHLIGHT_STYLE }}" rel="stylesheet" type="text/css">
 {% endblock %}
