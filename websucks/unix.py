@@ -32,13 +32,13 @@ class UnixClient(object):
                                   socket.SOCK_STREAM)
         self.address = socket_address
 
-    def send(self, msg, jsonize=True):
+    def send(self, msg, event="message", jsonize=True):
         data = msg
         try:
             self.sock.connect(self.address)
-            
+
             if jsonize:
-                data = json.dumps(msg)
+                data = json.dumps({"event": event, "data": json.dumps(msg)})
                 data = "%s\r\n" % data
             else:
                 data = "%s\r\n" % str(msg)
