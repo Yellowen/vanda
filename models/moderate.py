@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.contrib.comments.signals import comment_was_posted
+from django.conf import settings
 
 from base import Post
 from config import Setting
@@ -34,7 +35,7 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
 
     try:
         from ultra_blog.akismet import Akismet
-    except:
+    except ImportError:
         return
 
     apikey = Setting.get_setting("spam_apikey")
@@ -68,6 +69,21 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
                     )
                 comment.is_public = False
                 comment.save()
+
+    try:
+        from core.websucks.unix import UnixClient
+
+        print ">>> ", dir(comment)
+        if comment.is_public == True:
+            send_dict = {"model": comment.content_object.__class__.__name__,
+                         "content": comment.comment,
+                         "user": comment.user_name,
+                         "object_id": str(comment.object_pk),
+                         "date": comment.submit_date.strftime("%H:%M %d %b %Y")}
+            UnixClient(settings.UNIX_SOCKET).send(send_dict, event="new_comment")
+            
+    except ImportError:
+        return
 
 
 moderator.register(Post, PostModerator)

@@ -4,24 +4,24 @@
 {% for post in posts %}
 
 {% get_comment_form for post as form %}
-<micro>
-<data>
+<div class="micro" id="micro_{{ post.id }}">
+<div class="data">
 {{ form.object_pk }}
 {{ form.timestamp }}
 {{ form.security_hash }}
-</data>
-<p>[<logtime>{{ post.datetime|date:"H:m d M Y" }}</logtime>] <commentcount>{% get_comment_count for post as count %}[{{ count }} Comment{% if count != 0 %}s{% endif %}]</commentcount> <status class="{{ post.status|lower }}">{{ post.status|upper }}</status> <b>{{ post.author }}</b>: <log>{{ post.content|urlize }}</log></p>
+</div>
+
+<div class="addcomment"></div><span class="text">[<span class="logtime">{{ post.datetime|date:"H:i d b Y" }}</span>] <span class="commentcount">{% get_comment_count for post as count %}[<b>{{ count }}</b> Comment{% if count != 0 %}s{% endif %}]</span> <span class="status {{ post.status|lower }}">{{ post.status|upper }}</span> <b>{{ post.author }}</b>: {{ post.content|urlize }}</span>
 
 
-<comments>
+<div class="comments">
 {% get_comment_list for post as comment_list %}
 {% for comment in comment_list %}
 
-<comment>
-[<logtime>{{ comment.submit_date|date:"H:m d M Y" }}</logtime>] <status class="comment">COMMENT</status> <b>{{ comment.name }}</b>: <log>{{ comment.comment|urlize }}</log>
-</comment>
+<div class="comment">
+<span class="text">[<span class="logtime">{{ comment.submit_date|date:"H:i d b Y" }}</span>] <span class="status comment">COMMENT</span> <b>{{ comment.name }}</b>: <span class="commentcontent">{{ comment.comment|urlize }}</span></span></div>
 {% endfor %}
-</comments>
-</micro>
+</div>
+</div>
 {% endfor %}
 
