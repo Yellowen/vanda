@@ -28,7 +28,8 @@ class Status(models.Model):
     """
     Status model.
     """
-    name = models.CharField(_("Status"), max_length=32)
+    name = models.CharField(_("Status"), max_length=32,
+                            unique=True)
 
     def __unicode__(self):
         return self.name

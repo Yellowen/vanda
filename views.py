@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Behnam AhmadKhanBeigi ( b3hnam@gnu.org )
+#    Copyright (C) 2011-2012 Behnam AhmadKhanBeigi <b3hnam@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,11 +16,16 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+
+# Other people who work on this file
+# Sameer Rahmani <lxsameer@gnu.org>
+
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.views.decorators.csrf import csrf_exempt
 
 from models.base import Category
 from models import Post, Setting
@@ -168,3 +173,53 @@ def view_type(request, type_):
                "types": post_types.get_types_complex(),
                "rssfeed": "/blog/feed/"},
               context_instance=RequestContext(request))
+
+
+@csrf_exempt
+def micro_api(request):
+    """
+    Micro post adding API.
+    """
+    if request.method != "POST":
+        raise Http404()
+
+    from django.contrib.sites.models import Site
+
+    from api.models import APIKeys
+    from models import MicroPost, Status
+
+    # Extract informations from post request
+    key = request.POST.get("key", "0")
+    log = request.POST.get("log", None)
+    checksum = request.POST.get("checksum", "")
+
+    # Log should be filled
+    if not log:
+        return HttpResponse("Error: Log must not be empty.")
+
+    # Try to authenticate the API request.
+    try:
+        api = APIKeys.objects.get(key=key)
+        # validate the log entry
+        if not api.is_valid(log, checksum):
+            return HttpResponseForbidden("Corrupted request")
+    except APIKeys.DoesNotExist:
+        return HttpResponseForbidden("Authentication failed")
+
+    # Continue to collect the API information in case of correct API key
+    status = request.POST.get("status", "").lower()
+
+    post = MicroPost(author=api.user, content=log)
+
+
+    post.site = Site.objects.get_current()
+
+    if status:
+        try:
+            status_object = Status.objects.get(name=status)
+            post.status = status_object
+        except Status.DoesNotExist:
+            return HttpResponse("Error: No status found.")
+
+    post.save()
+    return HttpResponse("OK")

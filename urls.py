@@ -31,5 +31,6 @@ urlpatterns = patterns('',
         (r'^filter/$', "ultra_blog.views.filter"),
         (r'^feed/category/(?P<slug>\w+)/$', CategoryFeed()),
         (r'^feed/$', LatestPosts()),
+        (r'^api/micro/$', 'ultra_blog.views.micro_api'),
         (r'^$', "ultra_blog.views.blog_index"),
 )
