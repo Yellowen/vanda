@@ -19,6 +19,7 @@
 
 from django import template
 from django.core.urlresolvers import reverse
+from django.template import RequestContext
 
 from ultra_blog.models import MicroPost
 
@@ -46,10 +47,9 @@ class MicroPostsNode(template.Node):
 
     def render(self, context):
         microposts = MicroPost.objects.all()[:self.number]
-
-        t = template.loader.get_template("ublog/tags/micro.html")
-
-        return t.render(template.Context({"posts": microposts}))
+        rr = template.loader.render_to_string
+        return rr("ublog/tags/micro.html", {"posts": microposts},
+                  context_instance=RequestContext(context["request"]))
 
 
 register.tag('microposts', latest_micropost)

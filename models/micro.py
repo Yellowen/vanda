@@ -16,11 +16,16 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-
+from django.conf import settings
+from django.template import Context
+from django.template.loader import get_template
 from django.db import models
 from django.contrib.admin.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Status model added just because of lxsameercom
@@ -65,3 +70,19 @@ class MicroPost(models.Model):
         ordering = ["-datetime"]
         verbose_name_plural = _("Micro Posts")
         verbose_name = _('Mirco Post')
+
+
+@receiver(post_save, sender=MicroPost)
+def my_handler(sender, **kwargs):
+    try:
+        from core.websucks.unix import UnixClient
+
+        if kwargs["created"] == True:
+            t = get_template("ublog/tags/micro.html")
+            send_dict = {"html": t.render(Context({"posts": [kwargs["instance"]]})),
+                         "id": "#micro_%s" % kwargs["instance"].pk}
+
+            UnixClient(settings.UNIX_SOCKET).send(send_dict, event="new_log")
+
+    except ImportError:
+        return

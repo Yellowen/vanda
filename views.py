@@ -144,6 +144,7 @@ def view_category(request, category):
 
     return rr('ublog/index.html',
               {"posts": posts,
+               "category_name": category,
                "types": post_types.get_types_complex(),
                "rssfeed": "/blog/feed/category/%s/" % category},
               context_instance=RequestContext(request))

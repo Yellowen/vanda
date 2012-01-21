@@ -79,7 +79,7 @@ class CategoriesNode(template.Node):
                 if childs:
                     tmp = "%s%s" % (
                         tmp,
-                        "<li><a href='%s'>%s (%s)</a></li>\n" % (
+                        "<li><a href='%s'>%s (%s)</a>\n" % (
                             reverse("ultra_blog.views.view_category",
                                     args=[category.slug]),
                             category.title,
@@ -88,6 +88,7 @@ class CategoriesNode(template.Node):
                     for child in childs:
                         tmp = "%s\n%s" % (tmp,
                                           self.make_list(child))
+                    tmp = "%s\n</li>\n" % tmp
                 else:
                     tmp = "%s%s" % (
                         tmp,

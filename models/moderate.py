@@ -21,6 +21,7 @@ from django.contrib.comments.signals import comment_was_posted
 from django.conf import settings
 
 from base import Post
+from micro import MicroPost
 from config import Setting
 
 
@@ -73,7 +74,6 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
     try:
         from core.websucks.unix import UnixClient
 
-        print ">>> ", dir(comment)
         if comment.is_public == True:
             send_dict = {"model": comment.content_object.__class__.__name__,
                          "content": comment.comment,
@@ -81,10 +81,11 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
                          "object_id": str(comment.object_pk),
                          "date": comment.submit_date.strftime("%H:%M %d %b %Y")}
             UnixClient(settings.UNIX_SOCKET).send(send_dict, event="new_comment")
-            
+
     except ImportError:
         return
 
 
 moderator.register(Post, PostModerator)
+moderator.register(MicroPost, PostModerator)
 comment_was_posted.connect(on_comment_was_posted)
