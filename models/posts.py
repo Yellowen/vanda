@@ -34,6 +34,7 @@ class TextPost(models.Model):
 
         import re
 
+        import markdown
         from pygments import highlight
         from pygments.lexers import get_lexer_by_name
         from pygments.formatters import HtmlFormatter
@@ -42,14 +43,16 @@ class TextPost(models.Model):
         current_style = Setting.get_setting("highlight_style")
 
         # Find all the code tags
-        code_pattern = re.compile("(\[code ([A-Za-z]+)\ *\](.*)\[/code\])",
+        code_pattern = re.compile("(\[code ([A-Za-z]+)\ *\](.*?)\[/code\])",
                                   re.I | re.M | re.S)
-        code_sections = code_pattern.findall(self.content)
+
+        code_sections = code_pattern.findall(self.content, re.I | re.M | re.S)
 
         if code_sections:
             result = """<link href="%scss/source/%s.css" rel="stylesheet">
             <section>%s</section>""" % (
-                settings.MEDIA_URL, current_style, self.content)
+                settings.MEDIA_URL, current_style,
+                self.content)
         else:
             result = "<section>%s</section>" % self.content
 
@@ -60,7 +63,8 @@ class TextPost(models.Model):
             formatter = HtmlFormatter(linenos=True, cssclass="codehilite",
                                       style=current_style)
             tmpresult = highlight(code, lexer, formatter)
-            result = result.replace(str(raw_text), tmpresult)
+            result = result.replace(str(raw_text),
+                                    "<div class='codeblock'>%s</div>" % tmpresult)
 
         return result
 
