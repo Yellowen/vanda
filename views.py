@@ -37,7 +37,7 @@ def blog_index(request):
     Render the lastest blog entries.
     """
     ppp = Setting.get_setting("post_per_page")
-    post_list = Post.objects.all()
+    post_list = Post.objects.filter(publish=True)
 
     paginator = Paginator(post_list, ppp)
 
