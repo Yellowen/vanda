@@ -16,23 +16,21 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import os
 
-from django.conf.urls.defaults import patterns, include, url
+from django.core.urlresolvers import resolve
 from django.conf import settings
+from django.http import Http404
 
-from django.contrib import admin
 
-admin.autodiscover()
+def dispatch_url(request, lang=None):
+    """
+    Dispatch the urls again against the LEAF_URLCONF.
+    """
 
-urlpatterns = patterns('',
-    (r'^(en|fa)/', 'multilang.dispatcher.dispatch_url'),
-    (r'^', 'multilang.dispatcher.dispatch_url'),
-)
-
-if settings.DEBUG:
-    urlpatterns += patterns('',
-            (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': os.path.join(os.path.dirname(__file__),\
-                                    '../statics/').replace('\\', '/')}),
-)
+    if lang:
+        request.path = request.path[len(lang) + 1:]
+    try:
+        view = resolve(request.path, settings.LEAF_URLCONF)
+        return view.func(request, *view.args, **view.kwargs)
+    except Http404:
+        raise
