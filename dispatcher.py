@@ -50,20 +50,22 @@ def dispatch_url(request, lang=None):
         request.path = request.path[len(lang) + 1:]
 
     else:
-        if "language" in request.COOKIES:
-            _lang = request.COOKIES["language"]
+        if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
+            _lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
             need_cookie = False
         else:
-            if "language" in request.session:
-                _lang = request.session["language"]
+            if "django_language" in request.session:
+                _lang = request.session["django_language"]
             else:
                 _lang = settings.LANGUAGES[0][0]
 
     try:
         view = resolve(request.path, settings.LEAF_URLCONF)
+        request.session['django_language'] = _lang
+        settings.LANGUAGE_CODE = _lang
         response = view.func(request, *view.args, **view.kwargs)
         if need_cookie:
-            set_cookie(response, "language", _lang)
+            set_cookie(response, settings.LANGUAGE_COOKIE_NAME, _lang)
 
         return response
 
