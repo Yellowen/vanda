@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 import datetime
 
+from django.utils.translation import activate
 from django.core.urlresolvers import resolve
 from django.conf import settings
 from django.http import Http404
@@ -44,27 +45,35 @@ def dispatch_url(request, lang=None):
     Dispatch the urls again against the LEAF_URLCONF.
     """
     _lang = lang
+    print ">> ", lang
     need_cookie = True
 
     if lang:
         request.path = request.path[len(lang) + 1:]
-
+        print "111"
     else:
         if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
             _lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
+            request.session['django_language'] = _lang
             need_cookie = False
+            print "222"
         else:
             if "django_language" in request.session:
                 _lang = request.session["django_language"]
+                print "333"
             else:
                 _lang = settings.LANGUAGES[0][0]
+                print "444"
 
     try:
         view = resolve(request.path, settings.LEAF_URLCONF)
         request.session['django_language'] = _lang
-        settings.LANGUAGE_CODE = _lang
+        activate(_lang)
+        setattr(settings, "LANGUAGE_CODE", _lang)
+        print "<<<< ", request.path, _lang
         response = view.func(request, *view.args, **view.kwargs)
         if need_cookie:
+
             set_cookie(response, settings.LANGUAGE_COOKIE_NAME, _lang)
 
         return response

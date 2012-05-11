@@ -27,8 +27,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    (r'^(en|fa)/', 'multilang.dispatcher.dispatch_url'),
-    (r'^', 'multilang.dispatcher.dispatch_url'),
+
 )
 
 if settings.DEBUG:
@@ -36,4 +35,9 @@ if settings.DEBUG:
             (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
              {'document_root': os.path.join(os.path.dirname(__file__),\
                                     '../statics/').replace('\\', '/')}),
+)
+
+urlpatterns += patterns('',
+    (r'^(en|fa)/', 'multilang.dispatcher.dispatch_url'),
+    (r'^', 'multilang.dispatcher.dispatch_url'),
 )
