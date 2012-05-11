@@ -40,18 +40,36 @@ def set_cookie(response, key, value, days_expire=7):
                         secure=settings.SESSION_COOKIE_SECURE or None)
 
 
+def set_path(request, path):
+    request.path = path
+    request.path_info = path
+    request.META["PATH_INFO"] = path
+
+
 def dispatch_url(request, lang=None):
     """
     Dispatch the urls again against the LEAF_URLCONF.
     """
-    _lang = lang
-    print ">> ", lang
+    _lang = None
+    path = request.path
+    print ">>>>>>>>> ", path
+    for languages in settings.LANGUAGES:
+        prefix = "/%s/" % languages[0]
+        if path.startswith(prefix):
+            _lang = languages[0]
+            print ">>>> !!!!!!", _lang, prefix
+
     need_cookie = True
 
-    if lang:
-        request.path = request.path[len(lang) + 1:]
+    if _lang:
+        path = request.path[len(_lang) + 1:]
+        request.path = path
+        request.path_info = path
+        request.META["PATH_INFO"] = path
+
         print "111"
     else:
+        print "ZZZZZZZZ"
         if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
             _lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
             request.session['django_language'] = _lang
@@ -71,7 +89,9 @@ def dispatch_url(request, lang=None):
         activate(_lang)
         setattr(settings, "LANGUAGE_CODE", _lang)
         print "<<<< ", request.path, _lang
+        print "=== > ", request.__dict__
         response = view.func(request, *view.args, **view.kwargs)
+
         if need_cookie:
 
             set_cookie(response, settings.LANGUAGE_COOKIE_NAME, _lang)
