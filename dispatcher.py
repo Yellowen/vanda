@@ -50,14 +50,14 @@ def dispatch_url(request, lang=None):
     """
     Dispatch the urls again against the LEAF_URLCONF.
     """
-    _lang = None
-    path = request.path
-    print ">>>>>>>>> ", path
-    for languages in settings.LANGUAGES:
-        prefix = "/%s/" % languages[0]
-        if path.startswith(prefix):
-            _lang = languages[0]
-            print ">>>> !!!!!!", _lang, prefix
+    _lang = lang
+    ## path = request.path
+    ## print ">>>>>>>>> ", path
+    ## for languages in settings.LANGUAGES:
+    ##     prefix = "/%s/" % languages[0]
+    ##     if path.startswith(prefix):
+    ##         _lang = languages[0]
+    ##         print ">>>> !!!!!!", _lang, prefix
 
     need_cookie = True
 
@@ -67,29 +67,26 @@ def dispatch_url(request, lang=None):
         request.path_info = path
         request.META["PATH_INFO"] = path
 
-        print "111"
     else:
-        print "ZZZZZZZZ"
+
         if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
             _lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
             request.session['django_language'] = _lang
             need_cookie = False
-            print "222"
+
         else:
             if "django_language" in request.session:
                 _lang = request.session["django_language"]
-                print "333"
+
             else:
                 _lang = settings.LANGUAGES[0][0]
-                print "444"
 
     try:
         view = resolve(request.path, settings.LEAF_URLCONF)
         request.session['django_language'] = _lang
         activate(_lang)
         setattr(settings, "LANGUAGE_CODE", _lang)
-        print "<<<< ", request.path, _lang
-        print "=== > ", request.__dict__
+
         response = view.func(request, *view.args, **view.kwargs)
 
         if need_cookie:
