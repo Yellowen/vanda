@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Karajlug.org
-#    Copyright (C) 2010  Karajlug community
+#    Vanda page application
+#    Copyright (C) 2010-2012 Sameer Rahmani <lxsameer@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ from django.shortcuts import render_to_response as rr
 from django.http import Http404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.contrib.sites.models import Site
 from django.conf import settings
 
 from models import Page
@@ -30,8 +31,20 @@ def show_page(request, slug):
     """
     show the page with the given slug
     """
+    lang = settings.LANGUAGE_CODE
+    if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
+        lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
+
+    site = request.META["HTTP_HOST"]
+    try:
+        current_site = Site.objects.get(domain=site)
+    except Site.DoesNotExist:
+        raise Http404()
+
     try:
         page = Page.objects.get(slug=slug,
+                                site=current_site,
+                                language=lang,
                                 publish=True)
 
     except Page.DoesNotExist:

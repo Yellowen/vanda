@@ -26,7 +26,7 @@ class PageAdmin(admin.ModelAdmin):
     """
     Admin interface class for paeg model
     """
-    list_display = ("title", "slug", "user", "date")
+    list_display = ("title", "slug", "user", "date", "site", "language")
     search_fields = ("title", "content")
     list_filter = ("user",)
     prepopulated_fields = {"slug": ("title",)}

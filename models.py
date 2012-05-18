@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Karajlug.org
-#    Copyright (C) 2010  Karajlug community
+#    Vanda page application
+#    Copyright (C) 2010-2012 Sameer Rahmani <lxsameer@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+from django.contrib.sites.models import Site
+from django.conf import settings
 
 
 class Page(models.Model):
@@ -34,6 +36,13 @@ class Page(models.Model):
                             verbose_name=_("Slug"))
     # IMPORTANT: content field will render as html
     content = models.TextField(verbose_name=_("Page content"))
+
+    site = models.ForeignKey(Site, verbose_name=_("Site"))
+    language = models.CharField(_("Language"),
+                                max_length=4,
+                                choices=settings.LANGUAGES,
+                                default=settings.LANGUAGES[0][0])
+
     publish = models.BooleanField(default=False,
                                   verbose_name=_("Publish"))
 
