@@ -32,14 +32,12 @@ def show_page(request, slug):
     show the page with the given slug
     """
     lang = settings.LANGUAGE_CODE
-    if settings.LANGUAGE_COOKIE_NAME in request.COOKIES:
-        lang = request.COOKIES[settings.LANGUAGE_COOKIE_NAME]
 
     site = request.META["HTTP_HOST"]
     try:
         current_site = Site.objects.get(domain=site)
     except Site.DoesNotExist:
-        raise Http404()
+        raise Http404("Wrong site")
 
     try:
         page = Page.objects.get(slug=slug,
@@ -48,7 +46,7 @@ def show_page(request, slug):
                                 publish=True)
 
     except Page.DoesNotExist:
-        raise Http404()
+        raise Http404("Wrong page")
     return rr("page.html",
               {"page": page,
                "title": "%s | %s" % (_(settings.TITLE), page.title)},
