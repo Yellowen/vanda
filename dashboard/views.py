@@ -50,7 +50,7 @@ def micro_post(request):
     """
     Add a new micro post to database.
     """
-    print "here"
+
     if request.method == "POST":
         domain = request.get_host()
         try:
@@ -82,3 +82,27 @@ def micro_post(request):
         return HttpResponse(json.dumps({"status": 0,
                                         "msg": _("Done")}))
     return HttpResponseForbidden()
+
+
+@staff_member_required
+def new_post(request):
+    """
+    Adding new post.
+    """
+    if request.method == "POST":
+        
+        domain = request.get_host()
+        try:
+            site = Site.objects.get(domain=domain)
+        except Site.DoesNotExist:
+            raise Http404()
+
+        # TODO: uncomment following code to authenticating against per user
+        # subdomain.
+
+        # profile = request.get_profile()
+        # if profile.site.domain == site:
+
+        from ultra_blog.models import Post, Category
+
+        print ">>>", request.POST

@@ -35,7 +35,7 @@ class Category(models.Model):
     """
 
     title = models.CharField(max_length=250,
-                             unique=True, verbose_name=_("Title"))
+                             verbose_name=_("Title"))
     slug = models.SlugField(max_length=100,
             verbose_name=_("Slug"),
             help_text=_("This Field will fill automaticaly by title"))
@@ -62,7 +62,7 @@ class Category(models.Model):
         return reverse('ultra_blog.views.view_category', args=[self.slug])
 
     class Meta:
-        #unique_together = (('site', 'slug'))
+        unique_together = (('site', 'slug'))
         app_label = "ultra_blog"
         verbose_name_plural = _("Categories")
         verbose_name = _('Category')
