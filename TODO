@@ -3,3 +3,8 @@
   Add share link to social networks
   Add similar post in post_view
   Add tag cloud
+  Add multisite to micro post status model.
+
+== My
+
+ Add per user site authentication, check the TODO in views.py

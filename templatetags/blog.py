@@ -46,7 +46,9 @@ class MicroPostsNode(template.Node):
         self.number = number
 
     def render(self, context):
-        microposts = MicroPost.objects.all()[:self.number]
+        host = context["request"].get_host()
+        microposts = MicroPost.objects.filter(site__domain=host)[:self.number]
+
         rr = template.loader.render_to_string
         return rr("ublog/tags/micro.html", {"posts": microposts},
                   context_instance=RequestContext(context["request"]))

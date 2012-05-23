@@ -17,10 +17,15 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------
 
+import json
+
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
+from django.http import HttpResponseForbidden, Http404, HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.comments.models import Comment
+from django.contrib.sites.models import Site
+from django.utils.translation import ugettext as _
 
 from forms import QMicroPostForm, QNewPostForm
 
@@ -32,9 +37,48 @@ def index(request):
     """
     micro_form = QMicroPostForm()
     post_form = QNewPostForm(request)
-    last_comments = Comment.objects.filter(site__domain=request.META["HTTP_HOST"])[:10]
+    last_comments = Comment.objects.filter(site__domain=request.get_host())[:10]
     return rr("ublog/dashboard/index.html",
               {"micro_form": micro_form,
                "post_form": post_form,
                "comments": last_comments},
               context_instance=RequestContext(request))
+
+
+@staff_member_required
+def micro_post(request):
+    """
+    Add a new micro post to database.
+    """
+    print "here"
+    if request.method == "POST":
+        domain = request.get_host()
+        try:
+            site = Site.objects.get(domain=domain)
+        except Site.DoesNotExist:
+            raise Http404()
+
+        # TODO: uncomment following code to authenticating against per user
+        # subdomain.
+
+        # profile = request.get_profile()
+        # if profile.site.domain == site:
+
+        from ultra_blog.models import MicroPost, Status
+
+        try:
+            status = Status.objects.get(id=int(request.POST["status"]))
+
+        except Status.DoesNotExist:
+            return HttpResponse(json.dumps({"status": 1,
+                                            "msg": _("wrong status")}))
+
+        mpost = MicroPost()
+        mpost.author = request.user
+        mpost.content = request.POST["message"]
+        mpost.site = site
+        mpost.save()
+
+        return HttpResponse(json.dumps({"status": 0,
+                                        "msg": _("Done")}))
+    return HttpResponseForbidden()

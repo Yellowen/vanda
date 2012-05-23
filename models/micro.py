@@ -26,6 +26,7 @@ from django.contrib.sites.models import Site
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.sites.managers import CurrentSiteManager
 
 
 # Status model added just because of lxsameercom
@@ -35,6 +36,11 @@ class Status(models.Model):
     """
     name = models.CharField(_("Status"), max_length=32,
                             unique=True)
+
+    #site = models.ForeignKey(Site, verbose_name=_("Site"),
+    #                         null=True, blank=True)
+
+    #sites = CurrentSiteManager('site')
 
     def __unicode__(self):
         return self.name
@@ -64,6 +70,10 @@ class MicroPost(models.Model):
 
     site = models.ForeignKey(Site, verbose_name=_("Site"),
                              null=True, blank=True)
+
+    sites = CurrentSiteManager('site')
+
+    objects = models.Manager()
 
     class Meta:
         app_label = "ultra_blog"
