@@ -100,6 +100,15 @@ class BlogPostTypes(object):
         return map(lambda x: self._registery[x].verbose_name,
                    self._registery.keys())
 
+    def get_types_dict(self):
+        """
+        Get all the types in the dictionary form.
+        """
+        def typemap(x):
+            return [self._registery[x].name,
+                    self._registery[x].verbose_name]
+        return [i for i in map(typemap, self._registery.keys()) if i]
+
     def get_types_complex(self):
         """
         Get all of the types list.

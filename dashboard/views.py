@@ -20,8 +20,9 @@
 from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.comments.models import Comment
 
-from forms import QMicroPostForm
+from forms import QMicroPostForm, QNewPostForm
 
 
 @staff_member_required
@@ -30,7 +31,10 @@ def index(request):
     Dashboard index.
     """
     micro_form = QMicroPostForm()
-    print  ">>>> ", micro_form
+    post_form = QNewPostForm(request)
+    last_comments = Comment.objects.filter(site__domain=request.META["HTTP_HOST"])[:10]
     return rr("ublog/dashboard/index.html",
-              {"micro_form": micro_form},
+              {"micro_form": micro_form,
+               "post_form": post_form,
+               "comments": last_comments},
               context_instance=RequestContext(request))
