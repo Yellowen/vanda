@@ -20,6 +20,7 @@
 import json
 
 from django.shortcuts import render_to_response as rr
+from django.template.loader import render_to_string as rs
 from django.template import RequestContext
 from django.http import HttpResponseForbidden, Http404, HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
@@ -90,7 +91,7 @@ def new_post(request):
     Adding new post.
     """
     if request.method == "POST":
-        
+
         domain = request.get_host()
         try:
             site = Site.objects.get(domain=domain)
@@ -106,3 +107,21 @@ def new_post(request):
         from ultra_blog.models import Post, Category
 
         print ">>>", request.POST
+
+
+@staff_member_required
+def posts(request):
+    """
+    Posts index.
+    """
+    from ultra_blog.models import Post
+
+
+    posts = Post.sites.all()
+    content = rs("ublog/dashboard/grid.html",
+                 {"posts": posts},
+                 context_instance=RequestContext(request))
+
+    return rr("ublog/dashboard/page.html",
+              {"content": content},
+              context_instance=RequestContext(request))

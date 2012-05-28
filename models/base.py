@@ -24,6 +24,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 
 from tagging.fields import TagField
 from tagging.utils import get_tag_list
@@ -115,6 +116,9 @@ class Post (models.Model):
 
     site = models.ForeignKey(Site, verbose_name=_("Site"),
                              null=True, blank=True)
+
+    objects = models.Manager()
+    sites = CurrentSiteManager()
 
     def is_updated(self):
         """
