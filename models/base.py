@@ -30,7 +30,31 @@ from tagging.fields import TagField
 from tagging.utils import get_tag_list
 
 
-class Category(models.Model):
+class UltraModel(models.Model):
+
+    def get_dict(self, fields):
+        values_dict = {}
+        for field in fields:
+            field_name = field.split(".")[0]
+            if hasattr(self, field_name):
+                values_dict[field_name] = self
+                for prop in field.split("."):
+                    values_dict[field_name] = getattr(values_dict[field_name],
+                                                      prop)
+                values_dict[field_name] = unicode(values_dict[field_name])
+            else:
+                raise ValueError("'%s' class does not have '%s' attr." % (
+                    self.__class__.__name__,
+                    field))
+
+        return values_dict
+
+    class Meta:
+        abstract = True
+        app_label = "ultra_blog"
+
+
+class Category(UltraModel):
     """
     Each post will be tagged for just one category.
     """
@@ -70,7 +94,7 @@ class Category(models.Model):
         ordering = ["title"]
 
 
-class Post (models.Model):
+class Post (UltraModel):
     """
     Post model.
     author and datetime will be filled automaticly.
