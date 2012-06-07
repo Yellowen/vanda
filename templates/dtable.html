@@ -1,0 +1,54 @@
+{% for css in styles %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}{{ css }}" type="text/css" />
+{% endfor %}
+
+{% for script in scripts %}
+<script src="{{ MEDIA_URL }}{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+<script language="javascript">
+$(function() {
+    $("#{{ table_id }}").flexigrid(
+	{
+	    url: '{{ url }}',
+	    dataType: 'json',
+	    method: 'GET',
+	    colModel : {{ fields }},
+	    searchitems : [
+		{display: 'First Name', name : 'first_name'},
+		{display: 'Surname', name : 'surname', isdefault: true},
+		{display: 'Position', name : 'position'}
+	    ],
+	    sortname: "id",
+	    sortorder: "asc",
+	    usepager: true,
+	    title: "{{ title }}",
+	    useRp: true,
+	    rp: {{ rp }},
+	    showTableToggleBtn: false,
+	    resizable: {{ resizable }},
+	    width: {{ width }},
+	    height: {{ height }},
+	    singleSelect: {{ single_select }}
+	}
+    );
+});
+</script>
+
+<!--
+[
+		{display: 'title', name : 'title', width : 40, sortable : true, align: 'left'},
+		{display: 'slug', name : 'slug', width : 150, sortable : true, align: 'left'},
+		{display: 'Surname', name : 'surname', width : 150, sortable : true, align: 'left'},
+		{display: 'Position', name : 'email', width : 250, sortable : true, align: 'left'}
+	    ],
+	    buttons : [
+		{name: 'Edit', bclass: 'edit', onpress : doCommand},
+		{name: 'Delete', bclass: 'delete', onpress : doCommand},
+		{separator: true}
+	    ],
+-->
+
+<table class="display dataTable w1" id="{{ table_id }}">
+
+</table>
