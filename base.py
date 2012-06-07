@@ -66,8 +66,8 @@ class ChangeTable(object):
     buttons = []
     button_separator = True
 
-    css = ["css/blog/my/flexigrid.pack.css", ]
-    js = ["js/my/flexigrid.pack.js", ]
+    css = ["css/flexigrid.pack.css", ]
+    js = ["js/flexigrid.pack.js", ]
     table_id = "grid"
     width = mark_safe("\"auto\"")
     height = 400
