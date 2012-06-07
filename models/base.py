@@ -29,32 +29,10 @@ from django.contrib.sites.managers import CurrentSiteManager
 from tagging.fields import TagField
 from tagging.utils import get_tag_list
 
-
-class UltraModel(models.Model):
-
-    def get_dict(self, fields):
-        values_dict = {}
-        for field in fields:
-            field_name = field.split(".")[0]
-            if hasattr(self, field_name):
-                values_dict[field_name] = self
-                for prop in field.split("."):
-                    values_dict[field_name] = getattr(values_dict[field_name],
-                                                      prop)
-                values_dict[field_name] = unicode(values_dict[field_name])
-            else:
-                raise ValueError("'%s' class does not have '%s' attr." % (
-                    self.__class__.__name__,
-                    field))
-
-        return values_dict
-
-    class Meta:
-        abstract = True
-        app_label = "ultra_blog"
+from dtable.models import DTModel
 
 
-class Category(UltraModel):
+class Category(DTModel):
     """
     Each post will be tagged for just one category.
     """
@@ -94,7 +72,7 @@ class Category(UltraModel):
         ordering = ["title"]
 
 
-class Post (UltraModel):
+class Post (DTModel):
     """
     Post model.
     author and datetime will be filled automaticly.

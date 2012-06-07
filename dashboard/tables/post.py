@@ -17,22 +17,40 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # ---------------------------------------------------------------------------
 
+from django.utils.translation import ugettext as _
 
-from django.conf.urls.defaults import patterns, include, url
+from dtable import ChangeTable, Field
 
-from tables.post import posts
+from ultra_blog.models import Post
 
 
-urlpatterns = patterns('',
-    (r'^new/micro/$', 'ultra_blog.dashboard.views.micro_post'),
+class PostsChangeTable(ChangeTable):
+    name = "posts"
+    template = "ublog/dashboard/posts.html"
+    manager = Post.objects
+    query_dict = {'publish': True}
 
-    # Posts
-#    (r'^posts/$', 'ultra_blog.dashboard.views.posts'),
-    #url(r'^posts/', include('ultra_blog.dashboard.tables.post.posts.urls'),
-    #    name="posts"),
-    url(r'^posts/', include(posts.urls)),
-    (r'^save/post/$', 'ultra_blog.dashboard.views.save_post'),
-    (r'^jsonp/posts/$', 'ultra_blog.dashboard.views.posts_json'),
-    (r'^new/post/$', 'ultra_blog.dashboard.views.new_post'),
-    (r'^$', 'ultra_blog.dashboard.views.index'),
-)
+    fields = [
+        Field("id", _("ID"), width=20, sortable=True),
+        Field("title", _("Title"), width=200, sortable=True),
+        Field("slug", _("Slug"), width=200),
+        ]
+    queryset_fields = ["id", "title", "slug"]
+
+    height = 300
+
+    single_select = True
+    resizable = True
+    current_page = 1
+    per_page = 10
+
+    extra_context = {}
+
+    title = _("Posts")
+
+    buttons = [
+        [_("Add"), "btnadd"],
+        [_("Delete"), ],
+        ]
+
+posts = PostsChangeTable()
