@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Ultra Blog - Data type base blog application for Vanda platform
-#    Copyright (C) 2011 Some Hackers In Town
+#    Dtable - data table application for Vanda platform
+#    Copyright (C) 2012 Some Hackers In Town
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,20 +20,29 @@
 import json
 
 from django.http import HttpResponse
-from django.template.loader import render_to_string as rs
+from django.shortcuts import render_to_response as rr
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 
 class Field(object):
+    """
+    Represent a table field.
+    """
     display = None
     name = None
     width = 50
     sortable = False
     align = "left"
 
-    def __init__(self, name=None, display=None):
+    def __init__(self, name=None, display=None,
+                 width=50, sortable=False, align="left"):
         self.name = name
         self.display = display
+        self.width = width
+        self.sortable = sortable
+        self.align = align
 
     def get_dict(self):
         return {"display": self.display,
@@ -45,18 +54,22 @@ class Field(object):
 
 
 class ChangeTable(object):
-
+    name = ""
     template = "dtable.html"
     model = None
     manager = None
+    query_dict = {}
 
     fields = []
     queryset_fields = []
 
+    buttons = []
+    button_separator = True
+
     css = ["css/blog/my/flexigrid.pack.css", ]
     js = ["js/my/flexigrid.pack.js", ]
     table_id = "grid"
-    width = 700
+    width = mark_safe("\"auto\"")
     height = 400
 
     single_select = True
@@ -69,31 +82,29 @@ class ChangeTable(object):
     url = None
     title = "Grid"
 
-    urlpatterns = [
-        (r'^$', render),
-        (r'jsonp/$', json_data),
-        ]
+    urlpatterns = []
+
 
     def _prep_params(self, request):
         method = request.method
         self.request = request
 
-        self.query = request.GET
+        self.method = request.GET
         if method == "POST":
-            self.query = request.POST
+            self.method = request.POST
 
         self.current_page = 1
-        if "page" in self.query:
-            self.current_page = self.query["page"]
+        if "page" in self.method:
+            self.current_page = self.method["page"]
 
         self.per_page = 10
-        if "rp" in self.query:
-            self.per_page = self.query["rp"]
+        if "rp" in self.method:
+            self.per_page = self.method["rp"]
 
     def _prepare_context(self):
-        if not self.url:
-            raise ValueError("'url' property should not be 'None'")
-
+        """
+        Prepare the context for rendering template.
+        """
 
         fields = []
         append = fields.append
@@ -101,30 +112,52 @@ class ChangeTable(object):
             field_obj = None
             if isinstance(field, basestring):
                 field_obj = Field(field.lower(), field.title())
+            else:
+                field_obj = field
             append(field_obj.get_dict())
+
+        buttons = []
+        append = buttons.append
+        for button in self.buttons:
+            bclass = "btn"
+            if len(button) > 1:
+                bclass = button[1]
+            append([button[0], bclass])
 
         a = {"width": self.width,
              "height": self.height,
-             "url": self.url,
+             "url": reverse("%s-jsonp" % self.name, args=[]),
+             #"jsonpname": "%s-jsonp" % self.name,
              "title": self.title,
-             "resizable": self.resizable,
-             "single_select": self.single_select,
+             "resizable": str(self.resizable).lower(),
+             "single_select": str(self.single_select).lower(),
              "table_id": self.table_id,
              "scripts": self.js,
              "styles": self.css,
-             "fields": json.dumps(fields),
+             "fields": mark_safe(json.dumps(fields)),
+             "buttons": buttons,
              "rp": self.per_page,
              }
         return a
 
+    @property
     def urls(self):
         """
         url dispatcher
         """
-        from django.conf.urls.defaults import patterns
+        ## def wrap(view, cacheable=False):
+        ##     def wrapper(*args, **kwargs):
+        ##         return self.views(view)(*args, **kwargs)
+        ##     return update_wrapper(wrapper, view)
 
-        urlpatterns = patterns('', *self.urlpatterns)
-        return urlpatterns
+        from django.conf.urls.defaults import patterns, url
+
+        urlpatterns = patterns('',
+                               url(r'^$', self.render, name=self.name),
+                               url(r'jsonp/$', self.json_data,
+                                   name=self.name + "-jsonp"),
+                               )
+        return urlpatterns + self.urlpatterns
 
     def json_data(self, request):
         """
@@ -141,34 +174,48 @@ class ChangeTable(object):
 
         self._prep_params(request)
 
+        query = ""
+        if "sortname" in self.method:
+            if self.method["sortname"]:
+                query = self.method["sortname"]
+
+        if "sortorder" in self.method:
+            if self.method["sortorder"] == "desc":
+                query = "-%s" % query
+
         result = []
         counts = 0
 
-        start_index = self.current_page * self.per_page
-        end_index = start_index + self.per_page
+        start_index = (int(self.current_page) - 1) * int(self.per_page)
+        end_index = start_index + int(self.per_page)
+
+        query_dict = self.query_dict
 
         if self.manager:
             if self.query_dict:
                 counts = self.manager.filter(**query_dict).count()
                 end_index = end_check(end_index, counts)
-                result = self.manager.filter(**query_dict)[start_index:end_index]
+                result = self.manager.filter(**query_dict).order_by(query)[start_index:end_index]
+
             else:
                 counts = self.manager.all().count()
                 end_index = end_check(end_index, counts)
-                result = self.manager.all()[start_index:end_index]
+                result = self.manager.all().order_by(query)[start_index:end_index]
+
         elif self.model:
             if self.query_dict:
                 counts = self.model.objects.filter(**query_dict).count()
                 end_index = end_check(end_index, counts)
-                result = self.model.objects.filter(**query_dict)[start_index:end_index]
+                result = self.model.objects.filter(**query_dict).order_by(query)[start_index:end_index]
+
             else:
                 counts = self.model.objects.all().count()
                 end_index = end_check(end_index, counts)
-                result = self.model.objects.all()[start_index:end_index]
+                result = self.model.objects.all().order_by(query)[start_index:end_index]
         else:
             raise ValueError(
                 "one of the 'model' or 'manager' properties should fill.")
-
+        
         data = self._jsonify_data(result, counts)
         return HttpResponse(data)
 
@@ -184,8 +231,8 @@ class ChangeTable(object):
 
         return json.dumps(a)
 
-    def render(self):
+    def render(self, request):
         context = self._prepare_context()
         context.update(self.extra_context)
-        return rs(self.template, context,
-                  context_instance=RequestContext(self.request))
+        return rr(self.template, context,
+                  context_instance=RequestContext(request))

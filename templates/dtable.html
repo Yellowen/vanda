@@ -7,18 +7,19 @@
 {% endfor %}
 
 <script language="javascript">
+function do_command() {
+   console.log("hi");
+}
 $(function() {
+    var fields = $.parseJSON('{{ fields|escape }}');
+    console.dir(fields);
     $("#{{ table_id }}").flexigrid(
 	{
 	    url: '{{ url }}',
 	    dataType: 'json',
 	    method: 'GET',
-	    colModel : {{ fields }},
-	    searchitems : [
-		{display: 'First Name', name : 'first_name'},
-		{display: 'Surname', name : 'surname', isdefault: true},
-		{display: 'Position', name : 'position'}
-	    ],
+            colModel : fields,
+	    searchitems : fields,
 	    sortname: "id",
 	    sortorder: "asc",
 	    usepager: true,
@@ -29,26 +30,25 @@ $(function() {
 	    resizable: {{ resizable }},
 	    width: {{ width }},
 	    height: {{ height }},
+            {% if buttons %}
+
+	    buttons : [
+               {% for button in buttons %}
+		{name: '{{ button.0 }}', bclass: '{{ button.1 }}', onpress : do_command},
+               {% endfor %}
+		{separator: true }
+	    ],
+            {% endif %}
 	    singleSelect: {{ single_select }}
 	}
     );
 });
+
 </script>
 
 <!--
-[
-		{display: 'title', name : 'title', width : 40, sortable : true, align: 'left'},
-		{display: 'slug', name : 'slug', width : 150, sortable : true, align: 'left'},
-		{display: 'Surname', name : 'surname', width : 150, sortable : true, align: 'left'},
-		{display: 'Position', name : 'email', width : 250, sortable : true, align: 'left'}
-	    ],
-	    buttons : [
-		{name: 'Edit', bclass: 'edit', onpress : doCommand},
-		{name: 'Delete', bclass: 'delete', onpress : doCommand},
-		{separator: true}
-	    ],
 -->
 
-<table class="display dataTable w1" id="{{ table_id }}">
+<table class="display dataTable" id="{{ table_id }}">
 
 </table>
