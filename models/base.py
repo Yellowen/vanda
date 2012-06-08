@@ -173,6 +173,9 @@ class Post (DTModel):
         """
         return Comment.objects.filter(content_type=self)
 
+    def comments_count(self):
+        return Comment.objects.filter(content_type=self).count()
+
     def get_categories(self):
         """
         Return the categories list.

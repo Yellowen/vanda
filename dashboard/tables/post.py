@@ -19,7 +19,7 @@
 
 from django.utils.translation import ugettext as _
 
-from dtable import ChangeTable, Field
+from dtable import ChangeTable, Field, Button
 
 from ultra_blog.models import Post
 
@@ -34,12 +34,17 @@ class PostsChangeTable(ChangeTable):
         Field("id", _("ID"), width=20, sortable=True),
         Field("title", _("Title"), width=200, sortable=True),
         Field("slug", _("Slug"), width=200),
+        Field("site", _("Site"), width=200),
+        Field("publish", _("Publish"), width=70),
+        Field("comments_count", _("Comments"), width=70),
+        Field("post_type", _("Type"), width=70),
         ]
-    queryset_fields = ["id", "title", "slug"]
+    queryset_fields = ["id", "title", "slug", "site", "publish",
+                       "comments_count", "post_type"]
 
     height = 300
 
-    single_select = True
+    single_select = False
     resizable = True
     current_page = 1
     per_page = 10
@@ -49,8 +54,7 @@ class PostsChangeTable(ChangeTable):
     title = _("Posts")
 
     buttons = [
-        [_("Add"), "btnadd"],
-        [_("Delete"), ],
+        Button(_("Delete"), '/del/'),
         ]
 
 posts = PostsChangeTable()
