@@ -7,12 +7,17 @@
 {% endfor %}
 
 <script language="javascript">
-function do_command() {
-   console.log("hi");
+function do_command(name, grid, button) {
+    var selected = new Array();
+    $(".trSelected", grid).each(function(){
+	var i = selected.length;
+	console.log(i);
+	selected[i] = parseInt($(this).children("td[abbr=id]").children("div").html());
+    });
+    window.location = button.url + "?ids=" + selected.toString();
 }
 $(function() {
     var fields = $.parseJSON('{{ fields|escape }}');
-    console.dir(fields);
     $("#{{ table_id }}").flexigrid(
 	{
 	    url: '{{ url }}',
@@ -31,10 +36,9 @@ $(function() {
 	    width: {{ width }},
 	    height: {{ height }},
             {% if buttons %}
-
 	    buttons : [
                {% for button in buttons %}
-		{name: '{{ button.0 }}', bclass: '{{ button.1 }}', onpress : do_command},
+		{{ button }}
                {% endfor %}
 		{separator: true }
 	    ],

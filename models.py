@@ -30,7 +30,11 @@ class DTModel(models.Model):
                 for prop in field.split("."):
                     values_dict[field_name] = getattr(values_dict[field_name],
                                                       prop)
-                values_dict[field_name] = unicode(values_dict[field_name])
+
+                if callable(values_dict[field_name]):
+                    values_dict[field_name] = values_dict[field_name]()
+                else:
+                    values_dict[field_name] = unicode(values_dict[field_name])
             else:
                 raise ValueError("'%s' class does not have '%s' attr." % (
                     self.__class__.__name__,

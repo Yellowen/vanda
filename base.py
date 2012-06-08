@@ -53,6 +53,31 @@ class Field(object):
                 }
 
 
+class Button(object):
+    """
+    Represent a flexitable button.
+    """
+
+    def __init__(self, name, url, tooltip="", bclass="",
+                 bimage=""):
+        self.name = name
+        self.id = "%s_id" % name.lower()
+        self.url = url
+        self.tooltip = tooltip
+        self.bclass = bclass
+        self.bimage = bimage
+
+    def __unicode__(self):
+        result = "{"
+        for i in ["name", "id", "url", "tooltip", "bclass",
+                  "bimage"]:
+            value = getattr(self, i)
+            if value:
+                result = result + i + ": '" + value + "', "
+
+        return mark_safe(result + " onpress: do_command},")
+
+
 class ChangeTable(object):
     name = ""
     template = "dtable.html"
@@ -116,13 +141,13 @@ class ChangeTable(object):
                 field_obj = field
             append(field_obj.get_dict())
 
-        buttons = []
-        append = buttons.append
-        for button in self.buttons:
-            bclass = "btn"
-            if len(button) > 1:
-                bclass = button[1]
-            append([button[0], bclass])
+        ## buttons = []
+        ## append = buttons.append
+        ## for button in self.buttons:
+        ##     bclass = "btn"
+        ##     if len(button) > 1:
+        ##         bclass = button[1]
+        ##     append([button[0], bclass])
 
         a = {"width": self.width,
              "height": self.height,
@@ -135,7 +160,7 @@ class ChangeTable(object):
              "scripts": self.js,
              "styles": self.css,
              "fields": mark_safe(json.dumps(fields)),
-             "buttons": buttons,
+             "buttons": self.buttons,
              "rp": self.per_page,
              }
         return a
