@@ -37,7 +37,6 @@ class DTModel(models.Model):
                     values_dict[field_name] = unicode(values_dict[field_name])
             else:
                 if tableobj:
-                    print ">>> ", tableobj, field_name, hasattr(tableobj, field_name)
                     if hasattr(tableobj, field_name):
                         values_dict[field_name] = tableobj
                         for prop in field.split("."):
