@@ -62,6 +62,11 @@ class Button(object):
                  bimage=""):
         self.name = name
         self.id = "%s_id" % name.lower()
+
+        # url must be a list that first index is the name of url
+        # specified in url() function. and secend arg should be
+        # a list or dictionary of posible arguments pass to reverse
+        # function
         self.url = url
         self.tooltip = tooltip
         self.bclass = bclass
@@ -73,7 +78,12 @@ class Button(object):
                   "bimage"]:
             value = getattr(self, i)
             if value:
-                result = result + i + ": '" + value + "', "
+                if i == "url":
+                    result = result + i + ": '" + reverse(
+                        value[0],
+                        args=value[1]) + "', "
+                else:
+                    result = result + i + ": '" + value + "', "
 
         return mark_safe(result + " onpress: do_command},")
 
@@ -95,7 +105,7 @@ class ChangeTable(object):
     js = ["js/flexigrid.pack.js", ]
     table_id = "grid"
     width = mark_safe("\"auto\"")
-    height = 400
+    height = mark_safe("\"auto\"")
 
     single_select = True
     resizable = False
@@ -214,10 +224,10 @@ class ChangeTable(object):
         start_index = (int(self.current_page) - 1) * int(self.per_page)
         end_index = start_index + int(self.per_page)
 
-        query_dict = self.query_dict
+        query_dict = self._get_queryset_parameters(request)
 
         if self.manager:
-            if self.query_dict:
+            if query_dict:
                 counts = self.manager.filter(**query_dict).count()
                 end_index = end_check(end_index, counts)
                 result = self.manager.filter(**query_dict).order_by(query)[start_index:end_index]
@@ -228,7 +238,7 @@ class ChangeTable(object):
                 result = self.manager.all().order_by(query)[start_index:end_index]
 
         elif self.model:
-            if self.query_dict:
+            if query_dict:
                 counts = self.model.objects.filter(**query_dict).count()
                 end_index = end_check(end_index, counts)
                 result = self.model.objects.filter(**query_dict).order_by(query)[start_index:end_index]
@@ -240,7 +250,7 @@ class ChangeTable(object):
         else:
             raise ValueError(
                 "one of the 'model' or 'manager' properties should fill.")
-        
+
         data = self._jsonify_data(result, counts)
         return HttpResponse(data)
 
@@ -248,16 +258,28 @@ class ChangeTable(object):
         """
         Return a suitable json data for flexitable.
         """
+
         a = {"page": self.current_page,
              "rows": [
                  {"id": i.id,
-                  "cell": i.get_dict(self.queryset_fields)} for i in queryset],
+                  "cell": i.get_dict(self.queryset_fields,
+                                     self)} for i in queryset],
              "total": counts}
 
         return json.dumps(a)
 
     def render(self, request):
+        """
+        Render the final template.
+        """
         context = self._prepare_context()
         context.update(self.extra_context)
         return rr(self.template, context,
                   context_instance=RequestContext(request))
+
+    def _get_queryset_parameters(self, request):
+        """
+        Prepare a parameter dictionary for using in filter
+        method of model Manger.
+        """
+        return self.query_dict

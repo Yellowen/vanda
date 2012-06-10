@@ -21,7 +21,7 @@ from django.db import models
 
 class DTModel(models.Model):
 
-    def get_dict(self, fields):
+    def get_dict(self, fields, tableobj=None):
         values_dict = {}
         for field in fields:
             field_name = field.split(".")[0]
@@ -36,9 +36,25 @@ class DTModel(models.Model):
                 else:
                     values_dict[field_name] = unicode(values_dict[field_name])
             else:
-                raise ValueError("'%s' class does not have '%s' attr." % (
-                    self.__class__.__name__,
-                    field))
+                if tableobj:
+                    print ">>> ", tableobj, field_name, hasattr(tableobj, field_name)
+                    if hasattr(tableobj, field_name):
+                        values_dict[field_name] = tableobj
+                        for prop in field.split("."):
+                            values_dict[field_name] = getattr(
+                                values_dict[field_name],
+                                prop)
+
+                        if callable(values_dict[field_name]):
+                            values_dict[field_name] = values_dict[
+                                field_name](self)
+                        else:
+                            values_dict[field_name] = unicode(
+                                values_dict[field_name])
+                else:
+                    raise ValueError("'%s' or DTable classes does not have '%s' attr." % (
+                        self.__class__.__name__,
+                        field))
 
         return values_dict
 
