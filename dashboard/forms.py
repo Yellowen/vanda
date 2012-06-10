@@ -46,7 +46,7 @@ class QNewPostForm(forms.Form):
     tags = forms.CharField(label=_("tags"), required=False,
                            help_text=_("use ',' or space as separator."))
     post_type = forms.ChoiceField(label=_("Post type"))
-    publish = forms.BooleanField(label=_("Publish"))
+    publish = forms.BooleanField(label=_("Publish"), required=False)
 
     def __init__(self, request, *args, **kwargs):
         super(QNewPostForm, self).__init__(*args, **kwargs)

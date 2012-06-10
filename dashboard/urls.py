@@ -21,18 +21,29 @@
 from django.conf.urls.defaults import patterns, include, url
 
 from tables.post import posts
+from tables.category import categories
 
 
 urlpatterns = patterns('',
     (r'^new/micro/$', 'ultra_blog.dashboard.views.micro_post'),
 
     # Posts
-#    (r'^posts/$', 'ultra_blog.dashboard.views.posts'),
-    #url(r'^posts/', include('ultra_blog.dashboard.tables.post.posts.urls'),
-    #    name="posts"),
+    url(r'^posts/delete/$', 'ultra_blog.dashboard.views.delete_post',
+        name="delete-post"),
+    url(r'^posts/edit/(\d+)/$', 'ultra_blog.dashboard.views.edit_post',
+        name="edit-post"),
+
     url(r'^posts/', include(posts.urls)),
     (r'^save/post/$', 'ultra_blog.dashboard.views.save_post'),
-    (r'^jsonp/posts/$', 'ultra_blog.dashboard.views.posts_json'),
+
     (r'^new/post/$', 'ultra_blog.dashboard.views.new_post'),
+
+    # Categories
+    url(r'^categories/delete/$', 'ultra_blog.dashboard.views.delete_category',
+        name="delete-category"),
+    url(r'^categories/add/$', 'ultra_blog.dashboard.views.add_category',
+        name="add-category"),
+    url(r'^categories/', include(categories.urls)),
+
     (r'^$', 'ultra_blog.dashboard.views.index'),
 )

@@ -49,6 +49,9 @@ class Category(DTModel):
     site = models.ForeignKey(Site, verbose_name=_("Site"),
                              null=True, blank=True)
 
+    objects = models.Manager()
+    sites = CurrentSiteManager()
+
     def get_childs(self):
         return Category.objects.filter(parent=self)
 

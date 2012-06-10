@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.comments.forms import CommentForm
 
-from models import Post, TextPost, ImagePost, VideoPost
+from models import Post, TextPost, ImagePost, VideoPost, Category
 from base import post_types
 
 
@@ -126,3 +126,15 @@ class EditPostForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ["post_type_name", ]
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        exclude = ["site", ]
+
+    def save(self, site, *args, **kwargs):
+        obj = super(CategoryForm, self).save(commit=False)
+        obj.site = site
+        obj.save()
+        return obj

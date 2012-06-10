@@ -21,27 +21,25 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 from dtable import ChangeTable, Field, Button
-from ultra_blog.models import Post
+from ultra_blog.models import Category
 
 
-class PostsChangeTable(ChangeTable):
-    name = "posts"
+class CategoryChangeTable(ChangeTable):
+    name = "categories"
     template = "ublog/dashboard/posts.html"
-    manager = Post.objects
-    query_dict = {'publish': True}
+    manager = Category.objects
+    query_dict = {}
 
     fields = [
         Field("id", _("ID"), width=20, sortable=True),
         Field("title", _("Title"), width=200, sortable=True),
         Field("slug", _("Slug"), width=200),
-        Field("site", _("Site"), width=200),
-        Field("publish", _("Publish"), width=70),
-        Field("comments_count", _("Comments"), width=70),
-        Field("post_type", _("Type"), width=70),
-        Field("edit_link", _("Edit"), width=70),
+        Field("site", _("site"), width=200, sortable=True),
+        Field("parent", _("Parent"), width=200),
+        Field("count_posts", _("Posts"), width=200),
         ]
-    queryset_fields = ["id", "title", "slug", "site", "publish",
-                       "comments_count", "post_type", "edit_link"]
+    queryset_fields = ["id", "title", "slug",
+                       "site", "parent", "count_posts"]
 
     single_select = False
     resizable = True
@@ -50,10 +48,11 @@ class PostsChangeTable(ChangeTable):
 
     extra_context = {}
 
-    title = _("Posts")
+    title = _("Categories")
 
     buttons = [
-        Button(_("Delete"), ["delete-post", []]),
+        Button(_("Add"), ["add-category", []]),
+        Button(_("Delete"), ["delete-category", []]),
         ]
 
     def _get_queryset_parameters(self, request):
@@ -69,15 +68,6 @@ class PostsChangeTable(ChangeTable):
         except Site.DoesNotExist:
             raise ValueError("Invalid domain name.")
 
-        self.query_dict.update({"site": site})
-        return self.query_dict
+        return {"site": site}
 
-    def edit_link(self, obj):
-        """
-        Generate the edit link.
-        """
-        return "<a href='%s'>%s</a>" % (reverse("edit-post", args=[obj.id]),
-                                        _("Edit"))
-
-
-posts = PostsChangeTable()
+categories = CategoryChangeTable()

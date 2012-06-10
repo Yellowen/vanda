@@ -33,6 +33,17 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ultra_blog.base import post_types as PT
 from forms import QMicroPostForm, QNewPostForm
+from ultra_blog.models import Post, Category
+
+
+def get_site(request):
+    domain = request.get_host()
+    try:
+        site = Site.objects.get(domain=domain)
+    except Site.DoesNotExist:
+        raise Http404()
+
+    return site
 
 
 @staff_member_required
@@ -129,8 +140,6 @@ def new_post(request):
         new_post_form = QNewPostForm(request, request.POST)
         if new_post_form.is_valid():
 
-            from ultra_blog.models import Post, Category
-
             prev_data = new_post_form.cleaned_data
 
             try:
@@ -181,12 +190,7 @@ def save_post(request):
     if not "new_post_data" in request.session:
         return HttpResponseForbidden()
 
-    domain = request.get_host()
-    try:
-        site = Site.objects.get(domain=domain)
-    except Site.DoesNotExist:
-        raise Http404()
-
+    site = get_site(request)
     prev_data = request.session["new_post_data"]
     TypeForm = request.session["new_post_type_form"]
     form = TypeForm(request.POST)
@@ -256,3 +260,84 @@ def posts_json(request):
             "total": posts.count()}
     result = json.dumps(data)
     return HttpResponse(result)
+
+
+@staff_member_required
+def edit_post(request, id):
+    """
+    Edit a post.
+    """
+    site = get_site(request)
+    if request.method == "POST":
+        pass
+    else:
+        return HttpResponse()
+
+
+@staff_member_required
+def delete_post(request):
+    """
+    delete posts.
+    """
+
+    ids = request.GET.get("ids", [])
+
+    ids = [int(i) for i in ids.split(",")]
+    if ids:
+        posts = Post.objects.filter(pk__in=ids, site=site).delete()
+
+        return HttpResponseRedirect(reverse("posts", args=[]))
+    else:
+        return HttpResponseForbidden()
+
+
+@staff_member_required
+def delete_category(request):
+    """
+    delete categories.
+    """
+
+    site = get_site(request)
+
+    ids = request.GET.get("ids", [])
+
+    ids = [int(i) for i in ids.split(",")]
+    if ids:
+        posts = Category.objects.filter(pk__in=ids, site=site).delete()
+
+        return HttpResponseRedirect(reverse("categories", args=[]))
+    else:
+        return HttpResponseForbidden()
+
+
+@staff_member_required
+def add_category(request):
+    """
+    Add view.
+    """
+    site = get_site(request)
+
+    from ultra_blog.forms import CategoryForm
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            from django.db import IntegrityError
+            try:
+                m = form.save(site)
+            except IntegrityError:
+                return rr("ublog/dashboard/form.html",
+                          {"url": reverse("add-category", args=[]),
+                           "title": _("Add Category"),
+                           "form": form,
+                           "msg": _("A category with this title already exists."),
+                           "msgclass": "error"},
+                          context_instance=RequestContext(request))
+                
+            return HttpResponseRedirect(reverse("categories", args=[]))
+    else:
+        form = CategoryForm()
+        return rr("ublog/dashboard/form.html",
+                  {"url": reverse("add-category", args=[]),
+                   "title": _("Add Category"),
+                   "form": form},
+                  context_instance=RequestContext(request))
