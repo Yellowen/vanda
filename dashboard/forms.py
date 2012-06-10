@@ -33,7 +33,8 @@ class QMicroPostForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(QMicroPostForm, self).__init__(*args, **kwargs)
-        self.fields['status'].choices = [(i.id, i.name) for i in Status.objects.all()]
+        q = [(i.id, i.name) for i in Status.objects.all()]
+        self.fields['status'].choices = q
 
 
 class QNewPostForm(forms.Form):
@@ -49,7 +50,35 @@ class QNewPostForm(forms.Form):
     publish = forms.BooleanField(label=_("Publish"), required=False)
 
     def __init__(self, request, *args, **kwargs):
+        obj = None
+        self.request = request
+        if "instance" in kwargs:
+            obj = kwargs["instance"]
+            self.instance = obj
+            del kwargs["instance"]
+
         super(QNewPostForm, self).__init__(*args, **kwargs)
-        cats = Category.objects.filter(site__domain=request.META["HTTP_HOST"])
+        cats = Category.objects.filter(site__domain=request.get_host())
         self.fields["categories"].choices = [(i.id, i.title) for i in cats]
         self.fields["post_type"].choices = PT.get_types_dict()
+
+        if obj:
+            del self.fields["post_type"]
+            self.fields["title"].initial = obj.title
+            self.fields["slug"].initial = obj.slug
+            q = obj.categories.all()
+            self.fields["categories"].initial = [i.id for i in q]
+            self.fields["tags"].initial = obj.tags
+            self.fields["publish"].initial = obj.publish
+
+    def save(self):
+        data = self.request.POST
+        obj = self.instance
+        obj.title = data["title"]
+        obj.slug = data["slug"]
+        q = [int(i) for i in data.getlist("categories")]
+        obj.categories = q
+        obj.tags = data["tags"]
+        obj.publish = data["publish"]
+        obj.save()
+        return obj

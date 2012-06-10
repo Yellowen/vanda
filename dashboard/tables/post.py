@@ -22,26 +22,27 @@ from django.core.urlresolvers import reverse
 
 from dtable import ChangeTable, Field, Button
 from ultra_blog.models import Post
+from ultra_blog.base import post_types as PT
 
 
 class PostsChangeTable(ChangeTable):
     name = "posts"
     template = "ublog/dashboard/posts.html"
     manager = Post.objects
-    query_dict = {'publish': True}
+    query_dict = {}
 
     fields = [
         Field("id", _("ID"), width=20, sortable=True),
-        Field("title", _("Title"), width=200, sortable=True),
+        Field("title_link", _("Title"), width=200, sortable=True),
         Field("slug", _("Slug"), width=200),
         Field("site", _("Site"), width=200),
         Field("publish", _("Publish"), width=70),
         Field("comments_count", _("Comments"), width=70),
-        Field("post_type", _("Type"), width=70),
-        Field("edit_link", _("Edit"), width=70),
+        Field("post_type_link", _("Type"), width=70),
+
         ]
-    queryset_fields = ["id", "title", "slug", "site", "publish",
-                       "comments_count", "post_type", "edit_link"]
+    queryset_fields = ["id", "title_link", "slug", "site", "publish",
+                       "comments_count", "post_type_link"]
 
     single_select = False
     resizable = True
@@ -72,12 +73,19 @@ class PostsChangeTable(ChangeTable):
         self.query_dict.update({"site": site})
         return self.query_dict
 
-    def edit_link(self, obj):
+    def title_link(self, obj):
         """
         Generate the edit link.
         """
         return "<a href='%s'>%s</a>" % (reverse("edit-post", args=[obj.id]),
-                                        _("Edit"))
+                                        obj.title)
+
+    def post_type_link(self, obj):
+        verbose_name = PT.get_type(obj.post_type_name).verbose_name
+        return "<a href='%s'>%s</a>" % (reverse("edit-post-type",
+                                                args=[obj.post_type_name,
+                                                      obj.id]),
+                                        verbose_name)
 
 
 posts = PostsChangeTable()

@@ -20,6 +20,7 @@
 import json
 
 from django.shortcuts import render_to_response as rr
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string as rs
 from django.template import RequestContext
 from django.http import (HttpResponseForbidden, Http404, HttpResponse,
@@ -31,6 +32,7 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 
+from ultra_blog.forms import CategoryForm
 from ultra_blog.base import post_types as PT
 from forms import QMicroPostForm, QNewPostForm
 from ultra_blog.models import Post, Category
@@ -208,7 +210,7 @@ def save_post(request):
         post.tags = prev_data["tags"]
         post.author = request.user
         post.site = site
-        post.post_type_name = PT.get_form(prev_data["post_type"])
+        post.post_type_name = prev_data["post_type"]
         post.content_object = a
         post.save()
 
@@ -267,11 +269,49 @@ def edit_post(request, id):
     """
     Edit a post.
     """
+
     site = get_site(request)
+
+    obj = get_object_or_404(Post, pk=id)
     if request.method == "POST":
-        pass
+        form = QNewPostForm(request, request.POST, instance=obj)
+        if form.is_valid:
+            form.save()
+            return redirect("posts")
     else:
-        return HttpResponse()
+        form = QNewPostForm(request, instance=obj)
+        return rr("ublog/dashboard/form.html",
+                  {"url": reverse("edit-post", args=[id]),
+                   "title": _("Edit Post"),
+                   "submit_title": _("Save"),
+                   "form": form},
+                  context_instance=RequestContext(request))
+
+
+@staff_member_required
+def edit_post_type(request, type_name, id):
+    """
+    Edit a post.
+    """
+
+    site = get_site(request)
+
+    obj = get_object_or_404(Post, pk=id)
+    Form = PT.get_form(type_name)
+    post_type_obj = get_object_or_404(obj.content_object, pk=obj.object_id)
+    if request.method == "POST":
+        form = Form(request.POST, instance=post_type_obj)
+        if form.is_valid:
+            form.save()
+            return redirect("posts")
+    else:
+        form = Form(instance=post_type_obj)
+        return rr("ublog/dashboard/form.html",
+                  {"url": reverse("edit-post-type", args=[type_name, id]),
+                   "title": _("Edit Post"),
+                   "submit_title": _("Save"),
+                   "form": form},
+                  context_instance=RequestContext(request))
 
 
 @staff_member_required
@@ -281,6 +321,7 @@ def delete_post(request):
     """
 
     ids = request.GET.get("ids", [])
+    site = get_site(request)
 
     ids = [int(i) for i in ids.split(",")]
     if ids:
@@ -317,13 +358,12 @@ def add_category(request):
     """
     site = get_site(request)
 
-    from ultra_blog.forms import CategoryForm
     if request.method == "POST":
-        form = CategoryForm(request.POST)
+        form = CategoryForm(site, request.POST)
         if form.is_valid():
             from django.db import IntegrityError
             try:
-                m = form.save(site)
+                m = form.save()
             except IntegrityError:
                 return rr("ublog/dashboard/form.html",
                           {"url": reverse("add-category", args=[]),
@@ -332,12 +372,48 @@ def add_category(request):
                            "msg": _("A category with this title already exists."),
                            "msgclass": "error"},
                           context_instance=RequestContext(request))
-                
+
             return HttpResponseRedirect(reverse("categories", args=[]))
     else:
-        form = CategoryForm()
+        form = CategoryForm(site)
         return rr("ublog/dashboard/form.html",
                   {"url": reverse("add-category", args=[]),
                    "title": _("Add Category"),
+                   "form": form},
+                  context_instance=RequestContext(request))
+
+
+@staff_member_required
+def edit_category(request, id):
+    """
+    Edit a post.
+    """
+    site = get_site(request)
+
+    try:
+        instance = Category.objects.get(site=site, id=id)
+    except Category.DoesNotExist:
+        raise Http404()
+
+    form = CategoryForm(site, request.POST, instance=instance)
+    if form.is_valid():
+        from django.db import IntegrityError
+        try:
+            m = form.save()
+        except IntegrityError:
+            return rr("ublog/dashboard/form.html",
+                      {"url": reverse("edit-category", args=[id]),
+                       "title": _("Edit Category"),
+                       "form": form,
+                       "msg": _("A category with this title already exists."),
+                       "msgclass": "error"},
+                      context_instance=RequestContext(request))
+
+        return HttpResponseRedirect(reverse("categories", args=[]))
+    else:
+        form = CategoryForm(site, instance=instance)
+        return rr("ublog/dashboard/form.html",
+                  {"url": reverse("edit-category", args=[id]),
+                   "title": _("Edit Category"),
                    "form": form},
                   context_instance=RequestContext(request))

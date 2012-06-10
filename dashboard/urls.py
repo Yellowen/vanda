@@ -32,6 +32,9 @@ urlpatterns = patterns('',
         name="delete-post"),
     url(r'^posts/edit/(\d+)/$', 'ultra_blog.dashboard.views.edit_post',
         name="edit-post"),
+    url(r'^posts/edit/(\w+)/(\d+)/$',
+        'ultra_blog.dashboard.views.edit_post_type',
+        name="edit-post-type"),
 
     url(r'^posts/', include(posts.urls)),
     (r'^save/post/$', 'ultra_blog.dashboard.views.save_post'),
@@ -44,6 +47,8 @@ urlpatterns = patterns('',
     url(r'^categories/add/$', 'ultra_blog.dashboard.views.add_category',
         name="add-category"),
     url(r'^categories/', include(categories.urls)),
+    url(r'^categories/edit/(\d+)/$', 'ultra_blog.dashboard.views.edit_category',
+        name="edit-category"),
 
     (r'^$', 'ultra_blog.dashboard.views.index'),
 )

@@ -129,12 +129,28 @@ class EditPostForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
+
+    def __init__(self, site, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        self.site = site
+        query = None
+        if "instance" in kwargs:
+            q = Category.objects.filter(site=site).exclude(
+                id=kwargs["instance"].id)
+
+            query = [(i.id, i.title) for i in q]
+        else:
+            q = Category.objects.filter(site=site)
+            query = [(i.id, i.title) for i in q]
+
+        self.fields["parent"].choices = [("", "---")] + query
+
     class Meta:
         model = Category
         exclude = ["site", ]
 
-    def save(self, site, *args, **kwargs):
+    def save(self, *args, **kwargs):
         obj = super(CategoryForm, self).save(commit=False)
-        obj.site = site
+        obj.site = self.site
         obj.save()
         return obj

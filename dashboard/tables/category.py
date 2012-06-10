@@ -35,11 +35,13 @@ class CategoryChangeTable(ChangeTable):
         Field("title", _("Title"), width=200, sortable=True),
         Field("slug", _("Slug"), width=200),
         Field("site", _("site"), width=200, sortable=True),
-        Field("parent", _("Parent"), width=200),
-        Field("count_posts", _("Posts"), width=200),
+        Field("parent", _("Parent"), width=100),
+        Field("count_posts", _("Posts"), width=70),
+        Field("edit_link", _("Edit"), width=70),
+
         ]
     queryset_fields = ["id", "title", "slug",
-                       "site", "parent", "count_posts"]
+                       "site", "parent", "count_posts", "edit_link"]
 
     single_select = False
     resizable = True
@@ -69,5 +71,12 @@ class CategoryChangeTable(ChangeTable):
             raise ValueError("Invalid domain name.")
 
         return {"site": site}
+
+    def edit_link(self, obj):
+        """
+        Generate the edit link.
+        """
+        return "<a href='%s'>%s</a>" % (reverse("edit-category", args=[obj.id]),
+                                        _("Edit"))
 
 categories = CategoryChangeTable()
