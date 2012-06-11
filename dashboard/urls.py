@@ -20,8 +20,7 @@
 
 from django.conf.urls.defaults import patterns, include, url
 
-from tables.post import posts
-from tables.category import categories
+from tables import (posts, categories, comments)
 
 
 urlpatterns = patterns('',
@@ -49,6 +48,14 @@ urlpatterns = patterns('',
     url(r'^categories/', include(categories.urls)),
     url(r'^categories/edit/(\d+)/$', 'ultra_blog.dashboard.views.edit_category',
         name="edit-category"),
+
+    # comments
+    url(r'^comments/', include(comments.urls)),
+    url(r'^comments/delete/$', 'ultra_blog.dashboard.views.delete_comment',
+        name="delete-comment"),
+    url(r'^comments/change/public/(\d+)/$',
+        'ultra_blog.dashboard.views.edit_comment_public',
+        name="edit-comment-public"),
 
     (r'^$', 'ultra_blog.dashboard.views.index'),
 )

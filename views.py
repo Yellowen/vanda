@@ -26,6 +26,7 @@ from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponse, Http404, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sites.models import Site
 
 from models.base import Category
 from models import Post, Setting
@@ -62,10 +63,27 @@ def view_post(request, slug):
     """
     View a single post.
     """
+
+    domain = request.get_host()
+    try:
+        site = Site.objects.get(domain=domain)
+    except Site.DoesNotExist:
+        raise Http404()
+
     post = get_object_or_404(Post, slug=slug)
 
+    from django.contrib.comments.models import Comment
+
+
+    comments = Comment.objects.filter(site=site,
+                                      content_type__name='Post',
+                                      content_type__app_label="ultra_blog",
+                                      object_pk=post.pk,
+                                      is_public=True)
+
     return rr("ublog/view_post.html",
-              {"post": post},
+              {"post": post,
+               "comments_list": comments},
               context_instance=RequestContext(request))
 
 

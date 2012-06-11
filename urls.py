@@ -18,13 +18,14 @@
 # ---------------------------------------------------------------------------
 
 
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import patterns, url
 
 from feeds import LatestPosts, CategoryFeed
 
 
 urlpatterns = patterns('',
-        (r'^posts/([^/]+)/$', "ultra_blog.views.view_post"),
+        url(r'^posts/([^/]+)/$', "ultra_blog.views.view_post",
+            name="view-post"),
         (r'^tags/([^/]+)/$', "ultra_blog.views.view_tag"),
         (r'^categories/([^/]+)/$', "ultra_blog.views.view_category"),
         (r'^types/(\w+)/$', "ultra_blog.views.view_type"),
@@ -32,5 +33,7 @@ urlpatterns = patterns('',
         (r'^feed/category/(?P<slug>\w+)/$', CategoryFeed()),
         (r'^feed/$', LatestPosts()),
         (r'^api/micro/$', 'ultra_blog.views.micro_api'),
+        url(r'^new/comment/$', 'ultra_blog.comments.post_comment',
+            name="new-ucomment"),
         (r'^$', "ultra_blog.views.blog_index"),
 )

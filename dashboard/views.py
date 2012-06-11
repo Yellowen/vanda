@@ -417,3 +417,34 @@ def edit_category(request, id):
                    "title": _("Edit Category"),
                    "form": form},
                   context_instance=RequestContext(request))
+
+
+@staff_member_required
+def delete_comment(request):
+    """
+    Edit a post.
+    """
+    ids = request.GET.get("ids", [])
+    site = get_site(request)
+
+    ids = [int(i) for i in ids.split(",")]
+    if ids:
+        comments = Comment.objects.filter(pk__in=ids, site=site).delete()
+
+        return HttpResponseRedirect(reverse("comments", args=[]))
+    else:
+        return HttpResponseForbidden()
+
+
+@staff_member_required
+def edit_comment_public(request, id):
+    """
+    Toggle the is_public field for a comment.
+    """
+
+    site = get_site(request)
+    comment = get_object_or_404(Comment, pk=id,
+                                site=site)
+    comment.is_public = not comment.is_public
+    comment.save()
+    return HttpResponseRedirect(reverse("comments", args=[]))
