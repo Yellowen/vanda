@@ -89,11 +89,17 @@ class Button(object):
 
 
 class ChangeTable(object):
+    """
+    Base Class for all the change views.
+    """
     name = ""
     template = "dtable.html"
     model = None
     manager = None
     query_dict = {}
+
+    # Remember to use model with monkey patch not manager
+    monkey_patch = False
 
     fields = []
     queryset_fields = []
@@ -103,6 +109,7 @@ class ChangeTable(object):
 
     css = ["css/flexigrid.pack.css", ]
     js = ["js/flexigrid.pack.js", ]
+    wrap_cell = False
     table_id = "grid"
     width = mark_safe("\"auto\"")
     height = mark_safe("\"auto\"")
@@ -118,7 +125,6 @@ class ChangeTable(object):
     title = "Grid"
 
     urlpatterns = []
-
 
     def _prep_params(self, request):
         method = request.method
@@ -171,6 +177,7 @@ class ChangeTable(object):
              "styles": self.css,
              "fields": mark_safe(json.dumps(fields)),
              "buttons": self.buttons,
+             "nowrap": str(not self.wrap_cell).lower(),
              "rp": self.per_page,
              }
         return a
@@ -226,6 +233,12 @@ class ChangeTable(object):
 
         query_dict = self._get_queryset_parameters(request)
 
+        if self.monkey_patch:
+            from models import DTModel
+            func = DTModel.get_class_dict
+
+            setattr(self.model, "get_dict", DTModel.get_class_dict)
+
         if self.manager:
             if query_dict:
                 counts = self.manager.filter(**query_dict).count()
@@ -241,6 +254,7 @@ class ChangeTable(object):
             if query_dict:
                 counts = self.model.objects.filter(**query_dict).count()
                 end_index = end_check(end_index, counts)
+                print "<<<<", query_dict, query
                 result = self.model.objects.filter(**query_dict).order_by(query)[start_index:end_index]
 
             else:

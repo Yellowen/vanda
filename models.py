@@ -21,6 +21,43 @@ from django.db import models
 
 class DTModel(models.Model):
 
+    @staticmethod
+    def get_class_dict(self, fields, tableobj=None):
+        values_dict = {}
+        for field in fields:
+            field_name = field.split(".")[0]
+            if hasattr(self, field_name):
+                values_dict[field_name] = self
+                for prop in field.split("."):
+                    values_dict[field_name] = getattr(values_dict[field_name],
+                                                      prop)
+
+                if callable(values_dict[field_name]):
+                    values_dict[field_name] = values_dict[field_name]()
+                else:
+                    values_dict[field_name] = unicode(values_dict[field_name])
+            else:
+                if tableobj:
+                    if hasattr(tableobj, field_name):
+                        values_dict[field_name] = tableobj
+                        for prop in field.split("."):
+                            values_dict[field_name] = getattr(
+                                values_dict[field_name],
+                                prop)
+
+                        if callable(values_dict[field_name]):
+                            values_dict[field_name] = values_dict[
+                                field_name](self)
+                        else:
+                            values_dict[field_name] = unicode(
+                                values_dict[field_name])
+                else:
+                    raise ValueError("'%s' or DTable classes does not have '%s' attr." % (
+                        self.__class__.__name__,
+                        field))
+
+        return values_dict
+
     def get_dict(self, fields, tableobj=None):
         values_dict = {}
         for field in fields:
