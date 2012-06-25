@@ -195,7 +195,7 @@ def save_post(request):
     site = get_site(request)
     prev_data = request.session["new_post_data"]
     TypeForm = request.session["new_post_type_form"]
-    form = TypeForm(request.POST)
+    form = TypeForm(request.POST, request.FILES)
 
     if form.is_valid():
 
