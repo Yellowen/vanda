@@ -83,7 +83,7 @@ class CommentsChangeTable(ChangeTable):
         """
         Generate the edit link.
         """
-        
+
         #return "<a href='%s'>%s</a>" % (reverse("edit-post", args=[obj.id]),
         #                                obj.comment)
         return obj.comment

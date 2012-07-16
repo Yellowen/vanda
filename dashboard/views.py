@@ -177,7 +177,6 @@ def new_post(request):
         return HttpResponseForbidden()
 
 
-
 @staff_member_required
 def save_post(request):
     """
