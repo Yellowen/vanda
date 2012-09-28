@@ -16,26 +16,43 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.shortcuts import render_to_response as rr
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
+import json
+
+from django.db import models
+from django.utils.translation import ugettext as _
 
 
-@login_required
-def index(request):
+class UserDashboard(models.Model):
     """
-    Dashboard index.
+    Users dashboard data.
     """
-    return rr("dashboard/index.html",
-              {},
-              context_instance=RequestContext(request))
+    user = models.ForeignKey('auth.User', verbose_name=_("User"))
+    last_update = models.DateTimeField(_("last update"),
+                                       auto_now=True,
+                                       auto_now_add=True)
+    _data = models.TextField(_("data"))
 
+    @property
+    def data(self):
+        return json.loads(self._profile_data)
 
-@login_required
-def tmp_index(request):
-    """
-    Dashboard temporary index.
-    """
-    return rr("dashboard/tmp/index.html",
-              {},
-              context_instance=RequestContext(request))
+    @data.setter
+    def data(self, value):
+        self._profile_data = json.dumps(value)
+        return json.dumps(value)
+
+    @classmethod
+    def get_data(cls, user):
+        try:
+            obj = cls.objects.get(user=user)
+        except cls.DoesNotExist:
+            return None
+
+        return obj.data
+
+    def __unicode__(self):
+        return "%s's dashboard data" % self.user.username
+
+    class Meta:
+        verbose_name = _("dashboard data")
+        verbose_name_plural = _("Dashboards data")

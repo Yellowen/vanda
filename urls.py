@@ -16,9 +16,10 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from base import dashboard as DASHBOARD
+from django.conf.urls import patterns, url
 
 
-def dashboard(request):
-    DASHBOARD.load_user_data(request.user)
-    return {"dashboard": DASHBOARD}
+urlpatterns = patterns('',
+    url("^$", "dashboard.views.base.index",
+        name="dashboard-index"),
+)

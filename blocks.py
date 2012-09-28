@@ -16,9 +16,26 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from base import dashboard as DASHBOARD
 
 
-def dashboard(request):
-    DASHBOARD.load_user_data(request.user)
-    return {"dashboard": DASHBOARD}
+class Block(object):
+    def __init__(self, dashboard, **options):
+        self.dashboard = dashboard
+
+    def render(self):
+        """
+        Render the block html code using widgets htmls.
+        """
+        pass
+
+
+class HorizontalBar(Block):
+    pass
+
+
+class WidgetArea(Block):
+    pass
+
+
+class SideBar(Block):
+    pass
