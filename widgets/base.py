@@ -19,6 +19,7 @@
 import json
 
 from django.template.loader import get_template
+from django.template import Template
 
 
 class Widget(dict):
@@ -42,7 +43,7 @@ class Widget(dict):
             return get_template(self.template)
         else:
             if self.html:
-                return self.html
+                return Template(self.html)
             raise ValueError("'html' property should provide some HTML code")
 
     def render(self):
@@ -62,3 +63,8 @@ class Widget(dict):
     def from_dict(self, dict_):
         for i in dict_:
             setattr(self, i, dict_[i])
+
+    @classmethod
+    def load(cls, data):
+        obj = cls().from_dict(data)
+        return obj

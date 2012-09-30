@@ -36,6 +36,7 @@ class Dashboard(object):
         }
 
     _widgets = {}
+    _widgets_types = {}
     _blocks = {}
 
     def __init__(self, options=_default_config):
@@ -66,6 +67,9 @@ class Dashboard(object):
         else:
             return
 
+        if not widget.__class__.__name__ in self._widgets_types:
+            self._widgets_types[widget.__class__.__name__] = widget.__class__
+
     def load_config(self, config):
         blocks = config.get("blocks", {})
 
@@ -73,7 +77,17 @@ class Dashboard(object):
             if block in self._blocks:
                 # configure the corresponding block using configuration
                 # string
-                self._blocks[block].configure(blocks[block)
+                for widget_data in blocks[block]:
+                    # Widget data is like (widget_type, widget_pickled_data)
+                    widget_type = widget_data[0]
+
+                    if widget_type in self._widgets_types:
+                        widget = WidgetClass.load(widget_data[1])
+                    else:
+                        raise self.WidgetClassNotFound(
+                            "No widget class '%s'." % widget_type.__name__)
+
+                    self._blocks[block].add_widget(widget)
 
     def load_user_data(self, user):
         """
@@ -84,6 +98,9 @@ class Dashboard(object):
             self.load_config(self.user_config)
         else:
             self.load_config({})
+
+    class WidgetClassNotFound(Exception):
+        pass
 
 
 dashboard = Dashboard()
