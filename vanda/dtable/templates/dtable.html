@@ -1,0 +1,59 @@
+{% for css in styles %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}{{ css }}" type="text/css" />
+{% endfor %}
+
+{% for script in scripts %}
+<script src="{{ MEDIA_URL }}{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+<script language="javascript">
+function do_command(name, grid, button) {
+    var selected = new Array();
+    $(".trSelected", grid).each(function(){
+	var i = selected.length;
+	console.log(i);
+	selected[i] = parseInt($(this).children("td[abbr=id]").children("div").html());
+    });
+    window.location = button.url + "?ids=" + selected.toString();
+}
+$(function() {
+    var fields = $.parseJSON('{{ fields|escape }}');
+    $("#{{ table_id }}").flexigrid(
+	{
+	    url: '{{ url }}',
+	    dataType: 'json',
+	    method: 'GET',
+            colModel : fields,
+	    searchitems : fields,
+	    sortname: "id",
+	    sortorder: "asc",
+	    usepager: true,
+            nowrap: {{ nowrap }},
+	    title: "{{ title }}",
+	    useRp: true,
+	    rp: {{ rp }},
+	    showTableToggleBtn: false,
+	    resizable: {{ resizable }},
+	    width: {{ width }},
+	    height: {{ height }},
+            {% if buttons %}
+	    buttons : [
+               {% for button in buttons %}
+		{{ button }}
+               {% endfor %}
+		{separator: true }
+	    ],
+            {% endif %}
+	    singleSelect: {{ single_select }}
+	}
+    );
+});
+
+</script>
+
+<!--
+-->
+
+<table class="display dataTable" id="{{ table_id }}">
+
+</table>
