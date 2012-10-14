@@ -1,0 +1,16 @@
+*~
+*.pyc
+build/
+env/
+log/
+forum/
+vpkg/
+auth/
+.project
+.pydevproject
+docs/build/
+cache/*
+database.db
+news/
+statics/uploads/
+locales/
