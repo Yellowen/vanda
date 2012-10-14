@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block extra_head %}
+    <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/login.css" />
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        
+        <form method="post" action="">{% csrf_token %}
+            <div class="web2form">
+                {% if msg %}
+                    <div class="err">
+                        <p align="center">{{ msg }}</p>
+                    </div>
+                {% endif %}
+                
+                <table>
+                    <tr>
+                        <td><lable>{{ form.username.label_tag }}</lable></td>
+                        <td>{{ form.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.password.label_tag }}</td>
+                        <td>{{ form.password }}</td>
+                    </tr>
+                </table>
+                
+                <p align="center"><input type="submit" value="login" /></p>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

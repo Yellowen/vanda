@@ -1,0 +1,20 @@
+<div class="accordian">
+<ul>
+{% for section in menu %}
+  <li class="entry">{{ section.1 }}</li>
+<li class="entry">
+  <div class="subentry">
+    <ul>
+{% for item in section.2 %}
+
+      <li>
+	<a href="{{ item.2 }}">{{ item.1 }}</a>
+      </li>
+{% endfor %}
+
+    </ul>
+</div>
+</li>
+{% endfor %}
+</ul>
+</div>
