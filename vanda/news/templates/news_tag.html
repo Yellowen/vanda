@@ -1,0 +1,9 @@
+<div class="news_list">
+{% for news in news_list %}
+<div class="news_entry">
+<h2>{{ news.title|title }}</h2>
+<p>{{ news.content|linebreaks }}</p>
+<span>{{ news.date }}</span>
+</div>
+{% endfor %}
+</div>

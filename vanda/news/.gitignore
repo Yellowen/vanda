@@ -1,0 +1,9 @@
+*~
+*.pyc
+build/
+env/
+log/
+vpkg/
+debbox/.project
+debbox/.pydevproject
+docs/build/
