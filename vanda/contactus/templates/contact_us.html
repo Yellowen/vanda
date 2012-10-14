@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block PlaceHolder %}
+<div class="box" id="contact_us">
+<form action='' method='POST'>
+{% csrf_token %}
+<table>
+{{ ContactUs.as_table }}
+<tr>
+	<td colspan="2">
+		<input type="submit" value={% trans 'Send' %}>
+	</td>
+</tr>
+</table>
+</form>
+</div>
+{% endblock %}

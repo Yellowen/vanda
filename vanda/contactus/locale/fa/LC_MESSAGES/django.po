@@ -1,0 +1,43 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Mohsen.Hassani, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-30 11:57+0330\n"
+"PO-Revision-Date: 2011-10-30 11:59+0330\n"
+"Last-Translator: Mohsen.Hassani\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: forms.py:6
+msgid "Name"
+msgstr "نام"
+
+#: forms.py:7
+msgid "Family"
+msgstr "نام خانوادگی"
+
+#: forms.py:8
+msgid "E-mail"
+msgstr "پست الکترونیکی"
+
+#: forms.py:9
+msgid "Message"
+msgstr "پیغام"
+
+#: views.py:17
+msgid "Your message has been sent successfully!"
+msgstr "پیغام شما با موفقیت ارسال شد"
+
+#: templates/contact_us.html:12
+msgid "Send"
+msgstr "ارسال"
+
