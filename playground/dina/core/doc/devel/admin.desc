@@ -1,0 +1,12 @@
+			admin.py description
+			
+If you know nothing about django admin please read the django documentation befor reading this document
+
+inst_admin class:
+	   This class contain just one function , "save_model" . this function override that ModelAdmin
+	   save_model function and called when the save button clicked
+
+app_admin class:
+	   The most important code int this class is in save_model function . after saving an object 
+	   update_apps of installer module call for updating the published application and the all the
+	   application sync with db.

@@ -1,0 +1,11 @@
+<li><h2>{{ title }}</h2>
+<ul>
+{% if submenu %}
+  {% for i in submenu %}
+  {{ i }}
+  {% endfor %}
+{% endif %}
+{% for i in items %}
+<li><a href="{{ i.url }}">{{ i.title }}</a></li>
+{% endfor %}
+</ul></li>

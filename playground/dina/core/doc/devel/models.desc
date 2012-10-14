@@ -1,0 +1,13 @@
+				models.py description	
+
+If you know nothing about django models please read the django documentation befor reading this document
+
+
+Installer model :
+	  this model is an special one . This models never store any object in its table. it is just a installer 
+	  form that uploade the application or templates packages (see doc/devel/package.specification) , and install
+	  them in local system , also it make a application or template object from them and store it in db.
+
+application model :
+ 	  This model contain the main definition af an application in database. Publich field use for publishing and
+	  unpublishing the application.

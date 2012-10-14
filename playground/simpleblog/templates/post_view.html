@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class='blog'>
+
+<div class='post'>
+<h3 class="title">{{ post.title }}</a></h3>
+<h5 class="author">{% trans 'Author' %}: {{ post.author}}</h5>
+<p class="content">{{ post.content|linebreaks }}</p>
+<p class="date">{% trans 'Date' %}: {{ post.datetime }}</p> | <p class="commentcount"> {% trans 'Comment(s)' %}: {{ post.comments.count }}</p>
+</div>
+
+<div class="single_entry" id="post-17">
+      <div class="entry_meta">
+	<ul class="post-categories">
+	  {% for category in post.categories.all %}
+	  <li><a href="/blog/category/{{ category.slug }}/" title="View all posts in {{ category }}" rel="category tag">{{ category }}</a></li>
+	{% endfor %}
+	  </ul>
+        <ul class="post-categories">
+          <li><a href="/comments/" >{{ post.comments.count }} {% trans 'Comments' %}</a></li>
+          <li class="date">{{ post.datetime.ctime }}</li>
+        </ul>
+      </div>
+
+      <h1>{{ post.title }}</h1>
+      <p>{{ post.content|linebreaks }}</p>
+      <br class="clear" />
+      <div class="single_meta">
+        <ul class="single_author">
+          <li>By {{ post.author }}</li>
+        </ul>
+        
+        <br class="clear" />
+      </div>
+      <br class="clear" />
+        
+          <div class="related_posts"><h3>Related Posts</h3>
+	    <ul>
+	      {% for i in post.related_posts %}
+	      <li><a href="/blog/post/{{ i.slug }}/" rel="bookmark">{{ i.title }}</a></li>
+	      {% endfor %}
+	    </ul>
+	    <br class="clear" /></div>
+	  <!-- Similar Posts took 8.439 ms -->
+	  <h3 class="a_heading ie_fix">
+	    <a href="/blog/post/{{ post.slug }}/#comment" title="Leave a comment">{% trans 'Comments' %}</a>
+	  </h3>
+<br />
+
+
+<div id="comments">
+  <ol class="comment_list">
+{% for comment in comments.object_list %}
+
+    <li id="comment-5">
+      <div class="comment_author"> <img alt='' src='images/unknown.png' class='avatar avatar-80 photo' height='80' width='80' />
+        <p>{{ comment.author }} <span>{{ comment.datetime.ctime }}</span></p>
+          </div>
+          <div class="single_comment"> <img src="images/comment_arrow.png" width="32" height="31" alt="Comment Arrow" class="comment_arrow" />
+            <p>{{ comment.content }}</p>
+          </div>
+        <br class="clear" />
+	</li>
+          
+{% endfor %}          
+
+</ol>
+
+
+
+
+
+
+
+<a href="/blog/comment/{{ post.slug }}">Add new comment</a>
+<div class="commetns">
+  {% for comment in comments.object_list %}
+<div class="comment">
+<h3>{{ comment.nick }}</h3>
+<p class="content">{{ comment.content }}</p>
+<p class="date">{{ comment.datetime }}</p>
+</div>
+{% endfor %}
+
+
+{% if comments.has_previous %}                                                                                                                         
+<a href="?page={{ comments.previous_page_number }}">{% trans 'previous' %}</a>
+{% endif %}                                                                                                                                            
+
+  <span class="current">                                                                                                                                 
+    Page {{ posts.number }} of {{ comments.paginator.num_pages }}.                                                                                  
+  </span>                                                                                                                                                
+  
+  {% if comments.has_next %}                                                                                                                             
+  <a href="?page={{ comments.next_page_number }}">{% trans 'next' %}</a>
+  {% endif %}   
+</div>
+</div>
+{% endblock %}

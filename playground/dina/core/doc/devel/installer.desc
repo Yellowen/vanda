@@ -1,0 +1,25 @@
+				installer.py description
+
+This module duty is tu provide a installer object for installing packages .
+
+installer class:
+	  _extract : this method copy the package tu /tmp and extract that
+
+	  _read_index : this method read the package.info file inside of 
+	  	      	package and make a application or template object 
+			from them
+
+	  _parser : this method just parse the given file tu a python dictionary
+
+	  install : this method call others method and simply copy the package dir
+	  	    to Dina apps folder
+
+The installer module have some code in global scope tu function and an assignment
+
+    update_apps : this function search the database for all pulished apps and make
+    		  a python code entry in confs/__init__.py for them.
+
+
+    app_update_callback : this function called after the deleting process of application
+    			  model
+	  	      

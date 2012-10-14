@@ -1,0 +1,41 @@
+{% extends "base_html.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="section_left_panel">
+  <div id="section_left_panel_top">
+    <div id="section_left_panel_top_header">
+      <h3> {{ section_info.title }} </h3>
+    </div>
+    <div id="section_left_panel_top_des">
+      {{ section_info.description }}
+    </div>
+    <div id="section_left_panel_top_img">
+      <img src="/site_media/{{ section_info.image }}" />
+    </div>
+  </div>
+  <div id="section_left_panel_down">
+    {% for cat in category_all %}
+      <h4>
+	<a href="{{ cat.get_absolute_url }}">
+	
+	  {{ cat }}
+	
+	</a>
+      </h4>  
+    {% endfor %}
+  
+  </div>
+</div>
+
+<div id="section_right_panel">
+  {% for sec in section_all %}
+  <h4>
+    <a href="{{ sec.get_absolute_url }}">
+      {{ sec }}
+    </a>
+  </h4>
+  {% endfor %}
+</div>
+
+{% endblock %}

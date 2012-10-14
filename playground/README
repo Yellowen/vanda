@@ -1,0 +1,49 @@
+
+    Dina Project 
+------------------------------
+Dina is django based web framework that fill thw django gaps.
+
+Contents
+==============================
+
+1. License
+2. Dependencies license
+
+1. License
+==============================
+Dina Project
+Copyright (C) $YEAR$  $AUTHOR$
+
+  Dina is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+any later version.
+
+  Dina is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+  All the static files of Dina ( media files ) release under the term of
+GPL version 2.
+
+  All the documents of Dina that locate in 'doc' directories release
+under the term of GNU FDL.
+
+  All the HTML templates of Dina (*.html files that contain Django template
+language) release under the term of GPL v2.
+
+2. Dependencies license
+=============================
+Dina use some applications and library in its code that mentioned below:
+
+Django - Release under BSD license ( external )
+mptt   - Release under New BSD license ( internal )
+jquery - Release under GPL version 2 license ( internal )
+django_extensions - Release under New BSD license
+
+

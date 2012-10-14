@@ -1,0 +1,7 @@
+Name = blog;
+short = Built-in blog app for Dina CMS.;
+author = lxsameer;
+url = blog/;
+version = 0.0.1;
+home = dina.com;
+auth_mail = lxsameer@gmail.com;

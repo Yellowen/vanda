@@ -1,0 +1,1856 @@
+2010-05-04  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README, README.developers, dina/utils/mptt/django-
+	mptt-0.2-docs/forms.html, dina/utils/mptt/django-
+	mptt-0.2-docs/install.html, dina/utils/mptt/django-
+	mptt-0.2-docs/models.html, dina/utils/mptt/django-
+	mptt-0.2-docs/overview.html, dina/utils/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/utils/mptt/django-
+	mptt-0.2-docs/templates.html, dina/utils/mptt/django-
+	mptt-0.2-docs/utilities.html:
+	README added.
+	[efb95514f88f] [tip]
+
+	* apps/blog/templatetags/blog.py, dina/DPM/admin.py,
+	dina/DPM/managers.py, dina/DPM/models.py, dina/conf/configs.py,
+	dina/conf/models.py, dina/core/codec/file/main.py,
+	dina/core/dev/__init__.py, dina/core/installer.py,
+	dina/core/package.py, dina/core/repository.py, dina/core/server.py,
+	dina/core/tools/dinaize.py, dina/core/tools/dpm-buildpkg.py,
+	dina/core/tools/dpm-scanpackages.py, dina/core/urls.py,
+	dina/core/views.py, dina/fem/menu/admin.py, dina/fem/menu/models.py,
+	dina/fem/menu/templatetags/menu.py, dina/fem/menu/views.py,
+	dina/fem/page/admin.py, dina/fem/page/models.py,
+	dina/fem/page/urls.py, dina/fem/page/views.py,
+	dina/template/loaders/filesystem.py, dina/template/parser.py,
+	dina/urls.py:
+	Prepare to migrate to savannah
+	[b9cc81c92b95]
+
+	* apps/blog/admin.py, apps/blog/models.py, apps/blog/urls.py,
+	apps/blog/views.py, apps/urls.py, license_header, manage.py,
+	settings.py, urls.py, views.py:
+	blog fixed for savannah
+	[c8bf90bb2a84]
+
+2010-05-03  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* COPYING, License:
+	License file changed.
+	[bc31273e715e]
+
+	* License:
+	License added.
+	[00a1efd3ee34]
+
+2010-05-02  Nima Nazari  <eminem_d12n@yahoo.com>
+
+	* dina/core/server.py:
+	some bug fixed in server.py
+	[64a68314f4e5]
+
+	* dina/core/server.py, site_media/simple_black/default.css,
+	site_media/simple_black/img01.jpg,
+	site_media/simple_black/img02.jpg,
+	site_media/simple_black/img03.jpg,
+	site_media/simple_black/img11.gif,
+	site_media/simple_black/img12.gif,
+	site_media/simple_black/spacer.gif,
+	templates/simple_black/media/css/default.css,
+	templates/simple_black/media/images/img01.jpg,
+	templates/simple_black/media/images/img02.jpg,
+	templates/simple_black/media/images/img03.jpg,
+	templates/simple_black/media/images/img11.gif,
+	templates/simple_black/media/images/img12.gif,
+	templates/simple_black/media/images/spacer.gif, urls.py:
+	Media dynamic serving completed. ( unsecure )
+	[1c2f881585a8]
+
+	* .hgignore, dina/core/server.py:
+	some change in server.py
+	[979ca929b4c6]
+
+2010-05-02  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/core/server.py:
+	media serving view def added.
+	[2424785825ad]
+
+2010-04-30  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/DPM/fixtures/initial_data.json,
+	dina/fem/menu/fixtures/initial_data.json,
+	dina/fem/page/fixtures/initial_data.json:
+	Some fixtures add for page, menu and DPM
+	[4c0a44cd2c16]
+
+2010-04-21  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/template/loaders/filesystem.py, dina/template/parser.py:
+	dina/template/parser.py added.
+	[829e5025fdf5]
+
+2010-04-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/blog/templates/blog.html, apps/blog/templates/comments.html,
+	dina/DPM/admin.py, dina/DPM/managers.py, dina/DPM/models.py,
+	dina/fem/menu/templatetags/menu.py, dina/fem/page/views.py,
+	dina/template/loaders/filesystem.py, dina/urls.py,
+	templates/simple_black/base_html.html,
+	templates/simple_black/index.html,
+	templates/simple_black/index_1.html:
+	Default template loader completed, Dina is templatable now.
+	[e4d20b3b4c7f]
+
+	* templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/login.html, templates/dina/default, test.py:
+	Some bug fixed in admin templates.
+	[6e4c404e9a73]
+
+2010-04-16  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* templates/simple_black/base.html,
+	templates/simple_black/base_html.html:
+	removing brainstorm
+	[ac82458e0fb9]
+
+2010-04-11  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/urls.py, dina/DPM/admin.py, dina/DPM/managers.py,
+	dina/DPM/models.py, dina/core/views.py, dina/fem/menu/models.py,
+	dina/template/loaders/filesystem.py, dina/utils/mptt/__init__.py,
+	dina/utils/mptt/managers.py, settings.py, urls.py:
+	Some 1.2 port issue and template loader improvments
+	[1b78f16b3df7]
+
+2010-04-07  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/DPM/managers.py, dina/DPM/models.py, dina/template/__init__.py,
+	dina/template/loaders/__init__.py,
+	dina/template/loaders/filesystem.py, settings.py:
+	Dina template loader added.
+	[b4cfc0f4410b]
+
+2010-04-05  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* .hgignore, dina/DPM/admin.py, dina/DPM/models.py, settings.py:
+	TemplateManager added.
+	[8d6219563376]
+
+	* dina/DPM/models.py:
+	DPM Template model prepared.
+	[99c4b3da082c]
+
+	* dina/DPM/DPM.py, dina/DPM/__init__.py, dina/DPM/admin.py,
+	dina/DPM/models.py, dina/core/DPM.py, dina/core/admin.py,
+	dina/core/models.py:
+	DPM package moved to dina/DPM
+	[6bc0debd2cbf]
+
+2010-04-04  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* confs/__init__.py, urls.py:
+	Conf removed.
+	[a32e98aa4508]
+
+	* apps/brainstorm/__init__.py, apps/brainstorm/admin.py,
+	apps/brainstorm/brainstorm, apps/brainstorm/forms.py,
+	apps/brainstorm/models.py, apps/brainstorm/templates/comment.html,
+	apps/brainstorm/templates/form.html,
+	apps/brainstorm/templates/view.html,
+	apps/brainstorm/templatetags/__init__.py,
+	apps/brainstorm/templatetags/brainstorm.py, apps/brainstorm/urls.py,
+	apps/brainstorm/views.py:
+	Brainstorm removed.
+	[1c0852858f3d]
+
+	* dina/mptt/__init__.py, dina/mptt/django-mptt-0.2-docs/forms.html,
+	dina/mptt/django-mptt-0.2-docs/install.html, dina/mptt/django-
+	mptt-0.2-docs/models.html, dina/mptt/django-
+	mptt-0.2-docs/overview.html, dina/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/mptt/django-
+	mptt-0.2-docs/templates.html, dina/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/mptt/exceptions.py,
+	dina/mptt/forms.py, dina/mptt/managers.py, dina/mptt/models.py,
+	dina/mptt/signals.py, dina/mptt/templatetags/__init__.py,
+	dina/mptt/templatetags/mptt_tags.py, dina/mptt/tests/__init__.py,
+	dina/mptt/tests/doctests.py,
+	dina/mptt/tests/fixtures/categories.json,
+	dina/mptt/tests/fixtures/genres.json, dina/mptt/tests/models.py,
+	dina/mptt/tests/settings.py, dina/mptt/tests/testcases.py,
+	dina/mptt/tests/tests.py, dina/mptt/utils.py:
+	mptt moved.
+	[a9af33a27856]
+
+	* Changelog, dina/utils/__init__.py, dina/utils/mptt/__init__.py,
+	dina/utils/mptt/django-mptt-0.2-docs/forms.html, dina/utils/mptt
+	/django-mptt-0.2-docs/install.html, dina/utils/mptt/django-
+	mptt-0.2-docs/models.html, dina/utils/mptt/django-
+	mptt-0.2-docs/overview.html, dina/utils/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/utils/mptt/django-
+	mptt-0.2-docs/templates.html, dina/utils/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/utils/mptt/exceptions.py,
+	dina/utils/mptt/forms.py, dina/utils/mptt/managers.py,
+	dina/utils/mptt/models.py, dina/utils/mptt/signals.py,
+	dina/utils/mptt/templatetags/__init__.py,
+	dina/utils/mptt/templatetags/mptt_tags.py,
+	dina/utils/mptt/tests/__init__.py,
+	dina/utils/mptt/tests/doctests.py,
+	dina/utils/mptt/tests/fixtures/categories.json,
+	dina/utils/mptt/tests/fixtures/genres.json,
+	dina/utils/mptt/tests/models.py, dina/utils/mptt/tests/settings.py,
+	dina/utils/mptt/tests/testcases.py, dina/utils/mptt/tests/tests.py,
+	dina/utils/mptt/utils.py, settings.py:
+	Settings.py fixed for 1.2
+	[d77d72111adf]
+
+	* templates/admin/404.html, templates/admin/500.html,
+	templates/admin/actions.html, templates/admin/app_index.html,
+	templates/admin/auth/user/add_form.html,
+	templates/admin/auth/user/change_password.html,
+	templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/change_form.html, templates/admin/change_list.html,
+	templates/admin/change_list_results.html,
+	templates/admin/change_tree.html,
+	templates/admin/date_hierarchy.html,
+	templates/admin/delete_confirmation.html,
+	templates/admin/delete_selected_confirmation.html,
+	templates/admin/dpm.html, templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html,
+	templates/admin/edit_inline/stacked.html,
+	templates/admin/edit_inline/tabular.html,
+	templates/admin/filter.html, templates/admin/includes/fieldset.html,
+	templates/admin/index.html, templates/admin/invalid_setup.html,
+	templates/admin/login.html, templates/admin/menu/tree_view.html,
+	templates/admin/object_history.html,
+	templates/admin/pagination.html,
+	templates/admin/prepopulated_fields_js.html,
+	templates/admin/search_form.html, templates/admin/submit_line.html,
+	templates/admin/template_validator.html:
+	Admin template fixed
+	[f34001662468]
+
+2010-04-03  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* templates/admin/.svn/all-wcprops, templates/admin/.svn/entries,
+	templates/admin/.svn/prop-base/404.html.svn-base,
+	templates/admin/.svn/prop-base/500.html.svn-base,
+	templates/admin/.svn/prop-base/base.html.svn-base,
+	templates/admin/.svn/prop-base/base_site.html.svn-base,
+	templates/admin/.svn/prop-base/change_form.html.svn-base,
+	templates/admin/.svn/prop-base/change_list.html.svn-base,
+	templates/admin/.svn/prop-base/change_list_results.html.svn-base,
+	templates/admin/.svn/prop-base/date_hierarchy.html.svn-base,
+	templates/admin/.svn/prop-base/delete_confirmation.html.svn-base,
+	templates/admin/.svn/prop-base/filter.html.svn-base,
+	templates/admin/.svn/prop-base/index.html.svn-base,
+	templates/admin/.svn/prop-base/invalid_setup.html.svn-base,
+	templates/admin/.svn/prop-base/login.html.svn-base,
+	templates/admin/.svn/prop-base/object_history.html.svn-base,
+	templates/admin/.svn/prop-base/pagination.html.svn-base,
+	templates/admin/.svn/prop-base/search_form.html.svn-base,
+	templates/admin/.svn/prop-base/submit_line.html.svn-base,
+	templates/admin/.svn/prop-base/template_validator.html.svn-base,
+	templates/admin/.svn/text-base/404.html.svn-base,
+	templates/admin/.svn/text-base/500.html.svn-base,
+	templates/admin/.svn/text-base/actions.html.svn-base,
+	templates/admin/.svn/text-base/app_index.html.svn-base,
+	templates/admin/.svn/text-base/base.html.svn-base,
+	templates/admin/.svn/text-base/base_site.html.svn-base,
+	templates/admin/.svn/text-base/change_form.html.svn-base,
+	templates/admin/.svn/text-base/change_list.html.svn-base,
+	templates/admin/.svn/text-base/change_list_results.html.svn-base,
+	templates/admin/.svn/text-base/date_hierarchy.html.svn-base,
+	templates/admin/.svn/text-base/delete_confirmation.html.svn-base,
+	templates/admin/.svn/text-base/delete_selected_confirmation.html
+	.svn-base, templates/admin/.svn/text-base/filter.html.svn-base,
+	templates/admin/.svn/text-base/index.html.svn-base,
+	templates/admin/.svn/text-base/invalid_setup.html.svn-base,
+	templates/admin/.svn/text-base/login.html.svn-base,
+	templates/admin/.svn/text-base/object_history.html.svn-base,
+	templates/admin/.svn/text-base/pagination.html.svn-base,
+	templates/admin/.svn/text-base/prepopulated_fields_js.html.svn-base,
+	templates/admin/.svn/text-base/search_form.html.svn-base,
+	templates/admin/.svn/text-base/submit_line.html.svn-base,
+	templates/admin/.svn/text-base/template_validator.html.svn-base,
+	templates/admin/404.html, templates/admin/500.html,
+	templates/admin/actions.html, templates/admin/app_index.html,
+	templates/admin/auth/.svn/all-wcprops,
+	templates/admin/auth/.svn/entries, templates/admin/auth/user/.svn
+	/all-wcprops, templates/admin/auth/user/.svn/entries,
+	templates/admin/auth/user/.svn/prop-base/add_form.html.svn-base,
+	templates/admin/auth/user/.svn/prop-base/change_password.html.svn-
+	base, templates/admin/auth/user/.svn/text-base/add_form.html.svn-
+	base, templates/admin/auth/user/.svn/text-base/change_password.html
+	.svn-base, templates/admin/auth/user/add_form.html,
+	templates/admin/auth/user/change_password.html,
+	templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/change_form.html, templates/admin/change_list.html,
+	templates/admin/change_list_results.html,
+	templates/admin/change_tree.html,
+	templates/admin/date_hierarchy.html,
+	templates/admin/delete_confirmation.html,
+	templates/admin/delete_selected_confirmation.html,
+	templates/admin/dpm.html, templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html, templates/admin/edit_inline/.svn
+	/all-wcprops, templates/admin/edit_inline/.svn/entries,
+	templates/admin/edit_inline/.svn/text-base/stacked.html.svn-base,
+	templates/admin/edit_inline/.svn/text-base/tabular.html.svn-base,
+	templates/admin/edit_inline/stacked.html,
+	templates/admin/edit_inline/tabular.html,
+	templates/admin/filter.html, templates/admin/includes/.svn/all-
+	wcprops, templates/admin/includes/.svn/entries,
+	templates/admin/includes/.svn/text-base/fieldset.html.svn-base,
+	templates/admin/includes/fieldset.html, templates/admin/index.html,
+	templates/admin/invalid_setup.html, templates/admin/login.html,
+	templates/admin/menu/tree_view.html,
+	templates/admin/object_history.html,
+	templates/admin/pagination.html,
+	templates/admin/prepopulated_fields_js.html,
+	templates/admin/search_form.html, templates/admin/submit_line.html,
+	templates/admin/template_validator.html:
+	Importing to Django 1.2 : admin templated ported.
+	[445e183d5358]
+
+	* .gitignore, README, README.md:
+	.gitignore deleted.
+	[7cbcad1dd7e6]
+
+	* dina/fem/menu/brainstorm, dina/fem/menu/goals.txt,
+	dina/fem/page/brainstorm, dina/fem/page/goals.txt, dina/mptt/django-
+	mptt-0.2-docs.zip:
+	Some clean up
+	[48df5f2659c1]
+
+	* .hgignore, .project, .pydevproject, apps/blog/brainstorm,
+	apps/blog/goals.txt, apps/brainstorm/goals.txt, goals.txt:
+	Some clean up
+	[aaf1f71a321e]
+
+	* .hgignore:
+	.hgignore added.
+	[3ee6f4471ceb]
+
+2010-02-13  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* .project, .pydevproject, dina/conf/__init__.py,
+	dina/conf/configs.py, dina/conf/models.py, goals.txt, test.py:
+	Configuration framework added
+	[c65585d4cc6a]
+
+2010-01-27  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* server/apache/dina.wsgi:
+	WSGI handler changed
+	[9a24892b811e]
+
+2010-01-14  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* site_media/simple_black/default.css:
+	CSS Bug fixed
+	[4e6991704ee2]
+
+2010-01-09  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* site_media/simple_black/default.css,
+	templates/simple_black/base.html:
+	Simple_black template updated
+	[f2b5c4c4fe1b]
+
+2010-01-06  niasha  <niasha85@gmail.com>
+
+	* apps/blog/goals.txt, apps/brainstorm/views.py,
+	templates/simple_black/brainstorm.html:
+	Some bug fixed in template
+	[f4c82d3a8b55]
+
+	* site_media/simple_black/default.css,
+	templates/simple_black/menu_top.html:
+	item only menus bug fixed
+	[bff12bb2bb16]
+
+2009-12-27  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/blog/templates/blog.html, apps/blog/templates/comments.html,
+	apps/brainstorm/templates/comment.html,
+	apps/brainstorm/templates/index_1.html,
+	dina/fem/menu/templatetags/menu.py, dina/fem/page/views.py,
+	site_media/css, site_media/css/base.css, site_media/dina/base.css,
+	site_media/images, site_media/simple_black/default.css,
+	site_media/simple_black/img01.jpg,
+	site_media/simple_black/img02.jpg,
+	site_media/simple_black/img03.jpg,
+	site_media/simple_black/img11.gif,
+	site_media/simple_black/img12.gif,
+	site_media/simple_black/spacer.gif, templates/default,
+	templates/simple_black/base.html,
+	templates/simple_black/base_html.html,
+	templates/simple_black/brainstorm.html,
+	templates/simple_black/comments/400-debug.html,
+	templates/simple_black/comments/approve.html,
+	templates/simple_black/comments/approved.html,
+	templates/simple_black/comments/delete.html,
+	templates/simple_black/comments/deleted.html,
+	templates/simple_black/comments/flag.html,
+	templates/simple_black/comments/flagged.html,
+	templates/simple_black/comments/form.html,
+	templates/simple_black/comments/moderation_queue.html,
+	templates/simple_black/comments/posted.html,
+	templates/simple_black/comments/preview.html,
+	templates/simple_black/default, templates/simple_black/index.html,
+	templates/simple_black/index_1.html,
+	templates/simple_black/item.html, templates/simple_black/menu.html,
+	templates/simple_black/menu_side.html,
+	templates/simple_black/menu_top.html, urls.py, views.py:
+	simple_black template added
+	[3bd090d1fa72]
+
+	* apps/blog/admin.py, apps/blog/brainstorm, apps/blog/goals.txt,
+	apps/blog/models.py, apps/brainstorm/goals.txt,
+	apps/brainstorm/templates/form.html, apps/brainstorm/views.py,
+	dina/fem/menu/goals.txt, dina/fem/page/admin.py,
+	dina/fem/page/goals.txt, media/js/htmleditor.js,
+	media/js/wymeditor/iframe/default/lbl-blockquote.png,
+	media/js/wymeditor/iframe/default/lbl-h1.png,
+	media/js/wymeditor/iframe/default/lbl-h2.png,
+	media/js/wymeditor/iframe/default/lbl-h3.png,
+	media/js/wymeditor/iframe/default/lbl-h4.png,
+	media/js/wymeditor/iframe/default/lbl-h5.png,
+	media/js/wymeditor/iframe/default/lbl-h6.png,
+	media/js/wymeditor/iframe/default/lbl-p.png,
+	media/js/wymeditor/iframe/default/lbl-pre.png,
+	media/js/wymeditor/iframe/default/wymiframe.css,
+	media/js/wymeditor/iframe/default/wymiframe.html,
+	media/js/wymeditor/jquery.wymeditor.js,
+	media/js/wymeditor/jquery.wymeditor.min.js,
+	media/js/wymeditor/jquery.wymeditor.pack.js,
+	media/js/wymeditor/lang/bg.js, media/js/wymeditor/lang/ca.js,
+	media/js/wymeditor/lang/cs.js, media/js/wymeditor/lang/de.js,
+	media/js/wymeditor/lang/en.js, media/js/wymeditor/lang/es.js,
+	media/js/wymeditor/lang/fa.js, media/js/wymeditor/lang/fi.js,
+	media/js/wymeditor/lang/fr.js, media/js/wymeditor/lang/he.js,
+	media/js/wymeditor/lang/hr.js, media/js/wymeditor/lang/hu.js,
+	media/js/wymeditor/lang/it.js, media/js/wymeditor/lang/nb.js,
+	media/js/wymeditor/lang/nl.js, media/js/wymeditor/lang/nn.js,
+	media/js/wymeditor/lang/pl.js, media/js/wymeditor/lang/pt-br.js,
+	media/js/wymeditor/lang/pt.js, media/js/wymeditor/lang/ru.js,
+	media/js/wymeditor/lang/sv.js, media/js/wymeditor/lang/tr.js,
+	media/js/wymeditor/lang/zh_cn.js,
+	media/js/wymeditor/plugins/embed/jquery.wymeditor.embed.js,
+	media/js/wymeditor/plugins/fullscreen/icon_fullscreen.gif, media/js/
+	wymeditor/plugins/fullscreen/jquery.wymeditor.fullscreen.js, media/j
+	s/wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js,
+	media/js/wymeditor/plugins/resizable/jquery.wymeditor.resizable.js,
+	media/js/wymeditor/plugins/resizable/readme.txt,
+	media/js/wymeditor/plugins/tidy/README,
+	media/js/wymeditor/plugins/tidy/jquery.wymeditor.tidy.js,
+	media/js/wymeditor/plugins/tidy/tidy.php,
+	media/js/wymeditor/plugins/tidy/wand.png,
+	media/js/wymeditor/skins/compact/icons.png,
+	media/js/wymeditor/skins/compact/skin.css,
+	media/js/wymeditor/skins/compact/skin.js,
+	media/js/wymeditor/skins/default/icons.png,
+	media/js/wymeditor/skins/default/skin.css,
+	media/js/wymeditor/skins/default/skin.js,
+	media/js/wymeditor/skins/minimal/images/bg.header.gif,
+	media/js/wymeditor/skins/minimal/images/bg.selector.silver.gif,
+	media/js/wymeditor/skins/minimal/images/bg.wymeditor.png,
+	media/js/wymeditor/skins/minimal/images/icons.silver.gif,
+	media/js/wymeditor/skins/minimal/skin.css,
+	media/js/wymeditor/skins/minimal/skin.js,
+	media/js/wymeditor/skins/silver/COPYING,
+	media/js/wymeditor/skins/silver/README,
+	media/js/wymeditor/skins/silver/images/bg.header.gif,
+	media/js/wymeditor/skins/silver/images/bg.selector.silver.gif,
+	media/js/wymeditor/skins/silver/images/bg.wymeditor.png,
+	media/js/wymeditor/skins/silver/images/icons.silver.gif,
+	media/js/wymeditor/skins/silver/skin.css,
+	media/js/wymeditor/skins/silver/skin.js,
+	media/js/wymeditor/skins/twopanels/icons.png,
+	media/js/wymeditor/skins/twopanels/skin.css,
+	media/js/wymeditor/skins/twopanels/skin.js,
+	media/js/wymeditor/skins/wymeditor_icon.png, templates/default,
+	templates/test/default:
+	wymeditor added
+	[2ecf02245bf0]
+
+2009-12-26  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/blog/admin.py, apps/blog/models.py,
+	apps/blog/templates/blog.html, apps/blog/templates/comments.html,
+	apps/blog/urls.py, apps/blog/views.py, apps/urls.py, settings.py,
+	urls.py:
+	blog comments completed
+	[58b2a0d08fdc]
+
+2009-12-22  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* .gitignore, apps/brainstorm/brainstorm, apps/brainstorm/goals.txt,
+	apps/brainstorm/urls.py, apps/urls.py, dina/fem/page/__init__.py,
+	dina/fem/page/admin.py, dina/fem/page/brainstorm,
+	dina/fem/page/goals.txt, dina/fem/page/models.py,
+	dina/fem/page/urls.py, dina/fem/page/views.py, settings.py, urls.py:
+	dina.fem.page 0.1.0
+	[18ede0816c86]
+
+2009-12-21  niasha  <niasha85@gmail.com>
+
+	* apps/brainstorm/templates/form.html, apps/brainstorm/views.py,
+	apps/urls.py, templates/admin/menu/tree_view.html:
+	Some bug fixed
+	[0f699809627b]
+
+2009-12-21  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/brainstorm/templates/comment.html, apps/brainstorm/views.py:
+	Brainstorm 0.1.0
+	[c0c023e6b6b6]
+
+	* apps/brainstorm/admin.py, apps/brainstorm/forms.py,
+	apps/brainstorm/views.py:
+	Brainstorm worked
+	[ce614f834136]
+
+2009-12-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/brainstorm/admin.py, apps/brainstorm/forms.py,
+	apps/brainstorm/models.py, apps/brainstorm/templates/index_1.html,
+	apps/brainstorm/templates/view.html,
+	apps/brainstorm/templatetags/brainstorm.py,
+	apps/brainstorm/views.py, apps/urls.py, urls.py:
+	brainstorm Comments
+	[88e16a8d01b2]
+
+2009-12-19  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* TODO, apps/brainstorm/models.py,
+	apps/brainstorm/templates/form.html,
+	apps/brainstorm/templates/view.html,
+	apps/brainstorm/templatetags/brainstorm.py,
+	apps/brainstorm/views.py, apps/urls.py, media/css/jquery-ui.css,
+	media/css/ui_them/base/images/ui-bg_flat_0_aaaaaa_40x100.png,
+	media/css/ui_them/base/images/ui-bg_flat_75_ffffff_40x100.png,
+	media/css/ui_them/base/images/ui-bg_glass_55_fbf9ee_1x400.png,
+	media/css/ui_them/base/images/ui-bg_glass_65_ffffff_1x400.png,
+	media/css/ui_them/base/images/ui-bg_glass_75_dadada_1x400.png,
+	media/css/ui_them/base/images/ui-bg_glass_75_e6e6e6_1x400.png,
+	media/css/ui_them/base/images/ui-bg_glass_95_fef1ec_1x400.png,
+	media/css/ui_them/base/images/ui-bg_highlight-
+	soft_75_cccccc_1x100.png, media/css/ui_them/base/images/ui-
+	icons_222222_256x240.png, media/css/ui_them/base/images/ui-
+	icons_2e83ff_256x240.png, media/css/ui_them/base/images/ui-
+	icons_454545_256x240.png, media/css/ui_them/base/images/ui-
+	icons_888888_256x240.png, media/css/ui_them/base/images/ui-
+	icons_cd0a0a_256x240.png, media/css/ui_them/base/ui.accordion.css,
+	media/css/ui_them/base/ui.all.css,
+	media/css/ui_them/base/ui.base.css,
+	media/css/ui_them/base/ui.core.css,
+	media/css/ui_them/base/ui.datepicker.css,
+	media/css/ui_them/base/ui.dialog.css,
+	media/css/ui_them/base/ui.progressbar.css,
+	media/css/ui_them/base/ui.resizable.css,
+	media/css/ui_them/base/ui.slider.css,
+	media/css/ui_them/base/ui.tabs.css,
+	media/css/ui_them/base/ui.theme.css,
+	media/css/ui_them/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png,
+	media/css/ui_them/smoothness/images/ui-bg_flat_75_ffffff_40x100.png,
+	media/css/ui_them/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png,
+	media/css/ui_them/smoothness/images/ui-bg_glass_65_ffffff_1x400.png,
+	media/css/ui_them/smoothness/images/ui-bg_glass_75_dadada_1x400.png,
+	media/css/ui_them/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png,
+	media/css/ui_them/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png,
+	media/css/ui_them/smoothness/images/ui-bg_highlight-
+	soft_75_cccccc_1x100.png, media/css/ui_them/smoothness/images/ui-
+	icons_222222_256x240.png, media/css/ui_them/smoothness/images/ui-
+	icons_2e83ff_256x240.png, media/css/ui_them/smoothness/images/ui-
+	icons_454545_256x240.png, media/css/ui_them/smoothness/images/ui-
+	icons_888888_256x240.png, media/css/ui_them/smoothness/images/ui-
+	icons_cd0a0a_256x240.png, media/css/ui_them/smoothness/jquery-
+	ui.css, settings.py, templates/test/base.html,
+	templates/test/base_html.html, templates/test/brainstorm.html,
+	templates/test/index.html, urls.py:
+	brainstorm halflife
+	[a373aa36a4bc]
+
+2009-12-18  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/brainstorm/__init__.py, apps/brainstorm/models.py,
+	apps/brainstorm/templatetags/__init__.py,
+	apps/brainstorm/templatetags/brainstorm.py,
+	apps/brainstorm/views.py, dina/fem/menu/TODO,
+	dina/fem/menu/templatetags/menu.py:
+	brainstorm added
+	[d8c722d974dd]
+
+2009-12-11  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/fem/menu/views.py, media/css/base.css,
+	templates/admin/change_tree.html,
+	templates/admin/menu/tree_view.html:
+	waiting point : Menu
+	[15900c7ddf23]
+
+2009-12-10  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/fem/menu/admin.py, dina/fem/menu/models.py,
+	dina/fem/menu/views.py, templates/admin/change_tree.html,
+	templates/admin/menu/tree_view.html:
+	Menu change view code of admin improved
+	[b4b1b9dafd92]
+
+2009-12-08  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/fem/menu/TODO, dina/fem/menu/templatetags/menu.py,
+	dina/fem/menu/views.py, site_media/css/base.css,
+	templates/admin/change_tree.html, templates/test/index.html,
+	templates/test/menu_side.html, templates/test/menu_top.html:
+	Menu 0.1.0 completed
+	[b0aef2a9c5d6]
+
+	* dina/fem/menu/models.py, dina/fem/menu/templatetags/menu.py,
+	templates/test/index.html, templates/test/menu.html:
+	Menu tree completed
+	[1b4be6a50914]
+
+	* README, README.md, apps/urls.py, apps/urls.py~,
+	dina/core/dev/__init__.py, dina/fem/menu/models.py, dina/urls.py,
+	settings.py, urls.py:
+	Some bugs fixed
+	[ac9cbfc0eec1]
+
+2009-12-07  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/core/dev/__init__.py:
+	gassert () added
+	[f39e5f767292]
+
+	* dina/fem/menu/brainstorm, dina/fem/menu/goals.txt,
+	dina/fem/menu/models.py,
+	doc/devel/IMPORTAN_NOTE_for_developers.no.1.txt, urls.py:
+	Some docs added
+	[0c85804c483d]
+
+2009-12-05  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* templates/admin/dpm/installer_ui.html:
+	minor bugs fixed
+	[bc482fddf10d]
+
+	* dina/__init__.py, dina/core/DPM.py, dina/core/TODO,
+	dina/core/__init__.py, dina/core/admin.py,
+	dina/core/codec/__init__.py, dina/core/codec/file/__init__.py,
+	dina/core/codec/file/main.py, dina/core/doc/devel/admin.desc,
+	dina/core/doc/devel/installer.desc, dina/core/doc/devel/models.desc,
+	dina/core/doc/devel/repository, dina/core/installer.py,
+	dina/core/lxsameer.idea, dina/core/models.py, dina/core/package.py,
+	dina/core/repository.py, dina/core/templatetags/__init__.py,
+	dina/core/tests.py, dina/core/tools/Makefile,
+	dina/core/tools/README, dina/core/tools/dinaize.py, dina/core/tools
+	/dpm-buildpkg.py, dina/core/tools/dpm-scanpackages.py,
+	dina/core/urls.py, dina/core/views.py, dina/fem/__init__.py,
+	dina/fem/menu/__init__.py, dina/fem/menu/admin.py,
+	dina/fem/menu/models.py, dina/fem/menu/templatetags/__init__.py,
+	dina/fem/menu/templatetags/menu.py, dina/fem/menu/tests.py,
+	dina/fem/menu/views.py, dina/mptt/__init__.py, dina/mptt/django-
+	mptt-0.2-docs.zip, dina/mptt/django-mptt-0.2-docs/forms.html,
+	dina/mptt/django-mptt-0.2-docs/install.html, dina/mptt/django-
+	mptt-0.2-docs/models.html, dina/mptt/django-
+	mptt-0.2-docs/overview.html, dina/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/mptt/django-
+	mptt-0.2-docs/templates.html, dina/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/mptt/exceptions.py,
+	dina/mptt/forms.py, dina/mptt/managers.py, dina/mptt/models.py,
+	dina/mptt/signals.py, dina/mptt/templatetags/__init__.py,
+	dina/mptt/templatetags/mptt_tags.py, dina/mptt/tests/__init__.py,
+	dina/mptt/tests/doctests.py,
+	dina/mptt/tests/fixtures/categories.json,
+	dina/mptt/tests/fixtures/genres.json, dina/mptt/tests/models.py,
+	dina/mptt/tests/settings.py, dina/mptt/tests/testcases.py,
+	dina/mptt/tests/tests.py, dina/mptt/utils.py, dina/urls.py,
+	templates/admin/404.html, templates/admin/500.html,
+	templates/admin/actions.html, templates/admin/app_index.html,
+	templates/admin/auth/user/add_form.html,
+	templates/admin/auth/user/change_password.html,
+	templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/change_form.html, templates/admin/change_list.html,
+	templates/admin/change_list_results.html,
+	templates/admin/change_tree.html,
+	templates/admin/date_hierarchy.html,
+	templates/admin/delete_confirmation.html,
+	templates/admin/delete_selected_confirmation.html,
+	templates/admin/dpm.html, templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html,
+	templates/admin/edit_inline/stacked.html,
+	templates/admin/edit_inline/tabular.html,
+	templates/admin/filter.html, templates/admin/includes/fieldset.html,
+	templates/admin/index.html, templates/admin/invalid_setup.html,
+	templates/admin/login.html, templates/admin/object_history.html,
+	templates/admin/pagination.html,
+	templates/admin/prepopulated_fields_js.html,
+	templates/admin/search_form.html, templates/admin/submit_line.html,
+	templates/admin/template_validator.html, templates/test/index.html,
+	templates/test/item.html, templates/test/menu.html, urls.py,
+	views.py:
+	Menu silverpoint 1
+	[32b937e2902a]
+
+2009-12-04  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/fem/menu/templatetags/__init__.py,
+	dina/fem/menu/templatetags/menu.py, media/css/menu.css,
+	templates/test/menu.html:
+	Menu Basic
+	[817f721e2ed2]
+
+2009-11-28  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* templates/admin/change_tree.html:
+	Some Bug fixed
+	[b3cc369e4748]
+
+	* templates/admin/index.html:
+	Admin main page old look
+	[bf7b62bc89c2]
+
+	* dina/fem/menu/models.py, dina/fem/menu/views.py,
+	templates/admin/change_tree.html:
+	Menu structure completed
+	[6e2af52ba5f9]
+
+2009-11-27  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README.md, dina/fem/menu/models.py, dina/fem/menu/views.py,
+	templates/admin/change_tree.html:
+	Menu change view phase 0 completed
+	[242cf4b00141]
+
+	* README.md, media/img/jstree/themes/apple/bg.jpg,
+	media/img/jstree/themes/apple/dot_for_ie.gif,
+	media/img/jstree/themes/apple/icons.png,
+	media/img/jstree/themes/apple/style.css,
+	media/img/jstree/themes/apple/throbber.gif,
+	media/img/jstree/themes/checkbox/dot_for_ie.gif,
+	media/img/jstree/themes/checkbox/icons.png,
+	media/img/jstree/themes/checkbox/style.css,
+	media/img/jstree/themes/checkbox/throbber.gif,
+	media/img/jstree/themes/classic/dot_for_ie.gif,
+	media/img/jstree/themes/classic/icons.png,
+	media/img/jstree/themes/classic/style.css,
+	media/img/jstree/themes/classic/throbber.gif,
+	media/img/jstree/themes/default/dot_for_ie.gif,
+	media/img/jstree/themes/default/icons.png,
+	media/img/jstree/themes/default/style.css,
+	media/img/jstree/themes/default/throbber.gif,
+	media/img/jstree/themes/themeroller/dot_for_ie.gif,
+	media/img/jstree/themes/themeroller/icons.png,
+	media/img/jstree/themes/themeroller/style.css,
+	media/img/jstree/themes/themeroller/throbber.gif,
+	media/js/jstree/themes/apple/bg.jpg,
+	media/js/jstree/themes/apple/dot_for_ie.gif,
+	media/js/jstree/themes/apple/icons.png,
+	media/js/jstree/themes/apple/style.css,
+	media/js/jstree/themes/apple/throbber.gif,
+	media/js/jstree/themes/checkbox/dot_for_ie.gif,
+	media/js/jstree/themes/checkbox/icons.png,
+	media/js/jstree/themes/checkbox/style.css,
+	media/js/jstree/themes/checkbox/throbber.gif,
+	media/js/jstree/themes/classic/dot_for_ie.gif,
+	media/js/jstree/themes/classic/icons.png,
+	media/js/jstree/themes/classic/style.css,
+	media/js/jstree/themes/classic/throbber.gif,
+	media/js/jstree/themes/default/dot_for_ie.gif,
+	media/js/jstree/themes/default/icons.png,
+	media/js/jstree/themes/default/style.css,
+	media/js/jstree/themes/default/throbber.gif,
+	media/js/jstree/themes/themeroller/dot_for_ie.gif,
+	media/js/jstree/themes/themeroller/icons.png,
+	media/js/jstree/themes/themeroller/style.css,
+	media/js/jstree/themes/themeroller/throbber.gif, run_server.sh,
+	templates/admin/change_tree.html:
+	jstree added
+	[20bf52485c14]
+
+	* TODO, dina/fem/menu/models.py, dina/fem/menu/views.py,
+	dina/mptt/__init__.py, dina/mptt/django-mptt-0.2-docs.zip, dina/mptt
+	/django-mptt-0.2-docs/forms.html, dina/mptt/django-
+	mptt-0.2-docs/install.html, dina/mptt/django-
+	mptt-0.2-docs/models.html, dina/mptt/django-
+	mptt-0.2-docs/overview.html, dina/mptt/django-
+	mptt-0.2-docs/technical_details.html, dina/mptt/django-
+	mptt-0.2-docs/templates.html, dina/mptt/django-
+	mptt-0.2-docs/utilities.html, dina/mptt/exceptions.py,
+	dina/mptt/forms.py, dina/mptt/managers.py, dina/mptt/models.py,
+	dina/mptt/signals.py, dina/mptt/templatetags/__init__.py,
+	dina/mptt/templatetags/mptt_tags.py, dina/mptt/tests/__init__.py,
+	dina/mptt/tests/doctests.py,
+	dina/mptt/tests/fixtures/categories.json,
+	dina/mptt/tests/fixtures/genres.json, dina/mptt/tests/models.py,
+	dina/mptt/tests/settings.py, dina/mptt/tests/testcases.py,
+	dina/mptt/tests/tests.py, dina/mptt/utils.py, dina/urls.py,
+	media/img/jstree/themes/apple/bg.jpg,
+	media/img/jstree/themes/apple/dot_for_ie.gif,
+	media/img/jstree/themes/apple/icons.png,
+	media/img/jstree/themes/apple/style.css,
+	media/img/jstree/themes/apple/throbber.gif,
+	media/img/jstree/themes/checkbox/dot_for_ie.gif,
+	media/img/jstree/themes/checkbox/icons.png,
+	media/img/jstree/themes/checkbox/style.css,
+	media/img/jstree/themes/checkbox/throbber.gif,
+	media/img/jstree/themes/classic/dot_for_ie.gif,
+	media/img/jstree/themes/classic/icons.png,
+	media/img/jstree/themes/classic/style.css,
+	media/img/jstree/themes/classic/throbber.gif,
+	media/img/jstree/themes/default/dot_for_ie.gif,
+	media/img/jstree/themes/default/icons.png,
+	media/img/jstree/themes/default/style.css,
+	media/img/jstree/themes/default/throbber.gif,
+	media/img/jstree/themes/themeroller/dot_for_ie.gif,
+	media/img/jstree/themes/themeroller/icons.png,
+	media/img/jstree/themes/themeroller/style.css,
+	media/img/jstree/themes/themeroller/throbber.gif,
+	media/js/jquery-1.3.2.js, media/js/jquery.js,
+	media/js/jstree/jquery.tree.js,
+	media/js/jstree/lib/jquery.cookie.js,
+	media/js/jstree/lib/jquery.hotkeys.js,
+	media/js/jstree/lib/jquery.js,
+	media/js/jstree/lib/jquery.metadata.js,
+	media/js/jstree/lib/sarissa.js,
+	media/js/jstree/plugins/_jquery.tree.rtl.js,
+	media/js/jstree/plugins/jquery.tree.checkbox.js,
+	media/js/jstree/plugins/jquery.tree.contextmenu.js,
+	media/js/jstree/plugins/jquery.tree.cookie.js,
+	media/js/jstree/plugins/jquery.tree.hotkeys.js,
+	media/js/jstree/plugins/jquery.tree.metadata.js,
+	media/js/jstree/plugins/jquery.tree.themeroller.js,
+	media/js/jstree/plugins/jquery.tree.xml_flat.js,
+	media/js/jstree/plugins/jquery.tree.xml_nested.js, settings.py,
+	templates/admin/change_tree.html, urls.py:
+	Menu app added
+	[5d1442d99b14]
+
+2009-11-24  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* dina/fem/__init__.py, dina/fem/menu/__init__.py,
+	dina/fem/menu/admin.py, dina/fem/menu/models.py,
+	dina/fem/menu/tests.py, dina/fem/menu/views.py, settings.py,
+	urls.py:
+	Some bug fixed , FEM added
+	[339dfbdaf731]
+
+2009-11-11  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* core/DPM.py, core/TODO, core/__init__.py, core/admin.py,
+	core/codec/__init__.py, core/codec/file/__init__.py,
+	core/codec/file/main.py, core/doc/devel/admin.desc,
+	core/doc/devel/installer.desc, core/doc/devel/models.desc,
+	core/doc/devel/repository, core/installer.py, core/lxsameer.idea,
+	core/models.py, core/package.py, core/repository.py,
+	core/templatetags/__init__.py, core/tests.py, core/tools/Makefile,
+	core/tools/README, core/tools/dinaize.py, core/tools/dpm-
+	buildpkg.py, core/tools/dpm-scanpackages.py, core/urls.py,
+	core/views.py, dina/__init__.py, dina/core/DPM.py, dina/core/TODO,
+	dina/core/__init__.py, dina/core/admin.py,
+	dina/core/codec/__init__.py, dina/core/codec/file/__init__.py,
+	dina/core/codec/file/main.py, dina/core/doc/devel/admin.desc,
+	dina/core/doc/devel/installer.desc, dina/core/doc/devel/models.desc,
+	dina/core/doc/devel/repository, dina/core/installer.py,
+	dina/core/lxsameer.idea, dina/core/models.py, dina/core/package.py,
+	dina/core/repository.py, dina/core/templatetags/__init__.py,
+	dina/core/tests.py, dina/core/tools/Makefile,
+	dina/core/tools/README, dina/core/tools/dinaize.py, dina/core/tools
+	/dpm-buildpkg.py, dina/core/tools/dpm-scanpackages.py,
+	dina/core/urls.py, dina/core/views.py, settings.py:
+	file tree structure changed (core 2 dina)
+	[b2e858b9da60]
+
+2009-11-06  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* TODO, media/css/base.css, media/img/admin/download_manager.png,
+	media/img/admin/file-roller.png, media/img/admin/gnome-system.png,
+	media/img/installer/clean.png, settings.py,
+	templates/admin/base.html, templates/admin/index.html:
+	offline time A
+	[4cbba9350566]
+
+2009-10-27  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* media/css/login.css, server/apache/dina.wsgi,
+	templates/admin/login.html:
+	login layout bug fixed
+	[2e9f8e7f59eb]
+
+2009-10-22  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* core/urls.py, core/views.py, templates/admin/base.html,
+	templates/admin/dpm/#installer_ui.html#,
+	templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html, templates/admin/index.html:
+	Installer UI apply button phase 1
+	[9bba652b8852]
+
+	* media/css/login.css, media/img/admin/dina.png,
+	media/img/admin/django.png, media/img/admin/login.png,
+	media/img/admin/python.png, templates/admin/base.html,
+	templates/admin/login.html:
+	login interface improved.
+	[7f0dc1dfaed6]
+
+2009-10-21  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* TODO, core/DPM.py, core/urls.py, core/views.py,
+	templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html, templates/admin/index.html:
+	Installer UI improved. (Desc loader added)
+	[be417291a970]
+
+	* core/views.py:
+	Security bug fixed, (unauthorize access to installer)
+	[1e291a1ef099]
+
+	* media/css/mbContainer.css, media/img/elements/icons/browser.png,
+	media/img/elements/icons/desc.png, media/img/elements/icons/ss.png,
+	media/img/elements/icons/vb.png, media/img/installer/clean.png,
+	media/img/installer/reload.png,
+	templates/admin/dpm/#installer_ui.html#,
+	templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html:
+	Installer UI improved.
+	[608242d29087]
+
+	* TODO, templates/admin/dpm/installer_ui.html:
+	A development test in installer->ui->packages removed
+	[5f6a2f60a2d9]
+
+	* urls.py:
+	direct request to core bug fixed
+	[4a89bc71dd79]
+
+	* admin/DPM.py, admin/TODO, admin/__init__.py, admin/admin.py,
+	admin/codec/__init__.py, admin/codec/file/__init__.py,
+	admin/codec/file/main.py, admin/doc/devel/admin.desc,
+	admin/doc/devel/installer.desc, admin/doc/devel/models.desc,
+	admin/doc/devel/repository, admin/installer.py, admin/lxsameer.idea,
+	admin/models.py, admin/package.py, admin/repository.py,
+	admin/templatetags/__init__.py, admin/tests.py,
+	admin/tools/Makefile, admin/tools/README, admin/tools/dinaize.py,
+	admin/tools/dpm-buildpkg.py, admin/tools/dpm-scanpackages.py,
+	admin/urls.py, admin/views.py, core/DPM.py, core/TODO,
+	core/__init__.py, core/admin.py, core/codec/__init__.py,
+	core/codec/file/__init__.py, core/codec/file/main.py,
+	core/doc/devel/admin.desc, core/doc/devel/installer.desc,
+	core/doc/devel/models.desc, core/doc/devel/repository,
+	core/installer.py, core/lxsameer.idea, core/models.py,
+	core/package.py, core/repository.py, core/templatetags/__init__.py,
+	core/tests.py, core/tools/Makefile, core/tools/README,
+	core/tools/dinaize.py, core/tools/dpm-buildpkg.py, core/tools/dpm-
+	scanpackages.py, core/urls.py, core/views.py, settings.py, urls.py:
+	Core renamed from 'admin' to 'core'
+	[d73c7b872f9d]
+
+2009-10-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/admin.py, admin/models.py, templates/admin/index.html:
+	Repositories section added to admin panel
+	[a08011fb0b25]
+
+	* admin/views.py, templates/admin/dpm/pkglist.html:
+	Basic view of DPM interface completed.
+	[10c1887b784f]
+
+	* TODO, admin/DPM.py, admin/tools/dinaize.py, admin/tools/dpm-
+	buildpkg.py, admin/tools/dpm-scanpackages.py:
+	Tools bug fixed
+	[2098c6af885b]
+
+	* admin/DPM.py, admin/tools/dinaize.py, admin/tools/dpm-
+	scanpackages.py:
+	Tools bug fixed and DPM code optimized.
+	[c3a6a35fc0bd]
+
+	* TODO, admin/DPM.py, admin/doc/devel/repository, admin/repository.py:
+	Some commects added to core code
+	[5902cbc867d2]
+
+2009-10-19  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/tools/Makefile, admin/tools/README, admin/tools/dinaize.py,
+	admin/tools/dpm-buildpkg.py, admin/tools/dpm-scanpackages.py,
+	apps/blog/dina/control:
+	Tools completed. (Developer version )
+	[4bd4fbf878ac]
+
+	* admin/templatetags/__init__.py, admin/tools/dpm-buildpkg.py,
+	apps/blog/admin.py, apps/blog/templates/blog.html,
+	apps/blog/urls.py, apps/blog/views.py:
+	blog development base code added
+	[9ad5f9c532ce]
+
+2009-10-14  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* apps/blog/doc/devel/structure, apps/blog/models.py,
+	apps/blog/templatetags/__init__.py, apps/blog/templatetags/blog.py,
+	apps/blog/urls.py:
+	blog costumtag began
+	[ecc3d9490178]
+
+2009-10-15  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/tools/dpm-buildpkg.py, apps/blog/__init__.py,
+	apps/blog/doc/devel/structure, apps/blog/models.py,
+	apps/blog/tests.py, apps/blog/views.py:
+	Blog added
+	[3ed60dd66f57]
+
+2009-10-14  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/tools/dpm-buildpkg.py, admin/tools/dpm-scanpackages.py:
+	conflict solved
+	[d234804a83f4]
+
+2009-10-10  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/tools/dpm-buildpkg.py, admin/tools/dpm-scanpackages.py,
+	server/apache/dina.wsgi:
+	WSGI bug fixed.
+	[c042177dab39]
+
+2009-10-13  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/tools/dpm-buildpkg.py, admin/tools/dpm-scanpackages.py:
+	some comment added
+	[2cd039bd67b5]
+
+2009-09-25  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* TODO, admin/DPM.py, admin/models.py, admin/tools/dpm-buildpkg.py,
+	admin/tools/dpm-scanpackages.py, admin/views.py, apache/dina.wsgi,
+	server/apache/dina.wsgi, tools/pkg-scan.py:
+	dpm-scanpackages.py phase 1 completed
+	[e24d1b4238ec]
+
+2009-09-24  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/DPM.py, admin/codec/file/main.py, admin/repository.py,
+	admin/views.py, templates/admin/dpm/pkglist.html:
+	DPM code cleand up
+	[97d0c3e0b376]
+
+	* admin/DPM.py, admin/codec/file/__init__.py,
+	admin/codec/file/main.py, admin/models.py, admin/repository.py,
+	admin/views.py, settings.py:
+	DPM bugs fixed
+	[611686470c65]
+
+	* media/img/elements/.svn/all-wcprops,
+	media/img/elements/.svn/entries, media/img/elements/.svn/prop-
+	base/blank.png.svn-base, media/img/elements/.svn/prop-base/proxy.png
+	.svn-base, media/img/elements/.svn/prop-base/screenBgnd.gif.svn-
+	base, media/img/elements/.svn/text-base/blank.png.svn-base,
+	media/img/elements/.svn/text-base/proxy.png.svn-base,
+	media/img/elements/.svn/text-base/screenBgnd.gif.svn-base,
+	media/img/elements/default/.svn/all-wcprops,
+	media/img/elements/default/.svn/entries,
+	media/img/elements/default/.svn/prop-base/c.png.svn-base,
+	media/img/elements/default/.svn/prop-base/close.png.svn-base,
+	media/img/elements/default/.svn/prop-base/e.png.svn-base,
+	media/img/elements/default/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/default/.svn/prop-base/max.png.svn-base,
+	media/img/elements/default/.svn/prop-base/min.png.svn-base,
+	media/img/elements/default/.svn/prop-base/n.png.svn-base,
+	media/img/elements/default/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/default/.svn/prop-base/no.png.svn-base,
+	media/img/elements/default/.svn/prop-base/o.png.svn-base,
+	media/img/elements/default/.svn/prop-base/s.png.svn-base,
+	media/img/elements/default/.svn/prop-base/se.png.svn-base,
+	media/img/elements/default/.svn/prop-base/so.png.svn-base,
+	media/img/elements/default/.svn/text-base/c.png.svn-base,
+	media/img/elements/default/.svn/text-base/close.png.svn-base,
+	media/img/elements/default/.svn/text-base/e.png.svn-base,
+	media/img/elements/default/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/default/.svn/text-base/max.png.svn-base,
+	media/img/elements/default/.svn/text-base/min.png.svn-base,
+	media/img/elements/default/.svn/text-base/n.png.svn-base,
+	media/img/elements/default/.svn/text-base/ne.png.svn-base,
+	media/img/elements/default/.svn/text-base/no.png.svn-base,
+	media/img/elements/default/.svn/text-base/o.png.svn-base,
+	media/img/elements/default/.svn/text-base/s.png.svn-base,
+	media/img/elements/default/.svn/text-base/se.png.svn-base,
+	media/img/elements/default/.svn/text-base/so.png.svn-base,
+	media/img/elements/icons/.svn/all-wcprops,
+	media/img/elements/icons/.svn/entries, media/img/elements/icons/.svn
+	/prop-base/alert.png.svn-base, media/img/elements/icons/.svn/prop-
+	base/browser.png.svn-base, media/img/elements/icons/.svn/prop-
+	base/chart.png.svn-base, media/img/elements/icons/.svn/prop-base
+	/comment-edit-48x48.png.svn-base, media/img/elements/icons/.svn
+	/prop-base/restore.png.svn-base, media/img/elements/icons/.svn/text-
+	base/alert.png.svn-base, media/img/elements/icons/.svn/text-
+	base/browser.png.svn-base, media/img/elements/icons/.svn/text-
+	base/chart.png.svn-base, media/img/elements/icons/.svn/text-base
+	/comment-edit-48x48.png.svn-base, media/img/elements/icons/.svn
+	/text-base/restore.png.svn-base, media/img/elements/sounds/.svn/all-
+	wcprops, media/img/elements/sounds/.svn/entries,
+	media/img/elements/sounds/.svn/prop-base/Pop.aiff.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-19.mp3.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-20.mp3.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-27.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/Pop.aiff.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-19.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-20.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-27.mp3.svn-base,
+	media/img/elements/stiky/.svn/all-wcprops,
+	media/img/elements/stiky/.svn/entries, media/img/elements/stiky/.svn
+	/prop-base/c.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/close.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/e.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/iconize.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/max.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/min.png.svn-base, media/img/elements/stiky/.svn/prop-base/n.png
+	.svn-base, media/img/elements/stiky/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/no.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/o.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/s.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/se.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/so.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/c.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/close.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/e.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/max.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/min.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/n.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/ne.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/no.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/o.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/s.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/se.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/so.png.svn-base,
+	media/img/elements/white/.svn/all-wcprops,
+	media/img/elements/white/.svn/entries, media/img/elements/white/.svn
+	/prop-base/c.png.svn-base, media/img/elements/white/.svn/prop-
+	base/close.png.svn-base, media/img/elements/white/.svn/prop-
+	base/e.png.svn-base, media/img/elements/white/.svn/prop-
+	base/iconize.png.svn-base, media/img/elements/white/.svn/prop-
+	base/max.png.svn-base, media/img/elements/white/.svn/prop-
+	base/min.png.svn-base, media/img/elements/white/.svn/prop-base/n.png
+	.svn-base, media/img/elements/white/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/white/.svn/prop-base/no.png.svn-base,
+	media/img/elements/white/.svn/prop-base/o.png.svn-base,
+	media/img/elements/white/.svn/prop-base/s.png.svn-base,
+	media/img/elements/white/.svn/prop-base/se.png.svn-base,
+	media/img/elements/white/.svn/prop-base/so.png.svn-base,
+	media/img/elements/white/.svn/text-base/c.png.svn-base,
+	media/img/elements/white/.svn/text-base/close.png.svn-base,
+	media/img/elements/white/.svn/text-base/e.png.svn-base,
+	media/img/elements/white/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/white/.svn/text-base/max.png.svn-base,
+	media/img/elements/white/.svn/text-base/min.png.svn-base,
+	media/img/elements/white/.svn/text-base/n.png.svn-base,
+	media/img/elements/white/.svn/text-base/ne.png.svn-base,
+	media/img/elements/white/.svn/text-base/no.png.svn-base,
+	media/img/elements/white/.svn/text-base/o.png.svn-base,
+	media/img/elements/white/.svn/text-base/s.png.svn-base,
+	media/img/elements/white/.svn/text-base/se.png.svn-base,
+	media/img/elements/white/.svn/text-base/so.png.svn-base:
+	Source tree cleand
+	[ad61137fe26d]
+
+	* tools/pkg-scan.py:
+	pkg-scan.py bug fixed , better out put provided
+	[8dc8c5493bd3]
+
+	* tools/pkg-scan.py:
+	pkg-scan.py : repo builder added
+	[97928cc27b42]
+
+2009-09-23  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/DPM.py, admin/codec/file/main.py, admin/repository.py:
+	Very Basic DPM functionality added
+	[07b0f53b9c63]
+
+	* admin/DPM.py, admin/repository.py:
+	DPM.Update updated
+	[a1e7bdbea263]
+
+2009-09-22  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/DPM.py, admin/codec/__init__.py, admin/models.py,
+	admin/repository.py:
+	DPM class added
+	[f24c69b31e61]
+
+	* TODO, admin/package.py, admin/urls.py, admin/views.py,
+	media/img/elements/alert/.directory, media/img/elements/alert/.svn
+	/all-wcprops, media/img/elements/alert/.svn/entries,
+	media/img/elements/alert/.svn/prop-base/c.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/close.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/e.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/max.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/min.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/n.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/no.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/o.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/s.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/se.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/so.png.svn-base,
+	media/img/elements/alert/.svn/text-base/c.png.svn-base,
+	media/img/elements/alert/.svn/text-base/close.png.svn-base,
+	media/img/elements/alert/.svn/text-base/e.png.svn-base,
+	media/img/elements/alert/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/alert/.svn/text-base/max.png.svn-base,
+	media/img/elements/alert/.svn/text-base/min.png.svn-base,
+	media/img/elements/alert/.svn/text-base/n.png.svn-base,
+	media/img/elements/alert/.svn/text-base/ne.png.svn-base,
+	media/img/elements/alert/.svn/text-base/no.png.svn-base,
+	media/img/elements/alert/.svn/text-base/o.png.svn-base,
+	media/img/elements/alert/.svn/text-base/s.png.svn-base,
+	media/img/elements/alert/.svn/text-base/se.png.svn-base,
+	media/img/elements/alert/.svn/text-base/so.png.svn-base,
+	media/img/elements/alert/c.png, media/img/elements/alert/close.png,
+	media/img/elements/alert/e.png,
+	media/img/elements/alert/iconize.png,
+	media/img/elements/alert/max.png, media/img/elements/alert/min.png,
+	media/img/elements/alert/n.png, media/img/elements/alert/ne.png,
+	media/img/elements/alert/no.png, media/img/elements/alert/o.png,
+	media/img/elements/alert/s.png, media/img/elements/alert/se.png,
+	media/img/elements/alert/so.png,
+	media/img/elements/black/.directory, media/img/elements/black/.svn
+	/all-wcprops, media/img/elements/black/.svn/entries,
+	media/img/elements/black/.svn/prop-base/c.png.svn-base,
+	media/img/elements/black/.svn/prop-base/close.png.svn-base,
+	media/img/elements/black/.svn/prop-base/e.png.svn-base,
+	media/img/elements/black/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/black/.svn/prop-base/max.png.svn-base,
+	media/img/elements/black/.svn/prop-base/min.png.svn-base,
+	media/img/elements/black/.svn/prop-base/n.png.svn-base,
+	media/img/elements/black/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/black/.svn/prop-base/no.png.svn-base,
+	media/img/elements/black/.svn/prop-base/o.png.svn-base,
+	media/img/elements/black/.svn/prop-base/s.png.svn-base,
+	media/img/elements/black/.svn/prop-base/se.png.svn-base,
+	media/img/elements/black/.svn/prop-base/so.png.svn-base,
+	media/img/elements/black/.svn/text-base/c.png.svn-base,
+	media/img/elements/black/.svn/text-base/close.png.svn-base,
+	media/img/elements/black/.svn/text-base/e.png.svn-base,
+	media/img/elements/black/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/black/.svn/text-base/max.png.svn-base,
+	media/img/elements/black/.svn/text-base/min.png.svn-base,
+	media/img/elements/black/.svn/text-base/n.png.svn-base,
+	media/img/elements/black/.svn/text-base/ne.png.svn-base,
+	media/img/elements/black/.svn/text-base/no.png.svn-base,
+	media/img/elements/black/.svn/text-base/o.png.svn-base,
+	media/img/elements/black/.svn/text-base/s.png.svn-base,
+	media/img/elements/black/.svn/text-base/se.png.svn-base,
+	media/img/elements/black/.svn/text-base/so.png.svn-base,
+	media/img/elements/black/c.png, media/img/elements/black/close.png,
+	media/img/elements/black/e.png,
+	media/img/elements/black/iconize.png,
+	media/img/elements/black/max.png, media/img/elements/black/min.png,
+	media/img/elements/black/n.png, media/img/elements/black/ne.png,
+	media/img/elements/black/no.png, media/img/elements/black/o.png,
+	media/img/elements/black/s.png, media/img/elements/black/se.png,
+	media/img/elements/black/so.png,
+	media/img/elements/default/.directory,
+	media/img/elements/stiky/.directory,
+	templates/admin/dpm/installer_ui.html,
+	templates/admin/dpm/pkglist.html:
+	DPM widget basic API added
+	[4db24ed5fb35]
+
+	* media/css/base.css, media/css/demos.css, media/css/mbContainer.css,
+	media/img/elements/.DS_Store, media/img/elements/.directory,
+	media/img/elements/.svn/all-wcprops,
+	media/img/elements/.svn/entries, media/img/elements/.svn/prop-
+	base/blank.png.svn-base, media/img/elements/.svn/prop-base/proxy.png
+	.svn-base, media/img/elements/.svn/prop-base/screenBgnd.gif.svn-
+	base, media/img/elements/.svn/text-base/blank.png.svn-base,
+	media/img/elements/.svn/text-base/proxy.png.svn-base,
+	media/img/elements/.svn/text-base/screenBgnd.gif.svn-base,
+	media/img/elements/alert/.directory, media/img/elements/alert/.svn
+	/all-wcprops, media/img/elements/alert/.svn/entries,
+	media/img/elements/alert/.svn/prop-base/c.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/close.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/e.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/max.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/min.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/n.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/no.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/o.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/s.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/se.png.svn-base,
+	media/img/elements/alert/.svn/prop-base/so.png.svn-base,
+	media/img/elements/alert/.svn/text-base/c.png.svn-base,
+	media/img/elements/alert/.svn/text-base/close.png.svn-base,
+	media/img/elements/alert/.svn/text-base/e.png.svn-base,
+	media/img/elements/alert/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/alert/.svn/text-base/max.png.svn-base,
+	media/img/elements/alert/.svn/text-base/min.png.svn-base,
+	media/img/elements/alert/.svn/text-base/n.png.svn-base,
+	media/img/elements/alert/.svn/text-base/ne.png.svn-base,
+	media/img/elements/alert/.svn/text-base/no.png.svn-base,
+	media/img/elements/alert/.svn/text-base/o.png.svn-base,
+	media/img/elements/alert/.svn/text-base/s.png.svn-base,
+	media/img/elements/alert/.svn/text-base/se.png.svn-base,
+	media/img/elements/alert/.svn/text-base/so.png.svn-base,
+	media/img/elements/alert/c.png, media/img/elements/alert/close.png,
+	media/img/elements/alert/e.png,
+	media/img/elements/alert/iconize.png,
+	media/img/elements/alert/max.png, media/img/elements/alert/min.png,
+	media/img/elements/alert/n.png, media/img/elements/alert/ne.png,
+	media/img/elements/alert/no.png, media/img/elements/alert/o.png,
+	media/img/elements/alert/s.png, media/img/elements/alert/se.png,
+	media/img/elements/alert/so.png,
+	media/img/elements/black/.directory, media/img/elements/black/.svn
+	/all-wcprops, media/img/elements/black/.svn/entries,
+	media/img/elements/black/.svn/prop-base/c.png.svn-base,
+	media/img/elements/black/.svn/prop-base/close.png.svn-base,
+	media/img/elements/black/.svn/prop-base/e.png.svn-base,
+	media/img/elements/black/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/black/.svn/prop-base/max.png.svn-base,
+	media/img/elements/black/.svn/prop-base/min.png.svn-base,
+	media/img/elements/black/.svn/prop-base/n.png.svn-base,
+	media/img/elements/black/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/black/.svn/prop-base/no.png.svn-base,
+	media/img/elements/black/.svn/prop-base/o.png.svn-base,
+	media/img/elements/black/.svn/prop-base/s.png.svn-base,
+	media/img/elements/black/.svn/prop-base/se.png.svn-base,
+	media/img/elements/black/.svn/prop-base/so.png.svn-base,
+	media/img/elements/black/.svn/text-base/c.png.svn-base,
+	media/img/elements/black/.svn/text-base/close.png.svn-base,
+	media/img/elements/black/.svn/text-base/e.png.svn-base,
+	media/img/elements/black/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/black/.svn/text-base/max.png.svn-base,
+	media/img/elements/black/.svn/text-base/min.png.svn-base,
+	media/img/elements/black/.svn/text-base/n.png.svn-base,
+	media/img/elements/black/.svn/text-base/ne.png.svn-base,
+	media/img/elements/black/.svn/text-base/no.png.svn-base,
+	media/img/elements/black/.svn/text-base/o.png.svn-base,
+	media/img/elements/black/.svn/text-base/s.png.svn-base,
+	media/img/elements/black/.svn/text-base/se.png.svn-base,
+	media/img/elements/black/.svn/text-base/so.png.svn-base,
+	media/img/elements/black/c.png, media/img/elements/black/close.png,
+	media/img/elements/black/e.png,
+	media/img/elements/black/iconize.png,
+	media/img/elements/black/max.png, media/img/elements/black/min.png,
+	media/img/elements/black/n.png, media/img/elements/black/ne.png,
+	media/img/elements/black/no.png, media/img/elements/black/o.png,
+	media/img/elements/black/s.png, media/img/elements/black/se.png,
+	media/img/elements/black/so.png, media/img/elements/blank.png,
+	media/img/elements/default/.svn/all-wcprops,
+	media/img/elements/default/.svn/entries,
+	media/img/elements/default/.svn/prop-base/c.png.svn-base,
+	media/img/elements/default/.svn/prop-base/close.png.svn-base,
+	media/img/elements/default/.svn/prop-base/e.png.svn-base,
+	media/img/elements/default/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/default/.svn/prop-base/max.png.svn-base,
+	media/img/elements/default/.svn/prop-base/min.png.svn-base,
+	media/img/elements/default/.svn/prop-base/n.png.svn-base,
+	media/img/elements/default/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/default/.svn/prop-base/no.png.svn-base,
+	media/img/elements/default/.svn/prop-base/o.png.svn-base,
+	media/img/elements/default/.svn/prop-base/s.png.svn-base,
+	media/img/elements/default/.svn/prop-base/se.png.svn-base,
+	media/img/elements/default/.svn/prop-base/so.png.svn-base,
+	media/img/elements/default/.svn/text-base/c.png.svn-base,
+	media/img/elements/default/.svn/text-base/close.png.svn-base,
+	media/img/elements/default/.svn/text-base/e.png.svn-base,
+	media/img/elements/default/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/default/.svn/text-base/max.png.svn-base,
+	media/img/elements/default/.svn/text-base/min.png.svn-base,
+	media/img/elements/default/.svn/text-base/n.png.svn-base,
+	media/img/elements/default/.svn/text-base/ne.png.svn-base,
+	media/img/elements/default/.svn/text-base/no.png.svn-base,
+	media/img/elements/default/.svn/text-base/o.png.svn-base,
+	media/img/elements/default/.svn/text-base/s.png.svn-base,
+	media/img/elements/default/.svn/text-base/se.png.svn-base,
+	media/img/elements/default/.svn/text-base/so.png.svn-base,
+	media/img/elements/default/c.png,
+	media/img/elements/default/close.png,
+	media/img/elements/default/e.png,
+	media/img/elements/default/iconize.png,
+	media/img/elements/default/max.png,
+	media/img/elements/default/min.png,
+	media/img/elements/default/n.png, media/img/elements/default/ne.png,
+	media/img/elements/default/no.png, media/img/elements/default/o.png,
+	media/img/elements/default/s.png, media/img/elements/default/se.png,
+	media/img/elements/default/so.png,
+	media/img/elements/icons/.DS_Store,
+	media/img/elements/icons/.directory, media/img/elements/icons/.svn
+	/all-wcprops, media/img/elements/icons/.svn/entries,
+	media/img/elements/icons/.svn/prop-base/alert.png.svn-base,
+	media/img/elements/icons/.svn/prop-base/browser.png.svn-base,
+	media/img/elements/icons/.svn/prop-base/chart.png.svn-base,
+	media/img/elements/icons/.svn/prop-base/comment-edit-48x48.png.svn-
+	base, media/img/elements/icons/.svn/prop-base/restore.png.svn-base,
+	media/img/elements/icons/.svn/text-base/alert.png.svn-base,
+	media/img/elements/icons/.svn/text-base/browser.png.svn-base,
+	media/img/elements/icons/.svn/text-base/chart.png.svn-base,
+	media/img/elements/icons/.svn/text-base/comment-edit-48x48.png.svn-
+	base, media/img/elements/icons/.svn/text-base/restore.png.svn-base,
+	media/img/elements/icons/alert.png,
+	media/img/elements/icons/browser.png,
+	media/img/elements/icons/chart.png,
+	media/img/elements/icons/desc.png,
+	media/img/elements/icons/restore.png, media/img/elements/proxy.png,
+	media/img/elements/screenBgnd.gif, media/img/elements/sounds/.svn
+	/all-wcprops, media/img/elements/sounds/.svn/entries,
+	media/img/elements/sounds/.svn/prop-base/Pop.aiff.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-19.mp3.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-20.mp3.svn-base,
+	media/img/elements/sounds/.svn/prop-base/button-27.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/Pop.aiff.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-19.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-20.mp3.svn-base,
+	media/img/elements/sounds/.svn/text-base/button-27.mp3.svn-base,
+	media/img/elements/sounds/Pop.aiff,
+	media/img/elements/sounds/button-19.mp3,
+	media/img/elements/sounds/button-20.mp3,
+	media/img/elements/sounds/button-27.mp3,
+	media/img/elements/stiky/.svn/all-wcprops,
+	media/img/elements/stiky/.svn/entries, media/img/elements/stiky/.svn
+	/prop-base/c.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/close.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/e.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/iconize.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/max.png.svn-base, media/img/elements/stiky/.svn/prop-
+	base/min.png.svn-base, media/img/elements/stiky/.svn/prop-base/n.png
+	.svn-base, media/img/elements/stiky/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/no.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/o.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/s.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/se.png.svn-base,
+	media/img/elements/stiky/.svn/prop-base/so.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/c.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/close.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/e.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/max.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/min.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/n.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/ne.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/no.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/o.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/s.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/se.png.svn-base,
+	media/img/elements/stiky/.svn/text-base/so.png.svn-base,
+	media/img/elements/stiky/c.png, media/img/elements/stiky/close.png,
+	media/img/elements/stiky/e.png,
+	media/img/elements/stiky/iconize.png,
+	media/img/elements/stiky/max.png, media/img/elements/stiky/min.png,
+	media/img/elements/stiky/n.png, media/img/elements/stiky/ne.png,
+	media/img/elements/stiky/no.png, media/img/elements/stiky/o.png,
+	media/img/elements/stiky/s.png, media/img/elements/stiky/se.png,
+	media/img/elements/stiky/so.png,
+	media/img/elements/white/.directory, media/img/elements/white/.svn
+	/all-wcprops, media/img/elements/white/.svn/entries,
+	media/img/elements/white/.svn/prop-base/c.png.svn-base,
+	media/img/elements/white/.svn/prop-base/close.png.svn-base,
+	media/img/elements/white/.svn/prop-base/e.png.svn-base,
+	media/img/elements/white/.svn/prop-base/iconize.png.svn-base,
+	media/img/elements/white/.svn/prop-base/max.png.svn-base,
+	media/img/elements/white/.svn/prop-base/min.png.svn-base,
+	media/img/elements/white/.svn/prop-base/n.png.svn-base,
+	media/img/elements/white/.svn/prop-base/ne.png.svn-base,
+	media/img/elements/white/.svn/prop-base/no.png.svn-base,
+	media/img/elements/white/.svn/prop-base/o.png.svn-base,
+	media/img/elements/white/.svn/prop-base/s.png.svn-base,
+	media/img/elements/white/.svn/prop-base/se.png.svn-base,
+	media/img/elements/white/.svn/prop-base/so.png.svn-base,
+	media/img/elements/white/.svn/text-base/c.png.svn-base,
+	media/img/elements/white/.svn/text-base/close.png.svn-base,
+	media/img/elements/white/.svn/text-base/e.png.svn-base,
+	media/img/elements/white/.svn/text-base/iconize.png.svn-base,
+	media/img/elements/white/.svn/text-base/max.png.svn-base,
+	media/img/elements/white/.svn/text-base/min.png.svn-base,
+	media/img/elements/white/.svn/text-base/n.png.svn-base,
+	media/img/elements/white/.svn/text-base/ne.png.svn-base,
+	media/img/elements/white/.svn/text-base/no.png.svn-base,
+	media/img/elements/white/.svn/text-base/o.png.svn-base,
+	media/img/elements/white/.svn/text-base/s.png.svn-base,
+	media/img/elements/white/.svn/text-base/se.png.svn-base,
+	media/img/elements/white/.svn/text-base/so.png.svn-base,
+	media/img/elements/white/c.png, media/img/elements/white/close.png,
+	media/img/elements/white/e.png,
+	media/img/elements/white/iconize.png,
+	media/img/elements/white/max.png, media/img/elements/white/min.png,
+	media/img/elements/white/n.png, media/img/elements/white/ne.png,
+	media/img/elements/white/no.png, media/img/elements/white/o.png,
+	media/img/elements/white/s.png, media/img/elements/white/se.png,
+	media/img/elements/white/so.png, media/js/jquery-1.3.2.js,
+	media/js/ui/effects.blind.js, media/js/ui/effects.bounce.js,
+	media/js/ui/effects.clip.js, media/js/ui/effects.core.js,
+	media/js/ui/effects.drop.js, media/js/ui/effects.explode.js,
+	media/js/ui/effects.fold.js, media/js/ui/effects.highlight.js,
+	media/js/ui/effects.pulsate.js, media/js/ui/effects.scale.js,
+	media/js/ui/effects.shake.js, media/js/ui/effects.slide.js,
+	media/js/ui/effects.transfer.js, media/js/ui/i18n/jquery-ui-i18n.js,
+	media/js/ui/i18n/ui.datepicker-ar.js, media/js/ui/i18n/ui
+	.datepicker-bg.js, media/js/ui/i18n/ui.datepicker-ca.js,
+	media/js/ui/i18n/ui.datepicker-cs.js, media/js/ui/i18n/ui
+	.datepicker-da.js, media/js/ui/i18n/ui.datepicker-de.js,
+	media/js/ui/i18n/ui.datepicker-el.js, media/js/ui/i18n/ui
+	.datepicker-eo.js, media/js/ui/i18n/ui.datepicker-es.js,
+	media/js/ui/i18n/ui.datepicker-fa.js, media/js/ui/i18n/ui
+	.datepicker-fi.js, media/js/ui/i18n/ui.datepicker-fr.js,
+	media/js/ui/i18n/ui.datepicker-he.js, media/js/ui/i18n/ui
+	.datepicker-hr.js, media/js/ui/i18n/ui.datepicker-hu.js,
+	media/js/ui/i18n/ui.datepicker-hy.js, media/js/ui/i18n/ui
+	.datepicker-id.js, media/js/ui/i18n/ui.datepicker-is.js,
+	media/js/ui/i18n/ui.datepicker-it.js, media/js/ui/i18n/ui
+	.datepicker-ja.js, media/js/ui/i18n/ui.datepicker-ko.js,
+	media/js/ui/i18n/ui.datepicker-lt.js, media/js/ui/i18n/ui
+	.datepicker-lv.js, media/js/ui/i18n/ui.datepicker-ms.js,
+	media/js/ui/i18n/ui.datepicker-nl.js, media/js/ui/i18n/ui
+	.datepicker-no.js, media/js/ui/i18n/ui.datepicker-pl.js,
+	media/js/ui/i18n/ui.datepicker-pt-BR.js, media/js/ui/i18n/ui
+	.datepicker-ro.js, media/js/ui/i18n/ui.datepicker-ru.js,
+	media/js/ui/i18n/ui.datepicker-sk.js, media/js/ui/i18n/ui
+	.datepicker-sl.js, media/js/ui/i18n/ui.datepicker-sq.js,
+	media/js/ui/i18n/ui.datepicker-sr-SR.js, media/js/ui/i18n/ui
+	.datepicker-sr.js, media/js/ui/i18n/ui.datepicker-sv.js,
+	media/js/ui/i18n/ui.datepicker-th.js, media/js/ui/i18n/ui
+	.datepicker-tr.js, media/js/ui/i18n/ui.datepicker-uk.js,
+	media/js/ui/i18n/ui.datepicker-zh-CN.js, media/js/ui/i18n/ui
+	.datepicker-zh-TW.js, media/js/ui/jquery-ui-1.7.2.custom.js,
+	media/js/ui/jquery.metadata.js, media/js/ui/mbContainer.js,
+	media/js/ui/ui.accordion.js, media/js/ui/ui.core.js,
+	media/js/ui/ui.datepicker.js, media/js/ui/ui.dialog.js,
+	media/js/ui/ui.draggable.js, media/js/ui/ui.droppable.js,
+	media/js/ui/ui.progressbar.js, media/js/ui/ui.resizable.js,
+	media/js/ui/ui.selectable.js, media/js/ui/ui.slider.js,
+	media/js/ui/ui.sortable.js, media/js/ui/ui.tabs.js, run_server.sh,
+	templates/admin/base.html, templates/admin/dpm/installer_ui.html,
+	templates/admin/index.html:
+	Installer basic widget completed
+	[47a43cd0580e]
+
+2009-09-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README, admin/urls.py, admin/views.py, media/img/admin/.directory,
+	media/img/gis/.directory, run_server.sh, templates/admin/base.html,
+	templates/admin/dpm.html, templates/admin/index.html,
+	templates/admin/login.html, urls.py:
+	Admin media changed
+	[acdfbdcf2747]
+
+	* admin/urls.py, admin/views.py, templates/admin/#base.html#,
+	templates/admin/.#base.html, templates/admin/dpm.html,
+	templates/admin/index.html, urls.py:
+	DPM page added
+	[017b19f96aa3]
+
+2009-09-19  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* TODO:
+	TODO
+	[1127087bfb84]
+
+	* media/css/base.css, media/css/changelists.css,
+	media/css/dashboard.css, media/css/forms.css, media/css/ie.css,
+	media/css/login.css, media/css/rtl.css, media/css/widgets.css,
+	media/img/admin/arrow-down.gif, media/img/admin/arrow-up.gif,
+	media/img/admin/changelist-bg.gif, media/img/admin/changelist-
+	bg_rtl.gif, media/img/admin/chooser-bg.gif, media/img/admin
+	/chooser_stacked-bg.gif, media/img/admin/default-bg-reverse.gif,
+	media/img/admin/default-bg.gif, media/img/admin/deleted-overlay.gif,
+	media/img/admin/icon-no.gif, media/img/admin/icon-unknown.gif,
+	media/img/admin/icon-yes.gif, media/img/admin/icon_addlink.gif,
+	media/img/admin/icon_alert.gif, media/img/admin/icon_calendar.gif,
+	media/img/admin/icon_changelink.gif, media/img/admin/icon_clock.gif,
+	media/img/admin/icon_deletelink.gif, media/img/admin/icon_error.gif,
+	media/img/admin/icon_searchbox.png,
+	media/img/admin/icon_success.gif, media/img/admin/inline-delete-
+	8bit.png, media/img/admin/inline-delete.png, media/img/admin/inline-
+	restore-8bit.png, media/img/admin/inline-restore.png,
+	media/img/admin/inline-splitter-bg.gif, media/img/admin/nav-bg-
+	grabber.gif, media/img/admin/nav-bg-reverse.gif, media/img/admin
+	/nav-bg.gif, media/img/admin/selector-add.gif, media/img/admin
+	/selector-addall.gif, media/img/admin/selector-remove.gif,
+	media/img/admin/selector-removeall.gif, media/img/admin/selector-
+	search.gif, media/img/admin/selector_stacked-add.gif,
+	media/img/admin/selector_stacked-remove.gif, media/img/admin/tool-
+	left.gif, media/img/admin/tool-left_over.gif, media/img/admin/tool-
+	right.gif, media/img/admin/tool-right_over.gif, media/img/admin
+	/tooltag-add.gif, media/img/admin/tooltag-add_over.gif,
+	media/img/admin/tooltag-arrowright.gif, media/img/admin/tooltag-
+	arrowright_over.gif, media/img/gis/move_vertex_off.png,
+	media/img/gis/move_vertex_on.png, media/js/SelectBox.js,
+	media/js/SelectFilter2.js, media/js/actions.js,
+	media/js/admin/CollapsedFieldsets.js,
+	media/js/admin/DateTimeShortcuts.js,
+	media/js/admin/RelatedObjectLookups.js, media/js/admin/ordering.js,
+	media/js/calendar.js, media/js/core.js, media/js/dateparse.js,
+	media/js/getElementsBySelector.js, media/js/timeparse.js,
+	media/js/urlify.js, templates/admin/#base.html#,
+	templates/admin/.#base.html, templates/admin/404.html,
+	templates/admin/500.html, templates/admin/actions.html,
+	templates/admin/app_index.html,
+	templates/admin/auth/user/add_form.html,
+	templates/admin/auth/user/change_password.html,
+	templates/admin/base.html, templates/admin/base_site.html,
+	templates/admin/change_form.html, templates/admin/change_list.html,
+	templates/admin/change_list_results.html,
+	templates/admin/date_hierarchy.html,
+	templates/admin/delete_confirmation.html,
+	templates/admin/delete_selected_confirmation.html,
+	templates/admin/edit_inline/stacked.html,
+	templates/admin/edit_inline/tabular.html,
+	templates/admin/filter.html, templates/admin/includes/fieldset.html,
+	templates/admin/index.html, templates/admin/invalid_setup.html,
+	templates/admin/login.html, templates/admin/object_history.html,
+	templates/admin/pagination.html,
+	templates/admin/prepopulated_fields_js.html,
+	templates/admin/search_form.html, templates/admin/submit_line.html,
+	templates/admin/template_validator.html:
+	Big change on admin templates
+	[03e61b9f3781]
+
+	* admin/admin.py, admin/models.py, settings.py,
+	templates/admin/index.html, urls.py:
+	admin.py bug fixed
+	[11b94abe79d7]
+
+2009-09-10  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/installer.py:
+	Conflict resolved
+	[6a948ed45ca5]
+
+	* admin/installer.py:
+	Some changes in installer.py
+	[329b50ef09b9]
+
+	* admin/admin.py, admin/installer.py, admin/models.py,
+	apache/dina.wsgi, templates/default, templates/dina/default:
+	wsgi handler
+	[44163713d583]
+
+2009-08-21  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/lxsameer.idea:
+	installer : ideas
+	[0f6dc5163e95]
+
+	* admin/TODO, admin/models.py:
+	installer: template model added
+	[a4438ec3979c]
+
+2009-08-20  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/doc/devel/installer.desc, doc/devel/apps/admin/admin.desc,
+	doc/devel/apps/admin/installer.desc,
+	doc/devel/apps/admin/models.desc:
+	admin : Silver point 1 docs
+	[dd04393f0712]
+
+	* admin/doc/devel/admin.desc, admin/doc/devel/models.desc:
+	admin/doc/devel/admin.desc
+	[c2b673d4e04c]
+
+	* admin/doc/devel/models.desc, admin/models.py:
+	admin/doc/devel/models.desc
+	[ea8fa0572dbb]
+
+	* admin/installer.py, confs/__init__.py, urls.py:
+	dynamic URL handling completed
+	[827766cbe1c0]
+
+2009-08-19  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/installer.py, admin/models.py, confs/__init__.py:
+	Installer : installing and removing application completed (dirty
+	code)
+	[0ee558231989]
+
+	* admin/admin.py, admin/installer.py, admin/models.py:
+	Silver point 1
+	[d16db02542c9]
+
+	* README, admin/admin.py, admin/installer.py:
+	Phase 1 started
+	[5b2a05b24af5]
+
+	* admin/admin.py, admin/installer.py, confs/__init__.py, settings.py:
+	Fix pulish bug
+	[bca0e869a8de]
+
+	* admin/admin.py, admin/installer.py, confs/__init__.py, settings.py,
+	urls.py:
+	Installer : installing a app package successfully
+	[436bcc1115f0]
+
+	* settings.py:
+	Fix conflict
+	[7af70090f10c]
+
+2009-08-18  Behnam Ahmad Khan Beigi  <b3hnam@b3hnam.com>
+
+	* apps/blog/doc/devel/structure:
+	Add blog application
+	[8d895f0f1568]
+
+	* settings.py:
+	Merge branch 'master' of git@github.com:lxsameer/Dina_CMS
+	[cdde8b52de29]
+
+2009-08-19  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/admin.py, admin/installer.py, settings.py:
+	Dynamic apps Faild, Django can't find app so it can't make app model
+	[6ef2f158e673]
+
+	* confs/__init__.py:
+	bug #1 fixed
+	[b526f95d01f9]
+
+	* confs/__init__.py, urls.py:
+	dynamic urls added
+	[fb1aaa24be63]
+
+	* admin/TODO, admin/admin.py, admin/installer.py, admin/models.py,
+	confs/__init__.py, settings.py:
+	Dynamic INSTALLED_APP
+	[0a291c387db6]
+
+2009-08-18  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/admin.py, admin/installer.py, confs/__init__.py:
+	Installer : installing application completed (Basic)
+	[97fabf0c15c3]
+
+	* Merge branch 'master' of git@github.com:lxsameer/Dina_CMS
+	[9bbb9b3a2d70]
+
+2009-08-18  Behnam Ahmad Khan Beigi  <b3hnam@b3hnam.com>
+
+	* settings.py:
+	Add blog application
+	[28a38012709d]
+
+2009-08-18  BeHnAm AKB  <b3hnam@b3hnam.com>
+
+	* Merge branch 'master' of git@github.com:lxsameer/Dina_CMS
+	[198051e3d88b]
+
+	* doc/devel/b3hnam.idea:
+	Merge branch 'master' of git@github.com:lxsameer/Dina_CMS
+	[87d71968e072]
+
+2009-08-18  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/installer.py, settings.py:
+	Installer : Phase 1 completed
+	[2f600cfc5caa]
+
+	* admin/TODO, admin/admin.py, admin/installer.py, admin/models.py:
+	Installer : package extraction completed
+	[bb7ac9be6f76]
+
+	* admin/TODO, admin/admin.py, admin/installer.py, admin/models.py,
+	apps/__init__.py, settings.py:
+	Installer phase0
+	[cea7f1490e57]
+
+2009-08-16  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* admin/lxsameer.idea:
+	admin/lxsameer.idea added
+	[e4fc0dd77c3d]
+
+	* admin/admin.py, admin/models.py, settings.py, urls.py:
+	Better alghoritm for package manager
+	[8de836cfef57]
+
+	* admin/__init__.py, admin/admin.py, admin/models.py, admin/tests.py,
+	admin/views.py:
+	Admin app started
+	[584afc868b91]
+
+	* settings.py:
+	adding admin section
+	[d2b952b6386e]
+
+	* README, doc/devel/b3hnam.idea, doc/devel/coding.policy,
+	doc/devel/development.policy, doc/devel/lxsameer.idea,
+	doc/devel/template/templates_packages.fileformat, settings.py,
+	urls.py:
+	Project renamed
+	[19b4b7fea80e]
+
+2009-08-18  BeHnAm AKB  <b3hnam@b3hnam.com>
+
+	* doc/devel/b3hnam.idea:
+	add dev docs
+	[79bdd61f2865]
+
+2009-08-15  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* doc/devel/coding.policy, urls.py:
+	Add some documents
+	[37defdab389a]
+
+	* doc/devel/development.policy:
+	add some idea to development.policy
+	[712022677ef3]
+
+	* doc/devel/coding.policy, doc/devel/comments.policy, settings.py:
+	Coding.policy added
+	[170de3c7584c]
+
+	* doc/devel/comments.policy, settings.py:
+	setup settings for development environment
+	[122d14b6854a]
+
+	* Merge branch 'master' of git@github.com:lxsameer/Bax_CMS
+	[7990502beee1]
+
+	* __init__.py, manage.py, settings.py, urls.py:
+	Django basic project structure added
+	[29bda7217f02]
+
+2009-08-14  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* doc/devel/template/templates_packages.fileformat:
+	Templates package describtion has been added
+	[039ac60d2a55]
+
+2009-08-14  niasha  <niasha85@gmail.com>
+
+	* doc/devel/development.policy:
+	Add a development policy
+	[6d3946fa9c2e]
+
+2009-08-12  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README, doc/devel/b3hnam.idea~, doc/devel/development.policy:
+	Development Policy added
+	[0fbb65e24aaa]
+
+2003-07-29  BeHnAm AKB  <b3hnam@KaraNic.(none)>
+
+	* doc/devel/b3hnam.idea, doc/devel/b3hnam.idea~:
+	b3hnam.idea added
+	[2b88af011d22]
+
+2009-08-12  Sameer Rahmani  <lxsameer@gmail.com>
+
+	* README:
+	Phase 0
+	[c7a33ac20599]
+
+	* TODO, doc/devel/lxsameer.idea, doc/manual/index.html:
+	lxsameer's ideas
+	[4e36a89902cf]
+
+	* TODO, doc/devel/lxsameer.idea:
+	begin the team brainstorm
+	[f790f18b0ad9]
+
+	* README:
+	first commit
+	[a31e8b7e596f]
+

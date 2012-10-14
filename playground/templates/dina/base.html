@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load menu %}
+{% load i18n %}
+
+
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+{% block header %}
+<title>{% block title %}Dina Project{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="/site_media/css/default.css">
+{% endblock %}
+</head>
+<body>
+	<div id="wrapper">
+         <div id="header">
+		 
+		       <H1>Dina Project</H1>		 
+		       <span>Impossible is Impossible</span>
+			   
+		 </div>
+	 {% block top-side %}
+         <div id="navigation">
+
+		 {% menu_class "top"%}
+		 
+			   
+	 </div>
+	 {% endblock %}
+	 {% block body %}
+		 <div id="content">
+		      
+		      
+		      {% block content %}
+		      
+		
+		      {% endblock %}
+		      
+
+		      
+		 </div>
+	 {% endblock %}
+		 {% block left-side %}
+		 <div id="rightcolumn">
+		   
+		   <ul>
+		     {% menu_class "side" %}
+		   </ul>
+		   		 
+		 </div>
+		 {% endblock %}
+
+		 <div id="footer">
+		   
+		       {% block footer %}
+		
+			 <p class='copyright' align='center'>Copyright (c) 2009 - 2010 Dina Project. Dina release under the term of <a href="www.gnu.org/licenses/gpl-2.0.html">GNU/GPL v2</a>.</p>
+		
+		       {% endblock %}
+
+			   
+			    
+		 </div>
+	</div>
+   
+</body>
+</html>
