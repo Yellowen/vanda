@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load comments %}
+
+<div class="" id="commentshell" style="display: none;">
+<span class="text">[<span class="logtime"></span>] <span class="status comment">COMMENT</span> <b></b>: <span class="commentcontent"></span></span>
+</div>
+
+{% for post in posts %}
+
+{% get_comment_form for post as form %}
+<div class="micro" id="micro_{{ post.id }}">
+<div class="data">
+{{ form.object_pk }}
+{{ form.timestamp }}
+{{ form.security_hash }}
+</div>
+
+<span class="text">[<span class="logtime">{{ post.datetime|date:"H:i d b Y" }}</span>] <span class="commentcount">{% get_comment_count for post as count %}[<b>{{ count }}</b> Comment{% if count != 0 %}s{% endif %}]</span> {% if post.status %}<span class="status {{ post.status|lower }}">{{ post.status|upper }}</span>{% endif %} <b>{{ post.author }}</b>: {{ post.content|urlize }}</span>
+
+
+<div class="comments">
+{% get_comment_list for post as comment_list %}
+{% for comment in comment_list %}
+
+<div class="comment">
+<span class="text">[<span class="logtime">{{ comment.submit_date|date:"H:i d b Y" }}</span>] <span class="status comment">COMMENT</span> <b>{{ comment.name }}</b>: <span class="commentcontent">{{ comment.comment|urlize }}</span></span></div>
+{% endfor %}
+</div>
+</div>
+{% endfor %}
+
