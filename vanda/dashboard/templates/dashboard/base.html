@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block nav %}
+	  <ul>
+	    <li><a href="/me/">{% trans "My Profile" %}</a></li>
+	    <li><a href="/logout/?next=/">{% trans "Logout" %}</a></li>
+	    
+	  </ul>
+{% endblock nav %}
