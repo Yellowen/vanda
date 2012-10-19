@@ -1,8 +1,0 @@
-Requirements:
-
-Markdown
-Pygment
-django-tagging
-django-robots
-feedparser
-django-comments (distributed with django) (django comment framework should installed)
