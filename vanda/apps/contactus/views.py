@@ -11,9 +11,10 @@ def index(request):
     if request.method == 'POST':
         form = ContactUs(request.POST)
         if form.is_valid():
-            send_mail('User Contact', form.cleaned_data['message'],
-                      form.cleaned_data['email'],
-                      settings.ADMINS_MAIL)
+            send_mail('message from %s' % form.cleaned_data['email'],
+                      form.cleaned_data['message'],
+                      settings.EMAIL_HOST_USER,
+                      [settings.ADMINS_MAIL, ], fail_silently=False)
             SentMessage = _('Your message has been sent successfully!')
             return rr('msg.html', {'msg': SentMessage})
         else:

@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Vanda multilang
-#    Copyright (C) 2012  Sameer Rahmani <lxsameer@gnu.org>
+#    Karajlug.org
+#    Copyright (C) 2010-2012 Karajlug community
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,30 +16,21 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import os
-
-from django.conf.urls.defaults import patterns, include, url
-from django.conf import settings
 
 from django.contrib import admin
 
-admin.autodiscover()
+from models import UploadFile
 
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
 
-)
+class UPAdmin(admin.ModelAdmin):
+    """
+    Admin interface class for news model
+    """
+    list_display = ("get_address", "user", "date")
+    list_filter = ("user", )
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-            (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': os.path.join(os.path.dirname(__file__),\
-                                    '../statics/').replace('\\', '/')}),
-)
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
 
-urlpatterns += patterns('',
-    (r'^(en|fa)/', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-    (r'^$', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-    (r'.*', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-
-)
+admin.site.register(UploadFile, UPAdmin)

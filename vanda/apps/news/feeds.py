@@ -37,5 +37,5 @@ class LatestNews(Feed):
     def item_date(self, item):
         return item.date
 
-    def item_link(self, item):
-        return "http://karajlug.org/news/%s/" % item.id
+    ## def item_link(self, item):
+    ##     return "http://asdasd/news/%s/" % item.id

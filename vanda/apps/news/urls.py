@@ -19,12 +19,12 @@
 
 from django.conf.urls.defaults import patterns
 
-from news.feeds import LatestNews
+from vanda.apps.news.feeds import LatestNews
 
 
 urlpatterns = patterns('',
         (r'^feed/$', LatestNews()),
-        (r'^(\d+)/$', 'news.views.news_entry'),
-        (r'^$', 'news.views.index'),
+        (r'^(\d+)/$', 'vanda.apps.news.views.news_entry'),
+        (r'^$', 'vanda.apps.news.views.index'),
 
 )

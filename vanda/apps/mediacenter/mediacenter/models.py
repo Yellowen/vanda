@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
-#    Vanda multilang
-#    Copyright (C) 2012  Sameer Rahmani <lxsameer@gnu.org>
+#    Karajlug.org
+#    Copyright (C) 2010-2012 Karajlug community
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,30 +16,26 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import os
 
-from django.conf.urls.defaults import patterns, include, url
-from django.conf import settings
+from django.db import models
+from django.utils.translation import ugettext as _
+from django.contrib.auth.models import User
 
-from django.contrib import admin
 
-admin.autodiscover()
+class UploadFile(models.Model):
+    """
+    This model store the address of uploads files.
+    """
 
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+    ufile = models.FileField(_("File"), upload_to="uploads/")
+    user = models.ForeignKey(User, editable=False,
+                             verbose_name=_("User"))
+    date = models.DateTimeField(auto_now_add=True, auto_now=False,
+                                     verbose_name=_('Date and Time'))
 
-)
+    def get_address(self):
+        return "/statics/%s" % self.ufile
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-            (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': os.path.join(os.path.dirname(__file__),\
-                                    '../statics/').replace('\\', '/')}),
-)
-
-urlpatterns += patterns('',
-    (r'^(en|fa)/', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-    (r'^$', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-    (r'.*', 'vanda.apps.multilang.dispatcher.dispatch_url'),
-
-)
+    class Meta:
+        verbose_name = _("upload file")
+        verbose_name_plural = _("upload files")

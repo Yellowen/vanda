@@ -21,6 +21,6 @@ from django.conf.urls.defaults import patterns
 
 
 urlpatterns = patterns('',
-        (r'^(\w+)/$', 'page.views.show_page'),
+        (r'^(\w+)/$', 'vanda.apps.page.views.show_page'),
 
 )

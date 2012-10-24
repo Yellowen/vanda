@@ -20,5 +20,5 @@ from django.conf.urls.defaults import patterns
 
 
 urlpatterns = patterns('',
-    (r'^state/(\d{1,2})/$', 'locales.views.state'),
+    (r'^state/(\d{1,2})/$', 'vanda.apps.locales.views.state'),
 )

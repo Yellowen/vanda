@@ -39,7 +39,7 @@ def news_entry(request, id_=None):
     except News.DoesNotExist:
         raise Http404()
 
-    return rr("news_entry.djhtml",
+    return rr("news_entry.html",
               {"news": news_ent},
               context_instance=RequestContext(request))
 
