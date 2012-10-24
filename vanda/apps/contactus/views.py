@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from django.core.mail import send_mail
 from django.template import RequestContext
 from django.conf import settings
+from django.http import HttpResponseRedirect
 
 from forms import ContactUs
 
@@ -16,7 +17,7 @@ def index(request):
                       settings.EMAIL_HOST_USER,
                       [i[1] for i in settings.ADMINS], fail_silently=False)
             SentMessage = _('Your message has been sent successfully!')
-            return rr('msg.html', {'msg': SentMessage})
+            return HttpResponseRedirect("/")
         else:
             return rr('contact_us.html', {'ContactUs': form},
                       context_instance=RequestContext(request))
