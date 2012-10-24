@@ -14,7 +14,7 @@ def index(request):
             send_mail('message from %s' % form.cleaned_data['email'],
                       form.cleaned_data['message'],
                       settings.EMAIL_HOST_USER,
-                      settings.ADMINS, fail_silently=False)
+                      [i[1] for i in settings.ADMINS], fail_silently=False)
             SentMessage = _('Your message has been sent successfully!')
             return rr('msg.html', {'msg': SentMessage})
         else:

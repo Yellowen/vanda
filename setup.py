@@ -21,7 +21,7 @@
 from setuptools import setup, find_packages
 
 setup(name='Vanda',
-      version='2.1.7',
+      version='2.1.9',
       description='Rapid web development platform based on Django framework',
       author='Sameer Rahmani',
       author_email='lxsameer@gnu.org',
