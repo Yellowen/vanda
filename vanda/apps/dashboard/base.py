@@ -18,21 +18,21 @@
 # -----------------------------------------------------------------------------
 from django.utils.translation import ugettext as _
 
-import dashboard.blocks
-from dashboard.widgets import Widget
-from dashboard.models import UserDashboard
+import vanda.apps.dashboard.blocks
+from vanda.apps.dashboard.widgets import Widget
+from vanda.apps.dashboard.models import UserDashboard
 
 
 class Dashboard(object):
     _default_config = {
         "blocks": {"header": {"title": _("header"),
-                                "class": "HorizontalBar"},
-                     "aside": {"title": _("site bar"),
-                               "class": "SideBar"},
-                     "body": {"title": _("Dashboard"),
-                              "class": "WidgetArea"},
-                     "footer": {"title": _("footer"),
-                                "class": "HorizontalBar"}}
+                              "class": "HorizontalBar"},
+                   "aside": {"title": _("site bar"),
+                             "class": "SideBar"},
+                   "body": {"title": _("Dashboard"),
+                            "class": "WidgetArea"},
+                   "footer": {"title": _("footer"),
+                              "class": "HorizontalBar"}}
         }
 
     _widgets = {}
@@ -46,8 +46,11 @@ class Dashboard(object):
         for block in options["blocks"]:
             class_name = options["blocks"][block].get("class",
                                                       "WidgetArea")
-            if hasattr(dashboard.blocks, class_name):
-                klass = getattr(dashboard.blocks, class_name)
+            if "class" in options["blocks"][block]:
+                del options["blocks"][block]["class"]
+
+            if hasattr(vanda.apps.dashboard.blocks, class_name):
+                klass = getattr(vanda.apps.dashboard.blocks, class_name)
             else:
                 raise ImportError("can't import '%s' from blocks")
 
