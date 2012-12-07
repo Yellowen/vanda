@@ -20,6 +20,7 @@ import json
 
 from django.template.loader import get_template
 from django.template import Template, Context
+from django.conf.urls import patterns, url
 
 
 class Widget(dict):
@@ -37,6 +38,16 @@ class Widget(dict):
 
     #:
     html = ""
+
+    urls_patters = []
+
+    @property
+    def urls(self):
+        """
+        Url dispatcher property.
+        """
+        urlpatterns = patterns('', *self.urls_patters)
+        return urlpatterns
 
     def get_html(self):
         if self.template:
@@ -70,5 +81,5 @@ class Widget(dict):
 
     @classmethod
     def load(cls, data):
-        obj = cls().from_dict(data)
+        obj = cls().from_json(data)
         return obj

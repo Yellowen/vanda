@@ -1,0 +1,3 @@
+* Dashboard
+** Widgets
+*** Add support of tree like menus to NavigationMenu

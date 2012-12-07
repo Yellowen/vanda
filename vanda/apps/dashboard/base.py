@@ -110,7 +110,8 @@ class Dashboard(object):
                     widget_type = widget_data[0]
 
                     if widget_type in self._widgets_types:
-                        widget = WidgetClass.load(widget_data[1])
+                        widget = Widget.load(self._widgets_types[widget_type],
+                                             widget_data[1])
                     else:
                         raise self.WidgetClassNotFound(
                             "No widget class '%s'." % widget_type.__name__)
