@@ -1,0 +1,5 @@
+<aside class="{% if self.css_class %}{{ self.css_class }}{% else %}sidebar{% endif %}" id="{% if self.css_id  %}{{ self.css_id }}{% else %}id_aside{% endif %}">
+{% for widget in self.widgets %}
+{{ widget.render }}
+{% endfor %}
+</aside>

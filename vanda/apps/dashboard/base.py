@@ -17,8 +17,9 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
-import vanda.apps.dashboard.blocks
+from vanda.apps.dashboard import blocks as BLOCKS
 from vanda.apps.dashboard.widgets import Widget
 from vanda.apps.dashboard.models import UserDashboard
 
@@ -33,7 +34,7 @@ class Dashboard(object):
                             "class": "WidgetArea"},
                    "footer": {"title": _("footer"),
                               "class": "HorizontalBar"}}
-        }
+    }
 
     _widgets = {}
     _widgets_types = {}
@@ -43,19 +44,21 @@ class Dashboard(object):
         """
         Initializing the Dashboard.
         """
+        if hasattr(settings, "DASHBOARD_CONFIG"):
+            options = getattr(settings, "DASHBOARD_CONFIG")
+
         for block in options["blocks"]:
             class_name = options["blocks"][block].get("class",
                                                       "WidgetArea")
             if "class" in options["blocks"][block]:
                 del options["blocks"][block]["class"]
 
-            if hasattr(vanda.apps.dashboard.blocks, class_name):
-                klass = getattr(vanda.apps.dashboard.blocks, class_name)
+            if hasattr(BLOCKS, class_name):
+                klass = getattr(BLOCKS, class_name)
             else:
-                raise ImportError("can't import '%s' from blocks")
+                raise ImportError("can't import '%s' from blocks" % class_name)
 
             obj = klass(self, **options["blocks"][block])
-            setattr(self, block, obj)
             self._blocks[block] = obj
 
     def register(self, widget):
@@ -101,6 +104,17 @@ class Dashboard(object):
             self.load_config(self.user_config)
         else:
             self.load_config({})
+
+    def __getattr__(self, blockname):
+        """
+        Return the corresponding block object or actual attribute.
+        """
+        if blockname in self._blocks:
+            return self._blocks[blockname]
+        elif hasattr(self, blockname):
+            return getattr(self, blockname)
+        else:
+            raise AttributeError("No such attribute '%s'" % blockname)
 
     class WidgetClassNotFound(Exception):
         pass

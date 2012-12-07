@@ -16,10 +16,13 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.conf.urls import patterns, url
+
+from base import Block
 
 
-urlpatterns = patterns('',
-    url("^$", "vanda.apps.dashboard.views.base.index",
-        name="dashboard-index"),
-)
+class HorizontalBar(Block):
+    template = "dashboard/bars/horizontal.html"
+
+
+class SideBar(Block):
+    template = "dashboard/bars/side.html"

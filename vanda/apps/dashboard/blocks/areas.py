@@ -16,52 +16,9 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-from django.template.loader import get_template
-from django.template import Template
 
-
-class Block(object):
-    """
-    Block main class.
-    """
-
-    _widgets = {}
-
-    template = None
-    html = ""
-
-    def get_html(self):
-        if self.template:
-            return get_template(self.template)
-        else:
-            if self.html:
-                return Template(self.html)
-            raise ValueError("'html' property should provide some HTML code")
-
-    def __init__(self, dashboard, **options):
-        self.dashboard = dashboard
-
-    def render(self):
-        """
-        Render the block html code using widgets htmls.
-        """
-        return self.html.render()
-
-    def add_widget(self, widget):
-        # check for unique hash or something
-        # we need this to add more than a Widget
-        # instance in a block
-        if not widget.name in self._widgets:
-            self._widgets[widget.name]
-
-
-class HorizontalBar(Block):
-    pass
+from base import Block
 
 
 class WidgetArea(Block):
-    pass
-
-
-class SideBar(Block):
     pass

@@ -1,0 +1,5 @@
+<div class="{% if self.css_class %}{{ self.css_class }}{% else %}horizontalbar{% endif %}" id="{% if self.css_id  %}{{ self.css_id }}{% else %}id_horizontal{% endif %}">
+{% for widget in self.wigets %}
+{{ widget.render }}
+{% endfor %}
+</div>
