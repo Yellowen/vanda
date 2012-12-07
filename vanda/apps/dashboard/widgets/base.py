@@ -19,7 +19,7 @@
 import json
 
 from django.template.loader import get_template
-from django.template import Template
+from django.template import Template, Context
 
 
 class Widget(dict):
@@ -44,10 +44,14 @@ class Widget(dict):
         else:
             if self.html:
                 return Template(self.html)
-            raise ValueError("'html' property should provide some HTML code")
+            return Template()
 
     def render(self):
-        pass
+        """
+        Render the widget html code using widgets htmls.
+        """
+        html = self.get_html()
+        return html.render(Context({"self": self}))
 
     def from_json(self, jsonstr):
         self.from_dict(json.loads(jsonstr))

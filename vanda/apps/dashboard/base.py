@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.conf.urls import patterns, url, include
 
 from vanda.apps.dashboard import blocks as BLOCKS
 from vanda.apps.dashboard.widgets import Widget
@@ -61,6 +62,24 @@ class Dashboard(object):
             obj = klass(self, **options["blocks"][block])
             self._blocks[block] = obj
 
+    @property
+    def urls(self):
+        """
+        Url dispatcher property.
+        """
+        urls_list = [
+            url("^$", self.index,
+                name="dashboard-index"),
+        ]
+        append = urls_list.append
+
+        for widget in self._widgets:
+            append(url(r'^widget/%s/' % widget.name,
+                       include(widget.urls)))
+
+        urlpatterns = patterns('', *urls_list)
+        return urlpatterns
+
     def register(self, widget):
         """
         Register the widget to dashboard widgets list.
@@ -77,6 +96,9 @@ class Dashboard(object):
             self._widgets_types[widget.__class__.__name__] = widget.__class__
 
     def load_config(self, config):
+        """
+        Initilize the dashboard instance using give config dict.
+        """
         blocks = config.get("blocks", {})
 
         for block in blocks:
@@ -105,6 +127,20 @@ class Dashboard(object):
         else:
             self.load_config({})
 
+    def auto_discovery(self):
+        """
+        Walk throught the installed apps and look for a widget module
+        of package and import them.
+        """
+        for app in settings.INSTALLED_APPS:
+            try:
+                __import__("%s.widgets" % app,
+                           globals(),
+                           locals(),
+                           [], -1)
+            except ImportError:
+                pass
+
     def __getattr__(self, blockname):
         """
         Return the corresponding block object or actual attribute.
@@ -115,6 +151,22 @@ class Dashboard(object):
             return getattr(self, blockname)
         else:
             raise AttributeError("No such attribute '%s'" % blockname)
+
+    # Views -----------------------------
+    def index(self, request):
+        """
+        Dashboard index.
+        """
+        from django.shortcuts import render_to_response as rr
+        from django.contrib.auth.decorators import login_required
+        from django.template import RequestContext
+
+        @login_required
+        def wrap(request):
+            return rr("dashboard/index.html",
+                      {},
+                      context_instance=RequestContext(request))
+        return wrap(request)
 
     class WidgetClassNotFound(Exception):
         pass

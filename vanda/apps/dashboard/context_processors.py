@@ -20,5 +20,6 @@ from base import dashboard as DASHBOARD
 
 
 def dashboard(request):
-    DASHBOARD.load_user_data(request.user)
+    if request.user.is_authenticated():
+        DASHBOARD.load_user_data(request.user)
     return {"dashboard": DASHBOARD}
