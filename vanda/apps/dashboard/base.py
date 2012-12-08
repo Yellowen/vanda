@@ -135,12 +135,14 @@ class Dashboard(object):
         """
         for app in settings.INSTALLED_APPS:
             try:
-                __import__("%s.widgets" % app,
+                print ">>> 1111%s" % app
+                m = __import__("%s.widgets" % app,
                            globals(),
                            locals(),
-                           [], -1)
-            except ImportError:
-                pass
+                           ["widgets"], -1)
+                print ">>>>>> 22222", m
+            except ImportError, e:
+                print e
 
     def __getattr__(self, blockname):
         """
