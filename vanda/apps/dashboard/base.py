@@ -49,6 +49,8 @@ class Dashboard(object):
     _widgets = JDict()
     _widgets_types = {}
     _blocks = JDict()
+    _css = {"stylesheet": "dashboard/styles.css"}
+    _js = []
 
     def __init__(self, options=_default_config):
         """
@@ -59,7 +61,7 @@ class Dashboard(object):
 
         blocksclass = type("BlockList", (object, ), {})
         blocksobj = blocksclass()
-        
+
         for block in options["blocks"]:
             class_name = options["blocks"][block].get("class",
                                                       "WidgetArea")
@@ -74,7 +76,7 @@ class Dashboard(object):
             obj = klass(self, **options["blocks"][block])
             setattr(blocksobj, block, obj)
             self._blocks[block] = obj
-            
+
         setattr(self, "blocks", blocksobj)
 
     @property
@@ -167,13 +169,28 @@ class Dashboard(object):
         """
         for app in settings.INSTALLED_APPS:
             try:
-
-                m = __import__("%s.widgetset" % app,
+                __import__("%s.widgetset" % app,
                            globals(),
                            locals(),
                            [], -1)
-            except ImportError, e:
+            except ImportError:
                 pass
+
+    def styles(self):
+        print "<!!!!!!!!!!!!", self._css
+        css = type("Css", (object, ), {"rel": "",
+                                       "url": ""})
+        styles_list = []
+        append = styles_list.append
+        for key in self._css:
+            print "asdasd"
+            a = css()
+            a.rel = key
+            a.url = self._css[key]
+            append(a)
+        print "!@$#$!#$"
+        print ",<<<<===== ", self._css, styles_list
+        return styles_list
 
     # Views -----------------------------
     def index(self, request):
