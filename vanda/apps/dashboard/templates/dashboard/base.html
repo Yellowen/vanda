@@ -6,12 +6,12 @@
 {% endblock title %}</title>
 
 {% block head %}
-{% for js in dashboard.javascripts %}
+{% for js in dashboard.scripts %}
 <script language="javascript" src="{{ js }}"></script>
 {% endfor %}
 
 {% for css in dashboard.styles %}
-<link href={{ MEDIA_URL }}{{ css.url }} type="text/css" rel="{{ css.rel }}">
+<link href={{ MEDIA_URL }}{{ css }} type="text/css" rel="stylesheet">
 {% endfor %}
 {% endblock head %}
 {% block extrahead %}

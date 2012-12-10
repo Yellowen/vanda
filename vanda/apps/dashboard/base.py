@@ -16,6 +16,8 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+import collections
+
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.conf.urls import patterns, url, include
@@ -49,8 +51,8 @@ class Dashboard(object):
     _widgets = JDict()
     _widgets_types = {}
     _blocks = JDict()
-    _css = {"stylesheet": "dashboard/styles.css"}
-    _js = []
+    _css = set()
+    _js = set()
 
     def __init__(self, options=_default_config):
         """
@@ -111,6 +113,26 @@ class Dashboard(object):
 
         if not widget.__class__.__name__ in self._widgets_types:
             self._widgets_types[widget.__class__.__name__] = widget.__class__
+
+        if hasattr(widget, "css"):
+            if isinstance(widget.css, basestring):
+                self._css.add(widget.css)
+            elif isinstance(widget.css, collections.Iterable):
+                for style in widget.css:
+                    self._css.add(style)
+            else:
+                raise ValueError(
+                    "Bad value for 'css' attirbute of '%s'" % widget.__class__.__name__)
+
+        if hasattr(widget, "js"):
+            if isinstance(widget.js, basestring):
+                self._js.add(widget.js)
+            elif isinstance(widget.js, collections.Iterable):
+                for script in widget.js:
+                    self._js.add(script)
+            else:
+                raise ValueError(
+                    "Bad value for 'js' attirbute of '%s'" % widget.__class__.__name__)
 
     def load_config(self, config):
         """
@@ -177,20 +199,10 @@ class Dashboard(object):
                 pass
 
     def styles(self):
-        print "<!!!!!!!!!!!!", self._css
-        css = type("Css", (object, ), {"rel": "",
-                                       "url": ""})
-        styles_list = []
-        append = styles_list.append
-        for key in self._css:
-            print "asdasd"
-            a = css()
-            a.rel = key
-            a.url = self._css[key]
-            append(a)
-        print "!@$#$!#$"
-        print ",<<<<===== ", self._css, styles_list
-        return styles_list
+        return self._css
+
+    def scripts(self):
+        return self._js
 
     # Views -----------------------------
     def index(self, request):
