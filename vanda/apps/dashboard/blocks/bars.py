@@ -21,8 +21,8 @@ from base import Block
 
 
 class HorizontalBar(Block):
-    template = "dashboard/bars/horizontal.html"
+    template = "dashboard/blocks/bars/horizontal.html"
 
 
 class SideBar(Block):
-    template = "dashboard/bars/side.html"
+    template = "dashboard/blocks/bars/side.html"

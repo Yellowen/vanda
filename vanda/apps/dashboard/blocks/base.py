@@ -24,9 +24,6 @@ class Block(object):
     """
     Block main class.
     """
-
-    _widgets = {}
-
     template = None
     html = ""
 
@@ -40,7 +37,13 @@ class Block(object):
                 return Template()
 
     def __init__(self, dashboard, **options):
+        """
+        Initialize the block instance.
+        """
+        from vanda.apps.dashboard.base import JDict
+
         self.dashboard = dashboard
+        self._widgets = JDict()
 
     def render(self):
         """
@@ -54,8 +57,19 @@ class Block(object):
         # we need this to add more than a Widget
         # instance in a block
         if not widget.name in self._widgets:
-            self._widgets[widget.name]
+            self._widgets[widget.name] = widget
 
+    def to_dict(self):
+        return self._widgets.to_dict()
+    ##     """
+    ##     Return a jsonable dictionary which contains block data.
+    ##     """
+    ##     data = {}
+    ##     for widgetname in self._widgets:
+    ##         data.update({widgetname: self._widgets[widgetname].to_dict()})
+
+    ##     return data
+    
     def widgets(self):
         """
         Return a list of block widgets.

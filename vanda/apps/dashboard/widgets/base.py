@@ -23,7 +23,7 @@ from django.template import Template, Context
 from django.conf.urls import patterns, url
 
 
-class Widget(dict):
+class Widget(object):
     """
     Base class for all widgets.
     """

@@ -25,6 +25,15 @@ from vanda.apps.dashboard.widgets import Widget
 from vanda.apps.dashboard.models import UserDashboard
 
 
+class JDict(dict):
+
+    def to_dict(self):
+        data = {}
+        for key in self:
+            data.update({key: self[key].to_dict()})
+        return data
+
+
 class Dashboard(object):
     _default_config = {
         "blocks": {"header": {"title": _("header"),
@@ -37,9 +46,9 @@ class Dashboard(object):
                               "class": "HorizontalBar"}}
     }
 
-    _widgets = {}
+    _widgets = JDict()
     _widgets_types = {}
-    _blocks = {}
+    _blocks = JDict()
 
     def __init__(self, options=_default_config):
         """
@@ -48,6 +57,9 @@ class Dashboard(object):
         if hasattr(settings, "DASHBOARD_CONFIG"):
             options = getattr(settings, "DASHBOARD_CONFIG")
 
+        blocksclass = type("BlockList", (object, ), {})
+        blocksobj = blocksclass()
+        
         for block in options["blocks"]:
             class_name = options["blocks"][block].get("class",
                                                       "WidgetArea")
@@ -60,7 +72,10 @@ class Dashboard(object):
                 raise ImportError("can't import '%s' from blocks" % class_name)
 
             obj = klass(self, **options["blocks"][block])
+            setattr(blocksobj, block, obj)
             self._blocks[block] = obj
+            
+        setattr(self, "blocks", blocksobj)
 
     @property
     def urls(self):
@@ -74,8 +89,8 @@ class Dashboard(object):
         append = urls_list.append
 
         for widget in self._widgets:
-            append(url(r'^widget/%s/' % widget.name,
-                       include(widget.urls)))
+            append(url(r'^widget/%s/' % self._widgets[widget].name,
+                       include(self._widgets[widget].urls)))
 
         urlpatterns = patterns('', *urls_list)
         return urlpatterns
@@ -118,6 +133,23 @@ class Dashboard(object):
 
                     self._blocks[block].add_widget(widget)
 
+    def save_config(self):
+        """
+        Save dashboard data in json format.
+        """
+        import json
+        data = {"block": self._blocks.to_dict(),
+                "widgets": self._widgets.to_dict()}
+
+        print "data >>>> ", data
+        return json.dumps(data)
+
+    def add_widget_to(self, blockname, widget):
+        '''
+        Add a widget to a block.
+        '''
+        self._blocks[blockname].add_widget(widget)
+
     def load_user_data(self, user):
         """
         Load the user's dashboard configuraion from database.
@@ -135,25 +167,13 @@ class Dashboard(object):
         """
         for app in settings.INSTALLED_APPS:
             try:
-                print ">>> 1111%s" % app
-                m = __import__("%s.widgets" % app,
+
+                m = __import__("%s.widgetset" % app,
                            globals(),
                            locals(),
-                           ["widgets"], -1)
-                print ">>>>>> 22222", m
+                           [], -1)
             except ImportError, e:
-                print e
-
-    def __getattr__(self, blockname):
-        """
-        Return the corresponding block object or actual attribute.
-        """
-        if blockname in self._blocks:
-            return self._blocks[blockname]
-        elif hasattr(self, blockname):
-            return getattr(self, blockname)
-        else:
-            raise AttributeError("No such attribute '%s'" % blockname)
+                pass
 
     # Views -----------------------------
     def index(self, request):

@@ -46,15 +46,21 @@ class NavigationMenu (Widget):
     #: You can use models to provide menu items too.
     navigation_dict = {}
 
-    def get_items(self, nav_dict=navigation_dict):
+    def get_items(self, navdict={}):
+        if navdict:
+            nav_dict = navdict
+        else:
+            nav_dict = self.navigation_dict
+
         items = []
         append = items.append
-        for key, value in nav_dict:
-            if isinstance(value, dict):
+        for key in nav_dict:
+            if isinstance(nav_dict[key], dict):
                 append(MenuItem(name=key,
-                                submenus=self.get_items(value)))
+                                submenus=self.get_items(nav_dict[key])))
             else:
-                append(MenuItem(name=key, link=value))
+                append(MenuItem(name=key, link=nav_dict[key]))
+        print "<<<<< ", items
         return items
 
     def to_dict(self):
