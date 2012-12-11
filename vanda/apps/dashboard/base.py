@@ -79,6 +79,27 @@ class Dashboard(object):
             setattr(blocksobj, block, obj)
             self._blocks[block] = obj
 
+            # Retrieve css and js addresses and add the to global styles
+            # and scripts collection -----------------------------------
+            if hasattr(obj, "css") and obj.css:
+                if isinstance(obj.css, basestring):
+                    self._css.add(obj.css)
+                elif isinstance(obj.css, collections.Iterable):
+                    map(lambda x: self._css.add(x), obj.css)
+                else:
+                    raise ValueError(
+                        "Bad value for 'css' attirbute of '%s'" % obj.__class__.__name__)
+
+            if hasattr(obj, "js") and obj.js:
+                if isinstance(obj.js, basestring):
+                    self._js.add(obj.js)
+                elif isinstance(obj.js, collections.Iterable):
+                    map(lambda x: self._js.add(x), obj.js)
+                else:
+                    raise ValueError(
+                        "Bad value for 'js' attirbute of '%s'" % obj.__class__.__name__)
+            # -----------------------------------------------------------
+
         setattr(self, "blocks", blocksobj)
 
     @property

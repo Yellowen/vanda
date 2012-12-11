@@ -28,6 +28,19 @@ class Block(object):
     template = None
     html = ""
 
+    def __init__(self, dashboard, **options):
+        """
+        Initialize the block instance.
+        """
+        from vanda.apps.dashboard.base import JDict
+
+        self.title = options.get("title", _("untitle"))
+        self.css = options.get("css", None)
+        self.js = options.get("js", None)
+
+        self.dashboard = dashboard
+        self._widgets = JDict()
+
     def get_html(self):
         if self.template:
             return get_template(self.template)
@@ -36,16 +49,6 @@ class Block(object):
                 return Template(self.html)
             else:
                 return Template()
-
-    def __init__(self, dashboard, **options):
-        """
-        Initialize the block instance.
-        """
-        from vanda.apps.dashboard.base import JDict
-
-        self.title = options.get("title", _("untitle"))
-        self.dashboard = dashboard
-        self._widgets = JDict()
 
     def render(self):
         """
