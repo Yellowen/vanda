@@ -21,4 +21,4 @@ from base import Block
 
 
 class WidgetArea(Block):
-    pass
+    template = "dashboard/blocks/areas/widgetarea.html"

@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 from django.template.loader import get_template
 from django.template import Template, Context
+from django.utils.translation import ugettext as _
 
 
 class Block(object):
@@ -42,6 +43,7 @@ class Block(object):
         """
         from vanda.apps.dashboard.base import JDict
 
+        self.title = options.get("title", _("untitle"))
         self.dashboard = dashboard
         self._widgets = JDict()
 
