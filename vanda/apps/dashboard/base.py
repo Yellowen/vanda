@@ -45,7 +45,9 @@ class Dashboard(object):
                    "body": {"title": _("Dashboard"),
                             "class": "WidgetArea"},
                    "footer": {"title": _("footer"),
-                              "class": "HorizontalBar"}}
+                              "class": "HorizontalBar"}},
+        "css": [],
+        "js": [],
     }
 
     _widgets = JDict()
@@ -60,6 +62,15 @@ class Dashboard(object):
         """
         if hasattr(settings, "DASHBOARD_CONFIG"):
             options = getattr(settings, "DASHBOARD_CONFIG")
+
+        # Setup the global styles and scripts.
+        styles = options.get("css", [])
+        if styles:
+            self._add_styles(styles, self)
+
+        scripts = options.get("js", [])
+        if scripts:
+            self._add_scripts(scripts, self)
 
         blocksclass = type("BlockList", (object, ), {})
         blocksobj = blocksclass()
@@ -82,22 +93,11 @@ class Dashboard(object):
             # Retrieve css and js addresses and add the to global styles
             # and scripts collection -----------------------------------
             if hasattr(obj, "css") and obj.css:
-                if isinstance(obj.css, basestring):
-                    self._css.add(obj.css)
-                elif isinstance(obj.css, collections.Iterable):
-                    map(lambda x: self._css.add(x), obj.css)
-                else:
-                    raise ValueError(
-                        "Bad value for 'css' attirbute of '%s'" % obj.__class__.__name__)
+                self._add_styles(obj.css, obj)
 
             if hasattr(obj, "js") and obj.js:
-                if isinstance(obj.js, basestring):
-                    self._js.add(obj.js)
-                elif isinstance(obj.js, collections.Iterable):
-                    map(lambda x: self._js.add(x), obj.js)
-                else:
-                    raise ValueError(
-                        "Bad value for 'js' attirbute of '%s'" % obj.__class__.__name__)
+                self._add_scripts(obj.js, obj)
+
             # -----------------------------------------------------------
 
         setattr(self, "blocks", blocksobj)
@@ -135,25 +135,11 @@ class Dashboard(object):
         if not widget.__class__.__name__ in self._widgets_types:
             self._widgets_types[widget.__class__.__name__] = widget.__class__
 
-        if hasattr(widget, "css"):
-            if isinstance(widget.css, basestring):
-                self._css.add(widget.css)
-            elif isinstance(widget.css, collections.Iterable):
-                for style in widget.css:
-                    self._css.add(style)
-            else:
-                raise ValueError(
-                    "Bad value for 'css' attirbute of '%s'" % widget.__class__.__name__)
+        if hasattr(widget, "css") and widget.css:
+            self._add_styles(widget.css, widget)
 
-        if hasattr(widget, "js"):
-            if isinstance(widget.js, basestring):
-                self._js.add(widget.js)
-            elif isinstance(widget.js, collections.Iterable):
-                for script in widget.js:
-                    self._js.add(script)
-            else:
-                raise ValueError(
-                    "Bad value for 'js' attirbute of '%s'" % widget.__class__.__name__)
+        if hasattr(widget, "js") and widget.js:
+            self._add_scripts(widget.js, widget)
 
     def load_config(self, config):
         """
@@ -224,6 +210,24 @@ class Dashboard(object):
 
     def scripts(self):
         return self._js
+
+    def _add_scripts(self, scripts, cls):
+        if isinstance(scripts, basestring):
+            self._js.add(scripts)
+        elif isinstance(scripts, collections.Iterable):
+            map(lambda x: self._js.add(x), scripts)
+        else:
+            raise ValueError(
+                "Bad value for 'js' attirbute of '%s'" % cls.__class__.__name__)
+
+    def _add_styles(self, styles, cls):
+        if isinstance(styles, basestring):
+            self._css.add(styles)
+        elif isinstance(styles, collections.Iterable):
+            map(lambda x: self._css.add(x), styles)
+        else:
+            raise ValueError(
+                "Bad value for 'css' attirbute of '%s'" % cls.__class__.__name__)
 
     # Views -----------------------------
     def index(self, request):
