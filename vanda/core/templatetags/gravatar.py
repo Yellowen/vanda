@@ -35,9 +35,10 @@ register = template.Library()
 
 
 class GravatarUrlNode(template.Node):
-    def __init__(self, email, size=None):
+    def __init__(self, email, size=None, host=None):
         self.email = template.Variable(email)
         self.size = size
+        self.host = host
 
     def render(self, context):
         try:
@@ -49,7 +50,11 @@ class GravatarUrlNode(template.Node):
         if self.size:
             size = self.size
 
-        host = context["request"].META["HTTP_HOST"]
+        if self.host:
+            host = self.host
+        else:
+            host = context["request"].META["HTTP_HOST"]
+        
         default = "http://%s%simages/defaultavatar.png" % (host, settings.MEDIA_URL)
         gravatar_url = "http://www.gravatar.com/avatar/%s?" % \
                        hashlib.md5(email.lower()).hexdigest()
@@ -60,8 +65,8 @@ class GravatarUrlNode(template.Node):
 @register.tag
 def gravatar_url(parser, token):
     try:
-        tag_name, email, size = token.split_contents()
+        tag_name, email, size, host = token.split_contents()
 
     except ValueError:
         raise template.TemplateSyntaxError, "%r tag requires two argument" % token.contents.split()[0]
-    return GravatarUrlNode(email, int(size))
+    return GravatarUrlNode(email, int(size), host)

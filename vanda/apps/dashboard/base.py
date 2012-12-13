@@ -124,6 +124,8 @@ class Dashboard(object):
         """
         Register the widget to dashboard widgets list.
         """
+        widget.set_dashboard_instance(self)
+        
         if not isinstance(widget, Widget):
             raise TypeError("'widget' should be a 'Widget' Instance")
 
@@ -158,6 +160,7 @@ class Dashboard(object):
                     if widget_type in self._widgets_types:
                         widget = Widget.load(self._widgets_types[widget_type],
                                              widget_data[1])
+                        widget.set_dashboard_instance(self)
                     else:
                         raise self.WidgetClassNotFound(
                             "No widget class '%s'." % widget_type.__name__)
@@ -179,7 +182,12 @@ class Dashboard(object):
         '''
         Add a widget to a block.
         '''
-        self._blocks[blockname].add_widget(widget)
+        if widget.name in self._widgets:
+            registered_widget = self._widgets[widget.name]
+        else:
+            raise ValueError("Given widget is not registered in dashboard")
+
+        self._blocks[blockname].add_widget(registered_widget)
 
     def load_user_data(self, user):
         """
@@ -234,6 +242,7 @@ class Dashboard(object):
         """
         Dashboard index.
         """
+        self.request = request
         from django.shortcuts import render_to_response as rr
         from django.contrib.auth.decorators import login_required
         from django.template import RequestContext

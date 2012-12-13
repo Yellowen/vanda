@@ -27,7 +27,10 @@ class Block(object):
     """
     template = None
     html = ""
+    order_matters = False
 
+    _widget_list = []
+    
     def __init__(self, dashboard, **options):
         """
         Initialize the block instance.
@@ -37,6 +40,7 @@ class Block(object):
         self.title = options.get("title", _("untitle"))
         self.css = options.get("css", None)
         self.js = options.get("js", None)
+        self.order_matters = options.get("order_matters", False)
 
         self.dashboard = dashboard
         self._widgets = JDict()
@@ -61,7 +65,16 @@ class Block(object):
         # check for unique hash or something
         # we need this to add more than a Widget
         # instance in a block
+
         if not widget.name in self._widgets:
+            if self.order_matters:
+                weight = 500
+                if hasattr(widget, "weight"):
+                    weight = widget.weight
+                self._widget_list.append([weight, widget])
+                self._widget_list.sort()
+                self._widget_list.reverse()
+
             self._widgets[widget.name] = widget
 
     def to_dict(self):
@@ -79,4 +92,6 @@ class Block(object):
         """
         Return a list of block widgets.
         """
+        if self.order_matters:
+            return map(lambda x: x[1], self._widget_list)
         return self._widgets.values()

@@ -49,6 +49,9 @@ class Widget(object):
         urlpatterns = patterns('', *self.urls_patters)
         return urlpatterns
 
+    def set_dashboard_instance(self, dashboard):
+        self.dashboard = dashboard
+
     def get_html(self):
         if self.template:
             return get_template(self.template)
