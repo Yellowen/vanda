@@ -4,8 +4,20 @@
 <head>
 <title>{% block title %}{% trans "Dashboard" %}
 {% endblock title %}</title>
+{% block prehead %}
+{% endblock prehead %}
 
 {% block head %}
+<script language="javascript" src="{% url dashboard-js %}"></script>
+{% for js in dashboard.js_blocks_classes %}
+<script language="javascript" src="{{ js }}"></script>
+{% endfor %}
+{% for js in dashboard.js_widgets_classes %}
+<script language="javascript" src="{{ js }}"></script>
+{% endfor %}
+
+<script language="javascript" src="{% url dashboard-init-js %}"></script>
+
 {% for js in dashboard.scripts %}
 <script language="javascript" src="{{ js }}"></script>
 {% endfor %}
@@ -14,8 +26,9 @@
 <link href={{ css }} type="text/css" rel="stylesheet">
 {% endfor %}
 {% endblock head %}
-{% block extrahead %}
-{% endblock extrahead %}
+
+{% block posthead %}
+{% endblock posthead %}
 </head>
 <body>
 {% block content %}

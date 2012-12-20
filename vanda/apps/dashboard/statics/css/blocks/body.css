@@ -1,0 +1,36 @@
+.widgetarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.widget {
+    max-width: 220px;
+    max-height: 220px;
+    margin: 5px;
+}
+.widgetbox {
+    padding: 20px;
+    border-radius: 5px;
+    Background: white;
+    max-width: 200px;
+    max-height: 200px;
+    float: left;
+}
+
+.widgetbar {
+    position: relative;
+    float: right;
+    width: 18px;
+    height: 40px;
+    Background: #f1f1f1;
+    opacity: 0.3;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
+}
+
+.closebtn {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+}

@@ -21,6 +21,7 @@ import json
 from django.template.loader import get_template
 from django.template import Template, Context
 from django.conf.urls import patterns, url
+from django.http import HttpResponse
 
 
 class Widget(object):
@@ -39,14 +40,24 @@ class Widget(object):
     #:
     html = ""
 
-    urls_patters = []
+    dashboard = None
+    _request = None
+
+    @property
+    def url_patterns(self):
+        return []
 
     @property
     def urls(self):
         """
         Url dispatcher property.
         """
-        urlpatterns = patterns('', *self.urls_patters)
+        url_patterns = self.url_patterns
+        url_patterns.extend([
+            url(r'^$', self.widget_html),
+            ])
+        urlpatterns = patterns('',
+                               *url_patterns)
         return urlpatterns
 
     def set_dashboard_instance(self, dashboard):
@@ -81,6 +92,24 @@ class Widget(object):
     def from_dict(self, dict_):
         for i in dict_:
             setattr(self, i, dict_[i])
+
+    def get_element_id(self):
+        if hasattr(self, "css_id"):
+            if self.css_id:
+                return self.css_id
+        return "id_%s" % self.name
+
+    def widget_html(self, request):
+        self._request = request
+        html = self.get_html()
+        return HttpResponse(html.render(Context({"self": self})))
+
+    @property
+    def request(self):
+        if self._request:
+            return self._request
+        elif self.dashboard:
+            return self.dashboard.request
 
     @classmethod
     def load(cls, data):

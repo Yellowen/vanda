@@ -53,8 +53,16 @@ class Dashboard(object):
     _widgets = JDict()
     _widgets_types = {}
     _blocks = JDict()
-    _css = set()
+    _css_widgets = set()
     _js = set()
+    _css = set()
+    _js_blocks_classes = set()
+    _js_widgets_classes = set()
+
+    _css_blocks = set()
+
+    _json_blocks = {}
+    _json_widgets = {}
 
     def __init__(self, options=_default_config):
         """
@@ -63,10 +71,15 @@ class Dashboard(object):
         if hasattr(settings, "DASHBOARD_CONFIG"):
             options = getattr(settings, "DASHBOARD_CONFIG")
 
+        self._js_path = options.get("js_path",
+                                    settings.MEDIA_URL).rstrip("/")
+        self._css_path = options.get("css_path",
+                                     settings.MEDIA_URL).rstrip("/")
+
         # Setup the global styles and scripts.
         styles = options.get("css", [])
         if styles:
-            self._add_styles(styles, self)
+            [self._css.add(i) for i in styles]
 
         scripts = options.get("js", [])
         if scripts:
@@ -90,11 +103,21 @@ class Dashboard(object):
             setattr(blocksobj, block, obj)
             self._blocks[block] = obj
 
+            # Prepare javascript codes
+            self._json_blocks[block] = {"id": obj.get_element_id(),
+                                        "type": obj.__class__.__name__}
+
+            self._js_blocks_classes.add(
+                        "%s/blocks/%s.js" % (self._js_path,
+                                             obj.__class__.__name__.lower()))
+
+            # Preparing Csses
+            self._css_blocks.add(
+                "%s/blocks/%s.css" % (self._css_path,
+                                      block.lower()))
+
             # Retrieve css and js addresses and add the to global styles
             # and scripts collection -----------------------------------
-            if hasattr(obj, "css") and obj.css:
-                self._add_styles(obj.css, obj)
-
             if hasattr(obj, "js") and obj.js:
                 self._add_scripts(obj.js, obj)
 
@@ -110,12 +133,17 @@ class Dashboard(object):
         urls_list = [
             url("^$", self.index,
                 name="dashboard-index"),
+            url("^js/dashboard.js$", self.js_lib,
+                name="dashboard-js"),
+            url("^js/initialize.js$", self.js_init,
+                name="dashboard-init-js"),
         ]
         append = urls_list.append
 
         for widget in self._widgets:
-            append(url(r'^widget/%s/' % self._widgets[widget].name,
-                       include(self._widgets[widget].urls)))
+            append(url(r'^widgets/%s/' % self._widgets[widget].name,
+                       include(self._widgets[widget].urls),
+                       name="%s-widget" % self._widgets[widget].name))
 
         urlpatterns = patterns('', *urls_list)
         return urlpatterns
@@ -130,15 +158,23 @@ class Dashboard(object):
             raise TypeError("'widget' should be a 'Widget' Instance")
 
         if widget.name and widget.name not in self._widgets:
+            from django.core.urlresolvers import reverse
+
             self._widgets[widget.name] = widget
+            self._json_widgets[widget.name] = {"id": widget.get_element_id(),
+                                               "type": widget.__class__.__name__}
+            self._js_widgets_classes.add(
+                "%s/widgets/%s.js" % (self._js_path,
+                                     widget.__class__.__name__.lower()))
         else:
             return
 
         if not widget.__class__.__name__ in self._widgets_types:
             self._widgets_types[widget.__class__.__name__] = widget.__class__
 
-        if hasattr(widget, "css") and widget.css:
-            self._add_styles(widget.css, widget)
+        self._css_widgets.add(
+            "%s/widgets/%s.css" % (self._css_path,
+                                   widget.name.lower()))
 
         if hasattr(widget, "js") and widget.js:
             self._add_scripts(widget.js, widget)
@@ -188,6 +224,7 @@ class Dashboard(object):
             raise ValueError("Given widget is not registered in dashboard")
 
         self._blocks[blockname].add_widget(registered_widget)
+        self._json_widgets[registered_widget.name]["block"] = blockname
 
     def load_user_data(self, user):
         """
@@ -209,12 +246,19 @@ class Dashboard(object):
                 __import__("%s.widgetset" % app,
                            globals(),
                            locals(),
-                           [], -1)
+                           ["widgetset", ], -1)
             except ImportError:
                 pass
 
+    def js_blocks_classes(self):
+        return self._js_blocks_classes
+
+    def js_widgets_classes(self):
+        return self._js_widgets_classes
+
     def styles(self):
-        return self._css
+        return set(list(self._css_blocks) + list(self._css_widgets) + \
+                   list(self._css))
 
     def scripts(self):
         return self._js
@@ -228,14 +272,9 @@ class Dashboard(object):
             raise ValueError(
                 "Bad value for 'js' attirbute of '%s'" % cls.__class__.__name__)
 
-    def _add_styles(self, styles, cls):
-        if isinstance(styles, basestring):
-            self._css.add(styles)
-        elif isinstance(styles, collections.Iterable):
-            map(lambda x: self._css.add(x), styles)
-        else:
-            raise ValueError(
-                "Bad value for 'css' attirbute of '%s'" % cls.__class__.__name__)
+    @property
+    def widgets(self):
+        return self._widgets
 
     # Views -----------------------------
     def index(self, request):
@@ -254,6 +293,41 @@ class Dashboard(object):
                       context_instance=RequestContext(request))
         return wrap(request)
 
+    def js_lib(self, request):
+        """
+        Return a javascript snippet to initialize dashboard js code.
+        """
+        from django.shortcuts import render_to_response as rr
+        from django.contrib.auth.decorators import login_required
+        from django.template import RequestContext
+
+        @login_required
+        def wrap(request):
+            return rr("dashboard/js/dashboard.js",
+                      mimetype="application/javascript",
+                      context_instance=RequestContext(request))
+
+        return wrap(request)
+
+    def js_init(self, request):
+        """
+        Return a javascript snippet to initialize dashboard js code.
+        """
+        import json
+        from django.shortcuts import render_to_response as rr
+        from django.contrib.auth.decorators import login_required
+        from django.template import RequestContext
+
+        @login_required
+        def wrap(request):
+            return rr("dashboard/js/init.js",
+                      {"blocks": json.dumps(self._json_blocks),
+                       "widgets": json.dumps(self._json_widgets)},
+                      mimetype="application/javascript",
+                      context_instance=RequestContext(request))
+
+        return wrap(request)
+        
     class WidgetClassNotFound(Exception):
         pass
 

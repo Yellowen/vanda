@@ -30,6 +30,7 @@ class Block(object):
     order_matters = False
 
     _widget_list = []
+
     
     def __init__(self, dashboard, **options):
         """
@@ -95,3 +96,9 @@ class Block(object):
         if self.order_matters:
             return map(lambda x: x[1], self._widget_list)
         return self._widgets.values()
+
+    def get_element_id(self):
+        if hasattr(self, "css_id"):
+            if self.css_id:
+                return self.css_id
+        return "id_%s" % self.title

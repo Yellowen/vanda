@@ -1,0 +1,5 @@
+<div class="{% if self.css_class %}{{ self.css_class }}{% else %}slidearea{% endif %}" id="{% if self.css_id  %}{{ self.css_id }}{% else %}id_{{ self.title }}{% endif %}">
+{% for widget in self.widgets %}
+{{ widget.render }}
+{% endfor %}
+</div>
