@@ -28,19 +28,20 @@ WidgetArea.prototype.append_widget = function (widget) {
 		block = document.tmp;
 		delete document.tmp;
 		block.widgets[widget.name] = widget;
-		data_width = $(data).width();
-		data_height = $(data).height();
-		console.log(data_width);
-		console.log(data_height);
 		new_widget = $("#widget_data").html();
-
-		width = data_width + $(new_widget).css("padding") * 2;
-		console.log(width);
 		$(new_widget).filter(".widgetbox").attr("id", "id_" + widget.name + "_wbox");
-		$(new_widget).filter(".widgetbar").attr("id", "id_" + widget.name + "_wbar");
-		$(new_widget).filter(".widget").attr("id", "id_" + widget.name + "_widget");
+		console.log($(new_widget).filter(".widgetbar"));
+		$(new_widget).filter(".widget").last().attr("id", "id_" + widget.name + "_wbar");
+		console.log(new_widget);
 		$(new_widget).filter(".widgetbox").html(data);
 		$(block.es).append(new_widget);
+		var width =  $(block.es).find("#id_" + widget.name + "_wbox").css("width");
+		var p = $(block.es).find("#id_" + widget.name + "_wbox").css("padding-top");
+		var w = $(block.es).find("#id_" + widget.name + "_wbar").width();
+		console.log(w);
+
+		$(block.es).find(".widget").css("width", aa + 58);
+		$(block.es).find(".widget").attr("id", "id_" + widget.name + "_widget");
 		
 	    }
 	   });
