@@ -4,6 +4,18 @@ function WidgetArea (name, es) {
     var el = this.element_id;
     var self = this;
     $(el).ready(function (){
+	$(el).masonry({
+	    itemSelector : '.widget',
+	    isResizable: true,
+	    isAnimated: true,
+	    animationOptions: {
+		duration: 400
+	    },
+	    columnWidth: function( containerWidth ) {
+		return containerWidth / 5;
+	    }
+	});
+
 	$(".closebtn").live("click", function(){
 	    var widgetname = $(this).parent().attr("widgetname");
 	    $("#id_" + widgetname + "_widget").fadeOut(600, function(){$(this).remove()});
@@ -58,7 +70,7 @@ WidgetArea.prototype.append_widget = function (widget) {
 		var p = parseInt($(new_widget).find("#id_" + widget.name + "_wbox").css("padding-top"));
 		var w = $(new_widget).find("#id_" + widget.name + "_wbar").width();
 
-		$(block.es).append(new_widget.html());
+		$(block.es).append(new_widget.html()).masonry( 'appended', new_widget, true );
 		$(block.es).find("#id_" + widget.name + "_widget").fadeIn(600);
 		var width =  parseInt($(block.es).find("#id_" + widget.name + "_wbox").width());
 		var fwidth = width + p * 2 + w;
