@@ -9,6 +9,16 @@ function WidgetArea (name, es) {
 	    $("#id_" + widgetname + "_widget").fadeOut(600, function(){$(this).remove()});
 	    delete document.dashboard.widgets[widgetname];
 	});
+	$(".widget").live({
+	    mouseenter: function(){
+		var widgetname = $(this).attr("widgetname");
+		$(".widgetbar[widgetname=" + widgetname + "]").fadeIn('slow');
+	    },
+	    mouseleave: function(){
+		var widgetname = $(this).attr("widgetname");
+		$(".widgetbar[widgetname=" + widgetname + "]").fadeOut('slow');
+
+	    }});
     });
 };
 
@@ -41,6 +51,8 @@ WidgetArea.prototype.append_widget = function (widget) {
 		$(new_widget).find(".widgetbar").attr("widgetname", widget.name);
 
 		$(new_widget).find(".widget").attr("id", "id_" + widget.name + "_widget");
+		$(new_widget).find(".widget").attr("widgetname", widget.name);
+
 		$(new_widget).find(".widget").hide();
 		$(new_widget).find(".widgetbox").html(data);
 		var p = parseInt($(new_widget).find("#id_" + widget.name + "_wbox").css("padding-top"));
@@ -57,4 +69,5 @@ WidgetArea.prototype.append_widget = function (widget) {
 	    }
 	   });
 };
+
 document.blocks["WidgetArea"] = WidgetArea;
