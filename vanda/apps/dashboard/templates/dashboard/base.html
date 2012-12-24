@@ -9,6 +9,10 @@
 
 {% block head %}
 <script language="javascript" src="{% url dashboard-js %}"></script>
+{% for js in dashboard.pre_js %}
+<script language="javascript" src="{{ js }}"></script>
+{% endfor %}
+
 {% for js in dashboard.js_blocks_classes %}
 <script language="javascript" src="{{ js }}"></script>
 {% endfor %}

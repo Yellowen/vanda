@@ -39,13 +39,13 @@ WidgetArea.prototype.constructor = WidgetArea;
 WidgetArea.prototype.append_widget = function (widget) {
     document.tmp = this;
     async = this.async_ajax;
-    if (widget.name in document.dashboard.widgets)
+    if (widget.name in this.current_widgets)
     {
-	widget.name = widget.name + "_"
-	widget.element_id = widget.element_id + "_"
+	widget.name = widget.name + "_";
+	widget.element_id = widget.element_id + "_";
     }
-
     document.dashboard.widgets[widget.name] = widget;
+    this.current_widgets[widget.name] = widget;
     $.ajax({url: widget.base_url,
 	    method: "GET",
 	    async: async,
@@ -67,16 +67,15 @@ WidgetArea.prototype.append_widget = function (widget) {
 
 		$(new_widget).find(".widget").hide();
 		$(new_widget).find(".widgetbox").html(data);
-		var p = parseInt($(new_widget).find("#id_" + widget.name + "_wbox").css("padding-top"));
+		var p = parseInt($(new_widget).find("#id_" + widget.name + "_wbox").css("padding-left"));
 		var w = $(new_widget).find("#id_" + widget.name + "_wbar").width();
 
-		$(block.es).append(new_widget.html()).masonry( 'appended', new_widget, true );
+		$(block.es).append(new_widget.html());
 		$(block.es).find("#id_" + widget.name + "_widget").fadeIn(600);
 		var width =  parseInt($(block.es).find("#id_" + widget.name + "_wbox").width());
 		var fwidth = width + p * 2 + w;
-
 		$(block.es).find("#id_"+ widget.name + "_widget").css("width", fwidth);
-
+		widget.on_load();
 		$("#tmp_widget").html("");
 	    }
 	   });

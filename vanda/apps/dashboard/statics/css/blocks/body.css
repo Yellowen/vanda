@@ -4,8 +4,6 @@
 }
 
 .widget {
-    max-width: 220px;
-    max-height: 220px;
     margin: 5px;
     display: inline-block;
 }
@@ -13,8 +11,6 @@
     padding: 20px;
     border-radius: 5px;
     Background: white;
-    max-width: 200px;
-    max-height: 200px;
     float: left;
 }
 

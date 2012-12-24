@@ -58,6 +58,7 @@ class Dashboard(object):
     _css = set()
     _js_blocks_classes = set()
     _js_widgets_classes = set()
+    _pre_js = set()
 
     _css_blocks = set()
 
@@ -175,6 +176,14 @@ class Dashboard(object):
         self._css_widgets.add(
             "%s/widgets/%s.css" % (self._css_path,
                                    widget.name.lower()))
+        if hasattr(widget, "pre_js"):
+            if isinstance(widget.pre_js, basestring):
+                self._pre_js.add(widget.pre_js)
+            elif isinstance(widget.pre_js, collections.Iterable):
+                map(lambda x: self._pre_js.add(x), widget.pre_js)
+            else:
+                raise ValueError("'pre_js' should be a list or string on '%s'" % \
+                                 widget.__class__.__name__)
 
         if hasattr(widget, "js") and widget.js:
             self._add_scripts(widget.js, widget)
@@ -255,6 +264,9 @@ class Dashboard(object):
 
     def js_widgets_classes(self):
         return self._js_widgets_classes
+
+    def pre_js(self):
+        return self._pre_js
 
     def styles(self):
         return set(list(self._css_blocks) + list(self._css_widgets) + \

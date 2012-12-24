@@ -1,0 +1,38 @@
+.tab-container {
+ width: 500px;
+ padding: 10px;
+ border-radius: 0 4px 4px 4px;
+}
+.tab-container a{
+    text-decoration: none;
+    color: #3f3f3f;
+}
+.etabs {
+ margin: 5px 0 0 0;
+ padding: 0;
+}
+.tab-body {
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+}
+.tab-container .active {
+    Background: white;
+}
+.tab {
+
+    padding: 7px;
+    Background: #f1f1f1;
+    border: 1px solid #e1e1e1;
+    display: inline-block;
+    zoom:1;
+    *display: inline;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+.tab-container .panel-container {
+ background: #ddd;
+ border: 1px solid #666;
+ padding: 10px;
+ border-radius: 0 4px 4px 4px;
+}
+

@@ -25,6 +25,7 @@ function Block (name, element_selector){
     this.name = name;
     this.async_ajax = true;
     this.widgets = {};
+    this.current_widgets = {};
 };
 Block.prototype.register = function (widget){
     if (!(widget.name in this.widgets))
@@ -32,6 +33,7 @@ Block.prototype.register = function (widget){
 	this.widgets[widget.name] = widget;
     }
 };
+
 Block.prototype.show = function (){};
 Block.prototype.hide = function (){};
 Block.prototype.add_widget = function (){};
@@ -51,25 +53,11 @@ Block.prototype.load_url = function (url){
 Block.prototype.load_widget = function (widget){
     document.tmp = this;
     async = this.async_ajax;
-    $.ajax({url: widget.base_url,
-	    method: "GET",
-	    async: async,
-	    success: function(data){
-		block = document.tmp;
-		delete document.tmp;
-		$(block.es).html(data);
-	    }
-	   });
-};
-Block.prototype.append_widget = function (widget){
-    document.tmp = this;
-    async = this.async_ajax;
-    if (widget.name in document.dashboard.widgets)
+    if (widget.name in this.current_widgets)
     {
 	widget.name = widget.name + "_"
 	widget.element_id = widget.element_id + "_"
     }
-
     document.dashboard.widgets[widget.name] = widget;
     $.ajax({url: widget.base_url,
 	    method: "GET",
@@ -77,8 +65,30 @@ Block.prototype.append_widget = function (widget){
 	    success: function(data){
 		block = document.tmp;
 		delete document.tmp;
+		$(block.es).html(data);
+		widget.on_load();
+	    }
+	   });
+};
+Block.prototype.append_widget = function (widget){
+    document.tmp = this;
+    async = this.async_ajax;
+
+    if (widget.name in this.current_widgets)
+    {
+	widget.name = widget.name + "_";
+	widget.element_id = widget.element_id + "_";
+    }
+    document.dashboard.widgets[widget.name] = widget;
+    this.current_widgets[widget.name] = widget;
+    $.ajax({url: widget.base_url,
+	    method: "GET",
+	    async: async,
+	    success: function(data){
+		block = document.tmp;
+		delete document.tmp;
 		$(block.es).append(data);
-		
+		widget.on_load();
 	    }
 	   });
 };

@@ -11,6 +11,8 @@
 }
 .bar_button:hover {
     Background: #dfdfdf;
+    -moz-transition: Background 300ms linear 0ms;
+    -webkit-transition: Background 300ms linear 0ms;
 }
 .bar_button img{
     float: left;
