@@ -1,5 +1,8 @@
 $(function () {
     document.media_url = "{{ MEDIA_URL }}";
+    document.current_user = {id: {{ request.user.id }},
+			     username: "{{ request.user.username }}"
+			    };
     document.dashboard = new Dashboard();
     var init_data = JSON.parse('{% autoescape off %}{{ blocks }}{% endautoescape %}');
     document.tmp = init_data;
