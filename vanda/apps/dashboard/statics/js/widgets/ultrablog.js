@@ -33,7 +33,10 @@ UltraBlog.prototype.on_load = function(){
 	      authors__exact: document.current_user.id
 	  },
 	  function (data){
-	      console.log(data);
+	      //for(var blog in data.objects) {
+	      blog_config[self.name].blogs = data.objects
+	      localStorage.setItem("ultra_blog", blog_config)
+	      //}
 	  });
 };
 document.widgets["UltraBlog"] = UltraBlog;
