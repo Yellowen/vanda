@@ -16,30 +16,36 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
-import os
-
-from django.conf.urls import patterns, include, url
+from django import template
+from django.core.urlresolvers import reverse as rev
 from django.conf import settings
 
-from django.contrib import admin
 
-admin.autodiscover()
+register = template.Library()
 
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
 
-)
+@register.tag(name="reverse")
+def reverse(parser, token):
+    try:
+        # split_contents() knows not to split quoted strings.
+        tag_name, format_string = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            "%r tag requires a single argument" % token.contents.split()[0])
+    if not (
+        format_string[0] == format_string[-1] and \
+        format_string[0] in ('"', "'")):
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-            (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': os.path.join(os.path.dirname(__file__),\
-                                    '../statics/').replace('\\', '/')}),
-)
+        raise template.TemplateSyntaxError(
+            "%r tag's argument should be in quotes" % tag_name)
 
-urlpatterns += patterns('',
-    (r'^(en|fa)[/]?', 'multilang.dispatcher.dispatch_url'),
-    (r'^$', 'multilang.dispatcher.dispatch_url'),
-    (r'.*', 'multilang.dispatcher.dispatch_url'),
+    return ReverseUrl(format_string[1:-1])
 
-)
+
+class ReverseUrl(template.Node):
+
+    def __init__(self, format_string):
+        self.path = format_string
+
+    def render(self, context):
+        return rev(self.path, args=[], urlconf=settings.LEAF_URLCONF)

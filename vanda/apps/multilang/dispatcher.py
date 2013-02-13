@@ -83,17 +83,25 @@ def dispatch_url(request, lang=None):
 
     try:
         view = resolve(request.path, settings.LEAF_URLCONF)
-        request.session['django_language'] = _lang
-        activate(_lang)
-        setattr(settings, "LANGUAGE_CODE", _lang)
-
-        response = view.func(request, *view.args, **view.kwargs)
-
-        if need_cookie:
-
-            set_cookie(response, settings.LANGUAGE_COOKIE_NAME, _lang)
-
-        return response
 
     except Http404:
-        raise
+        try:
+            if not request.path.endswith("/"):
+                request.path = "%s/" % request.path
+                view = resolve(request.path, settings.LEAF_URLCONF)
+            else:
+                raise
+        except Http404:
+            print ("last")
+            raise
+
+    request.session['django_language'] = _lang
+    activate(_lang)
+    setattr(settings, "LANGUAGE_CODE", _lang)
+
+    response = view.func(request, *view.args, **view.kwargs)
+
+    if need_cookie:    
+        set_cookie(response, settings.LANGUAGE_COOKIE_NAME, _lang)
+
+    return response
