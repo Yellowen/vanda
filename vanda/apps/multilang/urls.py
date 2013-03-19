@@ -33,12 +33,13 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += patterns('',
             (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': os.path.join(os.path.dirname(__file__),
-                                            settings.MEDIA_ROOT).replace('\\', '/')}),
+             {'document_root': os.path.join(os.path.dirname(__file__),\
+                                    settings.MEDIA_ROOT).replace('\\', '/')}),
 )
 
 urlpatterns += patterns('',
-    (r'^(en|fa)[/]?', 'vanda.apps.multilang.dispatcher.dispatch_url'),
+    (r'^(en|fa)/', 'vanda.apps.multilang.dispatcher.dispatch_url'),
+    (r'^(en|fa)$', 'vanda.apps.multilang.dispatcher.dispatch_url'),
     (r'^$', 'vanda.apps.multilang.dispatcher.dispatch_url'),
     (r'.*', 'vanda.apps.multilang.dispatcher.dispatch_url'),
 
