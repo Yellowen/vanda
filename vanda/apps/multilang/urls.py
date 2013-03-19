@@ -21,22 +21,26 @@ import os
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 
-from django.contrib import admin
+## if "django.contrib.admin" in settings.INSTALLED_APPS:
+##     from django.contrib import admin
+##     admin.autodiscover()
 
-admin.autodiscover()
+##     urlpatterns = patterns('',
+##         url(r'^admin/', include(admin.site.urls)),
+##     )
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-
 )
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-            (r'^statics/(?P<path>.*)$', 'django.views.static.serve',
+            (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:],
+             'django.views.static.serve',
              {'document_root': os.path.join(os.path.dirname(__file__),\
                                     settings.MEDIA_ROOT).replace('\\', '/')}),
 )
 
+# TODO: Make lang code dynamic
 urlpatterns += patterns('',
     (r'^(en|fa)/', 'vanda.apps.multilang.dispatcher.dispatch_url'),
     (r'^(en|fa)$', 'vanda.apps.multilang.dispatcher.dispatch_url'),
