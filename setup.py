@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -----------------------------------------------------------------------------
 #    Vanda - A free platfrom for rapid web development
-#    Copyright (C) 2012 Yellowen
+#    Copyright (C) 2012-2013 Yellowen
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 from setuptools import setup, find_packages
 
 setup(name='Vanda',
-      version='2.1.10',
+      version='2.1.11',
       description='Rapid web development platform based on Django framework',
       author='Sameer Rahmani',
       author_email='lxsameer@gnu.org',
