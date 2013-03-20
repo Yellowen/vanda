@@ -1,7 +1,0 @@
-<nav class="{% if self.css_class %}{{ self.css_class }}{% else %}navigation{% endif %}" id="{% if self.css_id  %}{{ self.css_id }}{% else %}id_nav{% endif %}">
-<ul id="ul_{% if self.css_id %}{{ self.css_id }}{% else %}{{ self.name }}{% endif %}">
-  {% for item in self.get_items %}
-  <li><a href="{{ item.link }}">{{ item.name }}</a></li>
-  {% endfor %}
-</ul>
-</nav>
