@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #    Vanda dashbord - Dashboard application of Vanda platform
-#    Copyright (C) 2012  Sameer Rahmani <lxsameer@gnu.org>
+#    Copyright (C) 2012-2013  Sameer Rahmani <lxsameer@gnu.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,9 +16,10 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
+from django.conf.urls import patterns, url
 
-from base import Block
 
-
-class SlideArea(Block):
-    template = "dashboard/blocks/areas/slide.html"
+urlpatterns = patterns('',
+    url("^$", "vanda.apps.dashboard.views.base.index",
+        name="dashboard-index"),
+)
