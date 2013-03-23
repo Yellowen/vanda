@@ -1,21 +1,26 @@
 {% extends 'dashboard/base.html' %}
-
+{% load i18n %}
 {% block extrahead %}
 <script data-main="{{ STATIC_URL }}dashboard/main" src="{{ STATIC_URL }}dashboard/lib/require/require.js"></script>
 {% endblock extrahead %}
 
 {% block content %}
-<header>
+<div id="drawer"></div>
+<header class="black nav">
   <nav class="pull-left">
     <ul>
-      <li>sam</li>
+      <li><a href="#/help"><i class="icon-book icon-white"></i> {% trans "Help" %}</a></li>
+      <li><a href="{% url "logout" %}"><i class="icon-signout icon-white"></i> {% trans "Logout" %}</a></li>
     </ul>
   </nav>
   <nav class="pull-right">
     <ul>
-      <li>sam</li>
+      <li id="notification-area"><i class=" icon-spinner icon-spin icon-white"></i></li>
+      <li><a href="#" class="drawer-handle" data-url="dashboard/templates/widgets.html"><i class="icon-plus icon-white"></i> {% trans "Add widget" %}</a></li>
+      <li><a href="#/preferences"><i class="icon-cog icon-white"></i> {% trans "Preferences" %}</a></li>
     </ul>
 
   </nav>
 </header>
+
 {% endblock content %}
