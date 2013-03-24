@@ -6,6 +6,17 @@ define([
 
     Backbone.api_url = "/api/v1";
 
+    Backbone.TModel = Backbone.Model.extend({
+	url: function() {
+	    var temp_url = this.base_url;
+	    if (this.isNew()) {
+		return Backbone.api_url + (temp_url.charAt(temp_url.length - 1) == '/' ? temp_url : temp_url+'/');
+	    }
+	    return Backbone.api_url + (temp_url.charAt(temp_url.length - 1) == '/' ? temp_url : temp_url+'/') + encodeURIComponent(this.get('id')) + '/' ;
+	},
+	fields: function(){}
+    });
+
     // Our Backbone Model implementation with relation support.
     Backbone.RTModel = Backbone.RelationalModel.extend({
 	url: function() {

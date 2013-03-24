@@ -22,41 +22,14 @@ define([
     'bbloader',
 ], function($, _, Backbone) {
 
-    var DashboardView = Backbone.View.extend({
+    var RepositoryView = Backbone.View.extend({
 	initialize: function(){
-	    var that = this;
-	    console.log("Initilizing dashboard ....");
-	    require(["views/drawer"], function (Drawer){
-		that.drawer = new Drawer();
-		console.log("Drawer Initilized.");
-	    });
-
-	    require(["views/notifier"], function(Notifier) {
-		that.notification = new Notifier({'el': $("#notification-area")});
-		that.notification.hide();
-		console.log("Notifier Initilized.");
-	    });
 
 	},
 
-	el: $("#content"),
-
-	events: {
-	    "click .drawer-handle": "toggle_drawer",
-	},
-
-	render: function() {
-	    // TODO: Load the defaults
-	},
-
-	toggle_drawer: function() {
-	    this.notification.fadeIn(300);
-	    this.drawer.toggle_drawer();
-	    this.notification.fadeOut(300);
-	},
 
     });
 
-    return DashboardView;
+    return RepositoryView;
 
 });
