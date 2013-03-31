@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------------------
 
 from djamo.documents import Document
+from djamo.collections import Collection
 
 
 class Preference(Document):
@@ -25,3 +26,7 @@ class Preference(Document):
     User preference document store dashboard related preferences for user.
     """
     pass
+
+
+class Preferences(Collection):
+    document = Preference
