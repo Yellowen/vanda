@@ -19,13 +19,16 @@
 
 from djamo.documents import Document
 from djamo.collections import Collection
+from djamo.serializers import DjangoUser
 
 
 class Preference(Document):
     """
     User preference document store dashboard related preferences for user.
     """
-    pass
+    keys = {
+        "user": DjangoUser()
+    }
 
 
 class Preferences(Collection):
