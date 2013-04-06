@@ -17,19 +17,16 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # -----------------------------------------------------------------------------
 
-from djamo.documents import Document
-from djamo.collections import Collection
-from djamo.serializers import DjangoUser
+from djamo import Document, Collection
+from djamo.serializers.django import DjangoUser
 
 
 class Preference(Document):
     """
     User preference document store dashboard related preferences for user.
     """
-    keys = {
-        "user": DjangoUser()
-    }
-
+    fields = {"user": DjangoUser(),
+              }
 
 class Preferences(Collection):
     document = Preference
