@@ -18,7 +18,7 @@
 # -----------------------------------------------------------------------------
 
 from djamo import Document, Collection
-from djamo.serializers.django import DjangoUser
+from djamo.serializers import DjangoUser
 
 
 class Preference(Document):
